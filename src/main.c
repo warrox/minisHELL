@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 17:29:38 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 19:51:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list *parser_init(t_data *data, char **argv)
 		tmp = ft_lstnew(argv[i]);
 		data->arg = tmp;
 		tmp = NULL;
-		ft_printf("content of node : %s\n",data->arg->content);//To remove
+		//ft_printf("content of node : %s\n",data->arg->content);//To remove
 		data->arg = data->arg->next;
 		data->arg = NULL;
 		i++;
@@ -45,5 +45,6 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     t_data data;
 	parser_init(&data, envp);
+	display_prompt(&data, envp);
 	return (0);
 }
