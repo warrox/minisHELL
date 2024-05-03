@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/03 16:25:15 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/03 19:38:28 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ GREY    = \e[38;5;254m
 RESET   = \e[00m
 
 SOURCE = ./src/
-MAIN = main.c parser.c
+MAIN = main.c parser.c prompt.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN))
 
 SRC = $(MINISHELL)
@@ -51,7 +51,7 @@ $(NAME): $(OBJS)
 		@echo "$(BOLD)Linking...$(RESET)"
 		@make -sC $(LIBFT_MINISHELL_PATH)
 		@make -sC $(FT_PRINTF_PATH)
-		$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
+		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
 		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
 
 %.o: %.c
