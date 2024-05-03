@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:36:05 by whamdi            #+#    #+#             */
-/*   Updated: 2023/12/13 18:09:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 19:27:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
 # include <stdarg.h>
 # include <stdint.h>
 # include <stdio.h>
@@ -27,4 +28,5 @@ int	hex_convert_u(unsigned int int_to_convert);
 int	ft_print_pointer_address(uintptr_t ptr);
 int	ft_printf(const char *format, ...);
 int	convert_ptr_to_hex(uintptr_t int_to_convert);
+
 #endif
