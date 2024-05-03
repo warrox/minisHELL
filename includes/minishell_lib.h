@@ -6,7 +6,7 @@
 /*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 20:04:34 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 21:43:36 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@ typedef struct s_list_arg
 {
 	struct s_list_arg *next;
 	struct s_list_arg *prev;
-	char *arg_var;
-	char *arg_val;
-	char *opt;
-	char *arg;	
+	char **key_and_val;// keyname ex : ls
+	char *val; // value of the keyname - obsolette
+	char *opt; // option ex -a
+	//char *arg; to delete
+	char *full_env_var; // list of environement variable before separating key/value
 	
 }			t_list_arg;
 
 typedef struct s_data
 {
-	t_list *arg;
+	t_list_arg *lst;
 } t_data;
 
 
 /*************************** INIT FUNC ***********************/
 
 /*************************** PARSING FUNC ***************/
-t_list *parser_list_init(t_data *data, char **argv);
+t_list_arg *parser_list_init(t_data *data, char **argv);
 #endif
