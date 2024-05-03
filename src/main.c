@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 16:28:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:47:22 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int main(int argc, char **argv, char **envp)
 {
     (void)argc;
 	(void)argv;
-    t_data data;
-	parser_init(&data, envp);
+    //t_data data;
+	//parser_init(&data, envp);
 	//parser(argv, &data);
-    printf("ENV[0]: %s\n", envp[0]);
+    int i =0;
+	while(envp && envp[i++])
+		printf("ENV[%d]: %s\n",i, envp[i]);
     return 0;
 }
