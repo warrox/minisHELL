@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:14:44 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/03 15:14:46 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/03 16:35:14 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ NAME			= libft.a
 
 all:			$(NAME)
 
-$(NAME):		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+$(NAME):		$(OBJS) $(BONUS_OBJS)
+				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 clean:
 				$(RM) $(OBJS) $(BONUS_OBJS)
@@ -43,7 +43,4 @@ fclean:			clean
 
 re:				fclean $(NAME)
 
-bonus:			 $(BONUS_OBJS)
-				ar rcs $(NAME) $(BONUS_OBJS)
-
-.PHONY:			all clean fclean re bonus
+.PHONY:			all clean fclean re

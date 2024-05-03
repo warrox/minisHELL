@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 15:38:20 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:29:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ typedef struct s_list_arg
 	char *arg_var;
 	char *arg_val;
 	char *opt;
+	char *arg;	
+	
 }			t_list_arg;
 
 typedef struct s_data
 {
-		
+	t_list *arg;
 } t_data;
 
 
