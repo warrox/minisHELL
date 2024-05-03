@@ -6,12 +6,11 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 16:47:22 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:16:10 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-
 t_list *parser_init(t_data *data, char **argv)
 {
 	int i;
@@ -27,8 +26,8 @@ t_list *parser_init(t_data *data, char **argv)
 		tmp = ft_lstnew(argv[i]);
 		data->arg = tmp;
 		tmp = NULL;
+		ft_printf("content of node : %s\n",data->arg->content);//To remove
 		data->arg = data->arg->next;
-		ft_printf("content of node : %s\n",data->arg->content);
 		data->arg = NULL;
 		i++;
 	}
@@ -37,13 +36,14 @@ t_list *parser_init(t_data *data, char **argv)
 
 int main(int argc, char **argv, char **envp)
 {
-    (void)argc;
+    if(argc > 1)
+	{
+		ft_printf("Too many arguments... exit the program\n");
+		exit(EXIT_FAILURE);
+	}
+
 	(void)argv;
-    //t_data data;
-	//parser_init(&data, envp);
-	//parser(argv, &data);
-    int i =0;
-	while(envp && envp[i++])
-		printf("ENV[%d]: %s\n",i, envp[i]);
-    return 0;
+    t_data data;
+	parser_init(&data, envp);
+	return (0);
 }
