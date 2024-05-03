@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 17:29:38 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 20:03:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-t_list *parser_init(t_data *data, char **argv)
+t_list *parser_list_init(t_data *data, char **argv)
 {
 	int i;
 	i = ZERO_INIT;
@@ -44,6 +44,6 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argv;
     t_data data;
-	parser_init(&data, envp);
+	parser_list_init(&data, envp);
 	return (0);
 }
