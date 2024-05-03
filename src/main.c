@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 17:16:10 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:29:38 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 t_list *parser_init(t_data *data, char **argv)
 {
 	int i;
-	i = 0;
-	t_list *tmp;
-	t_list *save;
+	i = ZERO_INIT;
+	t_list *tmp = NULL_INIT;
+	t_list *save = NULL_INIT;
 	data->arg = ft_lstnew(argv[i]);
 	save = data->arg;
 	tmp = data->arg;
