@@ -1,29 +1,78 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
+#    Updated: 2024/05/03 16:11:06 by cyferrei         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+RM = rm -rf
+CFLAGS = -Wall -Werror -Wextra -g3
 
-SRCS = src/main.c src/parsing.c
-OBJS = $(SRCS:.c=.o)
+LIBFT_MINISHELL_PATH = libft
+LIBFT_MINISHELL = libft/libft.a
 
-LIBFTPATH = ./libft/
-LIBFT = -L$(LIBFTPATH)
-PRINTFPATH = ./Printf/
-PRINTF = -L$(PRINTFPATH)
+FT_PRINTF_PATH = ft_printf
+FT_PRINTF = ft_printf/ft_printf.a
+
+BOLD    = \e[1m
+FADE    = \e[2m
+ITA     = \e[3m
+BLINK   = \e[5m
+GREEN   = \e[38;5;76m
+RED     = \e[38;5;196m
+YELLOW  = \e[38;5;227m
+ORANGE  = \e[38;5;208m
+PURPLE  = \e[38;5;201m
+LBLUE   = \e[38;5;45m
+BLUE    = \e[38;5;27m
+INDI    = \e[38;5;91m
+SPINK   = \e[38;5;225m
+PEACH   = \e[38;5;223m
+GREY    = \e[38;5;254m
+RESET   = \e[00m
+
+SOURCE = ./src/
+MAIN = main.c parser.c
+MINISHELL = $(addprefix $(SOURCE), $(MAIN))
+
+SRC = $(MINISHELL)
+OBJS = $(SRC:%.c=%.o)
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		make -C $(LIBFTPATH)
-		make -C $(PRINTFPATH)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PRINTF) -lftprintf $(LIBFT) -lm -lbsd
+		@echo "$(BOLD)Linking...$(RESET)"
+		@make -sC $(LIBFT_MINISHELL_PATH)
+		@make -sC $(FT_PRINTF_PATH)
+		$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
+		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(LIBFTPATH) -I$(PRINTFPATH) -c $< -o $@
+	@echo "$(BOLD)Compiling $<...$(RESET)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(GREEN)$@ compiled successfully!$(RESET)"
 
 clean:
-	rm -f $(OBJS)
+	@echo "$(BOLD)Cleaning object files...$(RESET)"
+	$(RM) $(OBJS)
+	@make -s clean -C $(LIBFT_MINISHELL_PATH)
+	@make -s clean -C $(FT_PRINTF_PATH)
+	@echo "$(GREEN)Object files cleaned successfully!$(RESET)"
+	
 fclean: clean
-	rm -f $(NAME)
-	make -C $(LIBFTPATH) fclean
-	make -C $(PRINTFPATH) fclean
-
+	@echo "$(BOLD)Cleaning object files...$(RESET)"
+	@make -s fclean -C $(LIBFT_MINISHELL_PATH)
+	@make -s fclean -C $(FT_PRINTF_PATH)
+	$(RM) $(NAME)
+	@echo "$(GREEN)Executable cleaned successfully!$(RESET)"
+	
 re: fclean all
+
+.PHONY: all clean fclean re
