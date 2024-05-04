@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <>                                  +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/03 21:43:36 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/04 16:46:06 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ typedef struct s_list_arg
 	char **key_and_val;// keyname ex : ls
 	char *val; // value of the keyname - obsolette
 	char *opt; // option ex -a
-	//char *arg; to delete
-	char *full_env_var; // list of environement variable before separating key/value
-	
+	//char *arg; to delete	
 }			t_list_arg;
 
 typedef struct s_data
@@ -31,9 +29,15 @@ typedef struct s_data
 	t_list_arg *lst;
 } t_data;
 
-
+void print_lst(t_list_arg *lst);
+void parser_list_init(t_data *data, char **envp);
+t_list_arg	*ft_lst_arg_new(t_list_arg *new,char *content);
+void	ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new);
+t_list_arg	*ft_lst_arg_last(t_list_arg *lst);
+void    ft_lst_arg_delone(t_list_arg *lst);
+void    ft_lst_arg_clear(t_list_arg **lst);
 /*************************** INIT FUNC ***********************/
 
 /*************************** PARSING FUNC ***************/
-t_list_arg *parser_list_init(t_data *data, char **argv);
+void parser_list_init(t_data *data, char **envp);
 #endif
