@@ -3,17 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 16:46:06 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/04 17:16:53 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_LIB_H
+# define MINISHELL_LIB_H
+
+/*all includes*/
+
 # include "libft.h"
 # include "ft_printf.h"
 # include "define.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+
+/*all structures*/
+
 typedef struct s_list_arg
 {
 	struct s_list_arg *next;
@@ -36,8 +46,5 @@ void	ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new);
 t_list_arg	*ft_lst_arg_last(t_list_arg *lst);
 void    ft_lst_arg_delone(t_list_arg *lst);
 void    ft_lst_arg_clear(t_list_arg **lst);
-/*************************** INIT FUNC ***********************/
-
-/*************************** PARSING FUNC ***************/
 void parser_list_init(t_data *data, char **envp);
 #endif

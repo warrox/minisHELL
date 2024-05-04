@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
+#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/04 16:48:30 by whamdi           ###   ########.fr        #
+#    Updated: 2024/05/04 17:33:57 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ RESET   = \e[00m
 SOURCE = ./src/
 MAIN = main.c parser.c
 LST = lst_custom.c lst_custom_1.c 
-MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST))
+PROMPT = prompt.c
+MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT))
 
 SRC = $(MINISHELL)
 OBJS = $(SRC:%.c=%.o)
@@ -52,8 +53,8 @@ $(NAME): $(OBJS)
 		@echo "$(BOLD)Linking...$(RESET)"
 		@make -sC $(LIBFT_MINISHELL_PATH)
 		@make -sC $(FT_PRINTF_PATH)
-		$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
-
+		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
+		
 		@echo "\033[35m░▒▓██████████████▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓███████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
@@ -61,6 +62,8 @@ $(NAME): $(OBJS)
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓████████▓▒░▒▓████████▓▒░\033[0m"
+		
+		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
 		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
 
 %.o: %.c
