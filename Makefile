@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: whamdi <>                                  +#+  +:+       +#+         #
+#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/04 12:22:49 by whamdi           ###   ########.fr        #
+#    Updated: 2024/05/04 16:48:30 by whamdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ RESET   = \e[00m
 
 SOURCE = ./src/
 MAIN = main.c parser.c
-MINISHELL = $(addprefix $(SOURCE), $(MAIN))
+LST = lst_custom.c lst_custom_1.c 
+MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST))
 
 SRC = $(MINISHELL)
 OBJS = $(SRC:%.c=%.o)
