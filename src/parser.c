@@ -12,8 +12,8 @@
 
 #include "../includes/minishell_lib.h"
 
-void parser(char **arg, t_data *data)
+void	parser(char **arg, t_data *data)
 {
-	(void) arg;
-	(void) data;
+	(void)arg;
+	(void)data;
 }

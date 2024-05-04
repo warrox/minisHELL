@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_custom.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/05/04 18:46:52 by cyferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-
 
 void	ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new)
 {
@@ -17,35 +27,36 @@ void	ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new)
 		}
 	}
 }
-t_list_arg	*ft_lst_arg_new(t_list_arg *new,char *content)
-{
 
+t_list_arg	*ft_lst_arg_new(t_list_arg *new, char *content)
+{
 	new = (t_list_arg *)malloc(sizeof(t_list_arg));
 	if (!new)
 		return (NULL);
-	new->key_and_val = NULL_INIT;	
+	new->key_and_val = NULL_INIT;
 	new->next = NULL_INIT;
 	new->key_and_val = ft_split(content, '=');
 	return (new);
 }
-void parser_list_init(t_data *data, char **envp)
+
+void	parser_list_init(t_data *data, char **envp)
 {
-	int i;
+	int	i;
+
 	i = ZERO_INIT;
-	while(envp[i])
+	while (envp[i])
 	{
-		ft_lstadd_arg_back(&data->lst,ft_lst_arg_new(data->lst,envp[i]));
+		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, envp[i]));
 		i++;
 	}
 }
 
-void print_lst(t_list_arg *lst)
+void	print_lst(t_list_arg *lst)
 {
-	while(lst)
+	while (lst)
 	{
 		ft_printf("{Key[0] : %s}\n", lst->key_and_val[0]);
 		ft_printf("{Value[1] : %s}\n", lst->key_and_val[1]);
 		lst = lst->next;
 	}
 }
-
