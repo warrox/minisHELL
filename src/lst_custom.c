@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 18:46:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/05 09:36:12 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	parser_list_init(t_data *data, char **envp)
 	int	i;
 
 	i = ZERO_INIT;
+	data->lst = NULL;
 	while (envp[i])
 	{
 		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, envp[i]));
