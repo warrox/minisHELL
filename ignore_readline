@@ -1,0 +1,13 @@
+{
+   ignore_all_readline_leaks
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   ignore_all_ls_leaks
+   Memcheck:Leak
+   ...
+   obj:*/bin*
+}

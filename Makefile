@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/04 17:33:57 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/07 11:50:42 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ $(NAME): $(OBJS)
 		@make -sC $(LIBFT_MINISHELL_PATH)
 		@make -sC $(FT_PRINTF_PATH)
 		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
+		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
 		
 		@echo "\033[35m░▒▓██████████████▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓███████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
@@ -63,12 +64,9 @@ $(NAME): $(OBJS)
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
 		@echo "\033[35m░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓████████▓▒░▒▓████████▓▒░\033[0m"
 		
-		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
-		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
-
 %.o: %.c
 	@echo "$(BOLD)Compiling $<...$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)$@ compiled successfully!$(RESET)"
 
 clean:
@@ -84,6 +82,11 @@ fclean: clean
 	@make -s fclean -C $(FT_PRINTF_PATH)
 	$(RM) $(NAME)
 	@echo "$(GREEN)Executable cleaned successfully!$(RESET)"
+	
+leak:
+	valgrind --suppressions=ignore_readline --trace-children=yes    \
+    --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -q  \
+    ./minishell
 	
 re: fclean all
 
