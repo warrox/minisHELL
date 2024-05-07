@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <>                                  +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/06 12:21:49 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/07 10:40:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char *expansion(char *input, t_data *data)
 {
 	int i;
 	i = 0;
-	char *result;
+	char *result; 
+	result = NULL;
 	while(input[i] != '$')
 		i++;
 	i++;
