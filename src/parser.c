@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 16:47:43 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:11:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char	*search_occurence(char *input, int start, int end, t_data *data)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key_and_val[0], to_compare, ft_strlen(to_compare)))
-			return (tmp->key_and_val[1]);
+			return (free(to_compare), free(input), ft_strdup(tmp->key_and_val[1]));
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (free(to_compare), free(input), NULL);
 }
 
 char	*expansion(char *input, t_data *data, int i)
