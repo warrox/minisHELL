@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 11:34:11 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:39:07 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*expansion(char *input, t_data *data)
 	}
 	return (result);
 }
+
 char	*parser(char *input, t_data *data)
 {
 	int		i;
