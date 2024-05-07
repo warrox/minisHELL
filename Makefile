@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/07 11:50:42 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/07 14:40:13 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ RESET   = \e[00m
 SOURCE = ./src/
 MAIN = main.c parser.c
 LST = lst_custom.c lst_custom_1.c 
-PROMPT = prompt.c
+PROMPT = prompt.c prompt_utils.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT))
 
 SRC = $(MINISHELL)
