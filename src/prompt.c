@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 18:48:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:02:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	display_prompt(t_prompt *prompt, char **envp)
 			break ;
 		}
 		ft_printf("Vous avez entré: %s\n", input);
+		add_history(input);
 		free_prompt(prompt);
 		free(input);
 	}
