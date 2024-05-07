@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 18:48:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:22 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ static char	*get_usr(char **envp)
 		return (NULL);
 }
 
-int	display_prompt(t_prompt *prompt, char **envp)
+int	display_prompt(t_prompt *prompt, char **envp, t_data *data)
 {
 	char	*input;
-
 	input = NULL_INIT;
 	while (1)
 	{
@@ -66,8 +65,16 @@ int	display_prompt(t_prompt *prompt, char **envp)
 			break ;
 		}
 		ft_printf("Vous avez entré: %s\n", input);
+		input = parser(input, data);
+		ft_printf("Resultat: %s\n", input);
 		free_prompt(prompt);
 		free(input);
 	}
 	return (0);
 }
+
+/*it_data get_data()
+{
+	static t_data data;
+	return (data);
+}*/

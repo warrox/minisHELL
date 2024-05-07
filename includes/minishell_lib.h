@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <>                                  +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/06 12:21:50 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:41:57 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_LIB_H
 # define MINISHELL_LIB_H
-
-/*all includes*/
 
 # include "define.h"
 # include "ft_printf.h"
@@ -55,7 +53,7 @@ t_list_arg				*ft_lst_arg_last(t_list_arg *lst);
 void					ft_lst_arg_delone(t_list_arg *lst);
 void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
-int						display_prompt(t_prompt *prompt, char **envp);
+int						display_prompt(t_prompt *prompt, char **envp, t_data *data);
 void					free_prompt(t_prompt *prompt);
 char	*parser(char *input, t_data *data);
 #endif

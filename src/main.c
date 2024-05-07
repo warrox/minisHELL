@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 18:47:49 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:50 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	free_prompt(t_prompt *prompt)
 	free(prompt->usr_pwd);
 	free(prompt->usr_prompt);
 	free(prompt->usr_build_one);
+}
+
+void	test(t_data *data)
+{
+	print_lst(data->lst);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -33,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	parser_list_init(&data, envp);
 	// print_lst(data.lst);
-	display_prompt(&cstm_prompt, envp);
+	// exit(EXIT_FAILURE);
+	display_prompt(&cstm_prompt, envp, &data);
 	ft_lst_arg_clear(&data.lst);
+
 	return (0);
 }
