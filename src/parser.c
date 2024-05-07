@@ -6,7 +6,11 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/07 10:44:06 by whamdi           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/07 10:40:14 by whamdi           ###   ########.fr       */
+>>>>>>> bffd15727292502956ef74d48412e2edd0d2f4f0
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +44,11 @@ char *expansion(char *input, t_data *data)
 {
 	int i;
 	i = 0;
+<<<<<<< HEAD
 	char *result;
+=======
+	char *result; 
+>>>>>>> bffd15727292502956ef74d48412e2edd0d2f4f0
 	result = NULL;
 	while(input[i] != '$')
 		i++;
