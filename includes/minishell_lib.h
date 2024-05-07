@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 12:01:50 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:40:31 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "define.h"
 # include "ft_printf.h"
 # include "libft.h"
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
 
 /*all structures*/
@@ -29,6 +29,7 @@ typedef struct s_prompt
 	char				*usr_name;
 	char				*usr_pwd;
 	char				*usr_build_one;
+	char				*usr_build_two;
 	char				*usr_prompt;
 }						t_prompt;
 
@@ -44,7 +45,7 @@ typedef struct s_list_arg
 typedef struct s_data
 {
 	t_list_arg			*lst;
-	t_prompt			*cstm_prompt;
+	t_prompt			*prompt;
 
 }						t_data;
 
@@ -56,7 +57,10 @@ t_list_arg				*ft_lst_arg_last(t_list_arg *lst);
 void					ft_lst_arg_delone(t_list_arg *lst);
 void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
-int						display_prompt(t_prompt *prompt, char **envp);
-void					free_prompt(t_prompt *prompt);
-char	*parser(char *input, t_data *data);
+int						display_prompt(t_data *data);
+void					free_prompt(t_data *data);
+char					*parser(char *input, t_data *data);
+t_data					*build_user_prompt(t_data *data);
+t_data					*init_prompt(t_data *data);
+
 #endif
