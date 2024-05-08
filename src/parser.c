@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 17:11:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:35:57 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+
+void					msg_error_handler(int signal)
+{
+	if(signal == COMMAND_NOT_FOUND)
+		printf("command not found\n");
+	//add other signals in the future
+}
 
 char	*search_occurence(char *input, int start, int end, t_data *data)
 {
@@ -58,7 +65,8 @@ char	*parser(char *input, t_data *data)
 {
 	int		i;
 	char	*result;
-
+	
+	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
 	while (input[i] == ' ' || input[i] == '\t')
@@ -68,6 +76,8 @@ char	*parser(char *input, t_data *data)
 		if (input[i] == '$')
 		{
 			result = expansion(input, data, i);
+			if(result == NULL)
+				data->signal->signal = COMMAND_NOT_FOUND;
 			return (result);
 		}
 		i++;

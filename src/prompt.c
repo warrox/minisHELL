@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 17:06:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:37:52 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	free_prompt(t_data *data)
 {
@@ -21,7 +22,6 @@ void	free_prompt(t_data *data)
 	free(data->prompt->usr_build_two);
 	free(data->prompt);
 }
-
 int	display_prompt(t_data *data)
 {
 	char	*input;
@@ -38,9 +38,11 @@ int	display_prompt(t_data *data)
 			break ;
 		}
 		ft_printf("Vous avez entré: %s\n", input);
-		input = parser(input, data);
+		input = parser(input, data);	
+		if(input == NULL)
+			msg_error_handler(data->signal->signal);	
+		ft_printf("Input after : %s\n", input);
 		add_history(input);
-		ft_printf("Resultat: %s\n", input);
 		free_prompt(data);
 		free(input);
 	}
