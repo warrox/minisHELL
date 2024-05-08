@@ -6,17 +6,84 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/08 10:35:57 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:53:41 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 void					msg_error_handler(int signal)
 {
 	if(signal == COMMAND_NOT_FOUND)
-		printf("command not found\n");
+		printf("command not found\n"); // ecrire dans le stderror. 
+	if(signal == SYNTAX_ERROR)
+	{
+		printf("syntax error\n");
+	}
 	//add other signals in the future
+}
+int check_quote(char *input, int i)
+{
+	if(input[i] == '\'')
+		{
+			while(input[i] && input[i] != '\'')
+				i++;
+			if(input[i] == '\'')
+				return(1);
+		}
+		if(input[i] == '\"')
+		{
+			while(input[i] && input[i] != '\"')
+				i++;
+			if(input[i] == '\"')
+				return(1);
+		}
+	return(0);
+
+}
+int check_redir(char *input, int i, t_data *data)
+{
+	int flag;
+	flag = 0;
+	if(input[i] == '>')
+	{
+		i++;
+		while(ft_isprint(input[i])) //check if is print is a correct usage
+		{
+			if(input[i] == '$')
+				return(3);
+			if(input[i] != ' ' && input[i] != '\t')
+				flag = 1;
+			if(input[i] == '|')
+				break;
+			i++;
+		}
+	}
+	if(flag  == 1)
+		return(1);
+	data->signal->signal = SYNTAX_ERROR;
+	return(0);
+}
+int checker_err(char *input,t_data *data)
+{
+	int i;
+	int is_valid;
+	int not_valid;
+	
+	not_valid = 0;
+	is_valid = 1;
+	i = ZERO_INIT;
+	while(input[i])
+	{
+		if(check_quote(input,i))
+			return(is_valid);
+		if(check_redir(input, i,data))
+			return(is_valid);
+		i++;
+	}
+	msg_error_handler(data->signal->signal);
+	return(not_valid);
 }
 
 char	*search_occurence(char *input, int start, int end, t_data *data)
@@ -71,14 +138,14 @@ char	*parser(char *input, t_data *data)
 	i = 0;
 	while (input[i] == ' ' || input[i] == '\t')
 		i++;
+	checker_err(input,data);
 	while (input[i])
 	{
 		if (input[i] == '$')
 		{
 			result = expansion(input, data, i);
 			if(result == NULL)
-				data->signal->signal = COMMAND_NOT_FOUND;
-			return (result);
+				return (result);
 		}
 		i++;
 	}
