@@ -6,11 +6,97 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 15:05:11 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:18:25 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+
+void					msg_error_handler(int signal , t_data *data)
+{
+	if(signal == COMMAND_NOT_FOUND)
+		printf("command not found\n"); // ecrire dans le stderror. 
+	if(signal == SYNTAX_ERROR)
+	{
+		printf("syntax error\n");
+		display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
+	}
+	//add other signals in the future
+}
+int check_quote(char *input, int i,t_data *data)
+{
+	data->signal->signal = NULL_INIT;
+	int flag;
+	int flag_s;
+	flag = ZERO_INIT;
+	flag_s = ZERO_INIT;
+	while(input[i])
+	{
+		if(input[i] == '\'')
+		{
+			if(flag == 2)
+				return(1);
+			flag += 1;
+		}
+		if(input[i] == '\"')
+		{
+			if(flag_s == 2)
+				return(1);
+			flag_s += 1;
+		}
+		i++;
+	}
+	if(flag % 2 != 0 || flag_s == 1)	
+		data->signal->signal = SYNTAX_ERROR;
+	return(0);
+
+}
+
+int check_redir(char *input, int i, t_data *data)
+{	
+	int flag;
+	flag = 0;
+	if(input[i] == '>')
+	{
+		i++;
+		while(ft_isprint(input[i])) //check if is print is a correct usage
+		{
+			if(input[i] == '$')
+				return(3);
+			if(input[i] != ' ' && input[i] != '\t')
+				flag = 1;
+			if(input[i] == '|')
+				break;
+			i++;
+		}
+	}
+	else
+		return(0);
+	if(flag  == 1)
+		return(1);
+	data->signal->signal = SYNTAX_ERROR;
+	return(0);
+}
+int checker_err(char *input,t_data *data)
+{
+	int i;
+	int is_valid;
+	int not_valid;
+	
+	not_valid = 0;
+	is_valid = 1;
+	i = ZERO_INIT;
+	if(check_quote(input,i,data)) // bloc inverse cense renvoye not valid
+	{
+		return(is_valid);
+	}
+	if(check_redir(input, i,data))
+		return(is_valid);
+
+	if(data->signal->signal != NULL_INIT)	
+		msg_error_handler(data->signal->signal,data);
+	return(not_valid);
+}
 
 char	*search_occurence(char *input, int start, int end, t_data *data)
 {
@@ -58,19 +144,22 @@ char	*parser(char *input, t_data *data)
 {
 	int		i;
 	char	*result;
-
+	
+	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
 	cmd_env(data, input);
 	pwd_cmd(data, input);
 	while (input[i] == ' ' || input[i] == '\t')
 		i++;
+	checker_err(input,data);
 	while (input[i])
 	{
 		if (input[i] == '$')
 		{
 			result = expansion(input, data, i);
-			return (result);
+			if(result == NULL)
+				return (result);
 		}
 		i++;
 	}
