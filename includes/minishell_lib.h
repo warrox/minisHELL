@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/08 10:26:55 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:12:27 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void					free_prompt(t_data *data);
 char					*parser(char *input, t_data *data);
 t_data					*build_user_prompt(t_data *data);
 t_data					*init_prompt(t_data *data);
-void					msg_error_handler(int signal);
+void					msg_error_handler(int signal, t_data *data);
 
 #endif

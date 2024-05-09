@@ -6,44 +6,55 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/08 16:53:41 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:55:27 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 #include <stdio.h>
 
-void					msg_error_handler(int signal)
+void					msg_error_handler(int signal , t_data *data)
 {
 	if(signal == COMMAND_NOT_FOUND)
 		printf("command not found\n"); // ecrire dans le stderror. 
 	if(signal == SYNTAX_ERROR)
 	{
 		printf("syntax error\n");
+		display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
 	}
 	//add other signals in the future
 }
-int check_quote(char *input, int i)
+int check_quote(char *input, int i,t_data *data)
 {
-	if(input[i] == '\'')
+	data->signal->signal = NULL_INIT;
+	int flag;
+	int flag_s;
+	flag = ZERO_INIT;
+	flag_s = ZERO_INIT;
+	while(input[i])
+	{
+		if(input[i] == '\'')
 		{
-			while(input[i] && input[i] != '\'')
-				i++;
-			if(input[i] == '\'')
+			if(flag == 2)
 				return(1);
+			flag += 1;
 		}
 		if(input[i] == '\"')
 		{
-			while(input[i] && input[i] != '\"')
-				i++;
-			if(input[i] == '\"')
+			if(flag_s == 2)
 				return(1);
+			flag_s += 1;
 		}
+		i++;
+	}
+	if(flag % 2 != 0 || flag_s == 1)	
+		data->signal->signal = SYNTAX_ERROR;
 	return(0);
 
 }
+
 int check_redir(char *input, int i, t_data *data)
-{
+{	
 	int flag;
 	flag = 0;
 	if(input[i] == '>')
@@ -60,6 +71,8 @@ int check_redir(char *input, int i, t_data *data)
 			i++;
 		}
 	}
+	else
+		return(0);
 	if(flag  == 1)
 		return(1);
 	data->signal->signal = SYNTAX_ERROR;
@@ -74,15 +87,15 @@ int checker_err(char *input,t_data *data)
 	not_valid = 0;
 	is_valid = 1;
 	i = ZERO_INIT;
-	while(input[i])
+	if(check_quote(input,i,data)) // bloc inverse cense renvoye not valid
 	{
-		if(check_quote(input,i))
-			return(is_valid);
-		if(check_redir(input, i,data))
-			return(is_valid);
-		i++;
+		return(is_valid);
 	}
-	msg_error_handler(data->signal->signal);
+	if(check_redir(input, i,data))
+		return(is_valid);
+
+	if(data->signal->signal != NULL_INIT)	
+		msg_error_handler(data->signal->signal,data);
 	return(not_valid);
 }
 
