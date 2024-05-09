@@ -29,17 +29,7 @@ OBJS = ${SRCS:.c=.o}
 # Comment créer la bibliothèque statique
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
-	@echo "$(MAGENTA)     /\  \         /\  \          ___        /\__\         /\  \         /\  \    $(DEF_COLOR)"
-	@echo "$(MAGENTA)    /::\  \       /::\  \        /\  \      /::|  |        \:\  \       /::\  \   $(DEF_COLOR)"
-	@echo "$(MAGENTA)   /:/\:\  \     /:/\:\  \       \:\  \    /:|:|  |         \:\  \     /:/\:\  \  $(DEF_COLOR)"
-	@echo "$(MAGENTA)  /::\~\:\  \   /::\~\:\  \      /::\__\  /:/|:|  |__       /::\  \   /::\~\:\  \ $(DEF_COLOR)"
-	@echo "$(MAGENTA) /:/\:\ \:\__\ /:/\:\ \:\__\  __/:/\/__/ /:/ |:| /\__\     /:/\:\__\ /:/\:\ \:\__\$(DEF_COLOR)"
-	@echo "$(MAGENTA) \/__\:\/:/  / \/_|::\/:/  / /\/:/  /    \/__|:|/:/  /    /:/  \/__/ \/__\:\ \/__/$(DEF_COLOR)"
-	@echo "$(MAGENTA)      \::/  /     |:|::/  /  \::/__/         |:/:/  /    /:/  /           \:\__\  $(DEF_COLOR)"
-	@echo "$(MAGENTA)       \/__/      |:|\/__/    \:\__\         |::/  /     \/__/             \/__/  $(DEF_COLOR)"
-	@echo "$(MAGENTA)                  |:|  |       \/__/         /:/  /                               $(DEF_COLOR)"
-	@echo "$(MAGENTA)                   \|__|                     \/__/                                $(DEF_COLOR)"
-
+	
 # Règle pour créer les fichiers objets
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
