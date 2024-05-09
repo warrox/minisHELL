@@ -6,11 +6,11 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 17:06:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:19:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell_lib.h"
+#include "../../includes/minishell_lib.h"
 
 void	free_prompt(t_data *data)
 {
@@ -39,7 +39,8 @@ int	display_prompt(t_data *data)
 		}
 		ft_printf("Vous avez entré: %s\n", input);
 		input = parser(input, data);
-		add_history(input);
+		if(input != NULL)
+			add_history(input);
 		ft_printf("Resultat: %s\n", input);
 		free_prompt(data);
 		free(input);

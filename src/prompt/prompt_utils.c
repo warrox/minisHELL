@@ -6,11 +6,11 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:35:25 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 15:41:23 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:19:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell_lib.h"
+#include "../../includes/minishell_lib.h"
 
 t_data	*init_prompt(t_data *data)
 {

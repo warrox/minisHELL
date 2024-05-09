@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <>                                  +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/05 09:36:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/09 12:19:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell_lib.h"
+#include "../../includes/minishell_lib.h"
 
 void	ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new)
 {

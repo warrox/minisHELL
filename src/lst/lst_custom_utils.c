@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_custom_1.c                                     :+:      :+:    :+:   */
+/*   lst_custom_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:47:05 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/04 18:47:26 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:19:19 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell_lib.h"
+#include "../../includes/minishell_lib.h"
 
 void	ft_lst_arg_delone(t_list_arg *lst)
 {
