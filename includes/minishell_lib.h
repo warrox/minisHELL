@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/07 16:52:30 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:15:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void					free_prompt(t_data *data);
 char					*parser(char *input, t_data *data);
 t_data					*build_user_prompt(t_data *data);
 t_data					*init_prompt(t_data *data);
+void	cmd_env(t_data *data, char *input);
 
 #endif
