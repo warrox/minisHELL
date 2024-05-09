@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 15:20:15 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:49:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	display_prompt(t_data *data)
 			break ;
 		}
 		//ft_printf("Vous avez entré: %s\n", input);
-		input_cpy = parser(input, data);	
+		input_cpy = parser(input, data);
+		
 		//ft_printf("Input after : %s\n", input);
 		add_history(input);
 		free_prompt(data);

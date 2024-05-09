@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 15:21:00 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:25:35 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ t_data					*build_user_prompt(t_data *data);
 t_data					*init_prompt(t_data *data);
 void	cmd_env(t_data *data, char *input);
 void	pwd_cmd(t_data *data, char *input);
-void					msg_error_handler(int signal, t_data *data);
+void					msg_error_handler(int *signal, t_data *data);
 
 #endif

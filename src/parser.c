@@ -3,23 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 15:18:25 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:27:29 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
-void					msg_error_handler(int signal , t_data *data)
+
+t_data *init_signal(t_data *data)
 {
-	if(signal == COMMAND_NOT_FOUND)
+	data->signal = (t_signal *)malloc(sizeof(t_signal));
+	if (!data->signal)
+		return (NULL);
+	data->signal->signal = ZERO_INIT;
+	return (data);
+}
+
+void					msg_error_handler(int *signal , t_data *data)
+{
+	(void) data;
+	if(*signal == COMMAND_NOT_FOUND)
 		printf("command not found\n"); // ecrire dans le stderror. 
-	if(signal == SYNTAX_ERROR)
+	if(*signal == SYNTAX_ERROR)
 	{
 		printf("syntax error\n");
-		display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
+		//display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
 	}
 	//add other signals in the future
 }
@@ -94,7 +106,7 @@ int checker_err(char *input,t_data *data)
 		return(is_valid);
 
 	if(data->signal->signal != NULL_INIT)	
-		msg_error_handler(data->signal->signal,data);
+		msg_error_handler(&data->signal->signal,data);
 	return(not_valid);
 }
 
@@ -110,7 +122,7 @@ char	*search_occurence(char *input, int start, int end, t_data *data)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key_and_val[0], to_compare, ft_strlen(to_compare)))
-			return (free(to_compare), free(input), ft_strdup(tmp->key_and_val[1]));
+			return (free(to_compare), tmp->key_and_val[1]);
 		tmp = tmp->next;
 	}
 	return (free(to_compare), input);
@@ -137,7 +149,7 @@ char	*expansion(char *input, t_data *data, int i)
 			i++;
 		end = i;
 	}
-	return (result = search_occurence(input, start, end, data));
+		return (result = search_occurence(input, start, end, data));
 }
 
 char	*parser(char *input, t_data *data)
@@ -145,6 +157,7 @@ char	*parser(char *input, t_data *data)
 	int		i;
 	char	*result;
 	
+	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
@@ -158,11 +171,16 @@ char	*parser(char *input, t_data *data)
 		if (input[i] == '$')
 		{
 			result = expansion(input, data, i);
-			if(result == NULL)
-				return (result);
+			if(result == input)
+			{
+				//free(data->signal->signal);
+				free(data->signal);
+				return (input);	
+			}
 		}
 		i++;
 	}
+	free(data->signal);
 	return (input); // if NULL printf command not found
 						// expansion $
 						// < > << >>
