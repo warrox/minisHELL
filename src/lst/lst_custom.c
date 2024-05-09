@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 12:19:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:17:07 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	print_lst(t_list_arg *lst)
 {
 	while (lst)
 	{
-		ft_printf("{Key[0] : %s}\n", lst->key_and_val[0]);
-		ft_printf("{Value[1] : %s}\n", lst->key_and_val[1]);
+		ft_printf("%s=", lst->key_and_val[0]);
+		ft_printf("%s\n", lst->key_and_val[1]);
 		lst = lst->next;
 	}
 }
