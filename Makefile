@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/09 14:05:55 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/09 15:04:46 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SOURCE = ./src/
 MAIN = main.c parser.c
 LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c 
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
-BUILTINS = ./builtins/env.c 
+BUILTINS = ./builtins/env.c ./builtins/pwd.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS))
 
 SRC = $(MINISHELL)
