@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:06:15 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 14:13:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:45:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	cmd_env(t_data *data, char *input)
 {
-	if(ft_strncmp(input, "env", 3) == 0)
+	if(ft_strncmp(input, "env", 3) == 0 && data->lst != NULL)
 		print_lst(data->lst);
+	else
+		return;
 }
