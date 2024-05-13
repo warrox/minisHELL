@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:35:25 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 12:19:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:19:51 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static char	*get_pwd(t_data *data)
 	current = data->lst;
 	while (current && ft_strncmp("PWD", current->key_and_val[0], 3))
 		current = current->next;
+	if (!current)
+		return (NULL);
 	if (ft_strncmp("PWD", current->key_and_val[0], 3) == 0)
 		return (ft_strdup(current->key_and_val[1]));
 	else
@@ -45,6 +47,8 @@ static char	*get_usr(t_data *data)
 	current = data->lst;
 	while (current && ft_strncmp("USER", current->key_and_val[0], 4))
 		current = current->next;
+	if (!current)
+		return (NULL);
 	if (ft_strncmp("USER", current->key_and_val[0], 4) == 0)
 		return (ft_strdup(current->key_and_val[1]));
 	else
