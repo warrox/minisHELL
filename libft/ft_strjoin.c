@@ -6,21 +6,23 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:57:45 by whamdi            #+#    #+#             */
-/*   Updated: 2024/05/03 15:13:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:21:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*s3;
 	int		t_size;
 	int		i;
 	int		j;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	else if (!s2)
+		return(ft_strdup(s1));
 	t_size = ft_strlen(s1) + ft_strlen(s2);
 	i = 0;
 	j = 0;
