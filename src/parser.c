@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 17:27:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:47:55 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ char	*parser(char *input, t_data *data)
 	i = 0;
 	cmd_env(data, input);
 	pwd_cmd(data, input);
+	cmd_export(data, input);
 	while (input[i] == ' ' || input[i] == '\t')
 		i++;
 	checker_err(input,data);
