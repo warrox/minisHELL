@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:14:44 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/03 16:35:14 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/05/14 18:32:34 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 					ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c \
 					ft_memmove.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c \
 					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
-					ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_striteri.c
+					ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_striteri.c ft_strcmp.c ft_strcpy.c
 OBJS			= $(SRCS:.c=.o)
 
 BONUS			=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
