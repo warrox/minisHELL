@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/13 16:47:55 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:46:16 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	*parser(char *input, t_data *data)
 	result = NULL;
 	i = 0;
 	cmd_env(data, input);
-	pwd_cmd(data, input);
+	pwd_cmd(input);
 	cmd_export(data, input);
 	while (input[i] == ' ' || input[i] == '\t')
 		i++;
