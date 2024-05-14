@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:26:34 by whamdi            #+#    #+#             */
-/*   Updated: 2024/05/13 15:19:03 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:32:16 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+int	ft_strcmp(char *s1, char *s2);
+char	*ft_strcpy(char *dest, char *src);
 
 #endif
