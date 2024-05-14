@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:06:35 by whamdi            #+#    #+#             */
-/*   Updated: 2024/05/03 15:13:48 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/14 19:04:49 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ char	*ft_strdup(const char *source)
 {
 	int		i;
 	char	*copied_s;
-
+	
+	if(!source)
+		return (ft_strdup(""));
 	i = 0;
 	copied_s = malloc(ft_strlen(source) + 1);
 	if (!copied_s)
