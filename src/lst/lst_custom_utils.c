@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:47:05 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 12:19:19 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:40:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ void	ft_lst_arg_delone(t_list_arg *lst)
 		return ;
 	lst->next = NULL;
 	lst->prev = NULL;
-	lst->opt = NULL;
 	while (lst->key_and_val && lst->key_and_val[i])
 	{
 		free(lst->key_and_val[i]);
 		i++;
 	}
 	free(lst->key_and_val);
-	lst->val = NULL;
 	free(lst);
 }
 

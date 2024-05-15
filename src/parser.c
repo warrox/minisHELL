@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 17:27:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:54:59 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,35 +152,36 @@ char	*expansion(char *input, t_data *data, int i)
 		return (result = search_occurence(input, start, end, data));
 }
 
+
+
+
 char	*parser(char *input, t_data *data)
 {
 	int		i;
-	char	*result;
-	
+	char	*result;	
 	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
-	cmd_env(data, input);
-	pwd_cmd(data, input);
-	while (input[i] == ' ' || input[i] == '\t')
-		i++;
-	checker_err(input,data);
-	while (input[i])
-	{
-		if (input[i] == '$')
-		{
-			result = expansion(input, data, i);
-			if(result == input)
-			{
-				//free(data->signal->signal);
-				free(data->signal);
-				return (input);	
-			}
-		}
-		i++;
-	}
-	free(data->signal);
+	cmd_env(data, input); //check avec cyp if it goes in the general while loop
+	pwd_cmd(data, input);// same	
+	cutting_input(data, input);
+	//while (input[i])
+		// {
+		// 	if (input[i] == '$')
+		// 	{
+		// 		result = expansion(input, data, i);
+		// 		ft_printf("res = %s\n", result);
+		// 		if(result == input)
+		// 		{
+		// 		//free(data->signal->signal);
+		// 			free(data->signal);
+		// 			return (input);	
+		// 		}
+		// 	}
+		// 	i++;
+		// }
+
 	return (input); // if NULL printf command not found
 						// expansion $
 						// < > << >>
