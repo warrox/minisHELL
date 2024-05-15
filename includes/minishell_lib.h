@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 16:25:35 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:18:42 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_list_arg
 	struct s_list_arg	*next;
 	struct s_list_arg	*prev;
 	char				**key_and_val;
-	char				*val;
-	char				*opt;
+	char				*input_splited;
+	char				*result;
 }						t_list_arg;
 
 typedef struct s_data
@@ -51,7 +51,6 @@ typedef struct s_data
 	t_list_arg			*lst;
 	t_prompt			*prompt;
 	t_signal			*signal;
-
 }						t_data;
 
 void					print_lst(t_list_arg *lst);
@@ -70,5 +69,5 @@ t_data					*init_prompt(t_data *data);
 void	cmd_env(t_data *data, char *input);
 void	pwd_cmd(t_data *data, char *input);
 void					msg_error_handler(int *signal, t_data *data);
-
+void cutting_input(t_data *data, char *input);
 #endif
