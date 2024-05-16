@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/14 19:28:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:46:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	display_prompt(t_data *data)
 	char	*input_cpy;
 	input = NULL_INIT;
 	input_cpy = NULL_INIT;
+	
 	while (1)
 	{
 		init_prompt(data);
