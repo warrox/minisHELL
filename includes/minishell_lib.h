@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/14 13:45:54 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:04:08 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ void	cmd_env(t_data *data, char *input);
 void	pwd_cmd(char *input);
 void	cmd_export(t_data *data, char *input);
 void					msg_error_handler(int *signal, t_data *data);
+int	check_plus_egal(char *input);
+void	concat_env_var(t_data *data, char *value, char *new);
 
 #endif
