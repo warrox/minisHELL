@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/14 14:00:39 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:43:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	parser_list_init(t_data *data, char **envp)
 	data->lst = NULL;
 	while (envp[i])
 	{
+		//ft_printf("%s\n", envp[i]);
 		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, envp[i]));
 		i++;
 	}
