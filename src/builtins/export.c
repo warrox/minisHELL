@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/16 16:03:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:28:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ void cmd_export(t_data *data, char *input)
     t_list_arg *tmp = data->lst;
 	int i = 1;
 	int j = 1;
+	char *tmp_built;
 
 	if(ft_strcmp(input, "") == 0)
 		return;
-    if (ft_strcmp(input, "export") == 0 && data->lst != NULL) 
+    else if (ft_strcmp(input, "export") == 0 && data->lst != NULL) 
         print_lst_export(data->lst);
 	else
 	{
@@ -98,21 +99,34 @@ void cmd_export(t_data *data, char *input)
 				return;
 			}
 			tmp = data->lst;
-			int count = 0;
 			while(tmp)
 			{
+				tmp_built = ft_strjoin(tmp->key_and_val[0], "+");
+				if(ft_strcmp(arg[0], tmp_built) == 0 && check_plus_egal(split[j]))
+				{
+					free(tmp->key_and_val[0]);
+					tmp->key_and_val[0] = ft_strjoin(arg[0], "=");
+					concat_env_var(data, tmp->key_and_val[0], arg[1]);
+					free(tmp_built);
+					break;
+				}
+				if(ft_strcmp(arg[0], tmp->key_and_val[0]) == 0 && !check_egals(split[j]))
+				{
+					free(tmp_built);
+					break;
+				}
 				if(ft_strcmp(arg[0], tmp->key_and_val[0]) == 0 && check_egals(split[j])) 
 				{
 					set_value(data, tmp->key_and_val[0], arg[1]);
-					printf("MATCH\n");
+					free(tmp_built);
+					// printf("MATCH\n");
 					break;
 				}
+				free(tmp_built);
 				tmp = tmp->next;
-				count++;
 			}
 			if (tmp == NULL)
 			{
-				ft_printf("%s\n", split[i]);
 				ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, split[i]));
 			}
 			free_split(arg);
