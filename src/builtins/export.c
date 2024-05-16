@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/16 19:37:00 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:51:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int check_egals(char *input)
 	return (0);
 }
 
-static void free_split(char **split)
+void free_split(char **split)
 {
 	int i;
 	
