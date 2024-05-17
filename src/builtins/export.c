@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/16 19:51:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:10:36 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ static void	print_lst_export(t_list_arg *lst)
 
 void cmd_export(t_data *data, char *input) 
 {
-	char **split = NULL;
-   	char **arg = NULL;
-    t_list_arg *tmp = data->lst;
-	int i = 1;
+	char(**split) = NULL;
+   	char(**arg) = NULL;
+    t_list_arg (*tmp) = data->lst;
+	int (i) = 1;
 
 	if(ft_strcmp(input, "") == 0)
 		return;
     else if (ft_strcmp(input, "export") == 0 && data->lst != NULL) 
         print_lst_export(data->lst);
-	else
+	else if (ft_strstr(input, "export") == 1)
 	{
 		split = ft_split(input, ' ');
 		if (!split)
@@ -92,10 +92,7 @@ void cmd_export(t_data *data, char *input)
 		{
 			arg = ft_split(split[i], '=');
 			if(!arg)
-			{
-				free_split(split);
-				return;
-			}
+				return(free_split(split));
 			tmp = data->lst;
 			export_case(data, tmp, arg, split, i);
 			free_split(arg);
