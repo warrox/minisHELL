@@ -13,8 +13,7 @@
 #include "../includes/minishell_lib.h"
 #include <stdio.h>
 
-
-t_data *init_signal(t_data *data)
+t_data	*init_signal(t_data *data)
 {
 	data->signal = (t_signal *)malloc(sizeof(t_signal));
 	if (!data->signal)
@@ -23,91 +22,91 @@ t_data *init_signal(t_data *data)
 	return (data);
 }
 
-void					msg_error_handler(int *signal , t_data *data)
+void	msg_error_handler(int *signal, t_data *data)
 {
-	(void) data;
-	if(*signal == COMMAND_NOT_FOUND)
-		printf("command not found\n"); // ecrire dans le stderror. 
-	if(*signal == SYNTAX_ERROR)
+	(void)data;
+	if (*signal == COMMAND_NOT_FOUND)
+		printf("command not found\n"); // ecrire dans le stderror.
+	if (*signal == SYNTAX_ERROR)
 	{
 		printf("syntax error\n");
-		//display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
+		// display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
 	}
-	//add other signals in the future
+	// add other signals in the future
 }
-int check_quote(char *input, int i,t_data *data)
+int	check_quote(char *input, int i, t_data *data)
 {
+	int	flag;
+	int	flag_s;
+
 	data->signal->signal = NULL_INIT;
-	int flag;
-	int flag_s;
 	flag = ZERO_INIT;
 	flag_s = ZERO_INIT;
-	while(input[i])
+	while (input[i])
 	{
-		if(input[i] == '\'')
+		if (input[i] == '\'')
 		{
-			if(flag == 2)
-				return(1);
+			if (flag == 2)
+				return (1);
 			flag += 1;
 		}
-		if(input[i] == '\"')
+		if (input[i] == '\"')
 		{
-			if(flag_s == 2)
-				return(1);
+			if (flag_s == 2)
+				return (1);
 			flag_s += 1;
 		}
 		i++;
 	}
-	if(flag % 2 != 0 || flag_s == 1)	
+	if (flag % 2 != 0 || flag_s == 1)
 		data->signal->signal = SYNTAX_ERROR;
-	return(0);
-
+	return (0);
 }
 
-int check_redir(char *input, int i, t_data *data)
-{	
-	int flag;
+int	check_redir(char *input, int i, t_data *data)
+{
+	int	flag;
+
 	flag = 0;
-	if(input[i] == '>')
+	if (input[i] == '>')
 	{
 		i++;
-		while(ft_isprint(input[i])) //check if is print is a correct usage
+		while (ft_isprint(input[i])) // check if is print is a correct usage
 		{
-			if(input[i] == '$')
-				return(3);
-			if(input[i] != ' ' && input[i] != '\t')
+			if (input[i] == '$')
+				return (3);
+			if (input[i] != ' ' && input[i] != '\t')
 				flag = 1;
-			if(input[i] == '|')
-				break;
+			if (input[i] == '|')
+				break ;
 			i++;
 		}
 	}
 	else
-		return(0);
-	if(flag  == 1)
-		return(1);
+		return (0);
+	if (flag == 1)
+		return (1);
 	data->signal->signal = SYNTAX_ERROR;
-	return(0);
+	return (0);
 }
-int checker_err(char *input,t_data *data)
+int	checker_err(char *input, t_data *data)
 {
-	int i;
-	int is_valid;
-	int not_valid;
-	
+	int	i;
+	int	is_valid;
+	int	not_valid;
+
 	not_valid = 0;
 	is_valid = 1;
 	i = ZERO_INIT;
-	if(check_quote(input,i,data)) // bloc inverse cense renvoye not valid
+	if (check_quote(input, i, data)) // bloc inverse cense renvoye not valid
 	{
-		return(is_valid);
+		return (is_valid);
 	}
-	if(check_redir(input, i,data))
-		return(is_valid);
-
-	if(data->signal->signal != NULL_INIT)	
-		msg_error_handler(&data->signal->signal,data);
-	return(not_valid);
+	if (check_redir(input, i, data))
+		return (is_valid);
+	if (data->signal->signal != NULL_INIT)
+		msg_error_handler(&data->signal->signal, data);
+	return (not_valid);
 }
 
 char	*search_occurence(char *input, int start, int end, t_data *data)
@@ -149,14 +148,14 @@ char	*expansion(char *input, t_data *data, int i)
 			i++;
 		end = i;
 	}
-		return (result = search_occurence(input, start, end, data));
+	return (result = search_occurence(input, start, end, data));
 }
 
 char	*parser(char *input, t_data *data)
 {
 	int		i;
 	char	*result;
-	
+
 	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
@@ -167,32 +166,32 @@ char	*parser(char *input, t_data *data)
 	cmd_unset(data, input);
 	while (input[i] == ' ' || input[i] == '\t')
 		i++;
-	checker_err(input,data);
+	checker_err(input, data);
 	while (input[i])
 	{
 		if (input[i] == '$')
 		{
 			result = expansion(input, data, i);
-			if(result == input)
+			if (result == input)
 			{
-				//free(data->signal->signal);
+				// free(data->signal->signal);
 				free(data->signal);
-				return (input);	
+				return (input);
 			}
 		}
 		i++;
 	}
 	free(data->signal);
 	return (input); // if NULL printf command not found
-						// expansion $
-						// < > << >>
-						// ctrl c ctrl d ctrl \
+					// expansion $
+					// < > << >>
+					// ctrl c ctrl d ctrl \
 	// echo -n
-						// Cd
-						// pwd
-						// export
-						// unset
-						// env
-						// exit
-						// debug [$]> print debug > [expansion]
+					// Cd
+					// pwd
+					// export
+					// unset
+					// env
+					// exit
+					// debug [$]> print debug > [expansion]
 }

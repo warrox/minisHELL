@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:57:45 by whamdi            #+#    #+#             */
-/*   Updated: 2024/05/13 15:21:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:26:44 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*s3;
 	int		t_size;
-	int		i;
-	int		j;
 
+	int (i) = 0;
+	int (j) = 0;
 	if (!s1)
 		return (ft_strdup(s2));
 	else if (!s2)
-		return(ft_strdup(s1));
+		return (ft_strdup(s1));
 	t_size = ft_strlen(s1) + ft_strlen(s2);
-	i = 0;
-	j = 0;
 	s3 = malloc(t_size + 1);
 	if (!s3)
 		return (NULL);

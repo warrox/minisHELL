@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/16 19:51:38 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:06:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_prompt
 }						t_prompt;
 typedef struct s_signal
 {
-	int signal;
-}t_signal;
+	int					signal;
+}						t_signal;
 
 typedef struct s_list_arg
 {
@@ -51,6 +51,7 @@ typedef struct s_data
 	t_list_arg			*lst;
 	t_prompt			*prompt;
 	t_signal			*signal;
+	int					i;
 
 }						t_data;
 
@@ -67,17 +68,26 @@ void					free_prompt(t_data *data);
 char					*parser(char *input, t_data *data);
 t_data					*build_user_prompt(t_data *data);
 t_data					*init_prompt(t_data *data);
-void	cmd_env(t_data *data, char *input);
-void	pwd_cmd(char *input);
-void	cmd_export(t_data *data, char *input);
+void					cmd_env(t_data *data, char *input);
+void					pwd_cmd(char *input);
+void					cmd_export(t_data *data, char *input);
 void					msg_error_handler(int *signal, t_data *data);
-int	check_plus_egal(char *input);
-void	concat_env_var(t_data *data, char *value, char *new);
-void export_case(t_data *data, t_list_arg *tmp, char **arg, char **split, int i);
-void case_plus_egal(t_data *data, t_list_arg *tmp, char **arg, char *tmp_built);
-void	set_value(t_data *data, char *value, char *new);
-int check_egals(char *input);
-void	cmd_unset(t_data *data, char *input);
-void free_split(char **split);
+int						check_plus_egal(char *input);
+void					concat_env_var(t_data *data, char *value, char *new);
+void					export_case(t_data *data, t_list_arg *tmp, char **arg,
+							char **split);
+void					case_plus_egal(t_data *data, t_list_arg *tmp,
+							char **arg, char *tmp_built);
+void					set_value(t_data *data, char *value, char *new);
+int						check_egals(char *input);
+void					cmd_unset(t_data *data, char *input);
+void					free_split(char **split);
+void					check_export_cmd(char *input, t_data *data);
+void					print_lst_export(t_list_arg *lst);
+void					check_if_null(t_data *data, t_list_arg *tmp,
+							char **split);
+void					exec_export_case(t_data *data, t_list_arg *tmp,
+							char **split, char **arg);
+t_list_arg				*parse_key_and_val(t_list_arg *tmp);
 
 #endif

@@ -25,6 +25,5 @@ int	main(int argc, char **argv, char **envp)
 	parser_list_init(&data, envp);
 	display_prompt(&data);
 	ft_lst_arg_clear(&data.lst);
-
 	return (0);
 }

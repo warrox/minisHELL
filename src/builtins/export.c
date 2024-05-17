@@ -6,27 +6,22 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 16:10:36 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:16:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-//export sans ARGS OK
-//export avec ARGS
-//parsing des ARGS
-//export +=
-//env -i export
-
 void	set_value(t_data *data, char *value, char *new)
 {
-	t_list_arg *tmp;
+	t_list_arg	*tmp;
 
+	printf("TESTS\n");
 	tmp = data->lst;
 	while (tmp && ft_strcmp(tmp->key_and_val[0], value) != 0)
 		tmp = tmp->next;
 	if (tmp == NULL)
-		return;
+		return ;
 	else
 	{
 		free(tmp->key_and_val[1]);
@@ -34,26 +29,26 @@ void	set_value(t_data *data, char *value, char *new)
 	}
 }
 
-int check_egals(char *input)
+int	check_egals(char *input)
 {
-	int i;
+	int	i;
 
 	i = ZERO_INIT;
-	while(input[i])
+	while (input[i])
 	{
-		if(input[i] == '=')
+		if (input[i] == '=')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-	int i;
-	
+	int	i;
+
 	i = ZERO_INIT;
-	while(split[i])
+	while (split[i])
 	{
 		free(split[i]);
 		i++;
@@ -61,42 +56,40 @@ void free_split(char **split)
 	free(split);
 }
 
-static void	print_lst_export(t_list_arg *lst)
+void	print_lst_export(t_list_arg *lst)
 {
 	while (lst)
-	{   
-        ft_printf("declare -x ");
+	{
+		ft_printf("declare -x ");
 		ft_printf("%s=", lst->key_and_val[0]);
 		ft_printf("%s\n", lst->key_and_val[1]);
 		lst = lst->next;
 	}
 }
 
-void cmd_export(t_data *data, char *input) 
+void	cmd_export(t_data *data, char *input)
 {
-	char(**split) = NULL;
-   	char(**arg) = NULL;
-    t_list_arg (*tmp) = data->lst;
-	int (i) = 1;
+	char		**split;
+	char		**arg;
+	t_list_arg	*tmp;
 
-	if(ft_strcmp(input, "") == 0)
-		return;
-    else if (ft_strcmp(input, "export") == 0 && data->lst != NULL) 
-        print_lst_export(data->lst);
-	else if (ft_strstr(input, "export") == 1)
+	split = NULL_INIT;
+	arg = NULL_INIT;
+	tmp = data->lst;
+	data->i = 0;
+	check_export_cmd(input, data);
+	if (ft_strstr(input, "export") == 1)
 	{
 		split = ft_split(input, ' ');
 		if (!split)
-			return;
-		while(split[i])
+			return ;
+		while (split[data->i++])
 		{
-			arg = ft_split(split[i], '=');
-			if(!arg)
-				return(free_split(split));
+			arg = ft_split(split[data->i], '=');
+			if (!arg)
+				return (free_split(split));
 			tmp = data->lst;
-			export_case(data, tmp, arg, split, i);
-			free_split(arg);
-			i++;
+			(export_case(data, tmp, arg, split), free_split(arg));
 		}
 		free_split(split);
 	}
