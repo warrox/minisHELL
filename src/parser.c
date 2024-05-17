@@ -6,85 +6,11 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 14:19:53 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:36:50 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-#include <ctype.h>
-#include <stdio.h>
-
-
-t_data *init_signal(t_data *data)
-{
-	data->signal = (t_signal *)malloc(sizeof(t_signal));
-	if (!data->signal)
-		return (NULL);
-	data->signal->signal = ZERO_INIT;
-	return (data);
-}
-
-void					msg_error_handler(int *signal , t_data *data)
-{
-	(void) data;
-	if(*signal == COMMAND_NOT_FOUND)
-		printf("command not found\n"); // ecrire dans le stderror. 
-	if(*signal == SYNTAX_ERROR)
-	{
-		printf("syntax error\n");
-		//display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
-	}
-	//add other signals in the future
-}
-int check_if_quote_at_end(char c,char *input,int i)
-{
-	while(input[i])
-	{
-		if(input[i] == c)
-		{
-			return(1);	
-		}
-		i++;
-	}
-	return(0);
-}	
-int check_quote(char *input, int i,t_data *data)
-{
-	data->signal->signal = NULL_INIT;
-	int flag;
-	int flag_s;
-	flag = ZERO_INIT;
-	flag_s = ZERO_INIT;
-	while(input[i])
-	{
-		if(input[i] == '\'')
-		{
-			if(flag == 2)
-				return(1);
-			flag += 1;
-
-		}
-		//["]["]["]
-		if(input[i] == '\"')
-		{
-			if(flag_s == 2)
-			{
-				if (check_if_quote_at_end('\"',input,i))
-				{
-					flag_s -= 1;
-				}	
-				return(1);
-			}
-			flag_s += 1;
-		}
-		i++;
-	}
-	if(flag % 2 != 0 || flag_s == 1)	
-		data->signal->signal = SYNTAX_ERROR;
-	return(0);
-
-}
-
 int check_redir(char *input, int i, t_data *data)
 {	
 	int flag;
@@ -136,7 +62,6 @@ char	*search_occurence(char *input, int start, int end, t_data *data)
 	t_list_arg	*tmp;
 	int			i;
 	char		*to_compare;
-
 	i = 0;
 	tmp = data->lst;
 	to_compare = ft_substr(input, start, end);
@@ -170,7 +95,8 @@ char	*expansion(char *input, t_data *data, int i)
 			i++;
 		end = i;
 	}
-		return (result = search_occurence(input, start, end, data));
+	result = search_occurence(input, start, end, data);	
+	return (result);
 }
 
 
@@ -186,24 +112,24 @@ char	*parser(char *input, t_data *data)
 	i = 0;
 	cmd_env(data, input); //check avec cyp if it goes in the general while loop
 	pwd_cmd(data, input);// same	
-	//cutting_input(data, input);
-	checker_err(input, data);
-	while (input[i])
+	cutting_input(data, input);	
+	while(data->tokenizer)
+	{	
+		if (data->tokenizer->input_splited[i] == '$' && data->tokenizer->input_splited[i + 1] != '$')
 		{
-			if (input[i] == '$' && input[i + 1] != '$')
+			checker_err(data->tokenizer->input_splited, data);
+			data->tokenizer->result = expansion(data->tokenizer->input_splited, data, i);
+			if(data->tokenizer->result == data->tokenizer->input_splited)
 			{
-				//checker_err(input, data);
-				result = expansion(input, data, i);
-				ft_printf("res = %s\n", result);
-				if(result == input)
-				{
-				//free(data->signal->signal);
-					free(data->signal);
-					return (input);	
-				}
+				free(data->signal);
+				return (data->tokenizer->input_splited);	
 			}
-			i++;
+			else 
+				data->tokenizer->input_splited = data->tokenizer->result;
 		}
+		ft_printf("resx = %s\n", data->tokenizer->input_splited);
+		data->tokenizer = data->tokenizer->next;
+	}
 
 	return (input); // if NULL printf command not found
 						// expansion $

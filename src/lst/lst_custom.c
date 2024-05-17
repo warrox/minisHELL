@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 14:17:07 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:11:36 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ void	print_lst(t_list_arg *lst)
 	{
 		ft_printf("%s=", lst->key_and_val[0]);
 		ft_printf("%s\n", lst->key_and_val[1]);
+		lst = lst->next;
+	}
+}
+
+void	print_lst_token(t_list_arg *lst)
+{
+	while (lst)
+	{
+		ft_printf("input_splitted : %s\n", lst->input_splited);
 		lst = lst->next;
 	}
 }
