@@ -6,7 +6,7 @@
 #    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/14 10:42:50 by whamdi           ###   ########.fr        #
+#    Updated: 2024/05/17 17:41:34 by whamdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ GREY    = \e[38;5;254m
 RESET   = \e[00m
 
 SOURCE = ./src/
-MAIN = main.c parser.c
+MAIN = main.c parser.c parser_utils.c
 LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c 
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
-TOKENIZER = ./tokenizer/tokenizer.c
+TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER))
 
