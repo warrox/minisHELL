@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 19:06:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:00:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ typedef struct s_signal
 typedef struct s_list_arg
 {
 	struct s_list_arg	*next;
-	struct s_list_arg	*prev;
 	char				**key_and_val;
-	char				*val;
-	char				*opt;
 }						t_list_arg;
 
 typedef struct s_data

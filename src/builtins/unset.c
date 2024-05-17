@@ -6,11 +6,43 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 17:36:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:03:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+static void	free_node(t_list_arg *node)
+{
+	if (!node)
+		return ;
+	if (node->key_and_val)
+	{
+		if (node->key_and_val[0])
+			free(node->key_and_val[0]);
+		free(node->key_and_val);
+	}
+	free(node);
+}
+
+static void	unset_var(t_list_arg **head, t_list_arg *node_to_delete)
+{
+	t_list_arg	*prev;
+
+	if (!head || !node_to_delete)
+		return ;
+	if (node_to_delete == *head)
+		*head = node_to_delete->next;
+	else
+	{
+		prev = *head;
+		while (prev && prev->next != node_to_delete)
+			prev = prev->next;
+		if (prev)
+			prev->next = node_to_delete->next;
+	}
+	free_node(node_to_delete);
+}
 
 void	cmd_unset(t_data *data, char *input)
 {
@@ -18,6 +50,7 @@ void	cmd_unset(t_data *data, char *input)
 	int			i;
 	t_list_arg	*tmp;
 
+	tmp = NULL_INIT;
 	split = NULL_INIT;
 	i = 0;
 	tmp = data->lst;
@@ -30,10 +63,11 @@ void	cmd_unset(t_data *data, char *input)
 			return (free_split(split));
 		while (tmp)
 		{
-			printf("%s\n", split[i + 1]);
-			printf("%s\n", tmp->key_and_val[0]);
 			if (!ft_strcmp(split[i + 1], tmp->key_and_val[0]))
-				return (free_split(split)); // printf("OK\n");
+			{
+				unset_var(&data->lst, tmp);
+				return (free_split(split));
+			}
 			tmp = tmp->next;
 		}
 		free_split(split);

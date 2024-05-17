@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 19:24:45 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:46:04 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	exec_export_case(t_data *data, t_list_arg *tmp, char **split,
 		}
 		tmp = tmp->next;
 		free(tmp_built);
+		check_if_null(data, tmp, split);
 	}
 }
 
@@ -67,6 +68,9 @@ t_list_arg	*parse_key_and_val(t_list_arg *tmp)
 void	check_if_null(t_data *data, t_list_arg *tmp, char **split)
 {
 	if (tmp == NULL)
+	{
+		printf("HELLO\n");
 		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst,
 				split[data->i]));
+	}
 }
