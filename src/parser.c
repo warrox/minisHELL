@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 11:04:32 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/17 14:19:53 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <ctype.h>
 #include <stdio.h>
 
 
@@ -35,6 +36,18 @@ void					msg_error_handler(int *signal , t_data *data)
 	}
 	//add other signals in the future
 }
+int check_if_quote_at_end(char c,char *input,int i)
+{
+	while(input[i])
+	{
+		if(input[i] == c)
+		{
+			return(1);	
+		}
+		i++;
+	}
+	return(0);
+}	
 int check_quote(char *input, int i,t_data *data)
 {
 	data->signal->signal = NULL_INIT;
@@ -49,11 +62,19 @@ int check_quote(char *input, int i,t_data *data)
 			if(flag == 2)
 				return(1);
 			flag += 1;
+
 		}
+		//["]["]["]
 		if(input[i] == '\"')
 		{
 			if(flag_s == 2)
+			{
+				if (check_if_quote_at_end('\"',input,i))
+				{
+					flag_s -= 1;
+				}	
 				return(1);
+			}
 			flag_s += 1;
 		}
 		i++;
@@ -165,22 +186,24 @@ char	*parser(char *input, t_data *data)
 	i = 0;
 	cmd_env(data, input); //check avec cyp if it goes in the general while loop
 	pwd_cmd(data, input);// same	
-	cutting_input(data, input);
-	//while (input[i])
-		// {
-		// 	if (input[i] == '$')
-		// 	{
-		// 		result = expansion(input, data, i);
-		// 		ft_printf("res = %s\n", result);
-		// 		if(result == input)
-		// 		{
-		// 		//free(data->signal->signal);
-		// 			free(data->signal);
-		// 			return (input);	
-		// 		}
-		// 	}
-		// 	i++;
-		// }
+	//cutting_input(data, input);
+	checker_err(input, data);
+	while (input[i])
+		{
+			if (input[i] == '$' && input[i + 1] != '$')
+			{
+				//checker_err(input, data);
+				result = expansion(input, data, i);
+				ft_printf("res = %s\n", result);
+				if(result == input)
+				{
+				//free(data->signal->signal);
+					free(data->signal);
+					return (input);	
+				}
+			}
+			i++;
+		}
 
 	return (input); // if NULL printf command not found
 						// expansion $
