@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/15 16:18:42 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/17 09:41:20 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_list_arg
 typedef struct s_data
 {
 	t_list_arg			*lst;
+	t_list_arg			*tokenizer;
 	t_prompt			*prompt;
 	t_signal			*signal;
 }						t_data;

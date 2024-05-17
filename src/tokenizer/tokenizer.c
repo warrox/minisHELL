@@ -47,14 +47,16 @@ void cutting_input(t_data *data, char *input)
 
     split = ft_split(input, '|');
     if (!split)
-        return;
-
+		return;
+	
+	data->tokenizer = ft_lst_cut_new(split[i]);
+	i = 1;
     while (split[i])
     {   
         new_node = ft_lst_cut_new(split[i]);
         if (new_node)
         {
-            ft_lstadd_cut_back(&data->lst, new_node);
+            ft_lstadd_cut_back(&data->tokenizer, new_node);
         }
         i++;
     }
@@ -63,7 +65,7 @@ void cutting_input(t_data *data, char *input)
         free(split[i++]);
     free(split);
 
-    t_list_arg *tmp = data->lst;
+    t_list_arg *tmp = data->tokenizer;
     while (tmp)
     {
         ft_printf("res: %s\n", tmp->input_splited);
