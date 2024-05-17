@@ -42,9 +42,7 @@ int checker_err_pipe(char *input,t_data *data)
 	if(input[i] == '\0')
 		return(is_valid);
 	if(check_pipe(input,i,data) == 0) // bloc inverse cense renvoye not valid
-	{
 		return(is_valid);
-	}
 
 	if(data->signal->signal != NULL_INIT)	
 		msg_error_handler(&data->signal->signal,data);
