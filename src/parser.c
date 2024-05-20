@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/16 19:55:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:53:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	msg_error_handler(int *signal, t_data *data)
 	}
 	// add other signals in the future
 }
+
 int	check_quote(char *input, int i, t_data *data)
 {
 	int	flag;
@@ -89,6 +90,7 @@ int	check_redir(char *input, int i, t_data *data)
 	data->signal->signal = SYNTAX_ERROR;
 	return (0);
 }
+
 int	checker_err(char *input, t_data *data)
 {
 	int	i;
