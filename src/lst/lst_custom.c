@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 17:30:04 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:59:08 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ void	print_lst(t_list_arg *lst)
 	{
 		ft_printf("%s=", lst->key_and_val[0]);
 		ft_printf("%s\n", lst->key_and_val[1]);
+		lst = lst->next;
+	}
+}
+
+void	print_lst_token(t_list_arg *lst)
+{
+	while (lst)
+	{
+		ft_printf("input_splitted : %s\n", lst->input_splited);
 		lst = lst->next;
 	}
 }

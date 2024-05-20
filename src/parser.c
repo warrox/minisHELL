@@ -6,68 +6,15 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 15:53:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:31:44 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-#include <stdio.h>
 
-t_data	*init_signal(t_data *data)
-{
-	data->signal = (t_signal *)malloc(sizeof(t_signal));
-	if (!data->signal)
-		return (NULL);
-	data->signal->signal = ZERO_INIT;
-	return (data);
-}
-
-void	msg_error_handler(int *signal, t_data *data)
-{
-	(void)data;
-	if (*signal == COMMAND_NOT_FOUND)
-		printf("command not found\n"); // ecrire dans le stderror.
-	if (*signal == SYNTAX_ERROR)
-	{
-		printf("syntax error\n");
-		// display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
-	}
-	// add other signals in the future
-}
-
-int	check_quote(char *input, int i, t_data *data)
-{
-	int	flag;
-	int	flag_s;
-
-	data->signal->signal = NULL_INIT;
-	flag = ZERO_INIT;
-	flag_s = ZERO_INIT;
-	while (input[i])
-	{
-		if (input[i] == '\'')
-		{
-			if (flag == 2)
-				return (1);
-			flag += 1;
-		}
-		if (input[i] == '\"')
-		{
-			if (flag_s == 2)
-				return (1);
-			flag_s += 1;
-		}
-		i++;
-	}
-	if (flag % 2 != 0 || flag_s == 1)
-		data->signal->signal = SYNTAX_ERROR;
-	return (0);
-}
-
-int	check_redir(char *input, int i, t_data *data)
-{
-	int	flag;
-
+int check_redir(char *input, int i, t_data *data)
+{	
+	int flag;
 	flag = 0;
 	if (input[i] == '>')
 	{
@@ -116,7 +63,6 @@ char	*search_occurence(char *input, int start, int end, t_data *data)
 	t_list_arg	*tmp;
 	int			i;
 	char		*to_compare;
-
 	i = 0;
 	tmp = data->lst;
 	to_compare = ft_substr(input, start, end);
@@ -150,40 +96,43 @@ char	*expansion(char *input, t_data *data, int i)
 			i++;
 		end = i;
 	}
-	return (result = search_occurence(input, start, end, data));
+	result = search_occurence(input, start, end, data);	
+	return (result);
 }
 
 char	*parser(char *input, t_data *data)
 {
 	int		i;
-	char	*result;
+	char	*result;	
 
 	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
+
 	cmd_env(data, input);
 	pwd_cmd(input);
 	cmd_export(data, input);
-	cmd_unset(data, input);
-	while (input[i] == ' ' || input[i] == '\t')
-		i++;
-	checker_err(input, data);
-	while (input[i])
-	{
-		if (input[i] == '$')
+	cmd_unset(data, input);	
+	cutting_input(data, input);
+	while(data->tokenizer)
+	{	
+		if (data->tokenizer->input_splited[i] == '$' && data->tokenizer->input_splited[i + 1] != '$')
 		{
-			result = expansion(input, data, i);
-			if (result == input)
+			checker_err(data->tokenizer->input_splited, data);
+			data->tokenizer->result = expansion(data->tokenizer->input_splited, data, i);
+			if(data->tokenizer->result == data->tokenizer->input_splited)
 			{
-				// free(data->signal->signal);
 				free(data->signal);
-				return (input);
+				return (data->tokenizer->input_splited);	
 			}
+			else 
+				data->tokenizer->input_splited = data->tokenizer->result;
 		}
-		i++;
+		ft_printf("resx = %s\n", data->tokenizer->input_splited);
+		data->tokenizer = data->tokenizer->next;
 	}
-	free(data->signal);
+	// prntf("d = : %s", data->tokenizer->input_splited);
 	return (input); // if NULL printf command not found
 					// expansion $
 					// < > << >>

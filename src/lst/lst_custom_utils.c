@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:47:05 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 20:05:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:21:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_lst_arg_delone(t_list_arg *lst)
 		i++;
 	}
 	free(lst->key_and_val);
+	// free(lst->input_splited);
 	free(lst);
 }
 

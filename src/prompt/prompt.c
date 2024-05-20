@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 17:29:45 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:27:00 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_prompt(t_data *data)
 	free(data->prompt->usr_build_two);
 	free(data->prompt);
 }
+
+void	ft_clear_tokenizer(t_list_arg **tokenizer);
 
 int	display_prompt(t_data *data)
 {
@@ -38,12 +40,14 @@ int	display_prompt(t_data *data)
 		{
 			free(input);
 			free_prompt(data);
+			ft_clear_tokenizer(&data->tokenizer);
 			break ;
 		}
 		input_cpy = parser(input, data);
 		add_history(input);
 		free_prompt(data);
 		free(input);
+		ft_clear_tokenizer(&data->tokenizer);
 	}
 	return (0);
 }
