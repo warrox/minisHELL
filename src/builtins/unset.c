@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 20:03:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:04:47 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void	cmd_unset(t_data *data, char *input)
 		while (tmp)
 		{
 			if (!ft_strcmp(split[i + 1], tmp->key_and_val[0]))
-			{
-				unset_var(&data->lst, tmp);
-				return (free_split(split));
-			}
+				return (unset_var(&data->lst, tmp), free_split(split));
 			tmp = tmp->next;
 		}
 		free_split(split);
