@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/15 15:36:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/23 13:33:28 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-
 	if (argc > 1)
 	{
 		ft_printf("Too many arguments... exit the program\n");

@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/23 09:20:23 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:41:07 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char	*parser(char *input, t_data *data)
 	print_lst_token(data->tokenizer);
 	while(!data->tokenizer->cmd_and_arg)
 	{
-		ft_printf("BINM\n");
+		ft_printf("BiM\n");
 		data->tokenizer = data->tokenizer->next;
 	}
 	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 

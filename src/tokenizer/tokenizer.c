@@ -65,8 +65,12 @@ t_list_arg *create_signed(t_data *data, int i) // Tu dois preparer les redirecti
 // le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
 {
 	//if
-	//data->sign_to_exe = ft_lstnew(cmd_and_arg[1]);
-	(void) i;
+	// data->sign_to_exe = ft_lstnew(cmd_and_arg[1]);
+	(void)i;
+	char **result;
+	result = ft_split(data->tokenizer->input_splited, '>');
+
+
 	return(data->tokenizer);	
 }
 
@@ -108,7 +112,7 @@ void parse_cmd_arg(t_data *data)
 		if(tmp->redir_sign != ZERO_INIT)
 		{
 			ft_printf("NOT OK \n");
-			//create_signed(data, 0); // ici tu geres si il y'a une redirection
+			//create_signed();
 		}
 		else
 		{
