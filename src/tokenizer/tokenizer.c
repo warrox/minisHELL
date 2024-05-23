@@ -61,17 +61,23 @@ void ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
     }
 }
 
-t_list_arg *create_signed(t_data *data, int i) // Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input. 
+void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input. 
 // le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
 {
 	//if
 	// data->sign_to_exe = ft_lstnew(cmd_and_arg[1]);
-	(void)i;
 	char **result;
-	result = ft_split(data->tokenizer->input_splited, '>');
-
-
-	return(data->tokenizer);	
+	result = split_tokenizer(lst->input_splited, '>');
+	ft_printf("CATCH\n");
+	free(lst->input_splited);
+	ft_printf("NO CATCH\n");
+	ft_printf("X : %s\n",result[0]);
+	ft_printf("Y : %s\n",result[1]);
+	lst->input_splited = malloc(sizeof(char) * ft_strlen(result[0])+ ft_strlen(result[1])+ 1);
+	lst->input_splited = result[0];
+	ft_strlcat(lst->input_splited, result[1], (ft_strlen(result[0]) + ft_strlen(result[1])+ 1));
+	ft_printf("result : %s\n",lst->input_splited);
+	
 }
 
 void  tri_sign(t_data *data) // secure les if || sert a trouver les signes dans le splitted input.
@@ -108,11 +114,11 @@ void parse_cmd_arg(t_data *data)
 	while(tmp)
 	{
 		tri_sign(data);
-		// ft_printf("go\n");
 		if(tmp->redir_sign != ZERO_INIT)
 		{
 			ft_printf("NOT OK \n");
-			//create_signed();
+			create_signed(tmp);
+			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
 		}
 		else
 		{

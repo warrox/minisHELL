@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/23 10:41:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:35:28 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ char	*parser(char *input, t_data *data)
 	}
 	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 
 	print_lst_cmdarg(data->tokenizer);
+	ft_printf("sign : %d\n",data->tokenizer->redir_sign);
 	return (input); // if NULL printf command not found
 						// expansion $
 						// < > << >>
