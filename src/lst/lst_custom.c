@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 16:11:36 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:04:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ void	print_lst_token(t_list_arg *lst)
 	while (lst)
 	{
 		ft_printf("input_splitted : %s\n", lst->input_splited);
+		lst = lst->next;
+	}
+}
+void	print_lst_cmdarg(t_list_arg *lst)
+{
+	while (lst)
+	{
+		ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
+		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
+
 		lst = lst->next;
 	}
 }
