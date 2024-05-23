@@ -61,13 +61,71 @@ void ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
     }
 }
 
+t_list_arg *create_signed(t_data *data, int i) // Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input. 
+// le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
+{
+	//if
+	//data->sign_to_exe = ft_lstnew(cmd_and_arg[1]);
+	(void) i;
+	return(data->tokenizer);	
+}
+
+void  tri_sign(t_data *data) // secure les if || sert a trouver les signes dans le splitted input.
+{
+	int i = 0;
+	t_list_arg *tmp;
+	tmp = data->tokenizer;
+	while(tmp) 
+	{
+		while(tmp->input_splited[i])
+		{
+			if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
+			{
+				tmp->redir_sign = STDINS;
+			}
+			if(tmp->input_splited[i] == '>')
+			{
+				tmp->redir_sign = STDOUTS;
+			}
+			if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
+			{
+				tmp->redir_sign = HEREDOCS;
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	
+}
+void parse_cmd_arg(t_data *data)
+{
+	data->tokenizer->redir_sign = ZERO_INIT;
+	t_list_arg *tmp = data->tokenizer;
+	while(tmp)
+	{
+		tri_sign(data);
+		// ft_printf("go\n");
+		if(tmp->redir_sign != ZERO_INIT)
+		{
+			ft_printf("NOT OK \n");
+			//create_signed(data, 0); // ici tu geres si il y'a une redirection
+		}
+		else
+		{
+			ft_printf("OK\n");
+			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
+		}
+		tmp = tmp->next;
+	}
+}
+
+
 void cutting_input(t_data *data, char *input)
 {
     int i = 0;
     char **split;
     t_list_arg *new_node;
 
-	// test split[i] see if it's clean or not.
 	checker_err_pipe(input,data);
     split = ft_split(input, '|');
     if (!split)
@@ -83,15 +141,21 @@ void cutting_input(t_data *data, char *input)
         }
         i++;
     }
+	
     i = 0;
     while (split[i])
         free(split[i++]);
     free(split);
 
-    t_list_arg *tmp = data->tokenizer; // test if the list is well copied. A VIRER 
-    while (tmp)
-    {
-        tmp = tmp->next;
-    }
+	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	// print_lst_token(data->tokenizer);
 }
+
+
+// input > premier decoupage | 
+// second tour > $expand 
+// third > char **cmd_and_arg pour les commandes
+// cat > < >>
+// cat file1 > file2 > file10 > file x
+//redir =  
 

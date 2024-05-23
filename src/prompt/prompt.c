@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/09 16:49:14 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:15:33 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	display_prompt(t_data *data)
 		}
 		//ft_printf("Vous avez entré: %s\n", input);
 		input_cpy = parser(input, data);
-		
+		//ft_printf("tokenizer in prompt : %s\n",data->tokenizer->input_splited);	
 		//ft_printf("Input after : %s\n", input);
 		add_history(input);
 		free_prompt(data);
