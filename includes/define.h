@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/08 16:47:34 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/20 15:08:57 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,7 @@
 # define COMMAND_NOT_FOUND 1
 # define UNCLOSED_QUOTES 2
 # define SYNTAX_ERROR 3
+# define STDINS	4
+# define STDOUTS 5
+# define HEREDOCS 6
 #endif

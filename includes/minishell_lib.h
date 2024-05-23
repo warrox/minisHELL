@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 17:44:11 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:05:26 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,18 @@ typedef struct s_list_arg
 	struct s_list_arg	*next;
 	struct s_list_arg	*prev;
 	char				**key_and_val;
+	char				**cmd_and_arg;
 	char				*input_splited;
 	char				*result;
+	int					redir_sign;
+
 }						t_list_arg;
 
 typedef struct s_data
 {
 	t_list_arg			*lst;
 	t_list_arg			*tokenizer;
+	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
 }						t_data;
@@ -76,4 +80,7 @@ int check_quote(char *input, int i,t_data *data);
 t_data *init_signal(t_data *data);
 int checker_err_pipe(char *input,t_data *data);
 int check_pipe(char *input, int i,t_data *data);
+void  tri_sign(t_data *data);
+void parse_cmd_arg(t_data *data);
+void	print_lst_cmdarg(t_list_arg *lst);
 #endif
