@@ -83,12 +83,12 @@ void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> 
 void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
 {
 	int i = 0;
-	ft_printf("inside the string : %s\n",tmp->input_splited);
+	// ft_printf("inside the string : %s\n",tmp->input_splited);
 	while(tmp->input_splited[i])
 	{
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
-			ft_printf("FUCK]\n");
+			// ft_printf("FUCK]\n");
 			tmp->redir_sign = STDINS;
 		}
 		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>' )
@@ -97,16 +97,16 @@ void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 		}
 		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
 		{
-			ft_printf("Go A\n");
+			// ft_printf("Go A\n");
 			tmp->redir_sign = APPEND;
-			ft_printf("sign : %d\n",tmp->redir_sign);
+			// ft_printf("sign : %d\n",tmp->redir_sign);
 			i++;
 		}
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
 		{
-			ft_printf("Go B\n");
+			// ft_printf("Go B\n");
 			tmp->redir_sign = HEREDOCS;
-			ft_printf("SIGN : %d\n",tmp->redir_sign);
+			// ft_printf("SIGN : %d\n",tmp->redir_sign);
 			i++;
 		}
 		i++;
@@ -122,13 +122,13 @@ void parse_cmd_arg(t_data *data)
 		tri_sign(tmp);
 		if(tmp->redir_sign != ZERO_INIT)
 		{
-			ft_printf("NOT OK \n");
+			// ft_printf("NOT OK \n");
 			create_signed(tmp);
 			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
 		}
 		else
 		{
-			ft_printf("OK\n");
+			// ft_printf("OK\n");
 			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
 		}
 		tmp = tmp->next;
