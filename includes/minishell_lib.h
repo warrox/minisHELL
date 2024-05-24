@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 16:16:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:39:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,29 @@ void					free_prompt(t_data *data);
 char					*parser(char *input, t_data *data);
 t_data					*build_user_prompt(t_data *data);
 t_data					*init_prompt(t_data *data);
-void					cmd_env(t_data *data, char *input);
+void					cmd_env(t_data *data);
 void					pwd_cmd(t_data *data);
-void					cmd_export(t_data *data, char *input);
+void					cmd_export(t_data *data);
 void					msg_error_handler(int *signal, t_data *data);
-int						check_plus_egal(char *input);
-void					concat_env_var(t_data *data, char *value, char *new);
+int						check_plus_egal(t_data *data);
+void	concat_env_var(t_data *data, char *key, char *new);
 void					export_case(t_data *data, t_list_arg *tmp, char **arg,
 							char **split);
-void					case_plus_egal(t_data *data, t_list_arg *tmp,
-							char **arg, char *tmp_built);
-void					set_value(t_data *data, char *value, char *new);
-int						check_egals(char *input);
+void					case_plus_egal(t_data *data);
+void					set_value(t_data *data, char **split_arg);
+int						check_egals(t_data *data);
 void					cmd_unset(t_data *data, char *input);
 void					free_split(char **split);
-void					check_export_cmd(char *input, t_data *data);
+void					check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
 void					check_if_null(t_data *data, t_list_arg *tmp,
 							char **split);
 void					exec_export_case(t_data *data, t_list_arg *tmp,
 							char **split, char **arg);
 t_list_arg				*parse_key_and_val(t_list_arg *tmp);
+int	is_env_var(t_data *data, char **split_key);
+void	create_new_var(t_data *data, char *key, char *value);
+void	case_egal(t_data *data);
 
 
 void cutting_input(t_data *data, char *input);

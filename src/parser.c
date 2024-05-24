@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 16:16:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:54:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,19 +134,18 @@ char	*parser(char *input, t_data *data)
 	//tri_sign(data);
 	parse_cmd_arg(data);
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
-	cmd_env(data, input);
+	cmd_env(data);
 	pwd_cmd(data);
-	cmd_export(data, input);
+	cmd_export(data);
 	cmd_unset(data, input);	
-	print_lst_token(data->tokenizer);
-	print_lst_token(data->tokenizer);
+	//print_lst_token(data->tokenizer);
 	while(!data->tokenizer->cmd_and_arg)
 	{
 		ft_printf("BiM\n");
 		data->tokenizer = data->tokenizer->next;
 	}
 	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 
-	print_lst_cmdarg(data->tokenizer);
+	// print_lst_cmdarg(data->tokenizer);
 	// ft_printf("sign : %d\n",data->tokenizer->redir_sign);
 	return (input); // if NULL printf command not found
 					// expansion $

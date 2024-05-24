@@ -6,75 +6,43 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 15:43:30 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:56:48 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	exec_export_case(t_data *data, t_list_arg *tmp, char **split,
-		char **arg)
+void	case_egal(t_data *data)
 {
-	char	*tmp_built;
-
-	tmp_built = NULL_INIT;
-	while (tmp)
+	t_list_arg *tmp;
+	char	**split_arg;
+	
+	split_arg = NULL_INIT;
+	split_arg = ft_split(data->tokenizer->cmd_and_arg[1], '=');
+	if (!split_arg)
+		return;
+	tmp = data->lst;
+	while(tmp)
 	{
-		
-		dprintf(2, "%s\n", arg[0]);
-		tmp_built = ft_strjoin(tmp->key_and_val[0], "=");
-		dprintf(2, "%s\n", tmp_built);
-		if (ft_strcmp(arg[0], tmp->key_and_val[0]) == 0
-			&& !check_egals(split[data->i]))
-			return (free(tmp_built));
-		if (ft_strcmp(arg[0], tmp->key_and_val[0]) == 0
-			&& check_plus_egal(split[data->i]))
-		{
-			dprintf(2, "OK\n");
-			case_plus_egal(data, tmp, &arg[0], tmp_built);
-			return ;
-		}
-		if (ft_strcmp(arg[0], tmp->key_and_val[0]) == 0
-			&& check_egals(split[data->i]))
-		{
-			(set_value(data, tmp->key_and_val[0], arg[1]), free(tmp_built));
-			return ;
-		}
+		if (ft_strcmp(tmp->key_and_val[0], split_arg[0]) == 0)
+			return(set_value(data, split_arg));
 		tmp = tmp->next;
-		free(tmp_built);
-		check_if_null(data, tmp, split);
 	}
-}
-
-t_list_arg	*parse_key_and_val(t_list_arg *tmp)
-{
-	int		i;
-	int		j;
-	char	*new;
-
-	i = 0;
-	j = 0;
-	new = (char *)malloc(strlen(tmp->key_and_val[0]) + 1);
-	if (new == NULL)
-		return (NULL);
-	while (tmp->key_and_val[0][i] != '+' && tmp->key_and_val[0][i] != '\0')
-	{
-		new[j] = tmp->key_and_val[0][i];
-		i++;
-		j++;
-	}
-	new[j] = '\0';
-	strcpy(tmp->key_and_val[0], new);
-	free(new);
-	return (tmp);
-}
-
-void	check_if_null(t_data *data, t_list_arg *tmp, char **split)
-{
 	if (tmp == NULL)
+		create_new_var(data, split_arg[0], split_arg[1]);
+	free_split(split_arg);
+}
+
+int	check_plus_egal(t_data *data)
+{
+	int	i;
+
+	i = ZERO_INIT;
+	while (data->tokenizer->input_splited[i])
 	{
-		printf("HELLO\n");
-		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst,
-				split[data->i]));
+		if (data->tokenizer->input_splited[i] == '+' && data->tokenizer->input_splited[i + 1] == '=')
+			return (1);
+		i++;
 	}
+	return (0);
 }
