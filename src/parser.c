@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:54:34 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:16:29 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,8 @@ char	*parser(char *input, t_data *data)
 	result = NULL;
 	i = 0;
 	tmp = data->tokenizer;
-	cmd_env(data, input);
-	pwd_cmd(input);
-	cmd_export(data, input);
-	cmd_unset(data, input);	
 	cutting_input(data, input);// cut at pipe
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
-	print_lst_token(data->tokenizer);
 	tmp = data->tokenizer;
 	while(tmp) // $ EXPAND
 	{	
@@ -139,6 +134,11 @@ char	*parser(char *input, t_data *data)
 	//tri_sign(data);
 	parse_cmd_arg(data);
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	cmd_env(data, input);
+	pwd_cmd(data);
+	cmd_export(data, input);
+	cmd_unset(data, input);	
+	print_lst_token(data->tokenizer);
 	print_lst_token(data->tokenizer);
 	while(!data->tokenizer->cmd_and_arg)
 	{
