@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 17:18:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:48:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ typedef struct s_list_arg
 {
 	struct s_list_arg	*next;
 	char				**key_and_val;
+	char				**cmd_and_arg;
 	char				*input_splited;
 	char				*result;
+	int					redir_sign;
+
 }						t_list_arg;
 
 typedef struct s_data
 {
 	t_list_arg			*lst;
 	t_list_arg			*tokenizer;
+	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
 	int					i;
@@ -96,5 +100,7 @@ int check_quote(char *input, int i,t_data *data);
 t_data *init_signal(t_data *data);
 int checker_err_pipe(char *input,t_data *data);
 int check_pipe(char *input, int i,t_data *data);
-
+void parse_cmd_arg(t_data *data);
+void	print_lst_cmdarg(t_list_arg *lst);
+char	**split_tokenizer(char const *s, char c);
 #endif

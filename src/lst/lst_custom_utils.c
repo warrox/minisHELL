@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:47:05 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 17:21:58 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:43:08 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_lst_arg_clear(t_list_arg **lst)
 		return ;
 	while (*lst)
 	{
-		tmp = (*lst)->next;
+		tmp = (*lst)->next; 
 		ft_lst_arg_delone(*lst);
 		*(lst) = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 17:31:44 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:54:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,36 +103,51 @@ char	*expansion(char *input, t_data *data, int i)
 char	*parser(char *input, t_data *data)
 {
 	int		i;
-	char	*result;	
-
+	char	*result;
+	t_list_arg *tmp;
+	
 	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
-
+	tmp = data->tokenizer;
 	cmd_env(data, input);
 	pwd_cmd(input);
 	cmd_export(data, input);
 	cmd_unset(data, input);	
-	cutting_input(data, input);
-	while(data->tokenizer)
+	cutting_input(data, input);// cut at pipe
+	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	print_lst_token(data->tokenizer);
+	tmp = data->tokenizer;
+	while(tmp) // $ EXPAND
 	{	
-		if (data->tokenizer->input_splited[i] == '$' && data->tokenizer->input_splited[i + 1] != '$')
+		if (tmp->input_splited[i] == '$' && tmp->input_splited[i + 1] != '$')
 		{
-			checker_err(data->tokenizer->input_splited, data);
-			data->tokenizer->result = expansion(data->tokenizer->input_splited, data, i);
-			if(data->tokenizer->result == data->tokenizer->input_splited)
+			checker_err(tmp->input_splited, data);
+			tmp->result = expansion(tmp->input_splited, data, i);
+			if(tmp->result == tmp->input_splited)
 			{
 				free(data->signal);
-				return (data->tokenizer->input_splited);	
+				return (tmp->input_splited);	
 			}
 			else 
-				data->tokenizer->input_splited = data->tokenizer->result;
+				tmp->input_splited = tmp->result;
 		}
-		ft_printf("resx = %s\n", data->tokenizer->input_splited);
+		// ft_printf("resx = %s\n", tmp->input_splited);
+		tmp = tmp->next;
+	}
+	//tri_sign(data);
+	parse_cmd_arg(data);
+	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	print_lst_token(data->tokenizer);
+	while(!data->tokenizer->cmd_and_arg)
+	{
+		ft_printf("BiM\n");
 		data->tokenizer = data->tokenizer->next;
 	}
-	// prntf("d = : %s", data->tokenizer->input_splited);
+	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 
+	print_lst_cmdarg(data->tokenizer);
+	// ft_printf("sign : %d\n",data->tokenizer->redir_sign);
 	return (input); // if NULL printf command not found
 					// expansion $
 					// < > << >>

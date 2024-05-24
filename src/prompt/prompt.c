@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 17:27:00 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:36:46 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	display_prompt(t_data *data)
 			break ;
 		}
 		input_cpy = parser(input, data);
+		//ft_printf("tokenizer in prompt : %s\n",data->tokenizer->input_splited);	
+		//ft_printf("Input after : %s\n", input);
 		add_history(input);
 		free_prompt(data);
 		free(input);
