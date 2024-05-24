@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 19:43:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:01:00 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	set_value(t_data *data, char *value, char *new)
 {
 	t_list_arg	*tmp;
 
-	printf("TESTS\n");
 	tmp = data->lst;
 	while (tmp && ft_strcmp(tmp->key_and_val[0], value) != 0)
 		tmp = tmp->next;

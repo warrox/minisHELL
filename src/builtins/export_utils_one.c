@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 19:46:04 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:43:30 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ void	exec_export_case(t_data *data, t_list_arg *tmp, char **split,
 	tmp_built = NULL_INIT;
 	while (tmp)
 	{
-		tmp_built = ft_strjoin(tmp->key_and_val[0], "+");
+		
+		dprintf(2, "%s\n", arg[0]);
+		tmp_built = ft_strjoin(tmp->key_and_val[0], "=");
+		dprintf(2, "%s\n", tmp_built);
 		if (ft_strcmp(arg[0], tmp->key_and_val[0]) == 0
 			&& !check_egals(split[data->i]))
 			return (free(tmp_built));
-		if (ft_strcmp(arg[0], tmp_built) == 0
+		if (ft_strcmp(arg[0], tmp->key_and_val[0]) == 0
 			&& check_plus_egal(split[data->i]))
 		{
+			dprintf(2, "OK\n");
 			case_plus_egal(data, tmp, &arg[0], tmp_built);
 			return ;
 		}
