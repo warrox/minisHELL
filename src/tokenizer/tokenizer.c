@@ -64,46 +64,48 @@ void ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input. 
 // le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
 {
-	//if
-	// data->sign_to_exe = ft_lstnew(cmd_and_arg[1]);
 	char **result;
-	result = split_tokenizer(lst->input_splited, '>');
-	ft_printf("CATCH\n");
+	if (lst->redir_sign == STDOUTS)
+		result = split_tokenizer(lst->input_splited, '>');
+	if (lst->redir_sign == STDINS)
+		result = split_tokenizer(lst->input_splited, '<');
+	if (lst->redir_sign == HEREDOCS)
+		result = split_tokenizer(lst->input_splited, '<');
+	if (lst->redir_sign == APPEND)
+		result = split_tokenizer(lst->input_splited, '>');
 	free(lst->input_splited);
-	ft_printf("NO CATCH\n");
-	ft_printf("X : %s\n",result[0]);
-	ft_printf("Y : %s\n",result[1]);
 	lst->input_splited = malloc(sizeof(char) * ft_strlen(result[0])+ ft_strlen(result[1])+ 1);
 	lst->input_splited = result[0];
 	ft_strlcat(lst->input_splited, result[1], (ft_strlen(result[0]) + ft_strlen(result[1])+ 1));
-	ft_printf("result : %s\n",lst->input_splited);
 	
 }
 
-void  tri_sign(t_data *data) // secure les if || sert a trouver les signes dans le splitted input.
+void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
 {
 	int i = 0;
-	t_list_arg *tmp;
-	tmp = data->tokenizer;
-	while(tmp) 
+	ft_printf("inside the string : %s\n",tmp->input_splited);
+	while(tmp->input_splited[i])
 	{
-		while(tmp->input_splited[i])
+		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
-			if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
-			{
-				tmp->redir_sign = STDINS;
-			}
-			if(tmp->input_splited[i] == '>')
-			{
-				tmp->redir_sign = STDOUTS;
-			}
-			if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
-			{
-				tmp->redir_sign = HEREDOCS;
-			}
-			i++;
+			tmp->redir_sign = STDINS;
 		}
-		tmp = tmp->next;
+		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>' )
+		{
+			tmp->redir_sign = STDOUTS;
+		}
+		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
+		{
+			ft_printf("Go A\n");
+			tmp->redir_sign = APPEND;
+		}
+		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
+		{
+			ft_printf("Go B\n");
+			tmp->redir_sign = HEREDOCS;
+			ft_printf("SIGN : %d\n",tmp->redir_sign);
+		}
+		i++;
 	}
 	
 }
@@ -113,7 +115,7 @@ void parse_cmd_arg(t_data *data)
 	t_list_arg *tmp = data->tokenizer;
 	while(tmp)
 	{
-		tri_sign(data);
+		tri_sign(tmp);
 		if(tmp->redir_sign != ZERO_INIT)
 		{
 			ft_printf("NOT OK \n");

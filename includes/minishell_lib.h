@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/23 12:54:26 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:38:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int check_quote(char *input, int i,t_data *data);
 t_data *init_signal(t_data *data);
 int checker_err_pipe(char *input,t_data *data);
 int check_pipe(char *input, int i,t_data *data);
-void  tri_sign(t_data *data);
+void  tri_sign(t_list_arg *tmp);
 void parse_cmd_arg(t_data *data);
 void	print_lst_cmdarg(t_list_arg *lst);
 char	**split_tokenizer(char const *s, char c);

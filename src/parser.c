@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/23 15:35:28 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:35:56 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	*parser(char *input, t_data *data)
 	cmd_env(data, input);
 	pwd_cmd(data, input);	
 	cutting_input(data, input);// cut at pipe
-	ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
 	print_lst_token(data->tokenizer);
 	tmp = data->tokenizer;
 	while(tmp) // $ EXPAND
@@ -132,12 +132,12 @@ char	*parser(char *input, t_data *data)
 			else 
 				tmp->input_splited = tmp->result;
 		}
-		ft_printf("resx = %s\n", tmp->input_splited);
+		// ft_printf("resx = %s\n", tmp->input_splited);
 		tmp = tmp->next;
 	}
-	tri_sign(data);
+	//tri_sign(data);
 	parse_cmd_arg(data);
-	ft_printf("data->tokenizer = %p\n", data->tokenizer);
+	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
 	print_lst_token(data->tokenizer);
 	while(!data->tokenizer->cmd_and_arg)
 	{
@@ -146,7 +146,7 @@ char	*parser(char *input, t_data *data)
 	}
 	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 
 	print_lst_cmdarg(data->tokenizer);
-	ft_printf("sign : %d\n",data->tokenizer->redir_sign);
+	// ft_printf("sign : %d\n",data->tokenizer->redir_sign);
 	return (input); // if NULL printf command not found
 						// expansion $
 						// < > << >>
