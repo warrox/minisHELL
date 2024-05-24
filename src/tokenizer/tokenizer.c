@@ -88,6 +88,7 @@ void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 	{
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
+			ft_printf("FUCK]\n");
 			tmp->redir_sign = STDINS;
 		}
 		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>' )
@@ -98,12 +99,15 @@ void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 		{
 			ft_printf("Go A\n");
 			tmp->redir_sign = APPEND;
+			ft_printf("sign : %d\n",tmp->redir_sign);
+			i++;
 		}
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
 		{
 			ft_printf("Go B\n");
 			tmp->redir_sign = HEREDOCS;
 			ft_printf("SIGN : %d\n",tmp->redir_sign);
+			i++;
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/21 17:04:23 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:51:12 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_lst_cmdarg(t_list_arg *lst)
 	{
 		ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
 		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
-
+		ft_printf("Sign : %d\n",lst->redir_sign);
 		lst = lst->next;
 	}
 }
