@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 16:19:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:56:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void					print_lst_token(t_list_arg *lst);
 
 /**[BUILTINS FUNCTIONS]**/
 
+void	is_a_builtin(t_data *data);
 void					cmd_unset(t_data *data);
 void					case_egal(t_data *data);
 void					cmd_env(t_data *data);
@@ -77,10 +78,13 @@ int						check_plus_egal(t_data *data);
 t_data					*build_user_prompt(t_data *data);
 void					concat_env_var(t_data *data, char *key, char *new);
 int						check_egals(t_data *data);
-void					check_export_cmd(t_data *data);
+int					check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
 int						is_env_var(t_data *data, char **split_key);
 void					create_new_var(t_data *data, char *key, char *value);
+void	cmd_echo(t_data *data);
+int	check_echo_cmd(t_data *data);
+void	print_echo(t_data *data);
 
 /**[PROMPT FUNCTIONS]**/
 
