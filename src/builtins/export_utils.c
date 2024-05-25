@@ -48,7 +48,7 @@ int	check_export_cmd(t_data *data)
 		&& data->lst != NULL)
 	{
 		print_lst_export(data->lst);
-		return(1);	
+		return (1);
 	}
 	return (0);
 }
