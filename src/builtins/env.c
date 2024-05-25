@@ -14,7 +14,8 @@
 
 void	cmd_env(t_data *data)
 {
-	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "env", 3) == 0 && data->lst != NULL)
+	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "env", 3) == 0
+		&& data->lst != NULL)
 		print_lst(data->lst);
 	else
 		return ;

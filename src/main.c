@@ -14,9 +14,11 @@
 
 void	ft_clear_tokenizer(t_list_arg **tokenizer)
 {
-	t_list_arg *current = *tokenizer;
-	t_list_arg *next = *tokenizer;
+	t_list_arg	*current;
+	t_list_arg	*next;
 
+	current = *tokenizer;
+	next = *tokenizer;
 	while (next != NULL)
 	{
 		free(current->input_splited);
@@ -26,17 +28,17 @@ void	ft_clear_tokenizer(t_list_arg **tokenizer)
 	}
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+
 	if (argc > 1)
 	{
 		ft_printf("Too many arguments... exit the program\n");
 		exit(EXIT_FAILURE);
 	}
 	(void)argv;
-	parser_list_init(&data, envp);	
+	parser_list_init(&data, envp);
 	display_prompt(&data);
 	free(data.signal);
 	ft_lst_arg_clear(&data.lst);

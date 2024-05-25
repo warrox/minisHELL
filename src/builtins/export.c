@@ -69,14 +69,14 @@ void	print_lst_export(t_list_arg *lst)
 void	cmd_export(t_data *data)
 {
 	check_export_cmd(data);
-	if(check_plus_egal(data))
+	if (check_plus_egal(data))
 	{
 		case_plus_egal(data);
-		return;
+		return ;
 	}
-	if(check_egals(data))
+	if (check_egals(data))
 	{
 		case_egal(data);
-		return;
+		return ;
 	}
 }

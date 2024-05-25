@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 15:24:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:19:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,42 @@ typedef struct s_data
 	int					i;
 }						t_data;
 
+/**[PRINT FUNCTIONS]**/
+
 void					print_lst(t_list_arg *lst);
+void					print_lst_cmdarg(t_list_arg *lst);
+void					print_lst_token(t_list_arg *lst);
+
+/**[BUILTINS FUNCTIONS]**/
+
+void					cmd_unset(t_data *data);
+void					case_egal(t_data *data);
+void					cmd_env(t_data *data);
+void					pwd_cmd(t_data *data);
+void					cmd_export(t_data *data);
+void					case_plus_egal(t_data *data);
+void					set_value(t_data *data, char **split_arg);
+int						check_plus_egal(t_data *data);
+t_data					*build_user_prompt(t_data *data);
+void					concat_env_var(t_data *data, char *key, char *new);
+int						check_egals(t_data *data);
+void					check_export_cmd(t_data *data);
+void					print_lst_export(t_list_arg *lst);
+int						is_env_var(t_data *data, char **split_key);
+void					create_new_var(t_data *data, char *key, char *value);
+
+/**[PROMPT FUNCTIONS]**/
+
+int						display_prompt(t_data *data);
+t_data					*init_prompt(t_data *data);
+void					free_prompt(t_data *data);
+
+/**[UTILS FUNCTIONS]**/
+
+void					free_split(char **split);
+
+/**[				]**/
+
 void					parser_list_init(t_data *data, char **envp);
 t_list_arg				*ft_lst_arg_new(t_list_arg *new, char *content);
 void					ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new);
@@ -66,43 +101,14 @@ t_list_arg				*ft_lst_arg_last(t_list_arg *lst);
 void					ft_lst_arg_delone(t_list_arg *lst);
 void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
-int						display_prompt(t_data *data);
-void					free_prompt(t_data *data);
 char					*parser(char *input, t_data *data);
-t_data					*build_user_prompt(t_data *data);
-t_data					*init_prompt(t_data *data);
-void					cmd_env(t_data *data);
-void					pwd_cmd(t_data *data);
-void					cmd_export(t_data *data);
 void					msg_error_handler(int *signal, t_data *data);
-int						check_plus_egal(t_data *data);
-void	concat_env_var(t_data *data, char *key, char *new);
-void					export_case(t_data *data, t_list_arg *tmp, char **arg,
-							char **split);
-void					case_plus_egal(t_data *data);
-void					set_value(t_data *data, char **split_arg);
-int						check_egals(t_data *data);
-void					cmd_unset(t_data *data);
-void					free_split(char **split);
-void					check_export_cmd(t_data *data);
-void					print_lst_export(t_list_arg *lst);
-void					check_if_null(t_data *data, t_list_arg *tmp,
-							char **split);
-void					exec_export_case(t_data *data, t_list_arg *tmp,
-							char **split, char **arg);
-t_list_arg				*parse_key_and_val(t_list_arg *tmp);
-int	is_env_var(t_data *data, char **split_key);
-void	create_new_var(t_data *data, char *key, char *value);
-void	case_egal(t_data *data);
+void					cutting_input(t_data *data, char *input);
+int						check_quote(char *input, int i, t_data *data);
+t_data					*init_signal(t_data *data);
+int						checker_err_pipe(char *input, t_data *data);
+int						check_pipe(char *input, int i, t_data *data);
+void					parse_cmd_arg(t_data *data);
+char					**split_tokenizer(char const *s, char c);
 
-
-void cutting_input(t_data *data, char *input);
-void	print_lst_token(t_list_arg *lst);
-int check_quote(char *input, int i,t_data *data);
-t_data *init_signal(t_data *data);
-int checker_err_pipe(char *input,t_data *data);
-int check_pipe(char *input, int i,t_data *data);
-void parse_cmd_arg(t_data *data);
-void	print_lst_cmdarg(t_list_arg *lst);
-char	**split_tokenizer(char const *s, char c);
 #endif

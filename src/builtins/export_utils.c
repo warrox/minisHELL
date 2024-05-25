@@ -16,8 +16,8 @@ void	create_new_var(t_data *data, char *key, char *value)
 {
 	char	*build_var;
 	char	*final_var;
-	int i;
-	
+	int		i;
+
 	i = ZERO_INIT;
 	build_var = NULL_INIT;
 	final_var = NULL_INIT;
@@ -30,12 +30,12 @@ void	create_new_var(t_data *data, char *key, char *value)
 
 int	is_env_var(t_data *data, char **split_key)
 {
-	t_list_arg *tmp;
+	t_list_arg	*tmp;
 
 	tmp = data->lst;
-	while(tmp)
+	while (tmp)
 	{
-		if(ft_strcmp(tmp->key_and_val[0], split_key[0]) == 0)
+		if (ft_strcmp(tmp->key_and_val[0], split_key[0]) == 0)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -44,18 +44,19 @@ int	is_env_var(t_data *data, char **split_key)
 
 void	check_export_cmd(t_data *data)
 {
-	if (ft_strcmp(data->tokenizer->input_splited, "export") == 0 && data->lst != NULL)
+	if (ft_strcmp(data->tokenizer->input_splited, "export") == 0
+		&& data->lst != NULL)
 		print_lst_export(data->lst);
 }
 
 void	concat_env_var(t_data *data, char *key, char *new)
 {
 	t_list_arg	*tmp;
-	char	*new_value;
-	
+	char		*new_value;
+
 	new_value = NULL_INIT;
 	tmp = data->lst;
-	while(tmp && ft_strcmp(tmp->key_and_val[0], key) != 0)
+	while (tmp && ft_strcmp(tmp->key_and_val[0], key) != 0)
 		tmp = tmp->next;
 	new_value = ft_strjoin(tmp->key_and_val[1], new);
 	free(tmp->key_and_val[1]);
@@ -66,19 +67,19 @@ void	case_plus_egal(t_data *data)
 {
 	char	**split_key;
 	char	**split_value;
-	
+
 	split_key = NULL_INIT;
 	split_value = NULL_INIT;
 	split_key = ft_split(data->tokenizer->cmd_and_arg[1], '+');
 	if (!split_key)
-		return;
+		return ;
 	split_value = ft_split(data->tokenizer->cmd_and_arg[1], '=');
 	if (!split_value)
-		return;
+		return ;
 	dprintf(2, "%s\n", data->tokenizer->cmd_and_arg[1]);
 	dprintf(2, "%s\n", split_key[0]);
 	dprintf(2, "%s\n", split_value[1]);
-	if(is_env_var(data, split_key))
+	if (is_env_var(data, split_key))
 		concat_env_var(data, split_key[0], split_value[1]);
 	else
 		create_new_var(data, split_key[0], split_value[1]);

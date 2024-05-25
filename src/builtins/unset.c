@@ -50,16 +50,18 @@ void	cmd_unset(t_data *data)
 
 	tmp = NULL_INIT;
 	tmp = data->lst;
-	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "unset", 5) == 0 && data->lst != NULL)
+	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "unset", 5) == 0
+		&& data->lst != NULL)
 	{
 		if (!data->tokenizer->cmd_and_arg[1])
-			return;
+			return ;
 		while (tmp)
 		{
-			if(ft_strcmp(data->tokenizer->cmd_and_arg[1], tmp->key_and_val[0]) == 0)
+			if (ft_strcmp(data->tokenizer->cmd_and_arg[1],
+					tmp->key_and_val[0]) == 0)
 			{
 				unset_var(&data->lst, tmp);
-				return;
+				return ;
 			}
 			tmp = tmp->next;
 		}
