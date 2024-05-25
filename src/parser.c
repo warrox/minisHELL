@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 15:45:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:30:23 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,7 @@ char	*parser(char *input, t_data *data)
 	// tri_sign(data);
 	parse_cmd_arg(data);
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
-	cmd_env(data);
-	pwd_cmd(data);
-	cmd_export(data);
-	cmd_unset(data);
+	is_a_builtin(data);
 	// print_lst_token(da ta->tokenizer);
 	while (!data->tokenizer->cmd_and_arg)
 	{
