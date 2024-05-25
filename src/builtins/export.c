@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 18:40:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:43:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	print_lst_export(t_list_arg *lst)
 
 void	cmd_export(t_data *data)
 {
-	check_export_cmd(data);
+	if(check_export_cmd(data))
+		return;
 	if (check_plus_egal(data))
 	{
 		case_plus_egal(data);

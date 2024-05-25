@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 18:41:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:43:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ int	is_env_var(t_data *data, char **split_key)
 	return (0);
 }
 
-void	check_export_cmd(t_data *data)
+int	check_export_cmd(t_data *data)
 {
 	if (ft_strcmp(data->tokenizer->input_splited, "export") == 0
 		&& data->lst != NULL)
+	{
 		print_lst_export(data->lst);
+		return(1);	
+	}
+	return (0);
 }
 
 void	concat_env_var(t_data *data, char *key, char *new)
