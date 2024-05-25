@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/20 13:04:47 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:42:47 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,24 @@ static void	unset_var(t_list_arg **head, t_list_arg *node_to_delete)
 	free_node(node_to_delete);
 }
 
-void	cmd_unset(t_data *data, char *input)
+void	cmd_unset(t_data *data)
 {
-	char		**split;
-	int			i;
 	t_list_arg	*tmp;
 
 	tmp = NULL_INIT;
-	split = NULL_INIT;
-	i = 0;
 	tmp = data->lst;
-	if (ft_strncmp(input, "unset", 5) == 0 && data->lst != NULL)
+	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "unset", 5) == 0 && data->lst != NULL)
 	{
-		split = ft_split(input, ' ');
-		if (!split)
-			return ;
-		if (split[i + 1] == NULL)
-			return (free_split(split));
+		if (!data->tokenizer->cmd_and_arg[1])
+			return;
 		while (tmp)
 		{
-			if (!ft_strcmp(split[i + 1], tmp->key_and_val[0]))
-				return (unset_var(&data->lst, tmp), free_split(split));
+			if(ft_strcmp(data->tokenizer->cmd_and_arg[1], tmp->key_and_val[0]) == 0)
+			{
+				unset_var(&data->lst, tmp);
+				return;
+			}
 			tmp = tmp->next;
 		}
-		free_split(split);
 	}
 }
