@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 18:39:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:24:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void					export_case(t_data *data, t_list_arg *tmp, char **arg,
 void					case_plus_egal(t_data *data);
 void					set_value(t_data *data, char **split_arg);
 int						check_egals(t_data *data);
-void					cmd_unset(t_data *data, char *input);
+void					cmd_unset(t_data *data);
 void					free_split(char **split);
 void					check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
