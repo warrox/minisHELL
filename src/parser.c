@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 11:35:56 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/25 12:41:49 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,12 @@ char	*parser(char *input, t_data *data)
 	//tri_sign(data);
 	parse_cmd_arg(data);
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
-	print_lst_token(data->tokenizer);
-	while(!data->tokenizer->cmd_and_arg)
-	{
-		ft_printf("BiM\n");
-		data->tokenizer = data->tokenizer->next;
-	}
+	// print_lst_token(data->tokenizer);
+	// while(!data->tokenizer->cmd_and_arg)
+	// {
+	// 	ft_printf("BiM\n");
+	// 	data->tokenizer = data->tokenizer->next;
+	// }
 	//ft_printf("cmd[0] : %s\n",data->tokenizer->cmd_and_arg[0]); 
 	print_lst_cmdarg(data->tokenizer);
 	// ft_printf("sign : %d\n",data->tokenizer->redir_sign);

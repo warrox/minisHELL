@@ -22,22 +22,20 @@ char	*ft_strdup_cust(const char *source)
 // ------------------------------------
 
 
-int count_sign(t_list_arg *lst)
+int count_sign(char *input)
 {
-	int i; 
 	int count;
-	i = 0;
+	int i;
 	count = 0;
-	t_list_arg *tmp;
-	tmp = lst;
-	while(tmp->input_splited)
+	i = 0;
+	while(input[i])
 	{
-		if(tmp->input_splited[i] == '<' || tmp->input_splited[i] == '>')
+		if(input[i] == '<' || input[i] == '>')
 			count++;
-		if((tmp->input_splited[i + 1] == '<' && tmp->input_splited[i] == '<') || (tmp->input_splited[i + 1] == '>' && tmp->input_splited[i] == '>' ))
+		if((input[i] == '<' && input[i + 1] == '<') || (input[i] == '>' && input[i + 1] == '>'))
 			count -= 1;
 		i++;
-	}
+	}	
 	return(count);
 }
 t_list_arg *ft_lst_cut_new(char *content)
@@ -104,10 +102,14 @@ void  sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes d
 {
 	int i = 0;
 	int index = 0;
+	int count = 0;
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
+	count += count_sign(tmp->input_splited);
+	// ft_printf("valeur de count sign : %d\n",count);
+	tmp->array_sign = malloc(sizeof(int)* count) ;
+	i = 0;
 	while(tmp->input_splited[i])
 	{
-		tmp->array_sign = malloc(sizeof(int)* count_sign(tmp));
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
 			tmp->redir_sign = STDINS;

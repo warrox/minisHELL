@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 11:51:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/25 12:45:58 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,22 @@ void	print_lst_token(t_list_arg *lst)
 }
 void	print_lst_cmdarg(t_list_arg *lst)
 {
+	int i = 0;
 	while (lst)
 	{
 		ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
-		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
-		ft_printf("Sign : %d\n",lst->redir_sign);
+		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);	
+		i = 0;
+		if(lst->array_sign)
+		{
+			ft_printf("----Array Signs----\n");
+			while(lst->array_sign[i])
+			{
+				ft_printf("[%d]\n",lst->array_sign[i]);
+				i++;
+			}
+
+		}
 		lst = lst->next;
 	}
 }
