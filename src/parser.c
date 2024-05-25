@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 18:54:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:45:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ char	*parser(char *input, t_data *data)
 	cmd_env(data);
 	pwd_cmd(data);
 	cmd_export(data);
-	cmd_unset(data, input);	
-	//print_lst_token(data->tokenizer);
+	cmd_unset(data);	
+	//print_lst_token(da ta->tokenizer);
 	while(!data->tokenizer->cmd_and_arg)
 	{
 		ft_printf("BiM\n");
