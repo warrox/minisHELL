@@ -151,12 +151,12 @@ void parse_cmd_arg(t_data *data)
 		{
 			// ft_printf("NOT OK \n");
 			create_signed(tmp);
-			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
+			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
 		}
 		else
 		{
 			// ft_printf("OK\n");
-			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
+			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
 		}
 		tmp = tmp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 13:11:54 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/26 10:57:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void  sort_sign(t_list_arg *tmp);
 void parse_cmd_arg(t_data *data);
 void	print_lst_cmdarg(t_list_arg *lst);
 char	**split_tokenizer(char const *s, char c);
-
 #endif
