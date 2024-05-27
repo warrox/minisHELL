@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:48:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:04:25 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_list_arg
 	char				*input_splited;
 	char				*result;
 	int					redir_sign;
+	int					*array_sign;
 
 }						t_list_arg;
 
@@ -100,6 +101,7 @@ int check_quote(char *input, int i,t_data *data);
 t_data *init_signal(t_data *data);
 int checker_err_pipe(char *input,t_data *data);
 int check_pipe(char *input, int i,t_data *data);
+void  sort_sign(t_list_arg *tmp);
 void parse_cmd_arg(t_data *data);
 void	print_lst_cmdarg(t_list_arg *lst);
 char	**split_tokenizer(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:44:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:04:51 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,22 @@ void	print_lst_token(t_list_arg *lst)
 }
 void	print_lst_cmdarg(t_list_arg *lst)
 {
+	int i = 0;
 	while (lst)
 	{
 		ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
-		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
-		ft_printf("Sign : %d\n",lst->redir_sign);
+		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);	
+		i = 0;
+		if(lst->array_sign)
+		{
+			ft_printf("----Array Signs----\n");
+			while(lst->array_sign[i])
+			{
+				ft_printf("[%d]\n",lst->array_sign[i]);
+				i++;
+			}
+
+		}
 		lst = lst->next;
 	}
 }

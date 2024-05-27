@@ -33,6 +33,24 @@ char	*ft_strdup_cust(const char *source)
 	return (copied_s);
 }
 // ------------------------------------
+
+
+int count_sign(char *input)
+{
+	int count;
+	int i;
+	count = 0;
+	i = 0;
+	while(input[i])
+	{
+		if(input[i] == '<' || input[i] == '>')
+			count++;
+		if((input[i] == '<' && input[i + 1] == '<') || (input[i] == '>' && input[i + 1] == '>'))
+			count -= 1;
+		i++;
+	}	
+	return(count);
+}
 t_list_arg *ft_lst_cut_new(char *content)
 {
     t_list_arg *new_node = (t_list_arg *)malloc(sizeof(t_list_arg));
@@ -93,33 +111,42 @@ void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> 
 	
 }
 
-void  tri_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
+void  sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
 {
 	int i = 0;
+	int index = 0;
+	int count = 0;
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
+	count += count_sign(tmp->input_splited);
+	// ft_printf("valeur de count sign : %d\n",count);
+	tmp->array_sign = malloc(sizeof(int)* count) ;
+	i = 0;
 	while(tmp->input_splited[i])
 	{
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
-			// ft_printf("FUCK]\n");
 			tmp->redir_sign = STDINS;
+			tmp->array_sign[index] = tmp->redir_sign;
+			index++;
 		}
 		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>' )
 		{
 			tmp->redir_sign = STDOUTS;
+			tmp->array_sign[index] = tmp->redir_sign;
+			index++;
 		}
 		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
 		{
-			// ft_printf("Go A\n");
 			tmp->redir_sign = APPEND;
-			// ft_printf("sign : %d\n",tmp->redir_sign);
+			tmp->array_sign[index] = tmp->redir_sign;
+			index++;
 			i++;
 		}
 		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
 		{
-			// ft_printf("Go B\n");
 			tmp->redir_sign = HEREDOCS;
-			// ft_printf("SIGN : %d\n",tmp->redir_sign);
+			tmp->array_sign[index] = tmp->redir_sign;
+			index++;
 			i++;
 		}
 		i++;
@@ -132,17 +159,17 @@ void parse_cmd_arg(t_data *data)
 	t_list_arg *tmp = data->tokenizer;
 	while(tmp)
 	{
-		tri_sign(tmp);
+		sort_sign(tmp);
 		if(tmp->redir_sign != ZERO_INIT)
 		{
 			// ft_printf("NOT OK \n");
 			create_signed(tmp);
-			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
+			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
 		}
 		else
 		{
 			// ft_printf("OK\n");
-			tmp->cmd_and_arg = ft_split(tmp->input_splited, ' ');
+			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
 		}
 		tmp = tmp->next;
 	}
