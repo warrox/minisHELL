@@ -76,6 +76,7 @@ void	cutting_input(t_data *data, char *input)
 		return ;
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
+	data->is_init = 1;
 	while (split[i])
 	{
 		new_node = ft_lst_cut_new(split[i]);

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 10:17:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:24:19 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
 	count += count_sign(tmp->input_splited);
 	// ft_printf("valeur de count sign : %d\n",count);
-	tmp->array_sign = malloc(sizeof(int) * count);
 	i = 0;
+	tmp->array_sign = malloc(sizeof(int) * count);
 	while (tmp->input_splited[i])
 	{
 		if (tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
@@ -192,6 +192,7 @@ void	cutting_input(t_data *data, char *input)
 		return ;
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
+	data->is_init = 1;
 	while (split[i])
 	{
 		new_node = ft_lst_cut_new(split[i]);

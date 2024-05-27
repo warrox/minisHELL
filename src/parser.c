@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 10:12:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:18:54 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,13 @@ char	*parser(char *input, t_data *data)
 	char		*result;
 	t_list_arg	*tmp;
 
+	if (*input == '\0')
+		return(input);
 	init_signal(data);
 	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
-	tmp = data->tokenizer;
+	//tmp = data->tokenizer;
 	cutting_input(data, input);
 	tmp = data->tokenizer;
 	while (tmp)
@@ -132,11 +134,15 @@ char	*parser(char *input, t_data *data)
 		tmp = tmp->next;
 	}
 	parse_cmd_arg(data);
+	// ft_printf("CMD ARG 0 : %s\n",data->tokenizer->cmd_and_arg[0]);
+	// ft_printf("CMD ARG 1 : %s\n",data->tokenizer->cmd_and_arg[1]);
 	is_a_builtin(data);
-	while (!data->tokenizer->cmd_and_arg)
-	{
-		ft_printf("BiM\n");
-		data->tokenizer = data->tokenizer->next;
-	}
+	//print_lst_cmdarg(data->tokenizer);
+	// while (!data->tokenizer->cmd_and_arg)
+	// {
+	// 	ft_printf("BiM\n");
+	// 	data->tokenizer = data->tokenizer->next;
+	// }
+	print_lst_cmdarg(data->tokenizer);
 	return (input);
 }

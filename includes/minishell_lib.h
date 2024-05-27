@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 10:11:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:10:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_data
 	t_prompt			*prompt;
 	t_signal			*signal;
 	int					i;
+	int 				is_init;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/
@@ -116,5 +117,6 @@ int						check_pipe(char *input, int i, t_data *data);
 void					parse_cmd_arg(t_data *data);
 char					**split_tokenizer(char const *s, char c);
 void					sort_sign(t_list_arg *tmp);
+void	ft_clear_tokenizer(t_list_arg *tokenizer);
 
 #endif
