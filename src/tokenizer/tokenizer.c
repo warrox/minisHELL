@@ -6,10 +6,9 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:49:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:17:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell_lib.h"
 
@@ -24,7 +23,7 @@ char	*ft_strdup_cust(const char *source)
 		return (NULL);
 	while (source[i])
 	{
-		while(source[i] == ' ' || source[i] == '\t')
+		while (source[i] == ' ' || source[i] == '\t')
 			i++;
 		copied_s[i] = source[i];
 		i++;
@@ -34,65 +33,68 @@ char	*ft_strdup_cust(const char *source)
 }
 // ------------------------------------
 
-
-int count_sign(char *input)
+int	count_sign(char *input)
 {
-	int count;
-	int i;
+	int	count;
+	int	i;
+
 	count = 0;
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
-		if(input[i] == '<' || input[i] == '>')
+		if (input[i] == '<' || input[i] == '>')
 			count++;
-		if((input[i] == '<' && input[i + 1] == '<') || (input[i] == '>' && input[i + 1] == '>'))
+		if ((input[i] == '<' && input[i + 1] == '<') || (input[i] == '>'
+				&& input[i + 1] == '>'))
 			count -= 1;
 		i++;
-	}	
-	return(count);
+	}
+	return (count);
 }
-t_list_arg *ft_lst_cut_new(char *content)
+t_list_arg	*ft_lst_cut_new(char *content)
 {
-    t_list_arg *new_node = (t_list_arg *)malloc(sizeof(t_list_arg));
-    if (!new_node)
-        return NULL;
-    new_node->key_and_val = NULL_INIT;
-    new_node->next = NULL_INIT;
-	if(content[0] == '$')
+	t_list_arg	*new_node;
+
+	new_node = (t_list_arg *)malloc(sizeof(t_list_arg));
+	if (!new_node)
+		return (NULL);
+	new_node->key_and_val = NULL_INIT;
+	new_node->next = NULL_INIT;
+	if (content[0] == '$')
 		new_node->input_splited = ft_strdup_cust(content);
 	else
 	{
 		new_node->input_splited = ft_strdup(content);
 	}
-    if (!new_node->input_splited)
-    {
-        free(new_node);
-        return NULL;
-    }
-    return (new_node);
+	if (!new_node->input_splited)
+	{
+		free(new_node);
+		return (NULL);
+	}
+	return (new_node);
 }
 
-void ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
+void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 {
-    t_list_arg *tmp;
+	t_list_arg	*tmp;
 
-    if (lst == NULL || new_node == NULL)
-        return;
-
-    if (*lst == NULL)
-    {
-        *lst = new_node;
-    }
-    else
-    {
-        tmp = *lst;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-        tmp->next = new_node;
-    }
+	if (lst == NULL || new_node == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new_node;
+	}
+	else
+	{
+		tmp = *lst;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new_node;
+	}
 }
 
-void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input. 
+void	create_signed(t_list_arg *lst)
+		// Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input.
 // le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
 {
 	char **result;
@@ -105,13 +107,14 @@ void create_signed(t_list_arg *lst) // Tu dois preparer les redirections < > >> 
 	if (lst->redir_sign == APPEND)
 		result = split_tokenizer(lst->input_splited, '>');
 	free(lst->input_splited);
-	lst->input_splited = malloc(sizeof(char) * ft_strlen(result[0])+ ft_strlen(result[1])+ 1);
+	lst->input_splited = malloc(sizeof(char) * ft_strlen(result[0])
+			+ ft_strlen(result[1]) + 1);
 	lst->input_splited = result[0];
-	ft_strlcat(lst->input_splited, result[1], (ft_strlen(result[0]) + ft_strlen(result[1])+ 1));
-	
+	ft_strlcat(lst->input_splited, result[1], (ft_strlen(result[0])
+			+ ft_strlen(result[1]) + 1));
 }
 
-void  sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
+void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
 {
 	int i = 0;
 	int index = 0;
@@ -119,30 +122,30 @@ void  sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes d
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
 	count += count_sign(tmp->input_splited);
 	// ft_printf("valeur de count sign : %d\n",count);
-	tmp->array_sign = malloc(sizeof(int)* count) ;
+	tmp->array_sign = malloc(sizeof(int) * count);
 	i = 0;
-	while(tmp->input_splited[i])
+	while (tmp->input_splited[i])
 	{
-		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
+		if (tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
 		{
 			tmp->redir_sign = STDINS;
 			tmp->array_sign[index] = tmp->redir_sign;
 			index++;
 		}
-		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>' )
+		if (tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>')
 		{
 			tmp->redir_sign = STDOUTS;
 			tmp->array_sign[index] = tmp->redir_sign;
 			index++;
 		}
-		if(tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
+		if (tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
 		{
 			tmp->redir_sign = APPEND;
 			tmp->array_sign[index] = tmp->redir_sign;
 			index++;
 			i++;
 		}
-		if(tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
+		if (tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
 		{
 			tmp->redir_sign = HEREDOCS;
 			tmp->array_sign[index] = tmp->redir_sign;
@@ -151,16 +154,17 @@ void  sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes d
 		}
 		i++;
 	}
-	
 }
-void parse_cmd_arg(t_data *data)
+void	parse_cmd_arg(t_data *data)
 {
+	t_list_arg	*tmp;
+
 	data->tokenizer->redir_sign = ZERO_INIT;
-	t_list_arg *tmp = data->tokenizer;
-	while(tmp)
+	tmp = data->tokenizer;
+	while (tmp)
 	{
 		sort_sign(tmp);
-		if(tmp->redir_sign != ZERO_INIT)
+		if (tmp->redir_sign != ZERO_INIT)
 		{
 			// ft_printf("NOT OK \n");
 			create_signed(tmp);
@@ -175,40 +179,39 @@ void parse_cmd_arg(t_data *data)
 	}
 }
 
-
-void cutting_input(t_data *data, char *input)
+void	cutting_input(t_data *data, char *input)
 {
-    int i = 0;
-    char **split;
-    t_list_arg *new_node;
-	
-	checker_err_pipe(input,data);
-    split = ft_split(input, '|');
-    if (!split)
-		return;	
-    data->tokenizer = ft_lst_cut_new(split[i]);
+	int			i;
+	char		**split;
+	t_list_arg	*new_node;
+
+	i = 0;
+	checker_err_pipe(input, data);
+	split = ft_split(input, '|');
+	if (!split)
+		return ;
+	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
-    while (split[i])
-    {   
-        new_node = ft_lst_cut_new(split[i]);
-        if (new_node)
-        {
-            ft_lstadd_cut_back(&data->tokenizer, new_node);
-        }
-        i++;
-    }
-	
-    i = 0;
-    while (split[i])
-        free(split[i++]);
-    free(split);
+	while (split[i])
+	{
+		new_node = ft_lst_cut_new(split[i]);
+		if (new_node)
+		{
+			ft_lstadd_cut_back(&data->tokenizer, new_node);
+		}
+		i++;
+	}
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
 	// ft_printf("data->tokenizer = %p\n", data->tokenizer);
 	// print_lst_token(data->tokenizer);
 }
 
-// input > premier decoupage | 
-// second tour > $expand 
+// input > premier decoupage |
+// second tour > $expand
 // third > char **cmd_and_arg pour les commandes
 // cat > < >>
 // cat file1 > file2 > file10 > file x
-//redir =
+// redir =

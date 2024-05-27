@@ -38,7 +38,7 @@ void	ft_lst_arg_clear(t_list_arg **lst)
 		return ;
 	while (*lst)
 	{
-		tmp = (*lst)->next; 
+		tmp = (*lst)->next;
 		ft_lst_arg_delone(*lst);
 		*(lst) = tmp;
 	}

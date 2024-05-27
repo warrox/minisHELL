@@ -19,7 +19,7 @@
 # define UNCLOSED_QUOTES 2
 # define SYNTAX_ERROR 3
 
-# define STDINS	4
+# define STDINS 4
 # define STDOUTS 5
 # define HEREDOCS 6
 # define APPEND 7

@@ -6,37 +6,36 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/17 19:43:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:43:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	set_value(t_data *data, char *value, char *new)
+void	set_value(t_data *data, char **split_arg)
 {
 	t_list_arg	*tmp;
 
-	printf("TESTS\n");
 	tmp = data->lst;
-	while (tmp && ft_strcmp(tmp->key_and_val[0], value) != 0)
+	while (tmp && ft_strcmp(tmp->key_and_val[0], split_arg[0]) != 0)
 		tmp = tmp->next;
 	if (tmp == NULL)
 		return ;
 	else
 	{
 		free(tmp->key_and_val[1]);
-		tmp->key_and_val[1] = ft_strdup(new);
+		tmp->key_and_val[1] = ft_strdup(split_arg[1]);
 	}
 }
 
-int	check_egals(char *input)
+int	check_egals(t_data *data)
 {
 	int	i;
 
 	i = ZERO_INIT;
-	while (input[i])
+	while (data->tokenizer->input_splited[i])
 	{
-		if (input[i] == '=')
+		if (data->tokenizer->input_splited[i] == '=')
 			return (1);
 		i++;
 	}
@@ -67,30 +66,18 @@ void	print_lst_export(t_list_arg *lst)
 	}
 }
 
-void	cmd_export(t_data *data, char *input)
+void	cmd_export(t_data *data)
 {
-	char		**split;
-	char		**arg;
-	t_list_arg	*tmp;
-
-	split = NULL_INIT;
-	arg = NULL_INIT;
-	tmp = data->lst;
-	data->i = 0;
-	check_export_cmd(input, data);
-	if (ft_strstr(input, "export") == 1)
+	if (check_export_cmd(data))
+		return ;
+	if (check_plus_egal(data))
 	{
-		split = ft_split(input, ' ');
-		if (!split)
-			return ;
-		while (split[data->i++])
-		{
-			arg = ft_split(split[data->i], '=');
-			if (!arg)
-				return (free_split(split));
-			tmp = data->lst;
-			(export_case(data, tmp, arg, split), free_split(arg));
-		}
-		free_split(split);
+		case_plus_egal(data);
+		return ;
+	}
+	if (check_egals(data))
+	{
+		case_egal(data);
+		return ;
 	}
 }

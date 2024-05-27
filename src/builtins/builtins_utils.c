@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 14:54:02 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 10:23:59 by cyferrei         ###   ########.fr       */
+/*   Created: 2024/05/25 16:28:47 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/05/25 18:15:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	pwd_cmd(t_data *data)
+void	is_a_builtin(t_data *data)
 {
-	char	*value;
-
-	value = NULL_INIT;
-	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "pwd", 3) == 0)
-	{
-		value = getcwd(NULL, 0);
-		ft_printf("%s\n", value);
-		free(value);
-	}
+	cmd_env(data);
+	pwd_cmd(data);
+	cmd_export(data);
+	cmd_unset(data);
+	cmd_echo(data);
 }

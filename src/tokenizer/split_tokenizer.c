@@ -1,32 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_tokenizer.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/05/27 10:13:32 by cyferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/libft.h"
 #include "../../includes/minishell_lib.h"
-
-// static int	count_words(char const *str, char c)
-// {
-// 	int	count;
-// 	int	trigger;
-
-// 	count = 0;
-// 	trigger = 0;
-// 	while (*str)
-// 	{
-// 		if (*str != c && trigger == 0)
-// 		{
-// 			trigger = 1;
-// 			count++;
-// 		}
-// 		else if (*str == c)
-// 		{
-// 			trigger = 0;
-// 			if (count == 1)
-// 				break;
-// 		}
-// 		str++;
-// 	}
-// 	if (count == 1)
-// 		count = 2;
-// 	return (count);
-// }
 
 static char	*word_dup(char const *str, int start, int finish)
 {
@@ -82,7 +67,7 @@ char	**split_fill_c(char const *s, char c, char **split)
 			if (!split[j - 1])
 				return (free_tab(split));
 			index = -1;
-			break;
+			break ;
 		}
 	}
 	if (s[i] == c)
@@ -105,19 +90,3 @@ char	**split_tokenizer(char const *s, char c)
 	split = split_fill_c(s, c, split);
 	return (split);
 }
-
-/*int	main(void)
-{
-	char	**res;
-	int	i = 0;
-
-	res = ft_split_tokenizer_space("cd <yo>", ' ');
-	while (res[i])
-	{
-		printf("string[%d] = %s\n", i, res[i]);
-		i++;
-	}
-	free_tab(res);
-	return (0);
-}*/
-

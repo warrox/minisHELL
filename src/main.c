@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:36:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:17:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	ft_clear_tokenizer(t_list_arg **tokenizer)
 {
-	t_list_arg *current = *tokenizer;
-	t_list_arg *next = *tokenizer;
+	t_list_arg	*current;
+	t_list_arg	*next;
 
+	current = *tokenizer;
+	next = *tokenizer;
 	while (next != NULL)
 	{
-		printf("YO\n");
 		free(current->input_splited);
 		next = current->next;
 		free(current);
@@ -27,17 +28,17 @@ void	ft_clear_tokenizer(t_list_arg **tokenizer)
 	}
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+
 	if (argc > 1)
 	{
 		ft_printf("Too many arguments... exit the program\n");
 		exit(EXIT_FAILURE);
 	}
 	(void)argv;
-	parser_list_init(&data, envp);	
+	parser_list_init(&data, envp);
 	display_prompt(&data);
 	free(data.signal);
 	ft_lst_arg_clear(&data.lst);
