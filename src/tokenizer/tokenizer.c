@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 16:24:19 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:32:07 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,37 @@ char	*ft_strdup_cust(const char *source)
 }
 // ------------------------------------
 
+int sign_cmp(char *str)
+{
+	if (strncmp(str, ">>", 2) == 0)
+		return 2;
+	else if (ft_strncmp(str, "<<", 2) == 0)
+		return 2;
+	else if (ft_strncmp(str, ">", 1) == 0)
+		return 1;
+	else if (ft_strncmp(str, "<", 1) == 0)
+		return 1;
+	return 0;
+}
+
 int	count_sign(char *input)
 {
 	int	count;
+	int tmp;
 	int	i;
 
 	count = 0;
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '<' || input[i] == '>')
+		tmp = sign_cmp(&input[i]);
+		if (tmp != 0)
+		{
 			count++;
-		if ((input[i] == '<' && input[i + 1] == '<') || (input[i] == '>'
-				&& input[i + 1] == '>'))
-			count -= 1;
-		i++;
+			i += tmp;
+		}
+		else
+			i++;
 	}
 	return (count);
 }
@@ -93,88 +109,128 @@ void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 	}
 }
 
-void	create_signed(t_list_arg *lst)
-		// Tu dois preparer les redirections < > >> | separer la commande et l'argument qui necessitent une redirection du reste de l'input.
-// le probleme ce que tu peux avoir cat > file1 > file2 file 3 file 4
+int ft_isws(char c)
 {
-	char **result;
-	if (lst->redir_sign == STDOUTS)
-		result = split_tokenizer(lst->input_splited, '>');
-	if (lst->redir_sign == STDINS)
-		result = split_tokenizer(lst->input_splited, '<');
-	if (lst->redir_sign == HEREDOCS)
-		result = split_tokenizer(lst->input_splited, '<');
-	if (lst->redir_sign == APPEND)
-		result = split_tokenizer(lst->input_splited, '>');
-	free(lst->input_splited);
-	lst->input_splited = malloc(sizeof(char) * ft_strlen(result[0])
-			+ ft_strlen(result[1]) + 1);
-	lst->input_splited = result[0];
-	ft_strlcat(lst->input_splited, result[1], (ft_strlen(result[0])
-			+ ft_strlen(result[1]) + 1));
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
+char *get_filename(char *str)
+{
+	int i = 0;
+	int start;
+	int end;
+	char *new;
+	while (str[i] && ft_isws(str[i]) == 1)
+		i++;
+	start = i;
+	end = i;
+	while (str[end] && !ft_isws(str[end]))
+		end++;
+	if (end == start)
+		NULL; //CHECK
+	new = ft_substr(str, start, end - start);
+	return new;
+}
+
+void	create_signed(t_list_arg *lst)
+{
+	int i = 0;
+	int j = 0;
+	int tmp = 0;
+	lst->file_array = NULL;
+	lst->file_array = ft_calloc(lst->count_size + 1, sizeof(char *));
+	while (lst->input_splited[i])
+	{
+		tmp = sign_cmp(&lst->input_splited[i]);
+		if (tmp != 0)
+		{
+			i += tmp;
+			lst->file_array[j++] = get_filename(&lst->input_splited[i]);
+		}
+		else
+			i++;
+	}
 }
 
 void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
 {
 	int i = 0;
-	int index = 0;
-	int count = 0;
+	int j = 0;
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
-	count += count_sign(tmp->input_splited);
-	// ft_printf("valeur de count sign : %d\n",count);
+	tmp->count_size = count_sign(tmp->input_splited);
+	ft_printf("valeur de count sign : %d\n",tmp->count_size);
 	i = 0;
-	tmp->array_sign = malloc(sizeof(int) * count);
-	while (tmp->input_splited[i])
+	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
+	while (tmp->count_size && tmp->input_splited[i])
 	{
-		if (tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] != '<')
+		if (ft_strncmp(&tmp->input_splited[i], "<<", 2) == 0)
 		{
-			tmp->redir_sign = STDINS;
-			tmp->array_sign[index] = tmp->redir_sign;
-			index++;
+			tmp->array_sign[j++] = HEREDOCS;
+			i += 2;
 		}
-		if (tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] != '>')
+		else if (ft_strncmp(&tmp->input_splited[i], ">>", 2) == 0)
 		{
-			tmp->redir_sign = STDOUTS;
-			tmp->array_sign[index] = tmp->redir_sign;
-			index++;
+			tmp->array_sign[j++] = APPEND;
+			i += 2;
 		}
-		if (tmp->input_splited[i] == '>' && tmp->input_splited[i + 1] == '>')
+		else if (ft_strncmp(&tmp->input_splited[i], "<", 1) == 0)
 		{
-			tmp->redir_sign = APPEND;
-			tmp->array_sign[index] = tmp->redir_sign;
-			index++;
+			tmp->array_sign[j++] = STDINS;
+			i += 1;
+		}
+		else if (ft_strncmp(&tmp->input_splited[i], ">", 1) == 0)
+		{
+			tmp->array_sign[j++] = STDOUTS;
+			i += 1;
+		}
+		else
 			i++;
-		}
-		if (tmp->input_splited[i] == '<' && tmp->input_splited[i + 1] == '<')
-		{
-			tmp->redir_sign = HEREDOCS;
-			tmp->array_sign[index] = tmp->redir_sign;
-			index++;
-			i++;
-		}
-		i++;
 	}
 }
+
+int get_word_size(char *str)
+{
+	int i = 0;
+	while (str[i] && ft_isws(str[i]))
+		i++;
+	while (str[i] && !ft_isws(str[i]))
+		i++;
+	return i;
+}
+
+char *flush_redir(char *str)
+{
+	char buffer[2048];
+	int i = 0;
+	int tmp = 0;
+	int j = 0;
+	while (str[i])
+	{
+		tmp = sign_cmp(&str[i]);
+		if (tmp)
+		{
+			i += tmp;
+			i += get_word_size(&str[i]);
+		}
+		else {
+			buffer[j++] = str[i];
+			i++;
+		}
+	}
+	buffer[j] = 0;
+	return (ft_strdup(buffer));
+}
+
 void	parse_cmd_arg(t_data *data)
 {
 	t_list_arg	*tmp;
-
-	data->tokenizer->redir_sign = ZERO_INIT;
+	
 	tmp = data->tokenizer;
 	while (tmp)
 	{
 		sort_sign(tmp);
-		if (tmp->redir_sign != ZERO_INIT)
-		{
-			// ft_printf("NOT OK \n");
-			create_signed(tmp);
-			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
-		}
-		else
-		{
-			// ft_printf("OK\n");
-			tmp->cmd_and_arg = split_tokenizer(tmp->input_splited, ' ');
-		}
+		create_signed(tmp);
+		tmp->final_cmd = flush_redir(tmp->input_splited);
 		tmp = tmp->next;
 	}
 }
@@ -187,12 +243,11 @@ void	cutting_input(t_data *data, char *input)
 
 	i = 0;
 	checker_err_pipe(input, data);
-	split = ft_split(input, '|');
+	split = ft_split(input, '|'); //po bon
 	if (!split)
 		return ;
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
-	data->is_init = 1;
 	while (split[i])
 	{
 		new_node = ft_lst_cut_new(split[i]);

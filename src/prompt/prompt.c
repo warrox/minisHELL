@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 16:11:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:36:04 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,33 @@ int	display_prompt(t_data *data)
 
 	input = NULL_INIT;
 	input_cpy = NULL_INIT;
-	data->is_init = 0;
 	while (1)
 	{
 		init_prompt(data);
 		build_user_prompt(data);
 		input = readline(data->prompt->usr_prompt);
-		if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free_prompt(data);
-			if(data->is_init == 1)
+		// ft_printf("input : %s\n",input);
+		// exit(1);
+			if (ft_strncmp(input, "exit", 4) == 0)
+			{
+				free_prompt(data);
 				ft_clear_tokenizer(data->tokenizer);
-			free(input);
-			break ;
-		}
+				if(data->signal)
+					free(data->signal);
+				if(input)
+					free(input);
+				break ;
+			}
 		input_cpy = parser(input, data);
 		add_history(input);
 		free_prompt(data);
-		if(*input != '\0')
-		{
-			ft_clear_tokenizer(data->tokenizer);
-			if(data->signal)
-				free(data->signal);
-		}
 		free(input);
+		// if(*input != '\0')
+		// {
+		// 	ft_clear_tokenizer(data->tokenizer);
+		// 	if(data->signal)
+		// 		free(data->signal);
+		// }
 	}
 	return (0);
 }

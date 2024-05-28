@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 16:10:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:22:54 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ typedef struct s_list_arg
 	struct s_list_arg	*next;
 	char				**key_and_val;
 	char				**cmd_and_arg;
+	char				*final_cmd;
 	char				*input_splited;
 	char				*result;
-	int					redir_sign;
+	char				**file_array;
 	int					*array_sign;
+	int					count_size;
 
 }						t_list_arg;
 
@@ -57,7 +59,6 @@ typedef struct s_data
 	t_prompt			*prompt;
 	t_signal			*signal;
 	int					i;
-	int 				is_init;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/

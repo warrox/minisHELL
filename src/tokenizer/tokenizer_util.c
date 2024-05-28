@@ -1,5 +1,10 @@
 #include "../../includes/minishell_lib.h"
 
+
+void free_array_sign(t_data *data)
+{
+	(void)data;	
+}
 int	check_pipe(char *input, int i, t_data *data)
 {
 	int	flag;

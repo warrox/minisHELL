@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 17:00:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:05:17 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_list_arg	*ft_lst_arg_new(t_list_arg *new, char *content)
 	new = (t_list_arg *)malloc(sizeof(t_list_arg));
 	if (!new)
 		return (NULL);
+	new->count_size = 0;
 	new->key_and_val = NULL_INIT;
 	new->next = NULL_INIT;
 	new->key_and_val = ft_split(content, '=');
@@ -73,22 +74,23 @@ void	print_lst_token(t_list_arg *lst)
 void	print_lst_cmdarg(t_list_arg *lst)
 {
 	int	i;
-
 	i = 0;
 	while (lst)
 	{
-		ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
-		ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
+		// ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
+		// ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
+		ft_printf("FINAL_CMD = %s\n", lst->final_cmd);
 		i = 0;
 		if (lst->array_sign)
 		{
 			ft_printf("----Array Signs----\n");
-			// while (lst->array_sign[i])
-			// {
-			// 	ft_printf("[%d]\n", lst->array_sign[i]);
-			// 	i++;
-			// }
+			while (i < lst->count_size)
+			{
+				ft_printf("[%d]\t[%s]\n", lst->array_sign[i], lst->file_array[i]);
+				i++;
+			}
 		}
+		//free(lst->cmd_and_arg);// COCHON MAIS ON VA LA SUP DONC OSEF :)
 		lst = lst->next;
 	}
 }

@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 16:21:16 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:05:31 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
+
+void	erase_file_array(char **array)
+{
+	int i; 
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 void	ft_clear_tokenizer(t_list_arg *tokenizer)
 {
 	t_list_arg	*current;
@@ -19,11 +31,12 @@ void	ft_clear_tokenizer(t_list_arg *tokenizer)
 
 	current = tokenizer;
 	next = tokenizer;
-	//ft_printf("%s\n", current->input_splited);
-	while (next != NULL && next->next != NULL)
+	while (next != NULL)
 	{
 		free(current->input_splited);
 		free(current->array_sign);
+		free(current->final_cmd);
+		erase_file_array(current->file_array);	
 		next = current->next;
 		free(current);
 		current = next;
