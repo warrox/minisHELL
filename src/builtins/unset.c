@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 15:42:47 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:30:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	cmd_unset(t_data *data)
 
 	tmp = NULL_INIT;
 	tmp = data->lst;
-	if (ft_strncmp(data->tokenizer->cmd_and_arg[0], "unset", 5) == 0
+	if (ft_strncmp(data->tokenizer->final_cmd, "unset", 5) == 0
 		&& data->lst != NULL)
 	{
 		if (!data->tokenizer->cmd_and_arg[1])

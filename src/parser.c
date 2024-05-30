@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 10:43:34 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 14:27:22 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	*parser(char *input, t_data *data)
 	// print_lst_cmdarg(data->tokenizer);
 	// ft_printf("CMD ARG 0 : %s\n",data->tokenizer->cmd_and_arg[0]);
 	// ft_printf("CMD ARG 1 : %s\n",data->tokenizer->cmd_and_arg[1]);
-	//is_a_builtin(data);
+	is_a_builtin(data);
 	//print_lst_cmdarg(data->tokenizer);
 	// while (!data->tokenizer->cmd_and_arg)
 	// {

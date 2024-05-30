@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 18:15:16 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:33:03 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	check_echo_cmd(t_data *data)
 
 void	cmd_echo(t_data *data)
 {
-	dprintf(2, "%s\n", data->tokenizer->input_splited);
-	dprintf(2, "%s\n", data->tokenizer->cmd_and_arg[0]);
-	dprintf(2, "%s\n", data->tokenizer->cmd_and_arg[1]);
+	dprintf(2, "%s\n", data->tokenizer->final_cmd);
 	if (check_echo_cmd(data))
 		return ;
 	if (check_flag(data))
