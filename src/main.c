@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 10:53:05 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 15:42:15 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,37 @@ void	ft_clear_tokenizer(t_data *data)
 {
 	t_list_arg	*current;
 	t_list_arg	*next;
+	int i;
+
+	if (!data || !data->tokenizer) // Check if data or data->tokenizer is NULL
+		return;
 
 	current = data->tokenizer;
-	next = data->tokenizer;
-	if (!data->tokenizer)
-		return (free(data->tokenizer));
-	while (next != NULL)
+	while (current != NULL)
 	{
-		free(current->input_splited);
-		free(current->array_sign);
-		free(current->final_cmd);
-		erase_file_array(current->file_array);	
-		next = current->next;
+		i = 0;
+		next = current->next; // Get the next node before freeing the current one
+
+		if (current->input_splited)
+			free(current->input_splited);
+		if (current->array_sign)
+			free(current->array_sign);
+		if (current->final_cmd)
+			free(current->final_cmd);
+		if (current->file_array)
+			erase_file_array(current->file_array);
+		if (current->cmd_and_arg)
+		{
+			while (current->cmd_and_arg[i])
+				free(current->cmd_and_arg[i++]);
+			free(current->cmd_and_arg);
+		}
 		free(current);
 		current = next;
 	}
-	// free(data->tokenizer);
+	data->tokenizer = NULL; // Optionally set the tokenizer to NULL after freeing
 }
+
 
 int	main(int argc, char **argv, char **envp)
 {
