@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 10:37:24 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:27:02 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,12 @@ char					**split_tokenizer(char const *s, char c);
 void					sort_sign(t_list_arg *tmp);
 void	ft_clear_tokenizer(t_data *data);
 t_list_arg *init_tokenizer( void );
+char	*ft_strdup_cust(const char *source);
+int sign_cmp(char *str);
+int	count_sign(char *input);
+t_list_arg	*ft_lst_cut_new(char *content);
+void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node);
+int ft_isws(char c);
+char *get_filename(char *str);
+void	create_signed(t_list_arg *lst);
 #endif

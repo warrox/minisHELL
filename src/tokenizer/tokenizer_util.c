@@ -1,10 +1,5 @@
 #include "../../includes/minishell_lib.h"
 
-
-void free_array_sign(t_data *data)
-{
-	(void)data;	
-}
 int	check_pipe(char *input, int i, t_data *data)
 {
 	int	flag;
@@ -52,3 +47,60 @@ int	checker_err_pipe(char *input, t_data *data)
 		msg_error_handler(&data->signal->signal, data);
 	return (not_valid);
 }
+
+char	*ft_strdup_cust(const char *source)
+{
+	int		i;
+	char	*copied_s;
+
+	i = 0;
+	copied_s = malloc(ft_strlen(source) + 1);
+	if (!copied_s)
+		return (NULL);
+	while (source[i])
+	{
+		while (source[i] == ' ' || source[i] == '\t')
+			i++;
+		copied_s[i] = source[i];
+		i++;
+	}
+	copied_s[i] = '\0';
+	return (copied_s);
+}
+// ------------------------------------
+
+int sign_cmp(char *str)
+{
+	if (strncmp(str, ">>", 2) == 0)
+		return 2;
+	else if (ft_strncmp(str, "<<", 2) == 0)
+		return 2;
+	else if (ft_strncmp(str, ">", 1) == 0)
+		return 1;
+	else if (ft_strncmp(str, "<", 1) == 0)
+		return 1;
+	return 0;
+}
+
+int	count_sign(char *input)
+{
+	int	count;
+	int tmp;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (input[i])
+	{
+		tmp = sign_cmp(&input[i]);
+		if (tmp != 0)
+		{
+			count++;
+			i += tmp;
+		}
+		else
+			i++;
+	}
+	return (count);
+}
+
