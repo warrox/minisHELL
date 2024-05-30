@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:35:25 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 15:31:06 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:24:27 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_data	*init_prompt(t_data *data)
 	data->prompt->usr_name = NULL_INIT;
 	data->prompt->usr_prompt = NULL_INIT;
 	data->prompt->usr_pwd = NULL_INIT;
-	data->tokenizer = NULL;
-	data->signal = NULL;
 	return (data);
 }
 

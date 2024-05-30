@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 15:32:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:52:34 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ void	cutting_input(t_data *data, char *input)
 	split = ft_split(input, '|'); //po bon
 	if (!split)
 		return ;
+	free(data->tokenizer);
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
 	while (split[i])

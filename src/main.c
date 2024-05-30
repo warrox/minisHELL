@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 15:05:31 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:53:05 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	erase_file_array(char **array)
 {
 	int i; 
 	i = 0;
+	if (!array)
+		return ;
 	while (array[i])
 	{
 		free(array[i]);
@@ -24,13 +26,15 @@ void	erase_file_array(char **array)
 	}
 	free(array);
 }
-void	ft_clear_tokenizer(t_list_arg *tokenizer)
+void	ft_clear_tokenizer(t_data *data)
 {
 	t_list_arg	*current;
 	t_list_arg	*next;
 
-	current = tokenizer;
-	next = tokenizer;
+	current = data->tokenizer;
+	next = data->tokenizer;
+	if (!data->tokenizer)
+		return (free(data->tokenizer));
 	while (next != NULL)
 	{
 		free(current->input_splited);
@@ -41,6 +45,7 @@ void	ft_clear_tokenizer(t_list_arg *tokenizer)
 		free(current);
 		current = next;
 	}
+	// free(data->tokenizer);
 }
 
 int	main(int argc, char **argv, char **envp)

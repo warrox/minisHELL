@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 16:02:37 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:43:34 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,21 @@ char	*expansion(char *input, t_data *data, int i)
 	result = search_occurence(input, start, end, data);
 	return (result);
 }
+t_list_arg *init_tokenizer( void )// NEW FUNC
+{
+	t_list_arg *tokenizer = ft_calloc(1, sizeof(t_list_arg));
 
+	tokenizer->final_cmd = ZERO_INIT;
+	tokenizer->result = NULL_INIT;
+	tokenizer->array_sign = ZERO_INIT;
+	tokenizer->file_array = NULL_INIT;
+	tokenizer->count_size = ZERO_INIT;
+	tokenizer->cmd_and_arg = NULL_INIT;
+	tokenizer->key_and_val = NULL_INIT;
+	tokenizer->input_splited = NULL_INIT;
+	return (tokenizer);
+	
+}
 char	*parser(char *input, t_data *data)
 {
 	int			i;
@@ -110,8 +124,6 @@ char	*parser(char *input, t_data *data)
 
 	if (*input == '\0')	
 		return(input);
-	init_signal(data);
-	data->signal->signal = ZERO_INIT;
 	result = NULL;
 	i = 0;
 	//tmp = data->tokenizer;
@@ -134,7 +146,7 @@ char	*parser(char *input, t_data *data)
 		tmp = tmp->next;
 	}
 	parse_cmd_arg(data);
-	print_lst_cmdarg(data->tokenizer);
+	// print_lst_cmdarg(data->tokenizer);
 	// ft_printf("CMD ARG 0 : %s\n",data->tokenizer->cmd_and_arg[0]);
 	// ft_printf("CMD ARG 1 : %s\n",data->tokenizer->cmd_and_arg[1]);
 	//is_a_builtin(data);

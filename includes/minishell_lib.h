@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 13:22:54 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:37:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_data
 {
 	t_list_arg			*lst;
 	t_list_arg			*tokenizer;
-	t_list_arg			*sign_to_exe;
+	t_list_arg			*sign_to_exe;// check if i can remove it
 	t_prompt			*prompt;
 	t_signal			*signal;
 	int					i;
@@ -118,6 +118,6 @@ int						check_pipe(char *input, int i, t_data *data);
 void					parse_cmd_arg(t_data *data);
 char					**split_tokenizer(char const *s, char c);
 void					sort_sign(t_list_arg *tmp);
-void	ft_clear_tokenizer(t_list_arg *tokenizer);
-
+void	ft_clear_tokenizer(t_data *data);
+t_list_arg *init_tokenizer( void );
 #endif
