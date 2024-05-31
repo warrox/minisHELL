@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 16:27:06 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/31 13:52:16 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,20 @@ char	*parser(char *input, t_data *data)
 	cutting_input(data, input);
 	tmp = data->tokenizer;
 	while (tmp)
-	{
+	{	
+		while(tmp->input_splited[i])
+		{	
+			if(tmp->input_splited[i] == '$')
+				break;
+			ft_printf("INT I : %d\n", i);
+			i++;
+		}	
 		if (tmp->input_splited[i] == '$' && tmp->input_splited[i + 1] != '$')
 		{
 			checker_err(tmp->input_splited, data);
 			tmp->result = expansion(tmp->input_splited, data, i);
 			if (tmp->result == tmp->input_splited)
 			{
-				free(data->signal);
 				return (tmp->input_splited);
 			}
 			else
@@ -146,16 +152,5 @@ char	*parser(char *input, t_data *data)
 		tmp = tmp->next;
 	}
 	parse_cmd_arg(data);
-	// print_lst_cmdarg(data->tokenizer);
-	// ft_printf("CMD ARG 0 : %s\n",data->tokenizer->cmd_and_arg[0]);
-	// ft_printf("CMD ARG 1 : %s\n",data->tokenizer->cmd_and_arg[1]);
-	//is_a_builtin(data);
-	//print_lst_cmdarg(data->tokenizer);
-	// while (!data->tokenizer->cmd_and_arg)
-	// {
-	// 	ft_printf("BiM\n");
-	// 	data->tokenizer = data->tokenizer->next;
-	// }
-	//print_lst_cmdarg(data->tokenizer);
 	return (input);
 }

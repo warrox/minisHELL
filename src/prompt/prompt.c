@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 10:45:24 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:41:01 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,11 @@ int	display_prompt(t_data *data)
 				break ;
 			}
 		input_cpy = parser(input, data);
-		// print_lst_cmdarg(data->tokenizer);
 		print_lst_cmdarg(data->tokenizer);
-		ft_clear_tokenizer(data);
+		ft_clear_tokenizer(data); // double free when $PATH
 		add_history(input);
 		free_prompt(data);
 		free(input);
-		// if(*input != '\0')
-		// {
-		// 	ft_clear_tokenizer(data->tokenizer);
-		// 	if(data->signal)
-		// 		free(data->signal);
-		// }
 	}
 	return (0);
 }
