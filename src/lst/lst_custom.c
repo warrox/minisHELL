@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/28 16:05:17 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/31 14:27:27 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	print_lst_cmdarg(t_list_arg *lst)
 				i++;
 			}
 		}
-		//free(lst->cmd_and_arg);// COCHON MAIS ON VA LA SUP DONC OSEF :)
 		lst = lst->next;
 	}
 }

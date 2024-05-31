@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/31 11:40:44 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/31 16:14:28 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_list_arg
 	char				**cmd_and_arg;
 	char				*final_cmd;
 	char				*input_splited;
-	char				*result;
+	char				result[4096];
 	char				**file_array;
 	int					*array_sign;
 	int					count_size;
