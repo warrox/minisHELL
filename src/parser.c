@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <>                                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/31 17:34:48 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/01 10:18:20 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,39 @@ int expand_stopper(char c)
 	}
 	return(0);
 }
-char	*expansion(char *input, t_data *data)
+char	*expansion(char *input, t_data *data) // WIP try to add special char to the 
+// expanded var
 {
 	int i = 0;
 	int end = 0;
 	char *result;
 
-	while (input[i] && input[i] != expand_stopper(input[i]))
+	while (input[i])
 	{
 		end++;
+		if(expand_stopper(input[i]))
+			break;
 		i++;
 	}
 	char *key = ft_substr(input, 0, end);
 	result = ft_strdup(search_occurence(key, data));
+	i = 0;
+	while(result[i] != 0)
+	{
+		i++;
+		ft_printf("I : %d\n",i);
+	}
+	result[i] = input[end];
 	free(key);
 	return (result);
+//TEST to make
+// warren:~/home/warren/minisHELL$ $USER.
+// valeur de count sign : 0
+// expanDED : 
+// FDP = ||
+// FINAL_CMD = $USER.
+// ----Array Signs----
+// warren:~/home/warren/minisHELL$ 
 }
 t_list_arg *init_tokenizer( void )// NEW FUNC
 {
@@ -119,6 +137,7 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 	t_list_arg	*tmp;
 	int i;
 	int j;
+	char *expanded;
 	i = 0;
 	j = 0;
 	tmp = data->tokenizer;
@@ -135,7 +154,8 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			}
 			if (tmp->final_cmd[i] == '$')
 			{
-				char *expanded = expansion(&tmp->final_cmd[++i], data);
+				expanded = expansion(&tmp->final_cmd[++i], data);
+				ft_printf("expanDED : %s\n",expanded);
 				j += ft_strlen(expanded);
 				ft_strlcat(tmp->result, expanded, ft_strlen(expanded) + ft_strlen(tmp->result) + 1);
 				free(expanded);
@@ -159,6 +179,6 @@ char	*parser(char *input, t_data *data)
 	cutting_input(data, input);
 	parse_cmd_arg(data); //ADAPT YOUR EXPANSION AFTER THE PARSE_CMD_ARG
 	expander(data);	
-	is_a_builtin(data);
+	// is_a_builtin(data);
 	return (input);
 }
