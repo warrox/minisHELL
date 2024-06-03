@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 16:27:02 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/05/31 02:20:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_data
 void					print_lst(t_list_arg *lst);
 void					print_lst_cmdarg(t_list_arg *lst);
 void					print_lst_token(t_list_arg *lst);
+void    print_prompt_struct(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
