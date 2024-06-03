@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <>                                  +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/01 10:18:20 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/03 10:46:04 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <unistd.h>
 
 int	check_redir(char *input, int i, t_data *data)
 {
@@ -84,39 +85,32 @@ int expand_stopper(char c)
 	}
 	return(0);
 }
-char	*expansion(char *input, t_data *data) // WIP try to add special char to the 
-// expanded var
+char	*expansion(char *input, t_data *data)
 {
 	int i = 0;
 	int end = 0;
 	char *result;
-
+	int flag = 0;
 	while (input[i])
 	{
-		end++;
 		if(expand_stopper(input[i]))
+		{
+			flag = 1;
 			break;
+		}
+		end++;
 		i++;
 	}
 	char *key = ft_substr(input, 0, end);
 	result = ft_strdup(search_occurence(key, data));
 	i = 0;
 	while(result[i] != 0)
-	{
 		i++;
-		ft_printf("I : %d\n",i);
-	}
-	result[i] = input[end];
+	if(flag == 1)
+		result[i++] = input[end++];
+	result[i++] = '\0';
 	free(key);
 	return (result);
-//TEST to make
-// warren:~/home/warren/minisHELL$ $USER.
-// valeur de count sign : 0
-// expanDED : 
-// FDP = ||
-// FINAL_CMD = $USER.
-// ----Array Signs----
-// warren:~/home/warren/minisHELL$ 
 }
 t_list_arg *init_tokenizer( void )// NEW FUNC
 {
@@ -155,7 +149,6 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			if (tmp->final_cmd[i] == '$')
 			{
 				expanded = expansion(&tmp->final_cmd[++i], data);
-				ft_printf("expanDED : %s\n",expanded);
 				j += ft_strlen(expanded);
 				ft_strlcat(tmp->result, expanded, ft_strlen(expanded) + ft_strlen(tmp->result) + 1);
 				free(expanded);
@@ -165,7 +158,6 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			tmp->result[j++] = tmp->final_cmd[i++];
 		}
 		tmp->result[j] = '\0';
-		printf("FDP = |%s|\n", tmp->result);
 		tmp = tmp->next;
 	}
 }
@@ -175,9 +167,8 @@ char	*parser(char *input, t_data *data)
 	if (*input == '\0')	
 		return(input);
 	result = NULL;
-	//tmp = data->tokenizer;
 	cutting_input(data, input);
-	parse_cmd_arg(data); //ADAPT YOUR EXPANSION AFTER THE PARSE_CMD_ARG
+	parse_cmd_arg(data);
 	expander(data);	
 	// is_a_builtin(data);
 	return (input);

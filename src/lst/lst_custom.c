@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/31 14:27:27 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:03:20 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	print_lst_cmdarg(t_list_arg *lst)
 		// ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
 		// ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
 		ft_printf("FINAL_CMD = %s\n", lst->final_cmd);
+		ft_printf("RESULT : %s\n",lst->result);
 		i = 0;
 		if (lst->array_sign)
 		{
