@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 16:21:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:54:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,16 @@ int	check_plus_egal(t_data *data)
 	int	i;
 
 	i = ZERO_INIT;
-	while (data->tokenizer->input_splited[i])
+	
+	while (data->tokenizer->final_cmd[i])
 	{
-		if (data->tokenizer->input_splited[i] == '+'
-			&& data->tokenizer->input_splited[i + 1] == '=')
-			return (1);
+		if (data->tokenizer->final_cmd[i] == '+')
+		{
+			if(data->tokenizer->final_cmd[i + 1] != '=')
+				return (0);
+			else 
+				return (1);
+		}
 		i++;
 	}
 	return (0);
