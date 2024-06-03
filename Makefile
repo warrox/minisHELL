@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
+#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/05/30 16:28:23 by whamdi           ###   ########.fr        #
+#    Updated: 2024/05/31 02:08:31 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS =  -g3
+LDFLAGS = -lreadline -lncurses
 
 LIBFT_MINISHELL_PATH = libft
 LIBFT_MINISHELL = libft/libft.a
@@ -44,7 +45,8 @@ LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c
-MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER))
+UTILS = ./utils/print_utils.c
+MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS))
 
 SRC = $(MINISHELL)
 OBJS = $(SRC:%.c=%.o)
@@ -55,7 +57,7 @@ $(NAME): $(OBJS)
 		@echo "$(BOLD)Linking...$(RESET)"
 		@make -sC $(LIBFT_MINISHELL_PATH)
 		@make -sC $(FT_PRINTF_PATH)
-		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME) $(LDFLAGS)
 		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
 		
 		@echo "\033[35m░▒▓██████████████▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓███████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░      ░▒▓█▓▒░        \033[0m"
@@ -93,3 +95,4 @@ leak:
 re: fclean all
 
 .PHONY: all clean fclean re
+
