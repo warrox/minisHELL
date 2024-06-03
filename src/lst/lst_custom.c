@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 11:03:20 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:40:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,13 @@ void	print_lst_cmdarg(t_list_arg *lst)
 				ft_printf("[%d]\t[%s]\n", lst->array_sign[i], lst->file_array[i]);
 				i++;
 			}
+		}
+		i = 0;
+		while(lst->cmd_array[i])
+		{
+			ft_printf("----ARRAY_CMD[%d]----\n",i);
+			ft_printf("[%s]\n",lst->cmd_array[i]);
+			i++;
 		}
 		lst = lst->next;
 	}

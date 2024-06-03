@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 10:46:04 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:35:30 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			{
 				expanded = expansion(&tmp->final_cmd[++i], data);
 				j += ft_strlen(expanded);
-				ft_strlcat(tmp->result, expanded, ft_strlen(expanded) + ft_strlen(tmp->result) + 1);
+				ft_strlcat(tmp->result, expanded, ft_strlen(expanded) + ft_strlen(tmp->result) + 1);	
 				free(expanded);
 				while (tmp->final_cmd[i] && tmp->final_cmd[i] != ' ')
 					i++;
@@ -158,6 +158,7 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			tmp->result[j++] = tmp->final_cmd[i++];
 		}
 		tmp->result[j] = '\0';
+		tmp->cmd_array = ft_split(tmp->result, ' ');
 		tmp = tmp->next;
 	}
 }
@@ -169,7 +170,7 @@ char	*parser(char *input, t_data *data)
 	result = NULL;
 	cutting_input(data, input);
 	parse_cmd_arg(data);
-	expander(data);	
+	expander(data);
 	// is_a_builtin(data);
 	return (input);
 }
