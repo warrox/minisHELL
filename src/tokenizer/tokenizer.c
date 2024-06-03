@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 16:25:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/02 21:11:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 	int j = 0;
 	// ft_printf("inside the string : %s\n",tmp->input_splited);
 	tmp->count_size = count_sign(tmp->input_splited);
-	ft_printf("valeur de count sign : %d\n",tmp->count_size);
+	// ft_printf("valeur de count sign : %d\n",tmp->count_size);
 	i = 0;
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
 	while (tmp->count_size && tmp->input_splited[i])
