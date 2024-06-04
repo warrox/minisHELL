@@ -6,76 +6,11 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 12:21:13 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:20:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/minishell_lib.h"
 #include <unistd.h>
-
-int	check_redir(char *input, int i, t_data *data)
-{
-	int	flag;
-
-	flag = 0;
-	if (input[i] == '>')
-	{
-		i++;
-		while (ft_isprint(input[i]))
-		{
-			if (input[i] == '$')
-				return (3);
-			if (input[i] != ' ' && input[i] != '\t')
-				flag = 1;
-			if (input[i] == '|')
-				break ;
-			i++;
-		}
-	}
-	else
-		return (0);
-	if (flag == 1)
-		return (1);
-	data->signal->signal = SYNTAX_ERROR;
-	return (0);
-}
-
-int	checker_err(char *input, t_data *data)
-{
-	int	i;
-	int	is_valid;
-	int	not_valid;
-
-	not_valid = 0;
-	is_valid = 1;
-	i = ZERO_INIT;
-	if (check_quote(input, i, data))
-	{
-		return (is_valid);
-	}
-	if (check_redir(input, i, data))
-		return (is_valid);
-	if (data->signal->signal != NULL_INIT)
-		msg_error_handler(&data->signal->signal, data);
-	return (not_valid);
-}
-
-char	*search_occurence(char *input,t_data *data)
-{
-	t_list_arg	*tmp;
-	int			i;
-
-	i = 0;
-	tmp = data->lst;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key_and_val[0], input, ft_strlen(input)))
-			return (tmp->key_and_val[1]);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
 
 int expand_stopper(char c)
 {
@@ -112,7 +47,7 @@ char	*expansion(char *input, t_data *data)
 	free(key);
 	return (result);
 }
-t_list_arg *init_tokenizer( void )// NEW FUNC
+t_list_arg *init_tokenizer( void )
 {
 	t_list_arg *tokenizer = ft_calloc(1, sizeof(t_list_arg));
 
@@ -126,7 +61,7 @@ t_list_arg *init_tokenizer( void )// NEW FUNC
 	return (tokenizer);
 	
 }
-void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non input_splitted
+void expander(t_data *data)
 {
 	t_list_arg	*tmp;
 	int i;
@@ -173,7 +108,6 @@ char	*parser(char *input, t_data *data)
 	cutting_input(data, input);
 	parse_cmd_arg(data);	
 	expander(data);
-	int i = 0;	
 	// is_a_builtin(data);
 	return (input);
 }

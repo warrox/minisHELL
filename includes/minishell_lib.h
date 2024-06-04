@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 17:28:21 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:21:32 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,7 @@ void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node);
 int ft_isws(char c);
 char *get_filename(char *str);
 void	create_signed(t_list_arg *lst);
+int	check_redir(char *input, int i, t_data *data);
+int	checker_err(char *input, t_data *data);
+char	*search_occurence(char *input,t_data *data);
 #endif

@@ -6,25 +6,32 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 15:42:15 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:29:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
 
-void	erase_file_array(char **array)
+void	erase_file_array(char **array, char **array_2)
 {
 	int i; 
 	i = 0;
-	if (!array)
+	if (!array || !array_2)
 		return ;
 	while (array[i])
 	{
 		free(array[i]);
 		i++;
 	}
+	i = 0;
+	while (array_2[i])
+	{
+		free(array_2[i]);
+		i++;
+	}
 	free(array);
+	free(array_2);
 }
 void	ft_clear_tokenizer(t_data *data)
 {
@@ -48,13 +55,13 @@ void	ft_clear_tokenizer(t_data *data)
 		if (current->final_cmd)
 			free(current->final_cmd);
 		if (current->file_array)
-			erase_file_array(current->file_array);
-		if (current->cmd_and_arg)
-		{
-			while (current->cmd_and_arg[i])
-				free(current->cmd_and_arg[i++]);
-			free(current->cmd_and_arg);
-		}
+			erase_file_array(current->file_array,current->cmd_array);
+		// if (current->cmd_and_arg)
+		// {
+		// 	while (current->cmd_and_arg[i])
+		// 		free(current->cmd_and_arg[i++]);
+		// 	free(current->cmd_and_arg);
+		// }
 		free(current);
 		current = next;
 	}
