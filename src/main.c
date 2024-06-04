@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 14:29:14 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:33:13 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	ft_clear_tokenizer(t_data *data)
 	t_list_arg	*next;
 	int i;
 
-	if (!data || !data->tokenizer) // Check if data or data->tokenizer is NULL
+	if (!data || !data->tokenizer)
 		return;
 
 	current = data->tokenizer;
 	while (current != NULL)
 	{
 		i = 0;
-		next = current->next; // Get the next node before freeing the current one
+		next = current->next;
 
 		if (current->input_splited)
 			free(current->input_splited);
@@ -56,16 +56,10 @@ void	ft_clear_tokenizer(t_data *data)
 			free(current->final_cmd);
 		if (current->file_array)
 			erase_file_array(current->file_array,current->cmd_array);
-		// if (current->cmd_and_arg)
-		// {
-		// 	while (current->cmd_and_arg[i])
-		// 		free(current->cmd_and_arg[i++]);
-		// 	free(current->cmd_and_arg);
-		// }
 		free(current);
 		current = next;
 	}
-	data->tokenizer = NULL; // Optionally set the tokenizer to NULL after freeing
+	data->tokenizer = NULL;
 }
 
 
