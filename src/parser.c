@@ -6,107 +6,52 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 16:44:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:59:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
-int	check_redir(char *input, int i, t_data *data)
+int expand_stopper(char c)
 {
-	int	flag;
-
-	flag = 0;
-	if (input[i] == '>')
+	if(c == '{' ||(c == '}' || c == '.' || c == ' ' || c == '\t'))
 	{
-		i++;
-		while (ft_isprint(input[i]))
-		{
-			if (input[i] == '$')
-				return (3);
-			if (input[i] != ' ' && input[i] != '\t')
-				flag = 1;
-			if (input[i] == '|')
-				break ;
-			i++;
-		}
+		return(1);
 	}
-	else
-		return (0);
-	if (flag == 1)
-		return (1);
-	data->signal->signal = SYNTAX_ERROR;
-	return (0);
+	return(0);
 }
-
-int	checker_err(char *input, t_data *data)
+char	*expansion(char *input, t_data *data)
 {
-	int	i;
-	int	is_valid;
-	int	not_valid;
-
-	not_valid = 0;
-	is_valid = 1;
-	i = ZERO_INIT;
-	if (check_quote(input, i, data))
-	{
-		return (is_valid);
-	}
-	if (check_redir(input, i, data))
-		return (is_valid);
-	if (data->signal->signal != NULL_INIT)
-		msg_error_handler(&data->signal->signal, data);
-	return (not_valid);
-}
-
-char	*search_occurence(char *input, int start, int end, t_data *data)
-{
-	t_list_arg	*tmp;
-	int			i;
-	char		*to_compare;
-
-	i = 0;
-	tmp = data->lst;
-	to_compare = ft_substr(input, start, end);
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key_and_val[0], to_compare, ft_strlen(to_compare)))
-			return (free(to_compare), tmp->key_and_val[1]);
-		tmp = tmp->next;
-	}
-	return (free(to_compare), input);
-}
-
-char	*expansion(char *input, t_data *data, int i)
-{
-	int		start;
-	int		end;
-	char	*result;
-
-	start = 0;
-	end = 0;
-	result = NULL;
-	i++;
-	if (input[i] == ' ')
-		return (NULL);
+	int i = 0;
+	int end = 0;
+	char *result;
+	int flag = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ')
-			break ;
-		start = i;
-		while (input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
-			i++;
-		end = i;
+		if(expand_stopper(input[i]))
+		{
+			flag = 1;
+			break;
+		}
+		end++;
+		i++;
 	}
-	result = search_occurence(input, start, end, data);
+	char *key = ft_substr(input, 0, end);
+	result = ft_strdup(search_occurence(key, data));
+	i = 0;
+	while(result[i] != 0)
+		i++;
+	if(flag == 1)
+		result[i++] = input[end++];
+	result[i++] = '\0';
+	free(key);
 	return (result);
 }
-t_list_arg *init_tokenizer( void )// NEW FUNC
+t_list_arg *init_tokenizer( void )
 {
 	t_list_arg *tokenizer = ft_calloc(1, sizeof(t_list_arg));
 
 	tokenizer->final_cmd = ZERO_INIT;
-	tokenizer->result = NULL_INIT;
 	tokenizer->array_sign = ZERO_INIT;
 	tokenizer->file_array = NULL_INIT;
 	tokenizer->count_size = ZERO_INIT;
@@ -116,46 +61,53 @@ t_list_arg *init_tokenizer( void )// NEW FUNC
 	return (tokenizer);
 	
 }
-char	*parser(char *input, t_data *data)
+void expander(t_data *data)
 {
-	int			i;
-	char		*result;
 	t_list_arg	*tmp;
-
-	if (*input == '\0')	
-		return(input);
-	result = NULL;
+	int i;
+	int j;
+	char *expanded;
 	i = 0;
-	//tmp = data->tokenizer;
-	cutting_input(data, input);
+	j = 0;
 	tmp = data->tokenizer;
 	while (tmp)
 	{
-		if (tmp->input_splited[i] == '$' && tmp->input_splited[i + 1] != '$')
+		i = 0;
+		ft_bzero(tmp->result, 4096);
+		while (tmp->final_cmd[i])
 		{
-			checker_err(tmp->input_splited, data);
-			tmp->result = expansion(tmp->input_splited, data, i);
-			if (tmp->result == tmp->input_splited)
+			if (tmp->final_cmd[i] == '\'')
 			{
-				free(data->signal);
-				return (tmp->input_splited);
+				while (tmp->final_cmd[++i] != '\'')
+					tmp->result[j++] = tmp->final_cmd[i++];
 			}
-			else
-				tmp->input_splited = tmp->result;
+			if (tmp->final_cmd[i] == '$')
+			{
+				expanded = expansion(&tmp->final_cmd[++i], data);
+				j += ft_strlen(expanded);
+				ft_strlcat(tmp->result, expanded, ft_strlen(expanded) + ft_strlen(tmp->result) + 1);	
+				free(expanded);
+				while (tmp->final_cmd[i] && tmp->final_cmd[i] != ' ')
+					i++;
+			}
+			tmp->result[j++] = tmp->final_cmd[i++];
 		}
+		tmp->result[j] = '\0';
+		tmp->cmd_array = ft_split(tmp->result, ' ');
+		j = 0;
+		i = 0;
 		tmp = tmp->next;
 	}
-	parse_cmd_arg(data);
-	// print_lst_cmdarg(data->tokenizer);
-	// ft_printf("CMD ARG 0 : %s\n",data->tokenizer->cmd_and_arg[0]);
-	// ft_printf("CMD ARG 1 : %s\n",data->tokenizer->cmd_and_arg[1]);
-	is_a_builtin(data);
-	//print_lst_cmdarg(data->tokenizer);
-	// while (!data->tokenizer->cmd_and_arg)
-	// {
-	// 	ft_printf("BiM\n");
-	// 	data->tokenizer = data->tokenizer->next;
-	// }
-	//print_lst_cmdarg(data->tokenizer);
+}
+char	*parser(char *input, t_data *data)
+{
+	char		*result;	
+	if (*input == '\0')	
+		return(input);
+	result = NULL;
+	cutting_input(data, input);
+	parse_cmd_arg(data);	
+	expander(data);
+	// is_a_builtin(data);
 	return (input);
 }

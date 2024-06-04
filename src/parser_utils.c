@@ -42,7 +42,7 @@ int	check_quote(char *input, int i, t_data *data)
 	data->signal->signal = NULL_INIT;
 	flag = ZERO_INIT;
 	flag_s = ZERO_INIT;
-	while (input[i])
+	while (input[i] && input[i] != ' ')
 	{
 		if (input[i] == '\'')
 		{
