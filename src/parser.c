@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 17:35:30 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:15:56 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 	{
 		i = 0;
 		ft_bzero(tmp->result, 4096);
+		ft_printf("XXX : %s\n",tmp->final_cmd);
 		while (tmp->final_cmd[i])
 		{
 			if (tmp->final_cmd[i] == '\'')
@@ -158,7 +159,12 @@ void expander(t_data *data) // REMPLACER TOUTES LES VARS PAR final_cmd et non in
 			tmp->result[j++] = tmp->final_cmd[i++];
 		}
 		tmp->result[j] = '\0';
+		ft_printf("RESULTXOX : %s\n",tmp->result);
 		tmp->cmd_array = ft_split(tmp->result, ' ');
+		ft_printf("TESTOS : %s\n", tmp->cmd_array[0]);
+		ft_printf("TESTOX : %s\n", tmp->cmd_array[1]);
+		j = 0;
+		i = 0;
 		tmp = tmp->next;
 	}
 }
@@ -170,7 +176,17 @@ char	*parser(char *input, t_data *data)
 	result = NULL;
 	cutting_input(data, input);
 	parse_cmd_arg(data);
+	// while(data->tokenizer->final_cmd)
+	// {
+	// 	ft_printf("TESTOS : %s\n", data->tokenizer->final_cmd);
+	// 	data->tokenizer = data->tokenizer->next;
+	// }
 	expander(data);
+	int i = 0;
+	while(data->tokenizer->cmd_array[i++])
+	{
+		ft_printf("DEBUG3 : %s\n",data->tokenizer->cmd_array[i]);
+	}
 	// is_a_builtin(data);
 	return (input);
 }
