@@ -42,17 +42,19 @@ void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 	}
 }
 
-int ft_isws(char c)
+int	ft_isws(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-char *get_filename(char *str)
+char	*get_filename(char *str)
 {
-	int i = 0;
-	int start;
-	int end;
-	char *new;
+	int		i;
+	int		start;
+	int		end;
+	char	*new;
+
+	i = 0;
 	while (str[i] && ft_isws(str[i]) == 1)
 		i++;
 	start = i;
@@ -60,16 +62,20 @@ char *get_filename(char *str)
 	while (str[end] && !ft_isws(str[end]))
 		end++;
 	if (end == start)
-		NULL; //CHECK
+		NULL; // CHECK
 	new = ft_substr(str, start, end - start);
-	return new;
+	return (new);
 }
 
 void	create_signed(t_list_arg *lst)
 {
-	int i = 0;
-	int j = 0;
-	int tmp = 0;
+	int	i;
+	int	j;
+	int	tmp;
+
+	i = 0;
+	j = 0;
+	tmp = 0;
 	lst->file_array = NULL;
 	lst->file_array = ft_calloc(lst->count_size + 1, sizeof(char *));
 	while (lst->input_splited[i])
@@ -84,5 +90,3 @@ void	create_signed(t_list_arg *lst)
 			i++;
 	}
 }
-
-

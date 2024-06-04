@@ -47,7 +47,7 @@ int	checker_err(char *input, t_data *data)
 	return (not_valid);
 }
 
-char	*search_occurence(char *input,t_data *data)
+char	*search_occurence(char *input, t_data *data)
 {
 	t_list_arg	*tmp;
 	int			i;
@@ -62,6 +62,3 @@ char	*search_occurence(char *input,t_data *data)
 	}
 	return (NULL);
 }
-
-
-

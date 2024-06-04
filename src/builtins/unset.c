@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 14:30:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:09:53 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void	free_node(t_list_arg *node)
 	if (node->key_and_val)
 	{
 		if (node->key_and_val[0])
+		{
 			free(node->key_and_val[0]);
+			free(node->key_and_val[1]);
+		}
 		free(node->key_and_val);
 	}
 	free(node);
@@ -53,11 +56,13 @@ void	cmd_unset(t_data *data)
 	if (ft_strncmp(data->tokenizer->final_cmd, "unset", 5) == 0
 		&& data->lst != NULL)
 	{
-		if (!data->tokenizer->cmd_and_arg[1])
+		if (!data->tokenizer->cmd_array[1])
+		{
 			return ;
+		}
 		while (tmp)
 		{
-			if (ft_strcmp(data->tokenizer->cmd_and_arg[1],
+			if (ft_strcmp(data->tokenizer->cmd_array[1],
 					tmp->key_and_val[0]) == 0)
 			{
 				unset_var(&data->lst, tmp);

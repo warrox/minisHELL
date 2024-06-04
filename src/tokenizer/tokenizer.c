@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 11:06:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:10:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes dans le splitted input.
+void	sort_sign(t_list_arg *tmp)
 {
-	int i = 0;
-	int j = 0;
-	// ft_printf("inside the string : %s\n",tmp->input_splited);
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	tmp->count_size = count_sign(tmp->input_splited);
-	ft_printf("valeur de count sign : %d\n",tmp->count_size);
 	i = 0;
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
 	while (tmp->count_size && tmp->input_splited[i])
@@ -48,22 +49,28 @@ void	sort_sign(t_list_arg *tmp) // secure les if || sert a trouver les signes da
 	}
 }
 
-int get_word_size(char *str)
+int	get_word_size(char *str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (str[i] && ft_isws(str[i]))
 		i++;
 	while (str[i] && !ft_isws(str[i]))
 		i++;
-	return i;
+	return (i);
 }
 
-char *flush_redir(char *str)
+char	*flush_redir(char *str)
 {
-	char buffer[2048];
-	int i = 0;
-	int tmp = 0;
-	int j = 0;
+	char	buffer[2048];
+	int		i;
+	int		tmp;
+	int		j;
+
+	i = 0;
+	tmp = 0;
+	j = 0;
 	while (str[i])
 	{
 		tmp = sign_cmp(&str[i]);
@@ -72,7 +79,7 @@ char *flush_redir(char *str)
 			i += tmp;
 			i += get_word_size(&str[i]);
 		}
-		else 
+		else
 		{
 			buffer[j++] = str[i];
 			i++;
@@ -82,18 +89,16 @@ char *flush_redir(char *str)
 	return (ft_strdup(buffer));
 }
 
-
 void	parse_cmd_arg(t_data *data)
 {
 	t_list_arg	*tmp;
-	
+
 	tmp = data->tokenizer;
 	while (tmp)
 	{
 		sort_sign(tmp);
 		create_signed(tmp);
 		tmp->final_cmd = flush_redir(tmp->input_splited);
-		// tmp->cmd_and_arg = ft_split(tmp->final_cmd, ' ');
 		tmp = tmp->next;
 	}
 }
@@ -106,7 +111,7 @@ void	cutting_input(t_data *data, char *input)
 
 	i = 0;
 	checker_err_pipe(input, data);
-	split = ft_split(input, '|'); //po bon
+	split = ft_split(input, '|'); // po bon
 	if (!split)
 		return ;
 	free(data->tokenizer);
@@ -124,4 +129,3 @@ void	cutting_input(t_data *data, char *input)
 		free(split[i++]);
 	free(split);
 }
-

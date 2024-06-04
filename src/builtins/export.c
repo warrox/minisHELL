@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 16:43:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:57:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	set_value(t_data *data, char **split_arg)
 	{
 		free(tmp->key_and_val[1]);
 		tmp->key_and_val[1] = ft_strdup(split_arg[1]);
+		free_split(split_arg);
 	}
 }
 
@@ -33,9 +34,9 @@ int	check_egals(t_data *data)
 	int	i;
 
 	i = ZERO_INIT;
-	while (data->tokenizer->input_splited[i])
+	while (data->tokenizer->final_cmd[i])
 	{
-		if (data->tokenizer->input_splited[i] == '=')
+		if (data->tokenizer->final_cmd[i] == '=')
 			return (1);
 		i++;
 	}
@@ -68,16 +69,25 @@ void	print_lst_export(t_list_arg *lst)
 
 void	cmd_export(t_data *data)
 {
-	if (check_export_cmd(data))
-		return ;
-	if (check_plus_egal(data))
+	// printf("final_cmd --> %s\n", data->tokenizer->final_cmd);
+	// printf("input_splitted --> %s\n", data->tokenizer->input_splited);
+	// printf("cmd_arg_0 --> %s\n", data->tokenizer->cmd_and_arg[0]);
+	// printf("cmd_arg_1 --> %s\n", data->tokenizer->cmd_and_arg[1]);
+	// printf("cmd_arg_2 --> %s\n\n", data->tokenizer->cmd_and_arg[2]);
+	if (ft_strstr(data->tokenizer->final_cmd, "export"))
 	{
-		case_plus_egal(data);
-		return ;
-	}
-	if (check_egals(data))
-	{
-		case_egal(data);
-		return ;
+		if (check_export_cmd(data))
+			return ;
+		if (check_plus_egal(data))
+		{
+			// dprintf(2, " ICI %s\n", data->tokenizer->final_cmd);
+			case_plus_egal(data);
+			return ;
+		}
+		if (check_egals(data))
+		{
+			case_egal(data);
+			return ;
+		}
 	}
 }

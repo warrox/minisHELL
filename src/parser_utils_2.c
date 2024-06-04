@@ -67,6 +67,7 @@ void	cutting_input(t_data *data, char *input)
 	int			i;
 	char		**split;
 	t_list_arg	*new_node;
+	t_list_arg	*tmp;
 
 	i = 0;
 	// test split[i] see if it's clean or not.
@@ -89,8 +90,8 @@ void	cutting_input(t_data *data, char *input)
 	while (split[i])
 		free(split[i++]);
 	free(split);
-	t_list_arg *tmp = data->tokenizer;
-		// test if the list is well copied. A VIRER
+	tmp = data->tokenizer;
+	// test if the list is well copied. A VIRER
 	while (tmp)
 	{
 		tmp = tmp->next;

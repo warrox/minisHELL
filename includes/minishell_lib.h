@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 14:21:32 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 17:14:06 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,23 @@ typedef struct s_list_arg
 {
 	struct s_list_arg	*next;
 	char				**key_and_val;
-	char				**cmd_and_arg;
+	// char				**cmd_and_arg;
 	char				*final_cmd;
 	char				*input_splited;
 	char				result[4096];
+	int					count_size;
+	// ----variable pour ton exec ----
 	char				**file_array;
 	char				**cmd_array;
 	int					*array_sign;
-	int					count_size;
-
+	// -------------------------------
 }						t_list_arg;
 
 typedef struct s_data
 {
 	t_list_arg			*lst;
 	t_list_arg			*tokenizer;
-	t_list_arg			*sign_to_exe;// check if i can remove it
+	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
 	int					i;
@@ -67,6 +68,8 @@ typedef struct s_data
 void					print_lst(t_list_arg *lst);
 void					print_lst_cmdarg(t_list_arg *lst);
 void					print_lst_token(t_list_arg *lst);
+void					print_prompt_struct(t_data *data);
+void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
@@ -119,17 +122,18 @@ int						check_pipe(char *input, int i, t_data *data);
 void					parse_cmd_arg(t_data *data);
 char					**split_tokenizer(char const *s, char c);
 void					sort_sign(t_list_arg *tmp);
-void	ft_clear_tokenizer(t_data *data);
-t_list_arg *init_tokenizer( void );
-char	*ft_strdup_cust(const char *source);
-int sign_cmp(char *str);
-int	count_sign(char *input);
-t_list_arg	*ft_lst_cut_new(char *content);
-void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node);
-int ft_isws(char c);
-char *get_filename(char *str);
-void	create_signed(t_list_arg *lst);
-int	check_redir(char *input, int i, t_data *data);
-int	checker_err(char *input, t_data *data);
-char	*search_occurence(char *input,t_data *data);
+void					ft_clear_tokenizer(t_data *data);
+t_list_arg				*init_tokenizer(void);
+char					*ft_strdup_cust(const char *source);
+int						sign_cmp(char *str);
+int						count_sign(char *input);
+t_list_arg				*ft_lst_cut_new(char *content);
+void					ft_lstadd_cut_back(t_list_arg **lst,
+							t_list_arg *new_node);
+int						ft_isws(char c);
+char					*get_filename(char *str);
+void					create_signed(t_list_arg *lst);
+int						check_redir(char *input, int i, t_data *data);
+int						checker_err(char *input, t_data *data);
+char					*search_occurence(char *input, t_data *data);
 #endif

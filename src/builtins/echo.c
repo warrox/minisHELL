@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/30 14:33:03 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:22:36 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_echo(t_data *data)
 {
-	ft_putstr_fd(data->tokenizer->cmd_and_arg[1], 1);
+	ft_putstr_fd(data->tokenizer->final_cmd, 1);
 	ft_putstr_fd("\n", 1);
 }
 
@@ -23,16 +23,16 @@ int	check_flag(t_data *data)
 	int	i;
 
 	i = ZERO_INIT;
-	while (data->tokenizer->input_splited[i])
+	while (data->tokenizer->final_cmd[i])
 	{
-		if (data->tokenizer->input_splited[i] == '-')
+		if (data->tokenizer->final_cmd[i] == '-')
 		{
 			i++;
-			while (data->tokenizer->input_splited[i] == 'n')
+			while (data->tokenizer->final_cmd[i] == 'n')
 				i++;
-			if (data->tokenizer->input_splited[i] == ' ')
+			if (data->tokenizer->final_cmd[i] == ' ')
 				return (1);
-			if (data->tokenizer->input_splited[i] == '\0')
+			if (data->tokenizer->final_cmd[i] == '\0')
 				return (1);
 		}
 		i++;
@@ -42,7 +42,7 @@ int	check_flag(t_data *data)
 
 int	check_echo_cmd(t_data *data)
 {
-	if (ft_strncmp(data->tokenizer->input_splited, "echo", 5) == 0
+	if (ft_strncmp(data->tokenizer->final_cmd, "echo", 5) == 0
 		&& data->lst != NULL)
 	{
 		ft_putstr_fd("\n", 1);
@@ -53,7 +53,7 @@ int	check_echo_cmd(t_data *data)
 
 void	cmd_echo(t_data *data)
 {
-	dprintf(2, "%s\n", data->tokenizer->final_cmd);
+	// dprintf(2, "%s\n", data->tokenizer->final_cmd);
 	if (check_echo_cmd(data))
 		return ;
 	if (check_flag(data))

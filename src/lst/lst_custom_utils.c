@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:47:05 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:43:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:47:22 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ void	ft_lst_arg_delone(t_list_arg *lst)
 	if (!lst)
 		return ;
 	lst->next = NULL;
-	while (lst->key_and_val && lst->key_and_val[i])
+	if (lst->key_and_val && lst->key_and_val[i])
 	{
-		free(lst->key_and_val[i]);
-		i++;
+		while (lst->key_and_val && lst->key_and_val[i])
+		{
+			free(lst->key_and_val[i]);
+			i++;
+		}
+		free(lst->key_and_val);
 	}
-	free(lst->key_and_val);
-	// free(lst->input_splited);
 	free(lst);
 }
 

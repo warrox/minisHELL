@@ -69,23 +69,23 @@ char	*ft_strdup_cust(const char *source)
 }
 // ------------------------------------
 
-int sign_cmp(char *str)
+int	sign_cmp(char *str)
 {
 	if (strncmp(str, ">>", 2) == 0)
-		return 2;
+		return (2);
 	else if (ft_strncmp(str, "<<", 2) == 0)
-		return 2;
+		return (2);
 	else if (ft_strncmp(str, ">", 1) == 0)
-		return 1;
+		return (1);
 	else if (ft_strncmp(str, "<", 1) == 0)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
 int	count_sign(char *input)
 {
 	int	count;
-	int tmp;
+	int	tmp;
 	int	i;
 
 	count = 0;
@@ -103,4 +103,3 @@ int	count_sign(char *input)
 	}
 	return (count);
 }
-

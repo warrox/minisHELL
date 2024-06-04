@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/25 16:43:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:20:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	create_new_var(t_data *data, char *key, char *value)
 	build_var = ft_strjoin(key, "=");
 	final_var = ft_strjoin(build_var, value);
 	ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, &final_var[i]));
+	// IL FAUT FREE DATA->LST
 	free(build_var);
 	free(final_var);
 }
@@ -44,7 +45,7 @@ int	is_env_var(t_data *data, char **split_key)
 
 int	check_export_cmd(t_data *data)
 {
-	if (ft_strcmp(data->tokenizer->input_splited, "export") == 0
+	if (ft_strncmp(data->tokenizer->final_cmd, "export", 7) == 0
 		&& data->lst != NULL)
 	{
 		print_lst_export(data->lst);
@@ -74,15 +75,15 @@ void	case_plus_egal(t_data *data)
 
 	split_key = NULL_INIT;
 	split_value = NULL_INIT;
-	split_key = ft_split(data->tokenizer->cmd_and_arg[1], '+');
+	split_key = ft_split(data->tokenizer->cmd_array[1], '+');
 	if (!split_key)
 		return ;
-	split_value = ft_split(data->tokenizer->cmd_and_arg[1], '=');
+	split_value = ft_split(data->tokenizer->cmd_array[1], '=');
 	if (!split_value)
+	{
+		free_split(split_key);
 		return ;
-	dprintf(2, "%s\n", data->tokenizer->cmd_and_arg[1]);
-	dprintf(2, "%s\n", split_key[0]);
-	dprintf(2, "%s\n", split_value[1]);
+	}
 	if (is_env_var(data, split_key))
 		concat_env_var(data, split_key[0], split_value[1]);
 	else

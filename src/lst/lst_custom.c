@@ -74,28 +74,30 @@ void	print_lst_token(t_list_arg *lst)
 void	print_lst_cmdarg(t_list_arg *lst)
 {
 	int	i;
+
 	i = 0;
 	while (lst)
 	{
 		// ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
 		// ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
 		ft_printf("FINAL_CMD = %s\n", lst->final_cmd);
-		ft_printf("RESULT : %s\n",lst->result);
+		ft_printf("RESULT : %s\n", lst->result);
 		i = 0;
 		if (lst->array_sign)
 		{
 			ft_printf("----Array Signs----\n");
 			while (i < lst->count_size)
 			{
-				ft_printf("[%d]\t[%s]\n", lst->array_sign[i], lst->file_array[i]);
+				ft_printf("[%d]\t[%s]\n", lst->array_sign[i],
+					lst->file_array[i]);
 				i++;
 			}
 		}
 		i = 0;
-		while(lst->cmd_array[i])
+		while (lst->cmd_array[i])
 		{
-			ft_printf("----ARRAY_CMD[%d]----\n",i);
-			ft_printf("[%s]\n",lst->cmd_array[i]);
+			ft_printf("----ARRAY_CMD[%d]----\n", i);
+			ft_printf("[%s]\n", lst->cmd_array[i]);
 			i++;
 		}
 		lst = lst->next;

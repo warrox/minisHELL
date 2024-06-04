@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/31 11:41:01 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/04 17:01:43 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);
-			if (ft_strncmp(input, "exit", 4) == 0)
-			{
-				free_prompt(data);
-				ft_clear_tokenizer(data);
-				free(data->signal);
-				if(input)
-					free(input);
-				break ;
-			}
+		if (ft_strncmp(input, "exit", 4) == 0)
+		{
+			free_prompt(data);
+			ft_clear_tokenizer(data);
+			free(data->signal);
+			if (input)
+				free(input);
+			break ;
+		}
 		input_cpy = parser(input, data);
-		print_lst_cmdarg(data->tokenizer);
-		ft_clear_tokenizer(data); // double free when $PATH
+		// print_lst_cmdarg(data->tokenizer);
+		print_exec_utils(data);
+		ft_clear_tokenizer(data);
 		add_history(input);
 		free_prompt(data);
 		free(input);

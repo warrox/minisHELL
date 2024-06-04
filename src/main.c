@@ -12,10 +12,10 @@
 
 #include "../includes/minishell_lib.h"
 
-
 void	erase_file_array(char **array, char **array_2)
 {
-	int i; 
+	int	i;
+
 	i = 0;
 	if (!array || !array_2)
 		return ;
@@ -37,17 +37,15 @@ void	ft_clear_tokenizer(t_data *data)
 {
 	t_list_arg	*current;
 	t_list_arg	*next;
-	int i;
+	int			i;
 
 	if (!data || !data->tokenizer)
-		return;
-
+		return ;
 	current = data->tokenizer;
 	while (current != NULL)
 	{
 		i = 0;
 		next = current->next;
-
 		if (current->input_splited)
 			free(current->input_splited);
 		if (current->array_sign)
@@ -55,13 +53,12 @@ void	ft_clear_tokenizer(t_data *data)
 		if (current->final_cmd)
 			free(current->final_cmd);
 		if (current->file_array)
-			erase_file_array(current->file_array,current->cmd_array);
+			erase_file_array(current->file_array, current->cmd_array);
 		free(current);
 		current = next;
 	}
 	data->tokenizer = NULL;
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
