@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 17:18:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:40:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,30 @@ void	print_exec_utils(t_data *data)
 	t_list_arg	*tmp;
 	int			i;
 
+	int j = 0;
 	i = 0;
 	tmp = data->tokenizer;
 	while (tmp)
 	{
 		if (tmp->array_sign)
 		{
-			printf("---------------REDIRECTION ARRAY----------------\n");
-			while (i < tmp->count_size)
+			if(tmp->count_size > 0)
 			{
-				ft_printf("[%d]\t[%s]\n", tmp->array_sign[i],
-					tmp->file_array[i]);
-				i++;
+				printf("---------------REDIRECTION ARRAY on node [%d]----------------\n",j);
+				while (i < tmp->count_size)
+				{
+					ft_printf("[%d]\t[%s]\n", tmp->array_sign[i],tmp->file_array[i]);
+					i++;
+				}
 			}
-			printf("------------------------------------------------\n");
 		}
-		printf("---------------COMMAND & ARG ARRAY---------------------\n");
+		printf("---------------COMMAND & ARG ARRAY on node[%d]---------------------\n",j++);
 		i = 0;
 		while (tmp->cmd_array[i])
 		{
 			printf("[CMD_ARRAY][%d] = %s\n", i, tmp->cmd_array[i]);
 			i++;
 		}
-		printf("-------------------------------------------------------\n");
 		tmp = tmp->next;
 	}
 }
