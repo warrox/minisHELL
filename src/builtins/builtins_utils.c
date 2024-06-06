@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:28:47 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 15:39:04 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/06 08:46:33 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	is_a_builtin(t_data *data)
 	cmd_export(data);
 	cmd_unset(data);
 	cmd_echo(data);
+	ft_current_directory(data->tokenizer->cmd_array[1], data);
 }
