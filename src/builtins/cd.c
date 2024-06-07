@@ -9,10 +9,7 @@ t_list_arg *find_key_user(t_data *data)
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->key_and_val[0], "USER") == 0)
-		{
-			ft_printf("yox : %s\n",tmp->key_and_val[0]);
 			break;
-		}
 		tmp = tmp->next;
 	}
 	return(tmp);
@@ -25,10 +22,7 @@ t_list_arg *find_key_old_pwd(t_data *data)
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->key_and_val[0], "OLDPWD") == 0)
-		{
-			ft_printf("yox : %s\n",tmp->key_and_val[0]);
 			break;
-		}
 		tmp = tmp->next;
 	}
 	return(tmp);
@@ -41,10 +35,7 @@ t_list_arg *find_key_pwd(t_data *data)
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->key_and_val[0], "PWD")== 0)
-		{
-			ft_printf("yo : %s\n",tmp->key_and_val[0]);
 			break;
-		}
 		tmp = tmp->next;
 	}
 	return(tmp);
@@ -64,12 +55,10 @@ int cd_check_opt(char *path, t_data *data)
 		i++;
 	if(path[i]== '-')
 	{
-		ft_printf("PEDQUER1\n");
 		while(path[i]== ' ' || path[i] == '\t')
 			i++;
 		if(path[i + 1] == '\0')
 		{
-			ft_printf("PEDQUER\n");
 			tmp = find_key_old_pwd(data);
 			save_current = find_key_pwd(data);
 			chdir(tmp->key_and_val[1]);
