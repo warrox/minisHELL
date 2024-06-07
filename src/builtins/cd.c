@@ -106,19 +106,16 @@ void ft_current_directory(char *path,t_data *data)
 	char path_hu[4096];
 	tmp = data->lst;
 	i = 0;
-	if (ft_strstr(data->tokenizer->final_cmd, "cd"))
-	{
-		
-		if(data->tokenizer->final_cmd[i + 2] == '\0')
+	if (ft_strstr(data->tokenizer->final_cmd, "cd") || (ft_strstr(data->tokenizer->final_cmd, "cd") && (data->tokenizer->final_cmd[2] == ' ' && data->tokenizer->final_cmd[3] == '\0')))
+	{	
+		int j = 3;
+		while(data->tokenizer->final_cmd[j] == ' ')
+			j++;
+		if(data->tokenizer->final_cmd[i + 2] == '\0' || data->tokenizer->final_cmd[j] == '\0')
 		{
-			ft_printf("MACDOOM\n");
-			// /home/whamdi
 			tmp = find_key_user(data);
-			ft_printf("MAGLOIRE : %s\n",tmp->key_and_val[1]);
-			ft_printf("JEAN EDOUARD : %d\n",ft_strlen(tmp->key_and_val[1]));
 			ft_strcpy(path_hu, "/home/");
 			ft_strlcat(path_hu, tmp->key_and_val[1], (ft_strlen(path_hu) + ft_strlen(tmp->key_and_val[1])+ 1));
-			ft_printf("LOANA : %s\n",path_hu);
 			chdir(path_hu);
 			return;
 		}
@@ -135,14 +132,11 @@ void ft_current_directory(char *path,t_data *data)
 		getcwd(buffer_old, buffer_size);
 		if(chdir(path) == 0)
 		{
-			ft_printf("RETURN OF CHDIR : %d\n",chdir(path));
 			tmp = find_key_pwd(data);
-			ft_printf("TMP 1 : %s\n",tmp->key_and_val[1]);
 			free(data->lst->key_and_val[i]);
 			getcwd(buffer, buffer_size);
 			tmp->key_and_val[i] = ft_strdup(buffer);
 			tmp = find_key_old_pwd(data);
-			ft_printf("TMP 2 : %s\n",tmp->key_and_val[1]);
 			free(data->lst->key_and_val[i]);
 			data->lst->key_and_val[i] = ft_strdup(buffer_old);
 		}
