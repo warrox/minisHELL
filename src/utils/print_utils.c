@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/05 10:40:23 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/08 15:27:29 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	print_exec_utils(t_data *data)
 			if(tmp->count_size > 0)
 			{
 				printf("---------------REDIRECTION ARRAY on node [%d]----------------\n",j);
+				i = 0;
 				while (i < tmp->count_size)
 				{
 					ft_printf("[%d]\t[%s]\n", tmp->array_sign[i],tmp->file_array[i]);

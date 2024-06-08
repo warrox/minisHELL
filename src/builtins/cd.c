@@ -50,7 +50,7 @@ int cd_check_opt(char *path, t_data *data)
 	t_list_arg *save_current;
 	int buffer_size = 4096;
 	char buffer[buffer_size];
-	// ft_printf("ici : %s\n",path);
+	save_current = data->lst;
 	while(path[i] == ' ' || path[i] == '\t')
 		i++;
 	if(path[i]== '-')
@@ -122,12 +122,11 @@ void ft_current_directory(char *path,t_data *data)
 		if(chdir(path) == 0)
 		{
 			tmp = find_key_pwd(data);
-			free(data->lst->key_and_val[i]);
+			free(data->lst->key_and_val[1]);
 			getcwd(buffer, buffer_size);
-			tmp->key_and_val[i] = ft_strdup(buffer);
+			tmp->key_and_val[1] = ft_strdup(buffer);
 			tmp = find_key_old_pwd(data);
-			free(data->lst->key_and_val[i]);
-			data->lst->key_and_val[i] = ft_strdup(buffer_old);
+			data->lst->key_and_val[1] = ft_strdup(buffer_old);
 		}
 	}
 
