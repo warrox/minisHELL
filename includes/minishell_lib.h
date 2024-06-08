@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/08 12:44:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:04:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 /*all structures*/
 
-typedef struct s_pipe
+typedef struct s_exec
 {
 	pid_t	pid;
 	char	*cmd;
@@ -40,7 +40,7 @@ typedef struct s_pipe
 	int nb_cmd;
 	int nb_pipe;
 	int *tube;
-}			t_pipe;
+}			t_exec;
 
 typedef struct s_prompt
 {
@@ -79,7 +79,7 @@ typedef struct s_data
 	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
-	t_pipe				*pipe;
+	t_exec				*exec;
 	int					i;
 }						t_data;
 
@@ -160,6 +160,9 @@ char					*search_occurence(char *input, t_data *data);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);
+void	init_struct_exec(t_data *data);
 void	exec_single_cmd(t_data *data);
+int	nb_pipe(t_data *data);
+char	*get_path(t_data *data);
 
 #endif
