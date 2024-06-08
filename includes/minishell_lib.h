@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 17:14:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:44:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,26 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/wait.h>
 
 /*all structures*/
+
+typedef struct s_pipe
+{
+	pid_t	pid;
+	char	*cmd;
+	int infile;
+	int oufile;
+	int here_doc;
+	int nb_cmd;
+	int nb_pipe;
+	int *tube;
+}			t_pipe;
 
 typedef struct s_prompt
 {
@@ -32,6 +50,7 @@ typedef struct s_prompt
 	char				*usr_build_two;
 	char				*usr_prompt;
 }						t_prompt;
+
 typedef struct s_signal
 {
 	int					signal;
@@ -60,6 +79,7 @@ typedef struct s_data
 	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
+	t_pipe				*pipe;
 	int					i;
 }						t_data;
 
@@ -136,4 +156,10 @@ void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
+
+/**[EXEC]**/
+
+void	init_exec(t_data *data);
+void	exec_single_cmd(t_data *data);
+
 #endif
