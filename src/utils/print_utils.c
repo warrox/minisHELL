@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 17:18:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/08 11:59:08 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	print_prompt_struct(t_data *data)
 	printf("[usr_prompt] = %s\n", tmp->usr_prompt);
 	printf("----------------------------------------\n");
 }
+
 void	print_exec_utils(t_data *data)
 {
 	t_list_arg	*tmp;
