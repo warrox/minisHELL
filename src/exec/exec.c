@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 13:34:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:58:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->infile = NULL_INIT;
 	data->exec->here_doc = ZERO_INIT;
 	data->exec->nb_cmd = ZERO_INIT;
-	data->exec->oufile = ZERO_INIT;
+	data->exec->outfile = ZERO_INIT;
 	data->exec->nb_pipe = ZERO_INIT;
 	data->exec->pid = NULL_INIT;
 	data->exec->tube = NULL_INIT;
@@ -60,7 +60,7 @@ void	init_exec(t_data *data)
 {
 	int	i;
 	i = ZERO_INIT;
-	print_exec_utils(data);
+	//print_exec_utils(data);
 	init_struct_exec(data);
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
