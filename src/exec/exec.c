@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 14:58:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:07:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->tube = NULL_INIT;
 	data->exec->path = NULL_INIT;
 	data->exec->path_cmd = NULL_INIT;
+	data->exec->final_cmd = NULL_INIT;
 }
 
 void	exec_single_cmd(t_data *data)
@@ -60,6 +61,8 @@ void	init_exec(t_data *data)
 {
 	int	i;
 	i = ZERO_INIT;
+	if(data->tokenizer->final_cmd == NULL)
+		return;
 	//print_exec_utils(data);
 	init_struct_exec(data);
 	data->exec->path = get_path(data);
