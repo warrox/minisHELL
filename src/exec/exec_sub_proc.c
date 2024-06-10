@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 14:59:23 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:12:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,16 @@ void	exec_sub_proc(t_data *data)
 	if(is_redir(data))
 	{
 		init_files(data);
-		dup2(data->exec->outfile, STDOUT_FILENO);
-		close(data->exec->outfile);
+		if (data->exec->infile && data->exec->infile != 1)
+		{
+			dup2(data->exec->infile, STDIN_FILENO);
+			close(data->exec->infile);
+		}
+		if (data->exec->outfile && data->exec->outfile != -1)
+		{
+			dup2(data->exec->outfile, STDOUT_FILENO);
+			close(data->exec->outfile);
+		}
 	}
 	//printf("FINAL_CMD --> %s\n", data->exec->cmd);
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
