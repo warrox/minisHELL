@@ -1,5 +1,6 @@
 
 #include "../includes/minishell_lib.h"
+#include <readline/history.h>
 
 t_data	*init_signal(t_data *data)
 {
@@ -18,7 +19,6 @@ void	msg_error_handler(int *signal, t_data *data)
 	if (*signal == SYNTAX_ERROR)
 	{
 		printf("syntax error\n");
-		// display_prompt(data);//DINGUERIE HERE IS WHY ADD HISTORY DOESTN WORK CORRECTLY
 	}
 	// add other signals in the future
 }

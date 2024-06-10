@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 15:10:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:24:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <readline/history.h>
 
 void	sort_sign(t_list_arg *tmp)
 {
@@ -110,7 +111,12 @@ void	cutting_input(t_data *data, char *input)
 	t_list_arg	*new_node;
 
 	i = 0;
-	checker_err_pipe(input, data);
+	
+	if(checker_err_pipe(input, data) == 0)
+	{
+		add_history(input);
+		display_prompt(data);
+	}
 	split = ft_split(input, '|'); // po bon
 	if (!split)
 		return ;

@@ -71,7 +71,11 @@ void	cutting_input(t_data *data, char *input)
 
 	i = 0;
 	// test split[i] see if it's clean or not.
-	checker_err_pipe(input, data);
+	ft_printf("TEST\n");
+	if(checker_err_pipe(input, data) == 0)
+	{
+		ft_printf("YOLO\n");
+	}
 	split = ft_split(input, '|');
 	if (!split)
 		return ;

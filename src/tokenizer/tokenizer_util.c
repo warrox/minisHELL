@@ -1,5 +1,24 @@
 #include "../../includes/minishell_lib.h"
-
+int ft_is_oth_pipe(char *input, int i)
+{
+	i += 1;
+	while(input[i] && input[i] != '|')
+	{
+		while(input[i] == ' ' || input[i] == '\t')
+		{
+			i++;
+		}
+		if(input[i] == '|')
+		{
+			return(1);
+		}
+		else
+		{
+			return(0);
+		}
+	}
+	return(1);
+} 
 int	check_pipe(char *input, int i, t_data *data)
 {
 	int	flag;
@@ -12,15 +31,19 @@ int	check_pipe(char *input, int i, t_data *data)
 	{
 		if (input[i] == '|')
 		{
-			if (input[i + 1] == '|')
-				break ; // to check
+			if (input[i + 1] == '|' || ft_is_oth_pipe(input,i) == 1)
+			{
+				data->signal->signal = SYNTAX_ERROR;
+				return(1); // to check
+			}
 			flag += 1;
 		}
 		i++;
 	}
 	if (input[i] == '\0' && flag >= 1)
+	{
 		return (0);
-	data->signal->signal = SYNTAX_ERROR;
+	}
 	return (1);
 }
 
