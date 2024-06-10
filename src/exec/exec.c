@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/08 16:32:46 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:34:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,20 @@ void	init_struct_exec(t_data *data)
 	data->exec->nb_pipe = ZERO_INIT;
 	data->exec->pid = NULL_INIT;
 	data->exec->tube = NULL_INIT;
+	data->exec->path = NULL_INIT;
+	data->exec->path_cmd = NULL_INIT;
 }
 
 void	exec_single_cmd(t_data *data)
 {
-	char	*path;
-
-	(void)data;
-	path = NULL_INIT;
-	path = get_path(data);
-	printf("%s\n", path);
-	// data->exec->pid = fork();
-	// if (data->exec->pid == -1)
-	// 	return;
+	data->exec->pid = fork();
+	if (data->exec->pid == -1)
+		return;
+	if (data->exec->pid == 0)
+		exec_sub_proc(data);
+	else
+		waitpid(data->exec->pid, NULL, 0);
+	
 }
 
 void	init_exec(t_data *data)
@@ -61,7 +62,8 @@ void	init_exec(t_data *data)
 	i = ZERO_INIT;
 	print_exec_utils(data);
 	init_struct_exec(data);
+	data->exec->path = get_path(data);
+	data->exec->path_cmd = ft_split(data->exec->path, ':');
 	if (nb_pipe(data) == 1)
 		exec_single_cmd(data);
 }
-
