@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 10:31:43 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:44:23 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	display_prompt(t_data *data)
 		}
 		input_cpy = parser(input, data);
 		init_exec(data);
+		print_exec_utils(data);
 		ft_clear_tokenizer(data);
 		add_history(input);
 		free_exec(data);
