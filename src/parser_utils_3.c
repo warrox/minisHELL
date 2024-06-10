@@ -33,18 +33,24 @@ int	checker_err(char *input, t_data *data)
 	int	is_valid;
 	int	not_valid;
 
-	not_valid = 0;
-	is_valid = 1;
+	not_valid = 1;
+	is_valid = 0;
 	i = ZERO_INIT;
-	if (check_quote(input, i, data))
+	while(input[i]) // peu etre tu dois faire un if quand t'as un ''' ou """
 	{
-		return (is_valid);
+		ft_printf("KIKOO\n");
+		if (check_quote(input, i, data))
+		{
+			return (is_valid);
+		}
+		if (check_redir(input, i, data))
+			return (is_valid);
+		i++;
 	}
-	if (check_redir(input, i, data))
-		return (is_valid);
-	if (data->signal->signal != NULL_INIT)
-		msg_error_handler(&data->signal->signal, data);
-	return (not_valid);
+	ft_printf("LET's GOOOO\n");
+	// if (data->signal->signal != NULL_INIT)
+	// 	msg_error_handler(&data->signal->signal, data);
+	return (is_valid);
 }
 
 char	*search_occurence(char *input, t_data *data)

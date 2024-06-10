@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/06 08:47:32 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:53:45 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
 char					*parser(char *input, t_data *data);
 void					msg_error_handler(int *signal, t_data *data);
-void					cutting_input(t_data *data, char *input);
+int					cutting_input(t_data *data, char *input);
 int						check_quote(char *input, int i, t_data *data);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
@@ -137,4 +137,5 @@ int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
 void					ft_current_directory(char *path,t_data *data);
+int	checker_err(char *input, t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 11:24:03 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:54:51 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,22 +104,20 @@ void	parse_cmd_arg(t_data *data)
 	}
 }
 
-void	cutting_input(t_data *data, char *input)
+int	cutting_input(t_data *data, char *input)
 {
 	int			i;
 	char		**split;
 	t_list_arg	*new_node;
-
 	i = 0;
 	
-	if(checker_err_pipe(input, data) == 0)
+	if(checker_err_pipe(input, data) == 0 || check_quote(input, 0, data) == 0) 
 	{
-		add_history(input);
-		display_prompt(data);
+		return(-1);
 	}
 	split = ft_split(input, '|'); // po bon
 	if (!split)
-		return ;
+		return(-1);
 	free(data->tokenizer);
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
@@ -134,4 +132,5 @@ void	cutting_input(t_data *data, char *input)
 	while (split[i])
 		free(split[i++]);
 	free(split);
+	return(0);
 }

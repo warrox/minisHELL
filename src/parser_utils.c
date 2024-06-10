@@ -42,13 +42,16 @@ int	check_quote(char *input, int i, t_data *data)
 	data->signal->signal = NULL_INIT;
 	flag = ZERO_INIT;
 	flag_s = ZERO_INIT;
-	while (input[i] && input[i] != ' ')
+	i = 0;
+	while (input[i])
 	{
 		if (input[i] == '\'')
 		{
-			if (flag == 2)
-				return (1);
 			flag += 1;
+			if (flag == 2)
+			{
+				return (1);
+			}
 		}
 		//["]["]["]
 		if (input[i] == '\"')
@@ -65,7 +68,21 @@ int	check_quote(char *input, int i, t_data *data)
 		}
 		i++;
 	}
-	if (flag % 2 != 0 || flag_s == 1)
+	// if (flag % 2 != 0 || flag_s == 1)
+	// {
+	// 	data->signal->signal = SYNTAX_ERROR;
+	// 	return(1);
+	// }
+	if(flag_s == 1)
+	{
 		data->signal->signal = SYNTAX_ERROR;
+		msg_error_handler(&data->signal->signal, data);
+		return(0);
+	}
+	if(flag == 0)
+		return(1);
+
+	data->signal->signal = SYNTAX_ERROR;
+	msg_error_handler(&data->signal->signal, data);
 	return (0);
 }

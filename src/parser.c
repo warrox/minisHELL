@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 09:00:57 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:21:04 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,17 @@ void	expander(t_data *data)
 		{
 			if (tmp->final_cmd[i] == '\'')
 			{
-				while (tmp->final_cmd[++i] != '\'')
-					tmp->result[j++] = tmp->final_cmd[i++];
+				while (tmp->final_cmd[i++] != '\'')
+				{
+					tmp->result[j++] = tmp->final_cmd[i];
+				}
+			}
+			if (tmp->final_cmd[i] == '\"')
+			{
+				while (tmp->final_cmd[i++] != '\"')
+				{
+					tmp->result[j++] = tmp->final_cmd[i];
+				}
 			}
 			if (tmp->final_cmd[i] == '$')
 			{
@@ -112,7 +121,8 @@ char	*parser(char *input, t_data *data)
 	if (*input == '\0')
 		return (input);
 	result = NULL;
-	cutting_input(data, input);
+	if(cutting_input(data, input) == -1)
+		return NULL;
 	parse_cmd_arg(data);
 	expander(data);
 	is_a_builtin(data);
