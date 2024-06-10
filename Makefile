@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
+#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/06 08:48:37 by whamdi           ###   ########.fr        #
+#    Updated: 2024/06/10 16:01:19 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 UTILS = ./utils/print_utils.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c
-MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS))
+EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c
+MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS) $(EXEC))
 
 SRC = $(MINISHELL)
 OBJS = $(SRC:%.c=%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 14:53:45 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:59:46 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,28 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/wait.h>
 
 /*all structures*/
+
+typedef struct s_exec
+{
+	pid_t	pid;
+	char	*cmd;
+	char	*path;
+	char	**path_cmd;
+	int infile;
+	int outfile;
+	int here_doc;
+	int nb_cmd;
+	int nb_pipe;
+	int *tube;
+}			t_exec;
 
 typedef struct s_prompt
 {
@@ -32,6 +52,7 @@ typedef struct s_prompt
 	char				*usr_build_two;
 	char				*usr_prompt;
 }						t_prompt;
+
 typedef struct s_signal
 {
 	int					signal;
@@ -60,6 +81,7 @@ typedef struct s_data
 	t_list_arg			*sign_to_exe;
 	t_prompt			*prompt;
 	t_signal			*signal;
+	t_exec				*exec;
 	int					i;
 }						t_data;
 
@@ -137,5 +159,17 @@ int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
 void					ft_current_directory(char *path,t_data *data);
-int	checker_err(char *input, t_data *data);
+
+/**[EXEC]**/
+
+void	init_exec(t_data *data);
+void	init_struct_exec(t_data *data);
+void	exec_single_cmd(t_data *data);
+int	nb_pipe(t_data *data);
+char	*get_path(t_data *data);
+void	free_exec(t_data *data);
+void	exec_sub_proc(t_data *data);
+int	is_redir(t_data *data);
+void	file_not_found(t_data *data);
+
 #endif
