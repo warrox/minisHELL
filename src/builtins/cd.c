@@ -12,6 +12,8 @@ t_list_arg *find_key_user(t_data *data)
 			break;
 		tmp = tmp->next;
 	}
+	if(tmp == NULL)
+		ft_printf("USER is unset\n");
 	return(tmp);
 } 
 
@@ -97,12 +99,14 @@ void ft_current_directory(char *path,t_data *data)
 	i = 0;
 	if (ft_strstr(data->tokenizer->final_cmd, "cd") || (ft_strstr(data->tokenizer->final_cmd, "cd") && (data->tokenizer->final_cmd[2] == ' ' && data->tokenizer->final_cmd[3] == '\0')))
 	{	
-		int j = 3;
+		int j = 3;	
 		while(data->tokenizer->final_cmd[j] == ' ')
 			j++;
 		if(data->tokenizer->final_cmd[i + 2] == '\0' || data->tokenizer->final_cmd[j] == '\0')
 		{
 			tmp = find_key_user(data);
+			if(tmp == NULL)
+				return;
 			ft_strcpy(path_hu, "/home/");
 			ft_strlcat(path_hu, tmp->key_and_val[1], (ft_strlen(path_hu) + ft_strlen(tmp->key_and_val[1])+ 1));
 			chdir(path_hu);
