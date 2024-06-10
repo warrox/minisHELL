@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 15:59:46 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:53:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_exec
 	char	*cmd;
 	char	*path;
 	char	**path_cmd;
+	char	*final_cmd;
 	int infile;
 	int outfile;
 	int here_doc;
@@ -170,6 +171,9 @@ char	*get_path(t_data *data);
 void	free_exec(t_data *data);
 void	exec_sub_proc(t_data *data);
 int	is_redir(t_data *data);
+char	*build_cmd(t_data *data);
 void	file_not_found(t_data *data);
+void	cmd_not_found(t_data *data);
+void	error_excve(t_data *data);
 
 #endif
