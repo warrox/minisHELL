@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/08 16:04:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:54:00 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_exec
 {
 	pid_t	pid;
 	char	*cmd;
+	char	*path;
+	char	**path_cmd;
 	int infile;
 	int oufile;
 	int here_doc;
@@ -164,5 +166,7 @@ void	init_struct_exec(t_data *data);
 void	exec_single_cmd(t_data *data);
 int	nb_pipe(t_data *data);
 char	*get_path(t_data *data);
+void	free_exec(t_data *data);
+void	exec_sub_proc(t_data *data);
 
 #endif
