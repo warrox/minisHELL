@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 16:58:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:02:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ char	*build_cmd(t_data *data)
 	
 	tmp = NULL_INIT;
 	i = 0;
+	if (!data->exec->path || data->exec->path == NULL)
+		return (data->tokenizer->cmd_array[0]);
 	if(!data->tokenizer->cmd_array)
-		return (NULL);
+		return (NULL); 
 	if(data->tokenizer->cmd_array[0] == NULL)
 		return (NULL);
 	if (access(data->tokenizer->cmd_array[0], F_OK | X_OK) == 0)
@@ -50,7 +52,8 @@ char	*build_cmd(t_data *data)
 
 void	free_exec(t_data *data)
 {
-	free_split(data->exec->path_cmd);
+	if (data->exec->path_cmd)
+		free_split(data->exec->path_cmd);
 	free(data->exec);
 }
 
