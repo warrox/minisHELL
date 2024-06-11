@@ -99,7 +99,15 @@ void ft_current_directory(char *path,t_data *data)
 	i = 0;
 	if (ft_strstr(data->tokenizer->final_cmd, "cd") || (ft_strstr(data->tokenizer->final_cmd, "cd") && (data->tokenizer->final_cmd[2] == ' ' && data->tokenizer->final_cmd[3] == '\0')))
 	{	
-		int j = 3;	
+		int j;
+		ft_printf("Lenhgt of cd : %d\n",ft_strlen(data->tokenizer->final_cmd));
+		if(ft_strlen(data->tokenizer->final_cmd) == 2)
+		{
+			ft_printf("goin\n");
+			j = 0;
+		}
+		else
+			j = 3;
 		while(data->tokenizer->final_cmd[j] == ' ')
 			j++;
 		if(data->tokenizer->final_cmd[i + 2] == '\0' || data->tokenizer->final_cmd[j] == '\0')
