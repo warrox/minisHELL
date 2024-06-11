@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/11 12:35:45 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:05:38 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
-void					is_a_builtin(t_data *data);
-void					cmd_unset(t_data *data);
+int					is_a_builtin(t_data *data);
+int					cmd_unset(t_data *data);
 void					case_egal(t_data *data);
-void					cmd_env(t_data *data);
-void					pwd_cmd(t_data *data);
-void					cmd_export(t_data *data);
+int					cmd_env(t_data *data);
+int					pwd_cmd(t_data *data);
+int					cmd_export(t_data *data);
 void					case_plus_egal(t_data *data);
 void					set_value(t_data *data, char **split_arg);
 int						check_plus_egal(t_data *data);
@@ -112,9 +112,11 @@ int						check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
 int						is_env_var(t_data *data, char **split_key);
 void					create_new_var(t_data *data, char *key, char *value);
-void					cmd_echo(t_data *data);
+int					cmd_echo(t_data *data);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
+int	check_export_nothing(t_data *data);
+
 
 /**[PROMPT FUNCTIONS]**/
 
@@ -159,7 +161,7 @@ void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
-void					ft_current_directory(char *path,t_data *data);
+int ft_current_directory(char *path,t_data *data);
 
 /**[EXEC]**/
 
