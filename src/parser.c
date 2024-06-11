@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:21:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:58:03 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,5 @@ char	*parser(char *input, t_data *data)
 		return NULL;
 	parse_cmd_arg(data);
 	expander(data);
-	is_a_builtin(data);
 	return (input);
 }
