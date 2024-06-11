@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:21:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:19:50 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ void	expander(t_data *data)
 	int			i;
 	int			j;
 	char		*expanded;
-
+	int			flag;
 	i = 0;
 	j = 0;
+	flag = 0;
 	tmp = data->tokenizer;
 	while (tmp)
 	{
@@ -83,10 +84,11 @@ void	expander(t_data *data)
 		{
 			if (tmp->final_cmd[i] == '\'')
 			{
-				while (tmp->final_cmd[i++] != '\'')
+				while (tmp->final_cmd[++i] != '\'')
 				{
 					tmp->result[j++] = tmp->final_cmd[i];
 				}
+				flag = 1;
 			}
 			if (tmp->final_cmd[i] == '\"')
 			{
@@ -94,6 +96,7 @@ void	expander(t_data *data)
 				{
 					tmp->result[j++] = tmp->final_cmd[i];
 				}
+				flag = 1;
 			}
 			if (tmp->final_cmd[i] == '$')
 			{
@@ -106,7 +109,9 @@ void	expander(t_data *data)
 					i++;
 			}
 			tmp->result[j++] = tmp->final_cmd[i++];
-		}
+		}	
+		if(flag)
+			j -= 1;
 		tmp->result[j] = '\0';
 		tmp->cmd_array = ft_split(tmp->result, ' ');
 		j = 0;

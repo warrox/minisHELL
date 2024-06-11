@@ -34,7 +34,7 @@ int	check_if_quote_at_end(char c, char *input, int i)
 	}
 	return (0);
 }
-int	check_quote(char *input, int i, t_data *data)
+int	check_quote(char *input, int i, t_data *data) // revoir la logique do not work when echo '"'
 {
 	int	flag;
 	int	flag_s;
@@ -48,14 +48,16 @@ int	check_quote(char *input, int i, t_data *data)
 		if (input[i] == '\'')
 		{
 			flag += 1;
+			while(input[i] == '\"')
+				i++;
 			if (flag == 2)
-			{
 				return (1);
-			}
 		}
 		//["]["]["]
 		if (input[i] == '\"')
 		{
+			if(input[i] == '\'')
+				flag = 0;
 			if (flag_s == 2)
 			{
 				if (check_if_quote_at_end('\"', input, i))
