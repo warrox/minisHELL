@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 16:53:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:35:45 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void					ft_current_directory(char *path,t_data *data);
 
 void	init_exec(t_data *data);
 void	init_struct_exec(t_data *data);
+void	init_files(t_data *data, int i);
 void	exec_single_cmd(t_data *data);
 int	nb_pipe(t_data *data);
 char	*get_path(t_data *data);
