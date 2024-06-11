@@ -3,21 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:28:47 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/06 08:46:33 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:19:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	is_a_builtin(t_data *data)
+int	is_a_builtin(t_data *data)
 {
-	cmd_env(data);
-	pwd_cmd(data);
-	cmd_export(data);
-	cmd_unset(data);
-	cmd_echo(data);
-	ft_current_directory(data->tokenizer->cmd_array[1], data);
+	
+	if(cmd_env(data))
+		return (1);
+	else if (pwd_cmd(data))
+		return (1);
+	else if (cmd_export(data))
+		return (1);
+	else if (cmd_unset(data))
+		return (1);
+	else if (cmd_echo(data))
+		return (1);
+	else if (ft_current_directory(data->tokenizer->cmd_array[1], data))
+	{
+		
+		return (1);
+	}
+	else
+		return (0);
 }
