@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:08:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:24:06 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);
+		int j = 0;
+		while(ft_isws(input[j]))			
+			j++;
+		if(input[j] == '\0')
+		{
+			add_history(input);
+			free_prompt(data);
+			ft_clear_tokenizer(data);
+			continue;
+		}
 		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free_prompt(data);
@@ -50,12 +60,15 @@ int	display_prompt(t_data *data)
 			break ;
 		}
 		input_cpy = parser(input, data);
-		if(!input)
+		if(input[0] == '\0' || is_a_builtin(data))
+		{
+			add_history(input);
+			free_prompt(data);
+			ft_clear_tokenizer(data);
 			continue;
-		// print_lst_cmdarg(data->tokenizer);
-		if(data->tokenizer->final_cmd)
-			print_exec_utils(data);
+		}
 		init_exec(data);
+		// printf("%s\n", data->tokenizer->final_cmd);
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);
 		ft_clear_tokenizer(data);
