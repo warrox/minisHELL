@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/11 14:19:50 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:01:52 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,22 @@ void	expander(t_data *data)
 		{
 			if (tmp->final_cmd[i] == '\'')
 			{
-				while (tmp->final_cmd[++i] != '\'')
+				while (tmp->final_cmd[++i] != '\'' && tmp->final_cmd[i + 1] != '\0')
 				{
+					if(flag % 2 != 0 && tmp->final_cmd[i + 1] == '\0')
+						return;
+					flag++;
 					tmp->result[j++] = tmp->final_cmd[i];
 				}
 				flag = 1;
 			}
 			if (tmp->final_cmd[i] == '\"')
 			{
-				while (tmp->final_cmd[i++] != '\"')
+				while (tmp->final_cmd[i++] != '\"' && tmp->final_cmd[i + 1] != '\0')
 				{
+					if(flag % 2 != 0 && tmp->final_cmd[i + 1] == '\0')
+						return;
+					flag++;
 					tmp->result[j++] = tmp->final_cmd[i];
 				}
 				flag = 1;
