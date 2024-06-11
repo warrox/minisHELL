@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:07:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:50:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_struct_exec(t_data *data)
 	if (!data->exec)
 		return ;
 	data->exec->cmd = NULL_INIT;
-	data->exec->infile = NULL_INIT;
+	data->exec->infile = ZERO_INIT;
 	data->exec->here_doc = ZERO_INIT;
 	data->exec->nb_cmd = ZERO_INIT;
 	data->exec->outfile = ZERO_INIT;
@@ -63,7 +63,8 @@ void	init_exec(t_data *data)
 	i = ZERO_INIT;
 	if(data->tokenizer->final_cmd == NULL)
 		return;
-	//print_exec_utils(data);
+	// printf("CS : %d\n", data->tokenizer->count_size);
+	// print_exec_utils(data);
 	init_struct_exec(data);
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
