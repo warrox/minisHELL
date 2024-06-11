@@ -6,11 +6,33 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 15:40:49 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:14:54 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+int	check_export_nothing(t_data *data)
+{
+	t_list_arg *tmp;
+	char **split = NULL_INIT;
+
+	tmp = data->lst;
+	split = ft_split(data->tokenizer->final_cmd, ' ');
+	if (!split)
+		return (0);
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key_and_val[0], split[1]))
+		{
+			free_split(split);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	free_split(split);
+	return (0);
+}
 
 void	case_egal(t_data *data)
 {
