@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/12 11:45:31 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/12 14:18:46 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ char	*flush_redir(char *str)
 		}
 	}
 	if(flag == 0)
+	{
 		buffer[j] = str[i + 1];
-	j++;
+		j++;
+	}
 	buffer[j] = 0;
 	ft_printf("FLUSH : %s\n", buffer);
 	return (ft_strdup(buffer));

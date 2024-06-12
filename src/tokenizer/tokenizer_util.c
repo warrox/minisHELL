@@ -110,8 +110,7 @@ int	sign_cmp(char *str)
 		}
 		i++;
 	}
-
-	if (strncmp(str, ">>", 2) == 0)
+	if (ft_strncmp(str, ">>", 2) == 0)
 		return (2);
 	else if (ft_strncmp(str, "<<", 2) == 0)
 		return (2);
