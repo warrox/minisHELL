@@ -94,6 +94,23 @@ char	*ft_strdup_cust(const char *source)
 
 int	sign_cmp(char *str)
 {
+	int i;
+	int j;
+	i = 0;
+	j = 0;
+	while(str[i])
+	{
+		if(str[i] == '\"')
+		{
+			j = i +1;
+			while(str[j] != '\"')
+				j++;
+			if(str[j] == '\"')
+				return(0);
+		}
+		i++;
+	}
+
 	if (strncmp(str, ">>", 2) == 0)
 		return (2);
 	else if (ft_strncmp(str, "<<", 2) == 0)
@@ -110,11 +127,21 @@ int	count_sign(char *input)
 	int	count;
 	int	tmp;
 	int	i;
-
+	int flag;
 	count = 0;
 	i = 0;
+	flag = 0;
 	while (input[i])
 	{
+		if(input[i] == '\"')
+		{
+			i++;
+			flag++;
+			while(input[i] != '\"')
+				i++;
+			if(input[i] == '\"')
+				return(count);
+		}
 		tmp = sign_cmp(&input[i]);
 		if (tmp != 0)
 		{
