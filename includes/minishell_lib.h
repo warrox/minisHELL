@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 16:53:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:11:56 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void					create_new_var(t_data *data, char *key, char *value);
 void					cmd_echo(t_data *data);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
+int ft_exit(t_data *data, char *input);
 
 /**[PROMPT FUNCTIONS]**/
 

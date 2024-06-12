@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:08:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:13:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,21 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);
-		if (ft_strncmp(input, "exit", 4) == 0)
+		
+		
+		if(ft_exit(data,input) == 0)
 		{
-			free_prompt(data);
-			ft_clear_tokenizer(data);
-			free(data->signal);
-			if (input)
-				free(input);
-			break ;
-		}
+			return(0);
+		}	
+		// if (ft_strncmp(input, "exit", 4) == 0)
+		// {
+		// 	free_prompt(data);
+		// 	ft_clear_tokenizer(data);
+		// 	free(data->signal);
+		// 	if (input)
+		// 		free(input);
+		// 	break ;
+		// }
 		input_cpy = parser(input, data);
 		if(!input)
 			continue;
