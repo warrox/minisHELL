@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/12 15:13:43 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	display_prompt(t_data *data)
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
-		input = readline(data->prompt->usr_prompt);
-		
-		
+		input = readline(data->prompt->usr_prompt);	
 		if(ft_exit(data,input) == 0)
 		{
 			return(0);
