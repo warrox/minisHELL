@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/11 16:05:38 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:05:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 
 typedef struct s_exec
 {
-	pid_t	pid;
+	pid_t	pid_1;
+	pid_t	pid_2;
 	char	*cmd;
 	char	*path;
 	char	**path_cmd;
@@ -42,7 +43,7 @@ typedef struct s_exec
 	int here_doc;
 	int nb_cmd;
 	int nb_pipe;
-	int *tube;
+	int tube[2];
 }			t_exec;
 
 typedef struct s_prompt
@@ -167,16 +168,20 @@ int ft_current_directory(char *path,t_data *data);
 
 void	init_exec(t_data *data);
 void	init_struct_exec(t_data *data);
-void	init_files(t_data *data, int i);
+void	init_files(t_data *data, t_list_arg *tok, int i);
 void	exec_single_cmd(t_data *data);
-int	nb_pipe(t_data *data);
+int	nb_node(t_data *data);
 char	*get_path(t_data *data);
 void	free_exec(t_data *data);
 void	exec_sub_proc(t_data *data);
-int	is_redir(t_data *data);
-char	*build_cmd(t_data *data);
+int	is_redir(t_list_arg *tok);
+char	*build_cmd(t_data *data, t_list_arg *tok);
 void	file_not_found(t_data *data);
 void	cmd_not_found(t_data *data);
 void	error_excve(t_data *data);
+void	exec_one_pipe(t_data *data);
+void	exit_error(char *str);
+void	first_child_process(t_data *data);
+void	second_child_process(t_data *data);
 
 #endif
