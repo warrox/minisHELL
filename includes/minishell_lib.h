@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 18:05:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 21:19:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	free_exec(t_data *data);
 void	exec_sub_proc(t_data *data);
 int	is_redir(t_list_arg *tok);
 char	*build_cmd(t_data *data, t_list_arg *tok);
-void	file_not_found(t_data *data);
+void	file_not_found(t_data *data, t_list_arg *tok);
 void	cmd_not_found(t_data *data);
 void	error_excve(t_data *data);
 void	exec_one_pipe(t_data *data);
