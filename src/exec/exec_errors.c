@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 17:45:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:31:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	cmd_not_found(t_data *data)
 	exit(127);
 }
 
-void	file_not_found(t_data *data)
+void	file_not_found(t_data *data, t_list_arg *tok)
 {
-	if (data->tokenizer->file_array[0] != NULL)
-		write(2, data->tokenizer->file_array[0], ft_strlen(data->tokenizer->file_array[0]));
+	if (tok->file_array[0] != NULL)
+		write(2, tok->file_array[0], ft_strlen(tok->file_array[0]));
 	write(2, ": No such file or directory\n", 29);
-	// if (data->exec->outfile != -1)
-	// 	close(data->exec->outfile);
 	free(data->exec->cmd);
-	free_exec(data);
 	ft_clear_tokenizer(data);
+	close(data->exec->tube[1]);
+	close(data->exec->tube[0]);
+	free_exec(data);
 	free_prompt(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);

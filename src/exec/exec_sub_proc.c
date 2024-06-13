@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 18:39:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:28:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void init_files(t_data *data, t_list_arg *tok, int i)
     {
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
         if (data->exec->outfile < 0)
-            file_not_found(data);
+            file_not_found(data, tok);
 		if (nb_node(data) == 1)
 		{
 			dup2(data->exec->outfile, STDOUT_FILENO);
@@ -29,7 +29,7 @@ void init_files(t_data *data, t_list_arg *tok, int i)
     {
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
-            file_not_found(data);
+            file_not_found(data, tok);
 		if (nb_node(data) == 1)
 		{
 			dup2(data->exec->infile, STDIN_FILENO);
@@ -46,14 +46,11 @@ void	second_child_process(t_data *data)
 	
 	while(tmp && tmp->next)
 		tmp = tmp->next;
-	print_exec_utils(data);
 	if (is_redir(tmp))
 	{
 		while(tmp->array_sign[i] != 0)
 			init_files(data, tmp, i++);
 	}
-	dprintf(2, "in : %d\n", data->exec->infile);
-	dprintf(2, "out : %d\n", data->exec->outfile);
 	if (data->exec->infile != 0)
 	{
 		dup2(data->exec->infile, STDIN_FILENO);
@@ -69,8 +66,6 @@ void	second_child_process(t_data *data)
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
 	data->exec->cmd = build_cmd(data, tmp);
-	// dprintf(2, "%s\n", data->exec->cmd);
-	// dprintf(2, "%s\n", tmp->cmd_array[0]);
 	if (!data->exec->cmd)
 		cmd_not_found(data);
 	execve(data->exec->cmd, tmp->cmd_array, NULL);
