@@ -108,6 +108,14 @@ int	sign_cmp(char *str)
 			if(str[j] == '\"')
 				return(0);
 		}
+		if(str[i] == '\'')
+		{
+			j = i +1;
+			while(str[j] != '\'')
+				j++;
+			if(str[j] == '\'')
+				return(0);
+		}
 		i++;
 	}
 	if (ft_strncmp(str, ">>", 2) == 0)
