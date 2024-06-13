@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/12 15:47:23 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/13 13:13:42 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	display_prompt(t_data *data)
 {
 	char	*input;
 	char	*input_cpy;
-
+	int		int_nbr;
 	input = NULL_INIT;
+	int_nbr = ZERO_INIT;
 	input_cpy = NULL_INIT;
 	data->tokenizer = NULL;
 	init_signal(data);
@@ -40,9 +41,10 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);	
-		if(ft_exit(data,input) == 0)
+		int_nbr = ft_exit(data, input);
+		if(int_nbr >= 0 && int_nbr <= 255)
 		{
-			return(0);
+			return(int_nbr);
 		}	
 		// if (ft_strncmp(input, "exit", 4) == 0)
 		// {
