@@ -6,11 +6,17 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:04:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:45:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	exit_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(127); // voir exit code plus tard
+}
 
 void	error_excve(t_data *data)
 {
@@ -22,6 +28,7 @@ void	error_excve(t_data *data)
 	free_exec(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);
+	exit(126);
 }
 
 void	cmd_not_found(t_data *data)
