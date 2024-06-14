@@ -6,11 +6,16 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:01:39 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 15:10:45 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:04:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	first_pipe(t_list_arg *tok)
+{
+	
+}
 
 void	close_tubes(t_data *data)
 {

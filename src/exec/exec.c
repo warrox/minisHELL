@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 15:35:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:50:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->nb_node = ZERO_INIT;
 	data->exec->pid_1 = NULL_INIT;
 	data->exec->pid_2 = NULL_INIT;
+	data->exec->pid = NULL_INIT;
 	data->exec->tube[0] = ZERO_INIT;
 	data->exec->tube[1] = ZERO_INIT;
 	data->exec->path = NULL_INIT;
