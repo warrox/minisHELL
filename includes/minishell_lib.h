@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 15:14:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:04:39 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_exec
 {
 	pid_t	pid_1;
 	pid_t	pid_2;
+	pid_t	pid;
 	char	*cmd;
 	char	*path;
 	char	**path_cmd;
@@ -189,5 +190,7 @@ void	second_child_process(t_data *data);
 void	exec_multi_pipe(t_data *data);
 void	init_tubes(t_data *data);
 void	close_tubes(t_data *data);
+void	children_process(t_data *data);
+void	first_pipe(t_list_arg *tok);
 
 #endif
