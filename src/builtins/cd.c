@@ -82,7 +82,7 @@ int cd_check_opt(char *path, t_data *data)
 	return (0);
 }
 
-void ft_current_directory(char *path,t_data *data)
+int ft_current_directory(char *path,t_data *data)
 {
 	// 1 copier le path absolut via getcwd et remplacer old_pwd
 	// 2 chdir et check si ok 
@@ -110,20 +110,20 @@ void ft_current_directory(char *path,t_data *data)
 		{
 			tmp = find_key_user(data);
 			if(tmp == NULL)
-				return;
+				return (1);
 			ft_strcpy(path_hu, "/home/");
 			ft_strlcat(path_hu, tmp->key_and_val[1], (ft_strlen(path_hu) + ft_strlen(tmp->key_and_val[1])+ 1));
 			chdir(path_hu);
-			return;
+			return (1);
 		}
 		if(cd_check_opt(path,data))
 		{
-			return;
+			return (1);
 		}
 		if(chdir(path)== -1)
 		{
 			ft_printf("no such file or directory: %s\n",path);
-			return;
+			return (1);
 		}
 
 		getcwd(buffer_old, buffer_size);
@@ -137,8 +137,7 @@ void ft_current_directory(char *path,t_data *data)
 			data->lst->key_and_val[1] = ft_strdup(buffer_old);
 		}
 	}
-
-
+	return (0);
 }
 
 

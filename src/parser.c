@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 17:18:52 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:20:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell_lib.h"
 
@@ -136,6 +137,5 @@ char	*parser(char *input, t_data *data)
 		return NULL;
 	parse_cmd_arg(data);
 	expander(data);
-	is_a_builtin(data);
 	return (input);
 }

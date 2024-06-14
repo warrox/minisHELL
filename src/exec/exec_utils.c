@@ -6,40 +6,45 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 16:58:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:04:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int	is_redir(t_data *data)
+int	is_redir(t_list_arg *tok)
 {
 	t_list_arg *tmp;
 
-	tmp = data->tokenizer;
+	tmp = tok;
+	if (!tmp)
+		return (0);
 	if (tmp->array_sign[0])
 		return (1);
 	return (0);
 }
 
-char	*build_cmd(t_data *data)
+char	*build_cmd(t_data *data, t_list_arg *tok)
 {
 	int	i;
-	char	*tmp;
+	char *tmp_c;
+	t_list_arg	*tmp;
 	
-	tmp = NULL_INIT;
+	tmp = tok;
 	i = 0;
+	if (!data->exec->path || data->exec->path == NULL)
+		return (data->tokenizer->cmd_array[0]);
 	if(!data->tokenizer->cmd_array)
-		return (NULL);
+		return (NULL); 
 	if(data->tokenizer->cmd_array[0] == NULL)
 		return (NULL);
 	if (access(data->tokenizer->cmd_array[0], F_OK | X_OK) == 0)
 		return (data->tokenizer->cmd_array[0]);
 	while(data->exec->path_cmd[i])
 	{
-		tmp = ft_strjoin(data->exec->path_cmd[i], "/");
-		data->exec->final_cmd = ft_strjoin(tmp, data->tokenizer->cmd_array[0]);
-		free(tmp);
+		tmp_c = ft_strjoin(data->exec->path_cmd[i], "/");
+		data->exec->final_cmd = ft_strjoin(tmp_c, tmp->cmd_array[0]);
+		free(tmp_c);
 		if (access(data->exec->final_cmd, F_OK | X_OK) == 0)
 			return (data->exec->final_cmd);
 		free(data->exec->final_cmd);
@@ -50,7 +55,8 @@ char	*build_cmd(t_data *data)
 
 void	free_exec(t_data *data)
 {
-	free_split(data->exec->path_cmd);
+	if (data->exec->path_cmd)
+		free_split(data->exec->path_cmd);
 	free(data->exec);
 }
 

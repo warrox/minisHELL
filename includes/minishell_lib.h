@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/12 15:11:56 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:14:22 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 typedef struct s_exec
 {
+	pid_t	pid_1;
+	pid_t	pid_2;
 	pid_t	pid;
 	char	*cmd;
 	char	*path;
@@ -41,8 +43,11 @@ typedef struct s_exec
 	int outfile;
 	int here_doc;
 	int nb_cmd;
-	int nb_pipe;
-	int *tube;
+	int nb_node;
+	int nb_tube;
+	int tube[2];
+	int *multi_tube;
+	int index;
 }			t_exec;
 
 typedef struct s_prompt
@@ -96,12 +101,12 @@ void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
-void					is_a_builtin(t_data *data);
-void					cmd_unset(t_data *data);
+int					is_a_builtin(t_data *data);
+int					cmd_unset(t_data *data);
 void					case_egal(t_data *data);
-void					cmd_env(t_data *data);
-void					pwd_cmd(t_data *data);
-void					cmd_export(t_data *data);
+int					cmd_env(t_data *data);
+int					pwd_cmd(t_data *data);
+int					cmd_export(t_data *data);
 void					case_plus_egal(t_data *data);
 void					set_value(t_data *data, char **split_arg);
 int						check_plus_egal(t_data *data);
@@ -112,10 +117,11 @@ int						check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
 int						is_env_var(t_data *data, char **split_key);
 void					create_new_var(t_data *data, char *key, char *value);
-void					cmd_echo(t_data *data);
+int					cmd_echo(t_data *data);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
 int ft_exit(t_data *data, char *input);
+int	check_export_nothing(t_data *data);
 
 /**[PROMPT FUNCTIONS]**/
 
@@ -160,21 +166,31 @@ void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
-void					ft_current_directory(char *path,t_data *data);
+int ft_current_directory(char *path,t_data *data);
 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);
 void	init_struct_exec(t_data *data);
+void	init_files(t_data *data, t_list_arg *tok, int i);
 void	exec_single_cmd(t_data *data);
-int	nb_pipe(t_data *data);
+int	nb_node(t_data *data);
 char	*get_path(t_data *data);
 void	free_exec(t_data *data);
 void	exec_sub_proc(t_data *data);
-int	is_redir(t_data *data);
-char	*build_cmd(t_data *data);
-void	file_not_found(t_data *data);
+int	is_redir(t_list_arg *tok);
+char	*build_cmd(t_data *data, t_list_arg *tok);
+void	file_not_found(t_data *data, t_list_arg *tok);
 void	cmd_not_found(t_data *data);
 void	error_excve(t_data *data);
+void	exec_one_pipe(t_data *data);
+void	exit_error(char *str);
+void	first_child_process(t_data *data);
+void	second_child_process(t_data *data);
+void	exec_multi_pipe(t_data *data);
+void	init_tubes(t_data *data);
+void	close_tubes(t_data *data);
+void	children_process(t_data *data);
+void	first_pipe(t_list_arg *tok);
 
 #endif
