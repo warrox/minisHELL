@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 23:21:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:59:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->here_doc = ZERO_INIT;
 	data->exec->nb_cmd = ZERO_INIT;
 	data->exec->outfile = 1;
-	data->exec->nb_pipe = ZERO_INIT;
+	data->exec->nb_node = ZERO_INIT;
 	data->exec->pid_1 = NULL_INIT;
 	data->exec->pid_2 = NULL_INIT;
 	data->exec->tube[0] = ZERO_INIT;
@@ -45,6 +45,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->path = NULL_INIT;
 	data->exec->path_cmd = NULL_INIT;
 	data->exec->final_cmd = NULL_INIT;
+	data->exec->nb_tube = ZERO_INIT;
 }
 
 void	exec_single_cmd(t_data *data)
@@ -72,4 +73,6 @@ void	init_exec(t_data *data)
 		exec_single_cmd(data);
 	else if (nb_node(data) == 2)
 		exec_one_pipe(data);
+	else
+		exec_multi_pipe(data);
 }

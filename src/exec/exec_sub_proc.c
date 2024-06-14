@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 23:28:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:25:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	first_child_process(t_data *data)
 		while(data->tokenizer->array_sign[i] != 0)
 			init_files(data, data->tokenizer, i++);
 	}
-	dprintf(2, "in %d\n", data->exec->infile);
-	dprintf(2, "out %d\n", data->exec->outfile);
 	if (data->exec->infile != 0)
 	{
 		dup2(data->exec->infile, STDIN_FILENO);
@@ -102,8 +100,6 @@ void	first_child_process(t_data *data)
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (!data->exec->cmd)
 		cmd_not_found(data);
-	// dprintf(2, "%s\n", data->exec->cmd);
-	// dprintf(2, "%s\n", data->tokenizer->cmd_array[0]);
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
 	error_excve(data);
 }
