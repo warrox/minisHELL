@@ -1,4 +1,5 @@
 #include "../../includes/minishell_lib.h"
+#include <string.h>
 int ft_is_oth_pipe(char *input, int i)
 {
 	i += 1;
@@ -98,26 +99,6 @@ int	sign_cmp(char *str)
 	int j;
 	i = 0;
 	j = 0;
-	while(str[i])
-	{
-		if(str[i] == '\"')
-		{
-			j = i +1;
-			while(str[j] != '\"')
-				j++;
-			if(str[j] == '\"')
-				return(0);
-		}
-		if(str[i] == '\'')
-		{
-			j = i +1;
-			while(str[j] != '\'')
-				j++;
-			if(str[j] == '\'')
-				return(0);
-		}
-		i++;
-	}
 	if (ft_strncmp(str, ">>", 2) == 0)
 		return (2);
 	else if (ft_strncmp(str, "<<", 2) == 0)
@@ -138,18 +119,17 @@ int	count_sign(char *input)
 	count = 0;
 	i = 0;
 	flag = 0;
-	while (input[i])
+	char *ptr = input;
+	while (ptr[i])
 	{
-		if(input[i] == '\"')
-		{
-			i++;
-			flag++;
-			while(input[i] != '\"')
+		if (ptr[i] == '\"') {
+			if (ptr[i + 1])
 				i++;
-			if(input[i] == '\"')
-				return(count);
+			ptr = strchr(ptr,'\"');
+			if (!ptr)
+				return (count);
 		}
-		tmp = sign_cmp(&input[i]);
+		tmp = sign_cmp(&ptr[i]);
 		if (tmp != 0)
 		{
 			count++;

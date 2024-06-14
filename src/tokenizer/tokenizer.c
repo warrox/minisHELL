@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/12 14:18:46 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/14 13:53:31 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,23 @@ char	*flush_redir(char *str)
 	int		i;
 	int		tmp;
 	int		j;
-	int flag;
-	flag = 0;
 	i = 0;
 	tmp = 0;
 	j = 0;
 	ft_printf("HERE : %s\n", str);
 	while (str[i])
 	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\"')
+				buffer[j++] = str[i++];
+			if (str[i] == '\"')
+				i++;
+		}
+
 		tmp = sign_cmp(&str[i]);
-		if(tmp != 0)
-			flag++;
-		ft_printf("tmp int : %d\n", tmp);
+		ft_printf("tmp int : %d, str = %s\n", tmp, &str[i]);
 		if (tmp)
 		{
 			i += tmp;
@@ -91,11 +96,7 @@ char	*flush_redir(char *str)
 			i++;
 		}
 	}
-	if(flag == 0)
-	{
-		buffer[j] = str[i + 1];
-		j++;
-	}
+
 	buffer[j] = 0;
 	ft_printf("FLUSH : %s\n", buffer);
 	return (ft_strdup(buffer));
