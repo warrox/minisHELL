@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 14:04:58 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:35:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	exec_multi_pipe(t_data *data)
 	data->exec->multi_tube = (int *)malloc(sizeof(int) * (data->exec->nb_tube));
 	if (!data->exec->multi_tube)
 		exit_error("Failed to allocate memory for pipes!\n");
-	printf("ICI -> %d\n", data->exec->nb_node);
-	printf("La -> %d", data->exec->nb_tube);
+	// printf("ICI -> %d\n", data->exec->nb_node);
+	// printf("La -> %d\n", data->exec->nb_tube);
+	init_tubes(data);
+	// big while loop
+	close_tubes(data);
 	free(data->exec->multi_tube);
 }

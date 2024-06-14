@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 13:59:34 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:35:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->path_cmd = NULL_INIT;
 	data->exec->final_cmd = NULL_INIT;
 	data->exec->nb_tube = ZERO_INIT;
+	data->exec->index = -1;
 }
 
 void	exec_single_cmd(t_data *data)
