@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 21:19:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:59:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ typedef struct s_exec
 	int outfile;
 	int here_doc;
 	int nb_cmd;
-	int nb_pipe;
+	int nb_node;
+	int nb_tube;
 	int tube[2];
+	int *multi_tube;
 }			t_exec;
 
 typedef struct s_prompt
@@ -183,5 +185,6 @@ void	exec_one_pipe(t_data *data);
 void	exit_error(char *str);
 void	first_child_process(t_data *data);
 void	second_child_process(t_data *data);
+void	exec_multi_pipe(t_data *data);
 
 #endif
