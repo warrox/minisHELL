@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 16:09:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:46:43 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ static void	unset_var(t_list_arg **head, t_list_arg *node_to_delete)
 	free_node(node_to_delete);
 }
 
-void	cmd_unset(t_data *data)
+int	cmd_unset(t_data *data)
 {
+	if (data->tokenizer->cmd_array[0] == NULL)
+		return (1);
 	t_list_arg	*tmp;
 
 	tmp = NULL_INIT;
@@ -58,7 +60,7 @@ void	cmd_unset(t_data *data)
 	{
 		if (!data->tokenizer->cmd_array[1])
 		{
-			return ;
+			return (1);
 		}
 		while (tmp)
 		{
@@ -66,9 +68,10 @@ void	cmd_unset(t_data *data)
 					tmp->key_and_val[0]) == 0)
 			{
 				unset_var(&data->lst, tmp);
-				return ;
+				return (1);
 			}
 			tmp = tmp->next;
 		}
 	}
+	return (0);
 }

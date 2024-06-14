@@ -6,11 +6,17 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 17:04:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:31:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	exit_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(127); // voir exit code plus tard
+}
 
 void	error_excve(t_data *data)
 {
@@ -22,6 +28,7 @@ void	error_excve(t_data *data)
 	free_exec(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);
+	exit(126);
 }
 
 void	cmd_not_found(t_data *data)
@@ -37,16 +44,16 @@ void	cmd_not_found(t_data *data)
 	exit(127);
 }
 
-void	file_not_found(t_data *data)
+void	file_not_found(t_data *data, t_list_arg *tok)
 {
-	if (data->tokenizer->file_array[0] != NULL)
-		write(2, data->tokenizer->file_array[0], ft_strlen(data->tokenizer->file_array[0]));
+	if (tok->file_array[0] != NULL)
+		write(2, tok->file_array[0], ft_strlen(tok->file_array[0]));
 	write(2, ": No such file or directory\n", 29);
-	// if (data->exec->outfile != -1)
-	// 	close(data->exec->outfile);
 	free(data->exec->cmd);
-	free_exec(data);
 	ft_clear_tokenizer(data);
+	close(data->exec->tube[1]);
+	close(data->exec->tube[0]);
+	free_exec(data);
 	free_prompt(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);

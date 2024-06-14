@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 17:57:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:15:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,24 @@ void	print_lst_export(t_list_arg *lst)
 	}
 }
 
-void	cmd_export(t_data *data)
+int	cmd_export(t_data *data)
 {
-	// printf("final_cmd --> %s\n", data->tokenizer->final_cmd);
-	// printf("input_splitted --> %s\n", data->tokenizer->input_splited);
-	// printf("cmd_arg_0 --> %s\n", data->tokenizer->cmd_and_arg[0]);
-	// printf("cmd_arg_1 --> %s\n", data->tokenizer->cmd_and_arg[1]);
-	// printf("cmd_arg_2 --> %s\n\n", data->tokenizer->cmd_and_arg[2]);
 	if (ft_strstr(data->tokenizer->final_cmd, "export"))
 	{
 		if (check_export_cmd(data))
-			return ;
+			return (1);
 		if (check_plus_egal(data))
 		{
-			// dprintf(2, " ICI %s\n", data->tokenizer->final_cmd);
 			case_plus_egal(data);
-			return ;
+			return (1);
 		}
 		if (check_egals(data))
 		{
 			case_egal(data);
-			return ;
+			return (1);
 		}
+		if (check_export_nothing(data))
+			return (1);
 	}
+	return (0);
 }
