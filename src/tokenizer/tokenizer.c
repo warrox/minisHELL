@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:11:21 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:47:16 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,20 @@ char	*flush_redir(char *str)
 	ft_printf("HERE : %s\n", str);
 	while (str[i])
 	{
-		if (str[i] == '\"' || str[i] == '\'')
+		if (str[i] == '\"')
 		{
 			i++;
 			while (str[i] != '\"')
 				buffer[j++] = str[i++];
 			if (str[i] == '\"')
+				i++;
+		}
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'')
+				buffer[j++] = str[i++];
+			if (str[i] == '\'')
 				i++;
 		}
 
