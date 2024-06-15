@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:14:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:06:44 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,9 @@ void	exec_multi_pipe(t_data *data);
 void	init_tubes(t_data *data);
 void	close_tubes(t_data *data);
 void	children_process(t_data *data);
-void	first_pipe(t_list_arg *tok);
+void	first_pipe(t_data *data, t_list_arg *tok);
+void	last_pipe(t_data *data, t_list_arg *tok);
+void	intermediate_pipe(t_data *data, t_list_arg *tok);
+void	reset_in_out(t_data *data);
 
 #endif
