@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:14:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:03:00 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
 	t_signal			*signal;
 	t_exec				*exec;
 	int					i;
+	int					pansement;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/

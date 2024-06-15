@@ -63,8 +63,6 @@ int cd_check_opt(char *path, t_data *data)
 		{
 			tmp = find_key_old_pwd(data);
 			save_current = find_key_pwd(data);
-			ft_printf("DEBUG : %s\n",tmp->key_and_val[1]);
-			ft_printf("DEBUG SAVE : %s \n", save_current->key_and_val[1]);
 			if(tmp->key_and_val[1] == NULL)
 				tmp->key_and_val[1] = ft_strdup(save_current->key_and_val[1]);
 			chdir(tmp->key_and_val[1]);
@@ -77,7 +75,6 @@ int cd_check_opt(char *path, t_data *data)
 			save_current->key_and_val[1] = ft_strdup(buffer);	
 			ft_printf("%s\n",save_current->key_and_val[1]);
 			return(1);
-			// replace old by new & so on
 		}
 		else
 		{

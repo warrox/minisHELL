@@ -78,7 +78,6 @@ void	create_signed(t_list_arg *lst)
 	tmp = 0;
 	lst->file_array = NULL;
 	lst->file_array = ft_calloc(lst->count_size + 1, sizeof(char *));
-	ft_printf("splitted : %s\n",lst->input_splited);
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);

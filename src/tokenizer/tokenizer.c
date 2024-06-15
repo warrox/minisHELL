@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:47:16 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/15 15:30:09 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_word_size(char *str)
 	return (i);
 }
 
-char	*flush_redir(char *str)
+char	*flush_redir(char *str, t_data *data)
 {
 	char	buffer[2048];
 	int		i;
@@ -71,7 +71,7 @@ char	*flush_redir(char *str)
 	i = 0;
 	tmp = 0;
 	j = 0;
-	ft_printf("HERE : %s\n", str);
+	data->pansement = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -88,11 +88,13 @@ char	*flush_redir(char *str)
 			while (str[i] != '\'')
 				buffer[j++] = str[i++];
 			if (str[i] == '\'')
+			{
+				data->pansement = 1;
 				i++;
+			}
 		}
 
 		tmp = sign_cmp(&str[i]);
-		ft_printf("tmp int : %d, str = %s\n", tmp, &str[i]);
 		if (tmp)
 		{
 			i += tmp;
@@ -106,7 +108,6 @@ char	*flush_redir(char *str)
 	}
 
 	buffer[j] = 0;
-	ft_printf("FLUSH : %s\n", buffer);
 	return (ft_strdup(buffer));
 }
 
@@ -119,7 +120,7 @@ void	parse_cmd_arg(t_data *data)
 	{
 		sort_sign(tmp);
 		create_signed(tmp);
-		tmp->final_cmd = flush_redir(tmp->input_splited);
+		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		tmp = tmp->next;
 	}
 }
@@ -132,9 +133,7 @@ int	cutting_input(t_data *data, char *input)
 	i = 0;
 	
 	if(checker_err_pipe(input, data) == 0 || check_quote(input, 0, data) == 0) 
-	{
 		return(-1);
-	}
 	split = ft_split(input, '|'); // po bon
 	if (!split)
 		return(-1);

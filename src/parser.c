@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:20:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:26:12 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ void	expander(t_data *data)
 	int			j;
 	char		*expanded;
 	int			flag;
+	int			sq_flag;
+
+	sq_flag = 0;
 	i = 0;
 	j = 0;
 	flag = 0;
@@ -81,12 +84,14 @@ void	expander(t_data *data)
 	{
 		i = 0;
 		ft_bzero(tmp->result, 4096);
+		ft_printf("Couille dans le ptoage : %s\n", tmp->final_cmd);
 		while (tmp->final_cmd[i])
 		{
 			if (tmp->final_cmd[i] == '\'')
 			{
 				while (tmp->final_cmd[i++] != '\'' && tmp->final_cmd[i + 1] != '\0')
 				{
+					sq_flag++;
 					if(flag % 2 != 0 && tmp->final_cmd[i + 1] == '\0')
 						return;
 					flag++;
@@ -105,7 +110,7 @@ void	expander(t_data *data)
 				}
 				flag = 1;
 			}
-			if (tmp->final_cmd[i] == '$')
+			if (tmp->final_cmd[i] == '$' && data->pansement == 0)
 			{
 				expanded = expansion(&tmp->final_cmd[++i], data);
 				j += ft_strlen(expanded);
