@@ -82,8 +82,11 @@ void	create_signed(t_list_arg *lst)
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);
-		if(lst->input_splited[i - 1] == '\'')
+		if(i > 1)
+		{
+			if(lst->input_splited[i - 1] == '\'')
 			tmp = 0;
+		}
 		if (tmp != 0)
 		{
 			i += tmp;
