@@ -51,7 +51,6 @@ int ft_exit(t_data *data, char *input)
 			}
 			s_nbr[j] = '\0';
 			nbr = ft_atoi_long(s_nbr); //convertit le code d'erreur en int
-			ft_printf("NBR : %d\n",nbr);
 			if(input[j] == '\0')
 			{
 				if(nbr > 2147483646 || nbr < -214730)

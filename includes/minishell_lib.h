@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/15 17:56:03 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:04:42 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ typedef struct s_prompt
 	char				*usr_build_two;
 	char				*usr_prompt;
 }						t_prompt;
-
+typedef struct s_cd
+{
+	int i;
+	int j;
+	char buffer[4096];
+	char buffer_old[4096];
+	char path_hu[4096];
+} t_cd;
 typedef struct s_signal
 {
 	int					signal;
@@ -126,7 +133,14 @@ int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
 int ft_exit(t_data *data, char *input);
 int	check_export_nothing(t_data *data);
-
+void exec_cd_with_opt(t_data *data, t_list_arg *tmp, t_list_arg *save_current, char *buffer);
+void exec_cd(t_data *data, t_list_arg *tmp, char *buffer, char *buffer_old, int buffer_size);
+int no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
+int iterate_in_str(char *str);
+void init_tool_box(t_cd *tool_box);
+t_list_arg *find_key_user(t_data *data);
+t_list_arg *find_key_old_pwd(t_data *data);
+t_list_arg *find_key_pwd(t_data *data);
 /**[PROMPT FUNCTIONS]**/
 
 int						display_prompt(t_data *data);

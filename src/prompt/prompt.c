@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:25:55 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:25:51 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	display_prompt(t_data *data)
 		print_exec_utils(data);
 		if(is_a_builtin(data))
 		{
+			ft_printf("GOIN \n");
 			add_history(input);
 			free_prompt(data);
 			ft_clear_tokenizer(data);

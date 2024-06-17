@@ -42,39 +42,23 @@ t_list_arg *find_key_pwd(t_data *data)
 	}
 	return(tmp);
 } 
-
 int cd_check_opt(char *path, t_data *data)
 {
-	//check if '-'is found if true replace pwd by old path and so on.
-	int i;
-	i = 0;
 	t_list_arg *tmp;
 	t_list_arg *save_current;
-	int buffer_size = 4096;
-	char buffer[buffer_size];
+	t_cd toolbox;
+	data->i = 0;
 	save_current = data->lst;
-	while(path[i] == ' ' || path[i] == '\t')
-		i++;
-	if(path[i]== '-')
+	tmp = NULL;
+	while(path[data->i] == ' ' || path[data->i] == '\t')
+		data->i++;
+	if(path[data->i]== '-')
 	{
-		while(path[i]== ' ' || path[i] == '\t')
-			i++;
-		if(path[i + 1] == '\0')
+		while(path[data->i]== ' ' || path[data->i] == '\t')
+			data->i++;
+		if(path[data->i + 1] == '\0')
 		{
-			tmp = find_key_old_pwd(data);
-			save_current = find_key_pwd(data);
-			if(tmp->key_and_val[1] == NULL)
-				tmp->key_and_val[1] = ft_strdup(save_current->key_and_val[1]);
-			chdir(tmp->key_and_val[1]);
-			free(tmp->key_and_val[1]);
-			tmp->key_and_val[1] = NULL;
-			tmp->key_and_val[1] = ft_strdup(save_current->key_and_val[1]);
-			free(save_current->key_and_val[1]);
-			tmp->key_and_val[1] = NULL;
-			getcwd(buffer, buffer_size);
-			save_current->key_and_val[1] = NULL;
-			save_current->key_and_val[1] = ft_strdup(buffer);	
-			ft_printf("%s\n",save_current->key_and_val[1]);
+			exec_cd_with_opt(data, tmp, save_current, toolbox.buffer);	
 			return(1);
 		}
 		else
@@ -88,58 +72,31 @@ int cd_check_opt(char *path, t_data *data)
 
 int ft_current_directory(char *path,t_data *data)
 {
-	int buffer_size = 4096;
+	t_cd tool_box;
 	t_list_arg *tmp;
-	char buffer[buffer_size];
-	char buffer_old[buffer_size];
-	int i; 
-	char path_hu[4096];
+	
 	tmp = data->lst;
-	i = 0;
+	init_tool_box(&tool_box);	
 	if (ft_strstr(data->tokenizer->final_cmd, "cd") || (ft_strstr(data->tokenizer->final_cmd, "cd") && (data->tokenizer->final_cmd[2] == ' ' && data->tokenizer->final_cmd[3] == '\0')))
-	{	
-		int j;
-		if(ft_strlen(data->tokenizer->final_cmd) == 2)
-			j = 0;
-		else
-			j = 3;
-		while(data->tokenizer->final_cmd[j] == ' ')
-			j++;
-		if(data->tokenizer->final_cmd[i + 2] == '\0' || data->tokenizer->final_cmd[j] == '\0')
+	{		
+		tool_box.j = iterate_in_str(data->tokenizer->final_cmd);
+		if(data->tokenizer->final_cmd[tool_box.i + 2] == '\0' || data->tokenizer->final_cmd[tool_box.j] == '\0')
 		{
-			tmp = find_key_user(data);
-			if(tmp == NULL)
-				return (1);
-			ft_strcpy(path_hu, "/home/");
-			ft_strlcat(path_hu, tmp->key_and_val[1], (ft_strlen(path_hu) + ft_strlen(tmp->key_and_val[1])+ 1));
-			chdir(path_hu);
-			return (1);
+			no_arg(data, tmp, tool_box.path_hu);
+			return(1);
 		}
 		if(cd_check_opt(path,data))
-		{
 			return (1);
-		}
 		if(chdir(path)== -1)
 		{
 			ft_printf("no such file or directory: %s\n",path);
 			return (1);
 		}
-
-		getcwd(buffer_old, buffer_size);
+		getcwd(tool_box.buffer_old, 4096);
 		if(chdir(path) == 0)
-		{
-			tmp = find_key_pwd(data);
-			free(data->lst->key_and_val[1]);
-			data->lst->key_and_val[1] = NULL;
-			getcwd(buffer, buffer_size);
-			free(tmp->key_and_val[1]);
-			tmp->key_and_val[1] = NULL;
-			tmp->key_and_val[1] = ft_strdup(buffer);
-			tmp = find_key_old_pwd(data);
-			data->lst->key_and_val[1] = ft_strdup(buffer_old);
-		}
+			exec_cd(data,tmp, tool_box.buffer,tool_box.buffer_old,4096);			
 	}
-	return (0);
+	return (1);
 }
 
 
