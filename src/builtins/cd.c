@@ -87,11 +87,6 @@ int cd_check_opt(char *path, t_data *data)
 
 int ft_current_directory(char *path,t_data *data)
 {
-	// 1 copier le path absolut via getcwd et remplacer old_pwd
-	// 2 chdir et check si ok 
-	// si ok remplacer old_pwd et pwd
-	// if cd with no arg chdir goin to home root.
-	// cd /home/$user
 	int buffer_size = 4096;
 	t_list_arg *tmp;
 	char buffer[buffer_size];
@@ -134,6 +129,7 @@ int ft_current_directory(char *path,t_data *data)
 		{
 			tmp = find_key_pwd(data);
 			free(data->lst->key_and_val[1]);
+			data->lst->key_and_val[1] = NULL;
 			getcwd(buffer, buffer_size);
 			tmp->key_and_val[1] = ft_strdup(buffer);
 			tmp = find_key_old_pwd(data);

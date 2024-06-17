@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/15 15:03:00 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/15 17:56:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ typedef struct s_data
 	t_signal			*signal;
 	t_exec				*exec;
 	int					i;
+	int					j;
 	int					pansement;
+	int					flag; 
+	int					sq_flag;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/
@@ -168,7 +171,10 @@ int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
 int ft_current_directory(char *path,t_data *data);
-
+void expander(t_data *data);
+char	*expansion(char *input, t_data *data);
+int	get_word_size(char *str);
+char *flush_redir(char *str, t_data *data); 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

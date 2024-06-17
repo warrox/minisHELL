@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/15 15:30:09 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/15 17:58:12 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,55 +60,6 @@ int	get_word_size(char *str)
 	while (str[i] && !ft_isws(str[i]))
 		i++;
 	return (i);
-}
-
-char	*flush_redir(char *str, t_data *data)
-{
-	char	buffer[2048];
-	int		i;
-	int		tmp;
-	int		j;
-	i = 0;
-	tmp = 0;
-	j = 0;
-	data->pansement = 0;
-	while (str[i])
-	{
-		if (str[i] == '\"')
-		{
-			i++;
-			while (str[i] != '\"')
-				buffer[j++] = str[i++];
-			if (str[i] == '\"')
-				i++;
-		}
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				buffer[j++] = str[i++];
-			if (str[i] == '\'')
-			{
-				data->pansement = 1;
-				i++;
-			}
-		}
-
-		tmp = sign_cmp(&str[i]);
-		if (tmp)
-		{
-			i += tmp;
-			i += get_word_size(&str[i]);
-		}
-		else
-		{
-			buffer[j++] = str[i];
-			i++;
-		}
-	}
-
-	buffer[j] = 0;
-	return (ft_strdup(buffer));
 }
 
 void	parse_cmd_arg(t_data *data)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/14 17:14:41 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/06/15 17:56:37 by whamdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,12 @@ GREY    = \e[38;5;254m
 RESET   = \e[00m
 
 SOURCE = ./src/
-MAIN = main.c parser.c parser_utils.c parser_utils_3.c
+MAIN = main.c parser.c parser_utils.c parser_utils_3.c expander.c
 LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c 
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 UTILS = ./utils/print_utils.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c ./builtins/exit.c
-TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c
+TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c ./tokenizer/count_sign.c /tokenizer/flush_redir.c
 EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_multi_pipe_utils.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS) $(EXEC))
 
