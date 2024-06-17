@@ -2,6 +2,7 @@
 
 void exec_cd_with_opt(t_data *data, t_list_arg *tmp, t_list_arg *save_current, char *buffer)
 {
+
 	tmp = find_key_old_pwd(data);
 	save_current = find_key_pwd(data);
 	if(tmp->key_and_val[1] == NULL)
