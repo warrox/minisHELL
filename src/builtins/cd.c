@@ -72,6 +72,7 @@ int cd_check_opt(char *path, t_data *data)
 			free(save_current->key_and_val[1]);
 			tmp->key_and_val[1] = NULL;
 			getcwd(buffer, buffer_size);
+			save_current->key_and_val[1] = NULL;
 			save_current->key_and_val[1] = ft_strdup(buffer);	
 			ft_printf("%s\n",save_current->key_and_val[1]);
 			return(1);
@@ -131,6 +132,8 @@ int ft_current_directory(char *path,t_data *data)
 			free(data->lst->key_and_val[1]);
 			data->lst->key_and_val[1] = NULL;
 			getcwd(buffer, buffer_size);
+			free(tmp->key_and_val[1]);
+			tmp->key_and_val[1] = NULL;
 			tmp->key_and_val[1] = ft_strdup(buffer);
 			tmp = find_key_old_pwd(data);
 			data->lst->key_and_val[1] = ft_strdup(buffer_old);

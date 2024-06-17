@@ -1,7 +1,9 @@
 #include "../includes/minishell_lib.h"
 
-void handle_single_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag, int *sq_flag) {
-    while (final_cmd[*i] != '\'' && final_cmd[*i + 1] != '\0') {
+void handle_single_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag, int *sq_flag) 
+{
+    while (final_cmd[*i] != '\'' && final_cmd[*i + 1] != '\0') 
+	{
         (*i)++;
         (*sq_flag)++;
         if (*flag % 2 != 0 && final_cmd[*i + 1] == '\0')
@@ -12,7 +14,8 @@ void handle_single_quote_ex(char *final_cmd, char *result, int *i, int *j, int *
     *flag = 1;
 }
 
-void handle_double_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag) {
+void handle_double_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag) 
+{
     while (final_cmd[*i] != '\"' && final_cmd[*i + 1] != '\0') {
         (*i)++;
         if (*flag % 2 != 0 && final_cmd[*i + 1] == '\0')
@@ -23,7 +26,8 @@ void handle_double_quote_ex(char *final_cmd, char *result, int *i, int *j, int *
     *flag = 1;
 }
 
-void handle_expansion(char *final_cmd, char *result, t_data *data) {
+void handle_expansion(char *final_cmd, char *result, t_data *data) 
+{
     char *expanded = expansion(&final_cmd[++data->i], data);
     data->j += ft_strlen(expanded);
     ft_strlcat(result, expanded, ft_strlen(expanded) + ft_strlen(result) + 1);
@@ -32,14 +36,16 @@ void handle_expansion(char *final_cmd, char *result, t_data *data) {
         (data->i)++;
 }
 
-void init_expander(t_data *data) {
+void init_expander(t_data *data) 
+{
     data->i = 0;
     data->j = 0;
     data->flag = 0;
     data->sq_flag = 0;
 }
 
-void expander(t_data *data) {
+void expander(t_data *data) 
+{
     t_list_arg *tmp = data->tokenizer;
     init_expander(data);
     while (tmp) {
