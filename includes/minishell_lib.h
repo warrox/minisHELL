@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/15 17:06:44 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:38:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_exec
 {
 	pid_t	pid_1;
 	pid_t	pid_2;
-	pid_t	pid;
+	pid_t	*pid;
 	char	*cmd;
 	char	*path;
 	char	**path_cmd;
