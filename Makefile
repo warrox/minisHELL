@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/14 17:14:41 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/06/17 14:09:33 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra -g3
+# -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined -fsanitize=integer -fsanitize=null -fsanitize=unreachable
 
 LIBFT_MINISHELL_PATH = libft
 LIBFT_MINISHELL = libft/libft.a
