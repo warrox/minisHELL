@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 15:38:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:45:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,10 @@ void	first_pipe(t_data *data, t_list_arg *tok);
 void	last_pipe(t_data *data, t_list_arg *tok);
 void	intermediate_pipe(t_data *data, t_list_arg *tok);
 void	reset_in_out(t_data *data);
+void	error_init(t_data *data, char *str);
+void	error_cmd(t_data *data, t_list_arg *tok);
+void	error_execve_multi(t_data *data, t_list_arg *tok);
+void	file_not_found_multi(t_data *data, t_list_arg *tok);
+void	init_files_multi(t_data *data, t_list_arg *tok, int i);
 
 #endif
