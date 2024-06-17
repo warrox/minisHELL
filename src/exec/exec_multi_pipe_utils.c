@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:01:39 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 16:24:23 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:10:16 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,17 @@ void	intermediate_pipe(t_data *data, t_list_arg *tok)
 
 	i = 0;
 	(void)tok;
-	reset_in_out(data);
+	//reset_in_out(data);
 	if (is_redir(tok))
 	{
 		while(tok->array_sign[i] != 0)
-			init_files(data, tok, i++);
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
+			init_files_multi(data, tok, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -75,12 +81,18 @@ void	last_pipe(t_data *data, t_list_arg *tok)
 	int	i;
 	(void)tok;
 	i = 0;
-	dprintf(2, "idx_bf %d\n", data->exec->index);
-	reset_in_out(data);
+	//dprintf(2, "idx_bf %d\n", data->exec->index);
+	//reset_in_out(data);
 	if (is_redir(tok))
 	{
 		while(tok->array_sign[i] != 0)
-			init_files(data, tok, i++);
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
+			init_files_multi(data, tok, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -104,11 +116,17 @@ void	first_pipe(t_data *data, t_list_arg *tok)
 	int	i;
 	(void)tok;
 	i = ZERO_INIT;
-	reset_in_out(data);
+	//reset_in_out(data);
 	if (is_redir(tok))
 	{
 		while(tok->array_sign[i] != 0)
-			init_files(data, tok, i++);
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
+			init_files_multi(data, tok, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -150,7 +168,7 @@ void	init_tubes(t_data *data)
 	{
 		// printf("ICI -> %d\n", data->exec->nb_tube);
 		if (pipe(data->exec->multi_tube + 2 * i) < 0)
-			free(data->exec->multi_tube);
+			error_init(data, "Fail to init tubes\n");
 		i++;
 	}
 }

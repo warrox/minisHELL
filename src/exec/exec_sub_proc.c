@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:21:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:12:19 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ void	second_child_process(t_data *data)
 	if (is_redir(tmp))
 	{
 		while(tmp->array_sign[i] != 0)
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
 			init_files(data, tmp, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -77,11 +83,16 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 
-	
-	if(is_redir(data->tokenizer))
+	if (is_redir(data->tokenizer))
 	{
 		while(data->tokenizer->array_sign[i] != 0)
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
 			init_files(data, data->tokenizer, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
