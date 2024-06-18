@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 18:45:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:36:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,7 @@ void	error_cmd(t_data *data, t_list_arg *tok);
 void	error_execve_multi(t_data *data, t_list_arg *tok);
 void	file_not_found_multi(t_data *data, t_list_arg *tok);
 void	init_files_multi(t_data *data, t_list_arg *tok, int i);
+void	init_here_doc(t_data *data, t_list_arg *tok);
+int	gnl_hd(int fd, char **line);
 
 #endif
