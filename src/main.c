@@ -6,15 +6,27 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 14:27:57 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:16:14 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
+int global_value(int flag, int value)
+{
+	static int exitnb;
+
+	if (flag != 0){
+		flag = value;
+	}
+	return exitnb;
+}
+
 void	erase_file_array(char **array, char **array_2)
 {
 	int	i;
+	global_value(1, 127);
+	global_value(0, 0); // exemple from nathan
 
 	i = 0;
 	if (!array || !array_2)

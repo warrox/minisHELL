@@ -38,13 +38,14 @@ void exec_cd(t_data *data, t_list_arg *tmp, char *buffer, char *buffer_old, int 
 
 int no_arg(t_data *data, t_list_arg *tmp, char *path_hu)
 {
+	int res;
+	res = 0;
 	tmp = find_key_user(data);
 	if(tmp == NULL)
 		return (1);
 	ft_strcpy(path_hu, "/home/");
 	ft_strlcat(path_hu, tmp->key_and_val[1], (ft_strlen(path_hu) + ft_strlen(tmp->key_and_val[1])+ 1));
-	int res = chdir(path_hu);
-	ft_printf("CODE : %d\n",res);
+	res = chdir(path_hu);
 	return (1);
 
 }
