@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 14:57:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:42:39 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void init_files(t_data *data, t_list_arg *tok, int i)
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close(data->exec->outfile);
 	}
+	else if (tok->array_sign[i] == HEREDOCS)
+		init_here_doc(data, tok);
 }
 
 
