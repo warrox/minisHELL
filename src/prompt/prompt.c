@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 16:25:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:30:17 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ int	display_prompt(t_data *data)
 			return(int_nbr);
 		input_cpy = parser(input, data);
 		print_exec_utils(data);
-		if(is_a_builtin(data))
-		{
-			ft_printf("GOIN \n");
-			add_history(input);
-			free_prompt(data);
-			ft_clear_tokenizer(data);
-			continue;
-		}
+		// if(is_a_builtin(data))
+		// {
+		// 	add_history(input);
+		// 	free_prompt(data);
+		// 	ft_clear_tokenizer(data);
+		// 	continue;
+		// }
 		init_exec(data);
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);

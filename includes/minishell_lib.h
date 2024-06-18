@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 16:04:42 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/18 12:56:21 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,9 @@ int						check_quote(char *input, int i, t_data *data);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
 int						check_pipe(char *input, int i, t_data *data);
-void					parse_cmd_arg(t_data *data);
+int					parse_cmd_arg(t_data *data);
 char					**split_tokenizer(char const *s, char c);
-void					sort_sign(t_list_arg *tmp);
+int					sort_sign(t_list_arg *tmp, t_data *data);
 void					ft_clear_tokenizer(t_data *data);
 t_list_arg				*init_tokenizer(void);
 char					*ft_strdup_cust(const char *source);

@@ -6,48 +6,64 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/15 17:58:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:07:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 #include <readline/history.h>
-
-void	sort_sign(t_list_arg *tmp)
+int triple_sign_checker(char *str)
 {
-	int	i;
-	int	j;
-
+	int i;
 	i = 0;
-	j = 0;
-	tmp->count_size = count_sign(tmp->input_splited);
-	i = 0;
-	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
-	while (tmp->count_size && tmp->input_splited[i])
+	while(str[i])
 	{
-		if (ft_strncmp(&tmp->input_splited[i], "<<", 2) == 0)
+		if(ft_strncmp(&str[i], "<<<", 3)== 0 || ft_strncmp(&str[i], "<<>", 3) == 0 
+			|| ft_strncmp(&str[i], ">>>", 3) == 0 ||ft_strncmp(&str[i], ">><", 3) == 0)
 		{
-			tmp->array_sign[j++] = HEREDOCS;
-			i += 2;
+			ft_printf("minishell: syntax error near unexpected token\n");
+			return(-1);
 		}
-		else if (ft_strncmp(&tmp->input_splited[i], ">>", 2) == 0)
-		{
-			tmp->array_sign[j++] = APPEND;
-			i += 2;
-		}
-		else if (ft_strncmp(&tmp->input_splited[i], "<", 1) == 0)
-		{
-			tmp->array_sign[j++] = STDINS;
-			i += 1;
-		}
-		else if (ft_strncmp(&tmp->input_splited[i], ">", 1) == 0)
-		{
-			tmp->array_sign[j++] = STDOUTS;
-			i += 1;
-		}
-		else
-			i++;
+		i++;
 	}
+	return(0);
+}
+
+void fill_array_sign(t_data *data, char *str, t_list_arg *tmp)
+{
+	if (ft_strncmp(str, "<<", 2) == 0)
+	{
+		tmp->array_sign[data->j++] = HEREDOCS;
+	}
+	else if (ft_strncmp(&tmp->input_splited[data->i], ">>", 2) == 0)
+	{
+		tmp->array_sign[data->j++] = APPEND;
+	}
+	else if (ft_strncmp(&tmp->input_splited[data->i], "<", 1) == 0)
+	{
+		tmp->array_sign[data->j++] = STDINS;
+	}
+	else if (ft_strncmp(&tmp->input_splited[data->i], ">", 1) == 0)
+	{
+		tmp->array_sign[data->j++] = STDOUTS;
+	}
+}
+int	sort_sign(t_list_arg *tmp, t_data *data)
+{
+	data->j = 0;
+	data->i = 0;
+	int flag;
+	flag = 0;
+	if(triple_sign_checker(tmp->input_splited) == -1)
+		return(-1);
+	tmp->count_size = count_sign(tmp->input_splited);
+	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
+	while (tmp->count_size && tmp->input_splited[data->i])
+	{
+		fill_array_sign(data,&tmp->input_splited[data->i], tmp);
+		data->i++;
+	}
+	return(0);
 }
 
 int	get_word_size(char *str)
@@ -62,45 +78,18 @@ int	get_word_size(char *str)
 	return (i);
 }
 
-void	parse_cmd_arg(t_data *data)
+int	parse_cmd_arg(t_data *data)
 {
 	t_list_arg	*tmp;
 
 	tmp = data->tokenizer;
 	while (tmp)
 	{
-		sort_sign(tmp);
+		if(sort_sign(tmp,data) == -1)
+			return(-1);
 		create_signed(tmp);
 		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		tmp = tmp->next;
 	}
-}
-
-int	cutting_input(t_data *data, char *input)
-{
-	int			i;
-	char		**split;
-	t_list_arg	*new_node;
-	i = 0;
-	
-	if(checker_err_pipe(input, data) == 0 || check_quote(input, 0, data) == 0) 
-		return(-1);
-	split = ft_split(input, '|'); // po bon
-	if (!split)
-		return(-1);
-	free(data->tokenizer);
-	data->tokenizer = ft_lst_cut_new(split[i]);
-	i = 1;
-	while (split[i])
-	{
-		new_node = ft_lst_cut_new(split[i]);
-		if (new_node)
-			ft_lstadd_cut_back(&data->tokenizer, new_node);
-		i++;
-	}
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
 	return(0);
 }
