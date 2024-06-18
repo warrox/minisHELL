@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:39:17 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:35:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # define STDOUTS 5
 # define HEREDOCS 6
 # define APPEND 7
+# define BUFFER_SIZE 1024
 
 #endif
