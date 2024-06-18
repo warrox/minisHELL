@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 19:12:19 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:57:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,25 @@ void init_files(t_data *data, t_list_arg *tok, int i)
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
         if (data->exec->outfile < 0)
             file_not_found(data, tok);
-		if (nb_node(data) == 1)
-		{
-			dup2(data->exec->outfile, STDOUT_FILENO);
-			close(data->exec->outfile);
-		}
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
     }
     else if (tok->array_sign[i] == STDINS)
     {
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
-		if (nb_node(data) == 1)
-		{
-			dup2(data->exec->infile, STDIN_FILENO);
-			close(data->exec->infile);
-		}
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
     }
+	else if (tok->array_sign[i] == APPEND)
+	{
+		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
+		if (data->exec->outfile < 0)
+			file_not_found(data, tok);
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
+	}
 }
 
 

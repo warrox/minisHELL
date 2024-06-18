@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:01:39 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 19:10:16 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:07:07 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	intermediate_pipe(t_data *data, t_list_arg *tok)
 	}
 	else
 	{
-		dprintf(2, "LA -> %d\n", data->exec->index);
+		//dprintf(2, "LA -> %d\n", data->exec->index);
 		// dprintf(2, " ICI %d\n", data->exec->multi_tube[2 * data->exec->index + 1]);
 		dup2(data->exec->multi_tube[2 * data->exec->index + 1], STDOUT_FILENO);
 	}
@@ -103,7 +103,7 @@ void	last_pipe(t_data *data, t_list_arg *tok)
 		dup2(data->exec->multi_tube[data->exec->index * 2 - 2], STDIN_FILENO);
 	if (data->exec->outfile != 1)
 	{
-		dprintf(2, "TCHOIN\n");
+		// dprintf(2, "TCHOIN\n");
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close (data->exec->outfile);
 	}
