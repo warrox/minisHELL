@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:11:21 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:00:23 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*flush_redir(char *str)
 	i = 0;
 	tmp = 0;
 	j = 0;
-	ft_printf("HERE : %s\n", str);
+	//ft_printf("HERE : %s\n", str);
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
@@ -84,7 +84,7 @@ char	*flush_redir(char *str)
 		}
 
 		tmp = sign_cmp(&str[i]);
-		ft_printf("tmp int : %d, str = %s\n", tmp, &str[i]);
+		//ft_printf("tmp int : %d, str = %s\n", tmp, &str[i]);
 		if (tmp)
 		{
 			i += tmp;
@@ -98,7 +98,7 @@ char	*flush_redir(char *str)
 	}
 
 	buffer[j] = 0;
-	ft_printf("FLUSH : %s\n", buffer);
+	//ft_printf("FLUSH : %s\n", buffer);
 	return (ft_strdup(buffer));
 }
 
