@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 12:56:21 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:29:30 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_exec
 {
 	pid_t	pid_1;
 	pid_t	pid_2;
-	pid_t	pid;
+	pid_t	*pid;
 	char	*cmd;
 	char	*path;
 	char	**path_cmd;
@@ -212,6 +212,16 @@ void	exec_multi_pipe(t_data *data);
 void	init_tubes(t_data *data);
 void	close_tubes(t_data *data);
 void	children_process(t_data *data);
-void	first_pipe(t_list_arg *tok);
+void	first_pipe(t_data *data, t_list_arg *tok);
+void	last_pipe(t_data *data, t_list_arg *tok);
+void	intermediate_pipe(t_data *data, t_list_arg *tok);
+void	reset_in_out(t_data *data);
+void	error_init(t_data *data, char *str);
+void	error_cmd(t_data *data, t_list_arg *tok);
+void	error_execve_multi(t_data *data, t_list_arg *tok);
+void	file_not_found_multi(t_data *data, t_list_arg *tok);
+void	init_files_multi(t_data *data, t_list_arg *tok, int i);
+void	init_here_doc(t_data *data, t_list_arg *tok);
+int	gnl_hd(int fd, char **line);
 
 #endif

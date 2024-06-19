@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 15:50:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:56:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ void	init_exec(t_data *data)
 	init_struct_exec(data);
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
+	dprintf(2, "ICI %d\n", nb_node(data));
 	if (nb_node(data) == 1)
-		exec_single_cmd(data);
+		(dprintf(2, "HELLO\n"), exec_single_cmd(data));
 	else if (nb_node(data) == 2)
 		exec_one_pipe(data);
 	else

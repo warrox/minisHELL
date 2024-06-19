@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 17:21:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:42:39 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,27 @@ void init_files(t_data *data, t_list_arg *tok, int i)
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
         if (data->exec->outfile < 0)
             file_not_found(data, tok);
-		if (nb_node(data) == 1)
-		{
-			dup2(data->exec->outfile, STDOUT_FILENO);
-			close(data->exec->outfile);
-		}
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
     }
     else if (tok->array_sign[i] == STDINS)
     {
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
-		if (nb_node(data) == 1)
-		{
-			dup2(data->exec->infile, STDIN_FILENO);
-			close(data->exec->infile);
-		}
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
     }
+	else if (tok->array_sign[i] == APPEND)
+	{
+		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
+		if (data->exec->outfile < 0)
+			file_not_found(data, tok);
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
+	}
+	else if (tok->array_sign[i] == HEREDOCS)
+		init_here_doc(data, tok);
 }
 
 
@@ -49,7 +53,13 @@ void	second_child_process(t_data *data)
 	if (is_redir(tmp))
 	{
 		while(tmp->array_sign[i] != 0)
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
 			init_files(data, tmp, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -77,11 +87,16 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 
-	
-	if(is_redir(data->tokenizer))
+	if (is_redir(data->tokenizer))
 	{
 		while(data->tokenizer->array_sign[i] != 0)
+		{
+			if (data->exec->infile != 0 && data->exec->infile > 0)
+				close(data->exec->infile);
+			if (data->exec->outfile != 1 && data->exec->outfile > 0)
+				close(data->exec->outfile);
 			init_files(data, data->tokenizer, i++);
+		}
 	}
 	if (data->exec->infile != 0)
 	{

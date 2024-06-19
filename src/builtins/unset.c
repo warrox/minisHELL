@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:46:41 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/11 17:46:43 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:10:47 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	unset_var(t_list_arg **head, t_list_arg *node_to_delete)
 int	cmd_unset(t_data *data)
 {
 	if (data->tokenizer->cmd_array[0] == NULL)
-		return (1);
+		return (0);
 	t_list_arg	*tmp;
 
 	tmp = NULL_INIT;

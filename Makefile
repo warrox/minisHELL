@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+         #
+#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/18 15:07:53 by whamdi           ###   ########.fr        #
+#    Updated: 2024/06/19 10:35:52 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra -g3
+# -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined -fsanitize=integer -fsanitize=null -fsanitize=unreachable
 
 LIBFT_MINISHELL_PATH = libft
 LIBFT_MINISHELL = libft/libft.a
@@ -45,7 +46,7 @@ PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 UTILS = ./utils/print_utils.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c ./builtins/exit.c ./builtins/cd_utils.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c ./tokenizer/count_sign.c /tokenizer/flush_redir.c ./tokenizer/cutting_input.c
-EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_multi_pipe_utils.c
+EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_multi_pipe_utils.c exec/exec_errors_multi_pipe.c exec/here_doc.c exec/here_doc_utils.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS) $(EXEC))
 
 SRC = $(MINISHELL)
