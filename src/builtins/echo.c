@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 18:11:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:29:47 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,22 @@
 void	print_echo(t_data *data)
 {
 	int i = 1;
-	
+	int flag = 0;
+	while(data->tokenizer->cmd_array[flag + 1]){
+		// printf("%s",data->tokenizer->cmd_array[i]);
+		flag++;	
+	}
 	while(data->tokenizer->cmd_array[i])
 	{
-		ft_putstr_fd(data->tokenizer->cmd_array[i], 1);
-		ft_putstr_fd(" ", 1);
+		flag--;
+		printf("%s",data->tokenizer->cmd_array[i]);
+		if (flag > 0)
+		{
+			printf(" ");
+		}
 		i++;
 	}
-	ft_putstr_fd("\n", 1);
+	printf("\n");
 }
 
 int	check_flag(t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_sub_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:36:20 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:00:26 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void init_files(t_data *data, t_list_arg *tok, int i)
     }
     else if (tok->array_sign[i] == STDINS)
     {
-		dprintf(2, "WHAT?\n");
-		ft_printf("file: %s\n", tok->file_array[i]);
+		// dprintf(2, "WHAT?\n");
+		// ft_printf("file: %s\n", tok->file_array[i]);
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);

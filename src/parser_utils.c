@@ -15,10 +15,10 @@ void	msg_error_handler(int *signal, t_data *data)
 {
 	(void)data;
 	if (*signal == COMMAND_NOT_FOUND)
-		printf("command not found\n"); // ecrire dans le stderror.
+		ft_printf("command not found\n"); // ecrire dans le stderror.
 	if (*signal == SYNTAX_ERROR)
 	{
-		printf("syntax error\n");
+		ft_printf("syntax error\n");
 	}
 	// add other signals in the future
 }
