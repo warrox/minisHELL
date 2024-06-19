@@ -96,7 +96,7 @@ int ft_current_directory(char *path,t_data *data)
 		}
 		getcwd(tool_box.buffer_old, 4096);
 		if(chdir(path) == 0)
-			exec_cd(data,tmp, tool_box.buffer,tool_box.buffer_old,4096);			
+			return(exec_cd(data,tmp, tool_box.buffer,tool_box.buffer_old,4096),1);
 	}
 	return (0);
 }
