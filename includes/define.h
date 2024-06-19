@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/24 14:39:17 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:04:01 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,18 @@
 # define STDOUTS 5
 # define HEREDOCS 6
 # define APPEND 7
+
+#define GENERAL_ERRORS 1
+#define MISUSE_BULTINS 2
+#define CMD_INVOKED_CANTEXEC 126 
+#define CMD_NOT_FOUND 127
+#define INVALID_ARG_EXIT 128
+
+/*     Exit code 1: General errors, such as “divide by zero” and other impermissible operations
+    Exit code 2: Misuse of shell builtins, according to Bash documentation
+    Exit code 126: Command invoked cannot execute
+    Exit code 127: “command not found”
+    Exit code 128: Invalid argument to exit
+    Exit codes 128+n: Fatal error signal “n”*/
 
 #endif

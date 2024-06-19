@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 15:41:18 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:25:32 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	display_prompt(t_data *data)
 		int_nbr = ft_exit(data, input);
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
+		ft_printf("TARATA\n");
 		input_cpy = parser(input, data);
 		print_exec_utils(data);
 		if(is_a_builtin(data))

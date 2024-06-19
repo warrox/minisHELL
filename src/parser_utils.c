@@ -53,28 +53,30 @@ int	check_quote(char *input, int i, t_data *data) // revoir la logique do not wo
 			if (flag == 2)
 				return (1);
 		}
-		//["]["]["]
 		if (input[i] == '\"')
 		{
-			if(input[i] == '\'')
-				flag = 0;
-			if (flag_s == 2)
-			{
-				if (check_if_quote_at_end('\"', input, i))
-				{
-					flag_s -= 1;
-				}
-				return (1);
-			}
+		
 			flag_s += 1;
+			while(input[i] == '\'')
+				i++;
+			if(flag_s == 2)
+				return(1);
+			// while(input[i] == '\'')
+			// 	i++u;
+			// if(input[i] == '\'')
+			// 	flag = 0;
+			// if (flag_s == 2)
+			// {
+			// 	if (check_if_quote_at_end('\"', input, i))
+			// 	{
+			// 		flag_s -= 1;
+			// 	}
+			// 	return (1);
+			// }
+			// flag_s += 1;
 		}
 		i++;
 	}
-	// if (flag % 2 != 0 || flag_s == 1)
-	// {
-	// 	data->signal->signal = SYNTAX_ERROR;
-	// 	return(1);
-	// }
 	if(flag_s == 1)
 	{
 		data->signal->signal = SYNTAX_ERROR;
