@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:00:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:33:36 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	parse_cmd_arg(t_data *data)
 		if(sort_sign(tmp,data) == -1)
 			return(-1);
 		create_signed(tmp);
-		ft_printf("INPUT SPLITTED : %s\n",tmp->input_splited);
 		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		tmp = tmp->next;
 	}

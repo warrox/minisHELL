@@ -58,7 +58,6 @@ int ft_exit(t_data *data, char *input)
 					ft_printf("bash: exit: %d: numeric argument required",nbr);
 					return(2);
 				}
-				ft_printf("MODULO : %d\n", nbr % 255);
 				return(nbr % 255); // renvoie le int du code erreur
 			}
 			while(input[i] != '\0')// && !ft_isalnum(input[i]))

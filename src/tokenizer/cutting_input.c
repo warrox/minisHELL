@@ -27,6 +27,5 @@ int	cutting_input(t_data *data, char *input)
 	while (split[i])
 		free(split[i++]);
 	free(split);
-	ft_printf("IDK\n");
 	return(0);
 }
