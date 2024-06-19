@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 17:42:39 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:36:20 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void init_files(t_data *data, t_list_arg *tok, int i)
     }
     else if (tok->array_sign[i] == STDINS)
     {
+		dprintf(2, "WHAT?\n");
+		ft_printf("file: %s\n", tok->file_array[i]);
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
@@ -39,7 +41,12 @@ void init_files(t_data *data, t_list_arg *tok, int i)
 		close(data->exec->outfile);
 	}
 	else if (tok->array_sign[i] == HEREDOCS)
+	{
 		init_here_doc(data, tok);
+		data->exec->here_doc = 1;
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
+	}	
 }
 
 
@@ -139,18 +146,29 @@ void	exec_one_pipe(t_data *data)
 	waitpid(data->exec->pid_2, NULL, 0);
 }
 
-void	exec_sub_proc(t_data *data)
+void	 exec_sub_proc(t_data *data)
 {
 	int	i;
 	
 	i = ZERO_INIT; 
-	data->exec->cmd = build_cmd(data, data->tokenizer);
-	if (!data->exec->cmd)
-		cmd_not_found(data);
 	if(is_redir(data->tokenizer))
 	{
-		while(data->tokenizer->array_sign[i] != 0)
+		while(data->tokenizer->file_array[i] != 0)
 			init_files(data, data->tokenizer, i++);
+	}
+	data->exec->cmd = build_cmd(data, data->tokenizer);
+	if (!data->exec->cmd && !data->tokenizer->file_array[0])
+		cmd_not_found(data);
+	// dprintf(2, " RACESDD %d\n", data->exec->here_doc);
+	if (data->exec->here_doc && data->exec->cmd)
+	{
+		execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
+		error_excve(data);
+		exit(1);
+	}
+	else if (data->exec->here_doc){
+		printf("PAS DE COMMANDES MAIS HEREDOC\n");
+		exit(1);
 	}
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
 	error_excve(data);
