@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/13 23:31:57 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:27:00 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	error_excve(t_data *data)
 
 void	cmd_not_found(t_data *data)
 {
-	if (data->tokenizer->cmd_array != NULL)
+	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
 		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
