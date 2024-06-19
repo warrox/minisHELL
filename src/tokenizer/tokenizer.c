@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:55:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:40:39 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 #include <readline/history.h>
+#include <stdio.h>
 int triple_sign_checker(char *str)
 {
 	int i;
@@ -31,12 +32,15 @@ int triple_sign_checker(char *str)
 
 void fill_array_sign(t_data *data, char *str, t_list_arg *tmp)
 {
-	if (ft_strncmp(str, "<<", 2) == 0)
+	(void) str;
+	if (ft_strncmp(&tmp->input_splited[data->i], "<<", 2) == 0)
 	{
+		data->i++;
 		tmp->array_sign[data->j++] = HEREDOCS;
 	}
 	else if (ft_strncmp(&tmp->input_splited[data->i], ">>", 2) == 0)
 	{
+		data->i++;	
 		tmp->array_sign[data->j++] = APPEND;
 	}
 	else if (ft_strncmp(&tmp->input_splited[data->i], "<", 1) == 0)
@@ -57,7 +61,9 @@ int	sort_sign(t_list_arg *tmp, t_data *data)
 	if(triple_sign_checker(tmp->input_splited) == -1)
 		return(-1);
 	tmp->count_size = count_sign(tmp->input_splited);
+	printf("count size : %d\n", tmp->count_size);
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
+	dprintf(2, "input : %s\n", tmp->input_splited);
 	while (tmp->count_size && tmp->input_splited[data->i])
 	{
 		fill_array_sign(data,&tmp->input_splited[data->i], tmp);

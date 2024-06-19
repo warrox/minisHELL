@@ -1,4 +1,5 @@
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 t_list_arg	*ft_lst_cut_new(char *content)
 {
@@ -81,6 +82,7 @@ void	create_signed(t_list_arg *lst)
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);
+		printf("tmp : %d\n",tmp);
 		if(i > 1)
 		{
 			if(lst->input_splited[i - 1] == '\'')
