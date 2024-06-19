@@ -51,15 +51,16 @@ void expander(t_data *data)
     while (tmp) {
         data->i = 0;
         ft_bzero(tmp->result, 4096);
-        while (tmp->final_cmd[data->i]) {
-            if (tmp->final_cmd[data->i] == '\'')
-                handle_single_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag, &data->sq_flag);
-            else if (tmp->final_cmd[data->i] == '\"')
-                handle_double_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag);
-            else if (tmp->final_cmd[data->i] == '$' && data->pansement == 0)
-                handle_expansion(tmp->final_cmd, tmp->result, data);
-            else
-                tmp->result[data->j++] = tmp->final_cmd[data->i++];
+        while (tmp->final_cmd[data->i]) 
+		{
+			if (tmp->final_cmd[data->i] == '\'' && data->pansement == 0)
+				handle_single_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag, &data->sq_flag);
+			else if (tmp->final_cmd[data->i] == '\"' && data->pansement == 0)
+				handle_double_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag);
+			else if (tmp->final_cmd[data->i] == '$' && data->pansement == 0)
+				handle_expansion(tmp->final_cmd, tmp->result, data);
+			else
+				tmp->result[data->j++] = tmp->final_cmd[data->i++];
         }
 
         if (data->flag)

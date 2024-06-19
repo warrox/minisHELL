@@ -50,7 +50,6 @@ int cd_check_opt(char *path, t_data *data)
 	data->i = 0;
 	save_current = data->lst;
 	tmp = NULL;
-	ft_printf("path : %s\n", path);
 	if(path == NULL)
 		return(-1);
 	while(path[data->i] == ' ' || path[data->i] == '\t')
