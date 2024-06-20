@@ -3,6 +3,7 @@
 void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy) 
 {
 	data->pansement = 0;
+	data->pansement_2 = 0;
 	(*i)++;
 	while (str[*i] && str[*i] != '\"') 
 	{
@@ -12,7 +13,9 @@ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
     }
 	if (str[*i] == '\"') 
 	{
-        (*i)++;
+        data->pansement = 1;
+		data->pansement_2 = 1;
+		(*i)++;
     }
 }
 

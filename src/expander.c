@@ -1,6 +1,4 @@
 #include "../includes/minishell_lib.h"
-#include <stdio.h>
-
 void handle_single_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag, int *sq_flag) 
 {
     while (final_cmd[*i] != '\'' && final_cmd[*i + 1] != '\0') 
@@ -29,7 +27,7 @@ void handle_double_quote_ex(char *final_cmd, char *result, int *i, int *j, int *
 
 void handle_expansion(char *final_cmd, char *result, t_data *data) 
 {
-    char *expanded = expansion(&final_cmd[++data->i], data);
+	char *expanded = expansion(&final_cmd[++data->i], data);
     data->j += ft_strlen(expanded);
     ft_strlcat(result, expanded, ft_strlen(expanded) + ft_strlen(result) + 1);
     free(expanded);
@@ -58,7 +56,7 @@ void expander(t_data *data)
 				handle_single_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag, &data->sq_flag);
 			else if (tmp->final_cmd[data->i] == '\"' && data->pansement == 0)
 				handle_double_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag);
-			else if (tmp->final_cmd[data->i] == '$' && data->pansement == 0)
+			else if (tmp->final_cmd[data->i] == '$' && (data->pansement == 0 || data->pansement_2 == 1))
 				handle_expansion(tmp->final_cmd, tmp->result, data);
 			else
 				tmp->result[data->j++] = tmp->final_cmd[data->i++];

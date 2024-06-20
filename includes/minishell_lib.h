@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 14:03:10 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 19:22:07 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_data
 	int					i;
 	int					j;
 	int					pansement;
+	int					pansement_2;
 	int					flag; 
 	int					sq_flag;
 	int					quote_flag;
