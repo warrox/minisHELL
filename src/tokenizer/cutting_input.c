@@ -10,7 +10,7 @@ int	cutting_input(t_data *data, char *input)
 	i = 0;
 	if(checker_err_pipe(input, data) == 0 || check_quote(input, 0, data) == 0) 
 		return(-1);
-	split = split_pipe_cust(input, '|'); // po bon
+	split = split_pipe_cust(input, '|');
 	if (!split)
 		return(-1);
 	free(data->tokenizer);

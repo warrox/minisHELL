@@ -1,5 +1,6 @@
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 t_data	*init_signal(t_data *data)
 {
@@ -44,8 +45,11 @@ int check_quote_2(int flag_s,int flag,t_data *data)
 	if(flag == 0)
 		return(1);
 		
-	data->signal->signal = SYNTAX_ERROR;
-	msg_error_handler(&data->signal->signal, data);
+	if(flag == 1)
+	{
+		data->signal->signal = SYNTAX_ERROR;
+		msg_error_handler(&data->signal->signal, data);
+	}
 	return(3);
 }
 
@@ -57,7 +61,7 @@ int check_single_q(char c,int *flag, int *i)
 		while(c == '\"')
 			i++;
 		if (*flag == 2)
-		return (1);
+		return (2);
 	}
 	return(0);
 } 

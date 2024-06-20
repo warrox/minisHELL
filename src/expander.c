@@ -1,4 +1,5 @@
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 void handle_single_quote_ex(char *final_cmd, char *result, int *i, int *j, int *flag, int *sq_flag) 
 {
@@ -57,7 +58,7 @@ void expander(t_data *data)
 				handle_single_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag, &data->sq_flag);
 			else if (tmp->final_cmd[data->i] == '\"' && data->pansement == 0)
 				handle_double_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag);
-			else if (tmp->final_cmd[data->i] == '$' && data->pansement == 0)
+			else if (tmp->final_cmd[data->i] == '$')
 				handle_expansion(tmp->final_cmd, tmp->result, data);
 			else
 				tmp->result[data->j++] = tmp->final_cmd[data->i++];
