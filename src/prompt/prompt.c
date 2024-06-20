@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 18:12:58 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 16:49:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	display_prompt(t_data *data)
 			free_exec(data);
 		ft_clear_tokenizer(data);
 		add_history(input);
+		free_tmp_struct(data);
 		free_prompt(data);
 		free(input);
 	}
