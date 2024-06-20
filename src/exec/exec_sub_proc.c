@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_sub_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 17:00:26 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 10:55:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,13 @@ void	 exec_sub_proc(t_data *data)
 		error_excve(data);
 		exit(1);
 	}
-	else if (data->exec->here_doc){
-		printf("PAS DE COMMANDES MAIS HEREDOC\n");
+	else if (data->exec->here_doc)
+	{
+		ft_clear_tokenizer(data);
+		free_prompt(data);
+		free_exec(data);
+		free(data->signal);
+		ft_lst_arg_clear(&data->lst);
 		exit(1);
 	}
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
