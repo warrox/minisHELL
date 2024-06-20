@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 16:07:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:30:45 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,5 +237,6 @@ void rm_tmp_file(t_data *data);
 void add_tmp_file(t_data *data, const char *file_name);
 void	hd_or_rdr_no_cmd(t_data *data);
 void free_tmp_struct(t_data *data);
+void	hd_or_rdr_no_cmd_multi(t_data *data);
 
 #endif
