@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/14 15:04:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:28:30 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ char	*build_cmd(t_data *data, t_list_arg *tok)
 	
 	tmp = tok;
 	i = 0;
+	// dprintf(2, "LA %s\n", tmp->cmd_array[0]);
 	if (!data->exec->path || data->exec->path == NULL)
 		return (data->tokenizer->cmd_array[0]);
-	if(!data->tokenizer->cmd_array)
+	if(!tmp->cmd_array)
 		return (NULL); 
-	if(data->tokenizer->cmd_array[0] == NULL)
+	if(tmp->cmd_array[0] == NULL)
 		return (NULL);
 	if (access(data->tokenizer->cmd_array[0], F_OK | X_OK) == 0)
 		return (data->tokenizer->cmd_array[0]);

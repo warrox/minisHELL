@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 10:55:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:23:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void init_files(t_data *data, t_list_arg *tok, int i)
     }
     else if (tok->array_sign[i] == STDINS)
     {
-		// dprintf(2, "WHAT?\n");
-		// ft_printf("file: %s\n", tok->file_array[i]);
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
@@ -40,15 +38,7 @@ void init_files(t_data *data, t_list_arg *tok, int i)
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close(data->exec->outfile);
 	}
-	else if (tok->array_sign[i] == HEREDOCS)
-	{
-		init_here_doc(data, tok);
-		data->exec->here_doc = 1;
-		dup2(data->exec->infile, STDIN_FILENO);
-		close(data->exec->infile);
-	}	
 }
-
 
 void	second_child_process(t_data *data)
 {
@@ -59,7 +49,7 @@ void	second_child_process(t_data *data)
 		tmp = tmp->next;
 	if (is_redir(tmp))
 	{
-		while(tmp->array_sign[i] != 0)
+		while(tmp->file_array[i] != 0)
 		{
 			if (data->exec->infile != 0 && data->exec->infile > 0)
 				close(data->exec->infile);
@@ -67,6 +57,11 @@ void	second_child_process(t_data *data)
 				close(data->exec->outfile);
 			init_files(data, tmp, i++);
 		}
+	}
+	data->exec->cmd = build_cmd(data, tmp);
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tmp) != 0)))
+	{
+		hd_or_rdr_no_cmd(data);
 	}
 	if (data->exec->infile != 0)
 	{
@@ -82,9 +77,6 @@ void	second_child_process(t_data *data)
 	}
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
-	data->exec->cmd = build_cmd(data, tmp);
-	if (!data->exec->cmd)
-		cmd_not_found(data);
 	execve(data->exec->cmd, tmp->cmd_array, NULL);
 	error_excve(data);
 }
@@ -96,7 +88,7 @@ void	first_child_process(t_data *data)
 
 	if (is_redir(data->tokenizer))
 	{
-		while(data->tokenizer->array_sign[i] != 0)
+		while(data->tokenizer->file_array[i])
 		{
 			if (data->exec->infile != 0 && data->exec->infile > 0)
 				close(data->exec->infile);
@@ -104,6 +96,11 @@ void	first_child_process(t_data *data)
 				close(data->exec->outfile);
 			init_files(data, data->tokenizer, i++);
 		}
+	}
+	data->exec->cmd = build_cmd(data, data->tokenizer);
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(data->tokenizer) != 0)))
+	{
+		hd_or_rdr_no_cmd(data);
 	}
 	if (data->exec->infile != 0)
 	{
@@ -119,17 +116,17 @@ void	first_child_process(t_data *data)
 		dup2(data->exec->tube[1], STDOUT_FILENO);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
-	data->exec->cmd = build_cmd(data, data->tokenizer);
-	if (!data->exec->cmd)
-		cmd_not_found(data);
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
 	error_excve(data);
 }
 
 void	exec_one_pipe(t_data *data)
 {
+	int status = 0;
+	
 	if (pipe(data->exec->tube) < 0)
 		exit_error("pipe failed!\n");
+	check_here_doc(data);
 	data->exec->pid_1 = fork();
 	if (data->exec->pid_1 == -1)
 		free_exec(data);
@@ -142,8 +139,8 @@ void	exec_one_pipe(t_data *data)
 		second_child_process(data);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
-	waitpid(data->exec->pid_1, NULL, 0);
-	waitpid(data->exec->pid_2, NULL, 0);
+	waitpid(data->exec->pid_1, &status, 0);
+	waitpid(data->exec->pid_2, &status, 0);
 }
 
 void	 exec_sub_proc(t_data *data)
@@ -157,15 +154,18 @@ void	 exec_sub_proc(t_data *data)
 			init_files(data, data->tokenizer, i++);
 	}
 	data->exec->cmd = build_cmd(data, data->tokenizer);
-	if (!data->exec->cmd && !data->tokenizer->file_array[0])
-		cmd_not_found(data);
-	// dprintf(2, " RACESDD %d\n", data->exec->here_doc);
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(data->tokenizer) != 0)))
+	{
+		hd_or_rdr_no_cmd(data);
+	}
 	if (data->exec->here_doc && data->exec->cmd)
 	{
 		execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
 		error_excve(data);
 		exit(1);
 	}
+	if (!data->exec->cmd)
+		cmd_not_found(data);
 	else if (data->exec->here_doc)
 	{
 		ft_clear_tokenizer(data);
