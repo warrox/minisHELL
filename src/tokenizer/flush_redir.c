@@ -1,21 +1,16 @@
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy) 
 {
-	int flag_skip;
-	flag_skip = 0;
 	data->pansement = 0;
 	(*i)++;
 	while (str[*i] && str[*i] != '\"') 
 	{
-		if(str[*i] == '\"')
-			flag_skip = 1;
 		if(flag_for_copy == 1) 
 			buffer[(*j)++] = str[*i];
         (*i)++;
     }
-	if(flag_skip == 1)
-		data->pansement = 1;
 	if (str[*i] == '\"') 
 	{
         (*i)++;
@@ -25,21 +20,14 @@ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
 
 void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy) 
 {
-    int flag_skip;
-	flag_skip = 0;
 	data->pansement = 0;
 	(*i)++;
 	while (str[*i] && str[*i] != '\'') 
 	{
-        if(str[*i] == '\'') 
-			flag_skip = 1;
 		if(flag_for_copy == 1)
 			buffer[(*j)++] = str[*i];
         (*i)++;
     }
-    if(flag_skip == 1)
-		data->pansement = 1;
-
 	if (str[*i] == '\'') 
 	{
         data->pansement = 1;
@@ -70,9 +58,9 @@ char *flush_redir(char *str, t_data *data)
 	len = ft_strlen(str);
 	while (data->i < len) 
 	{
-		if (str[data->i] == '\"' && data->pansement == 0)
+		if (str[data->i] == '\"')
 			handle_double_quotes_flush(str, buffer, &data->i, &data->j,data,1);
-		else if (str[data->i] == '\'' && data->pansement == 0) 
+		else if (str[data->i] == '\'') 
 			handle_single_quotes_flush(str, buffer, &data->i, &data->j, data,1);
 		else 
 			tmp = handle_signs(str, &data->i);
