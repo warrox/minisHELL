@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 09:34:16 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 10:58:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ int	sort_sign(t_list_arg *tmp, t_data *data)
 		return(-1);
 	else if(triple_sign_checker(tmp->input_splited, data) == -2)
 		return(-2);
-	// if -2 check pour skip le sign sort
 	tmp->count_size = count_sign(tmp->input_splited);
+
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
+	if(!tmp->array_sign)
+		return(-1);
 	while (tmp->count_size && tmp->input_splited[data->i])
 	{
 		fill_array_sign(data,&tmp->input_splited[data->i], tmp);
@@ -95,13 +97,15 @@ int	get_word_size(char *str)
 int	parse_cmd_arg(t_data *data)
 {
 	t_list_arg	*tmp;
+	int sort_sign_result;
 
 	tmp = data->tokenizer;
 	while (tmp)
 	{
-		if(sort_sign(tmp,data) == -1)
+		sort_sign_result = sort_sign(tmp, data);
+		if(sort_sign_result == -1)
 			return(-1);
-		else if(sort_sign(tmp,data) == 0) 
+		else if(sort_sign_result == 0) 
 			create_signed(tmp);
 		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		tmp = tmp->next;

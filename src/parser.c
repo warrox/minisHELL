@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 11:09:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 10:13:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_list_arg	*init_tokenizer(void)
 
 	tokenizer = ft_calloc(1, sizeof(t_list_arg));
 	tokenizer->final_cmd = ZERO_INIT;
+
 	tokenizer->array_sign = ZERO_INIT;
 	tokenizer->file_array = NULL_INIT;
 	tokenizer->count_size = ZERO_INIT;
