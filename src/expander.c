@@ -58,7 +58,7 @@ void expander(t_data *data)
 				handle_single_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag, &data->sq_flag);
 			else if (tmp->final_cmd[data->i] == '\"' && data->pansement == 0)
 				handle_double_quote_ex(tmp->final_cmd, tmp->result, &data->i, &data->j, &data->flag);
-			else if (tmp->final_cmd[data->i] == '$')
+			else if (tmp->final_cmd[data->i] == '$' && data->pansement == 0)
 				handle_expansion(tmp->final_cmd, tmp->result, data);
 			else
 				tmp->result[data->j++] = tmp->final_cmd[data->i++];

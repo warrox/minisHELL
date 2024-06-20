@@ -1,5 +1,4 @@
 #include "../../includes/minishell_lib.h"
-#include <stdio.h>
 
 void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy) 
 {
@@ -14,7 +13,6 @@ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
 	if (str[*i] == '\"') 
 	{
         (*i)++;
-		data->pansement = 1;
     }
 }
 
