@@ -1,16 +1,16 @@
 
 #include "../../includes/minishell_lib.h"
 
+
 int	cutting_input(t_data *data, char *input)
 {
 	int			i;
 	char		**split;
 	t_list_arg	*new_node;
 	i = 0;
-	
 	if(checker_err_pipe(input, data) == 0 || check_quote(input, 0, data) == 0) 
 		return(-1);
-	split = ft_split(input, '|'); // po bon
+	split = split_pipe_cust(input, '|'); // po bon
 	if (!split)
 		return(-1);
 	free(data->tokenizer);
