@@ -6,17 +6,24 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 19:00:40 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/20 09:34:16 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-#include <readline/history.h>
-#include <stdio.h>
-int triple_sign_checker(char *str)
+int triple_sign_checker(char *str, t_data *data)
 {
 	int i;
+	int j;
 	i = 0;
+	j = 0;
+	handle_double_quotes_flush(str, NULL, &j, 0,data,0);
+	j = 0;
+	if(data->pansement == 0)
+		handle_single_quotes_flush(str, NULL, &j, 0, data,0); 
+	if(data->pansement == 1)
+		return(-2);
+
 	while(str[i])
 	{
 		if(ft_strncmp(&str[i], "<<<", 3)== 0 || ft_strncmp(&str[i], "<<>", 3) == 0 
@@ -58,8 +65,11 @@ int	sort_sign(t_list_arg *tmp, t_data *data)
 	data->i = 0;
 	int flag;
 	flag = 0;
-	if(triple_sign_checker(tmp->input_splited) == -1)
+	if(triple_sign_checker(tmp->input_splited, data) == -1)
 		return(-1);
+	else if(triple_sign_checker(tmp->input_splited, data) == -2)
+		return(-2);
+	// if -2 check pour skip le sign sort
 	tmp->count_size = count_sign(tmp->input_splited);
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
 	while (tmp->count_size && tmp->input_splited[data->i])
@@ -91,7 +101,8 @@ int	parse_cmd_arg(t_data *data)
 	{
 		if(sort_sign(tmp,data) == -1)
 			return(-1);
-		create_signed(tmp);
+		else if(sort_sign(tmp,data) == 0) 
+			create_signed(tmp);
 		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		tmp = tmp->next;
 	}

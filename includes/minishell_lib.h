@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 15:06:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 08:51:10 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_data
 	int					pansement;
 	int					flag; 
 	int					sq_flag;
+	int					quote_flag;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/
@@ -151,7 +152,7 @@ void					free_prompt(t_data *data);
 
 void					free_split(char **split);
 
-/**[				]**/
+/**[PARSER FUNCTION LONGUE COMME MON AUBERGINE]**/
 
 void					parser_list_init(t_data *data, char **envp);
 t_list_arg				*ft_lst_arg_new(t_list_arg *new, char *content);
@@ -189,6 +190,8 @@ void expander(t_data *data);
 char	*expansion(char *input, t_data *data);
 int	get_word_size(char *str);
 char *flush_redir(char *str, t_data *data); 
+void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
+void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);
