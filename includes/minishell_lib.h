@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 15:06:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:07:29 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # include <sys/wait.h>
 
 /*all structures*/
+
+typedef struct s_tmp_files
+{
+	char	*file_name;
+	struct s_tmp_files	*next;
+}			t_tmp_files;
 
 typedef struct s_exec
 {
@@ -95,6 +101,7 @@ typedef struct s_data
 	t_prompt			*prompt;
 	t_signal			*signal;
 	t_exec				*exec;
+	t_tmp_files			*tmp_files;
 	int					i;
 	int					j;
 	int					pansement;
@@ -221,8 +228,14 @@ void	error_cmd(t_data *data, t_list_arg *tok);
 void	error_execve_multi(t_data *data, t_list_arg *tok);
 void	file_not_found_multi(t_data *data, t_list_arg *tok);
 void	init_files_multi(t_data *data, t_list_arg *tok, int i);
-void	init_here_doc(t_data *data, t_list_arg *tok);
+void	init_here_doc(t_data *data, t_list_arg *tok, int idx, char *file);
 int	gnl_hd(int fd, char **line);
-int is_here_doc(t_list_arg *tok);
+void	check_here_doc(t_data *data);
+void	init_tmp_struct(t_data *data);
+void	is_here_doc(t_data *data, t_list_arg *tok);
+void rm_tmp_file(t_data *data);
+void add_tmp_file(t_data *data, const char *file_name);
+void	hd_or_rdr_no_cmd(t_data *data);
+void free_tmp_struct(t_data *data);
 
 #endif
