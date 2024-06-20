@@ -6,11 +6,24 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 14:27:00 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:48:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	hd_or_rdr_no_cmd(t_data *data)
+{
+	ft_clear_tokenizer(data);
+	free_prompt(data);
+	free(data->signal);
+	close(data->exec->tube[0]);
+	close(data->exec->tube[1]);
+	free_exec(data);
+	free_tmp_struct(data);
+	ft_lst_arg_clear(&data->lst);
+	exit(126);
+}
 
 void	exit_error(char *str)
 {
@@ -27,6 +40,7 @@ void	error_excve(t_data *data)
 	free_prompt(data);
 	free_exec(data);
 	free(data->signal);
+	free_tmp_struct(data);
 	ft_lst_arg_clear(&data->lst);
 	exit(126);
 }
@@ -40,6 +54,7 @@ void	cmd_not_found(t_data *data)
 	free_prompt(data);
 	free_exec(data);
 	free(data->signal);
+	rm_tmp_file(data);
 	ft_lst_arg_clear(&data->lst);
 	exit(127);
 }
