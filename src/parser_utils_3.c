@@ -27,32 +27,6 @@ int	check_redir(char *input, int i, t_data *data)
 	return (0);
 }
 
-int	checker_err(char *input, t_data *data)
-{
-	int	i;
-	int	is_valid;
-	int	not_valid;
-
-	not_valid = 1;
-	is_valid = 0;
-	i = ZERO_INIT;
-	while(input[i]) // peu etre tu dois faire un if quand t'as un ''' ou """
-	{
-		ft_printf("KIKOO\n");
-		if (check_quote(input, i, data))
-		{
-			return (is_valid);
-		}
-		if (check_redir(input, i, data))
-			return (is_valid);
-		i++;
-	}
-	ft_printf("LET's GOOOO\n");
-	// if (data->signal->signal != NULL_INIT)
-	// 	msg_error_handler(&data->signal->signal, data);
-	return (is_valid);
-}
-
 char	*search_occurence(char *input, t_data *data)
 {
 	t_list_arg	*tmp;

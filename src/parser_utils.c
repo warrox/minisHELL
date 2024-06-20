@@ -1,6 +1,5 @@
 
 #include "../includes/minishell_lib.h"
-#include <readline/history.h>
 
 t_data	*init_signal(t_data *data)
 {
@@ -34,36 +33,8 @@ int	check_if_quote_at_end(char c, char *input, int i)
 	}
 	return (0);
 }
-int	check_quote(char *input, int i, t_data *data)
+int check_quote_2(int flag_s,int flag,t_data *data)
 {
-	int	flag;
-	int	flag_s;
-
-	data->signal->signal = NULL_INIT;
-	flag = ZERO_INIT;
-	flag_s = ZERO_INIT;
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '\'')
-		{
-			flag += 1;
-			while(input[i] == '\"')
-				i++;
-			if (flag == 2)
-				return (1);
-		}
-		if (input[i] == '\"')
-		{	
-			flag_s += 1;
-			while(input[i] == '\'')
-				i++;
-			if(flag_s == 2)
-				return(1);
-
-		}
-		i++;
-	}
 	if(flag_s == 1)
 	{
 		data->signal->signal = SYNTAX_ERROR;
@@ -75,5 +46,47 @@ int	check_quote(char *input, int i, t_data *data)
 		
 	data->signal->signal = SYNTAX_ERROR;
 	msg_error_handler(&data->signal->signal, data);
+	return(3);
+}
+
+int check_single_q(char c,int *flag, int *i)
+{
+	if (c == '\'')
+	{
+		*flag += 1;
+		while(c == '\"')
+			i++;
+		if (*flag == 2)
+		return (1);
+	}
+	return(0);
+} 
+
+int	check_quote(char *input, int i, t_data *data)
+{
+	int	flag;
+	int	flag_s;
+
+	data->signal->signal = NULL_INIT;
+	flag = ZERO_INIT;
+	flag_s = ZERO_INIT;
+	i = 0;
+	while (input[i])
+	{
+		if(check_single_q(input[i],&flag,&i) == 2)
+			return(1);
+		if (input[i] == '\"')
+		{	
+			flag_s += 1;
+			while(input[i] == '\'')
+				i++;
+			if(flag_s == 2)
+				return(1);
+		}
+		i++;
+	}
+	i = check_quote_2(flag_s, flag, data);
+	if(i == 1 || i == 2)
+		return(1);
 	return (0);
 }
