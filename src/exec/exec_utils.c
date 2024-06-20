@@ -6,11 +6,29 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 17:28:30 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:47:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	hd_or_rdr_no_cmd_multi(t_data *data)
+{
+	ft_clear_tokenizer(data);
+	free_prompt(data);
+	free(data->signal);
+	close_tubes(data);
+	free(data->exec->multi_tube);
+	free(data->exec->pid);
+	if (data->exec->outfile != 1)
+		close(data->exec->outfile);
+	if (data->exec->infile != 0)
+		close(data->exec->infile);
+	free_exec(data);
+	free_tmp_struct(data);
+	ft_lst_arg_clear(&data->lst);
+	exit(126);
+}
 
 int	is_redir(t_list_arg *tok)
 {
@@ -39,8 +57,8 @@ char	*build_cmd(t_data *data, t_list_arg *tok)
 		return (NULL); 
 	if(tmp->cmd_array[0] == NULL)
 		return (NULL);
-	if (access(data->tokenizer->cmd_array[0], F_OK | X_OK) == 0)
-		return (data->tokenizer->cmd_array[0]);
+	if (access(tmp->cmd_array[0], F_OK | X_OK) == 0)
+		return (tmp->cmd_array[0]);
 	while(data->exec->path_cmd[i])
 	{
 		tmp_c = ft_strjoin(data->exec->path_cmd[i], "/");

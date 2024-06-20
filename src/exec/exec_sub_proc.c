@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 17:23:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:20:04 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	exec_one_pipe(t_data *data)
 	
 	if (pipe(data->exec->tube) < 0)
 		exit_error("pipe failed!\n");
+	init_tmp_struct(data);
 	check_here_doc(data);
 	data->exec->pid_1 = fork();
 	if (data->exec->pid_1 == -1)

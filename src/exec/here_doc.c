@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 17:07:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:42:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	check_here_doc(t_data *data)
 	char *file;
 	
 	file = NULL_INIT;
-	init_tmp_struct(data);
 	while(tmp)
 	{
 		is_here_doc(data, tmp);
@@ -89,10 +88,4 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 		write(fd, "\n", 1);
 	}
 	close(fd);
-	// data->exec->infile = open(file, O_RDONLY);
-	// if (data->exec->infile < 0)
-	// {
-	// 	unlink(file);
-	// 	file_not_found(data, tok);
-	// }
 }

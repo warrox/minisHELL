@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 16:49:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:39:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	display_prompt(t_data *data)
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		print_exec_utils(data);
+		// print_exec_utils(data);
 		if(is_a_builtin(data))
 		{
 			add_history(input);

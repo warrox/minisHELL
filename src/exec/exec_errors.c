@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 16:48:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:34:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	hd_or_rdr_no_cmd(t_data *data)
 	free(data->signal);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
+	if (data->exec->infile)
+		close(data->exec->infile);
+	if (data->exec->outfile)
+		close(data->exec->outfile);
 	free_exec(data);
 	free_tmp_struct(data);
 	ft_lst_arg_clear(&data->lst);

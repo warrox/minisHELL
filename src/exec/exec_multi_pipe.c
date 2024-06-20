@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 17:27:36 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:40:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ void	init_files_multi(t_data *data, t_list_arg *tok, int i)
 		if (data->exec->outfile < 0)
 			file_not_found_multi(data, tok);
 	}
-	// else if (tok->array_sign[i] == HEREDOCS)
-	// 	init_here_doc(data, tok);
-}
-
-void	reset_in_out(t_data *data)
-{
-	data->exec->infile = 0;
-	data->exec->outfile = 1;
 }
 
 void	children_process(t_data *data)
@@ -49,12 +41,14 @@ void	children_process(t_data *data)
 	
 	
 	i = ZERO_INIT;
+	check_here_doc(data);
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
 	{
 		close_tubes(data);
 		free(data->exec->multi_tube);
 		free_exec(data);
+		free_tmp_struct(data);
 		exit(1);
 	}
 	if (!data->exec->pid[data->exec->index])
@@ -64,6 +58,7 @@ void	children_process(t_data *data)
 			tmp = tmp->next;
 			i++;
 		}
+		data->exec->cmd = build_cmd(data, tmp);
 		if (data->exec->index == 0)
 			first_pipe(data, tmp);
 		else if (data->exec->index == data->exec->nb_node - 1)
@@ -71,9 +66,6 @@ void	children_process(t_data *data)
 		else
 			intermediate_pipe(data, tmp);
 		close_tubes(data);
-		data->exec->cmd = build_cmd(data, tmp);
-		if (!data->exec->cmd)
-			error_cmd(data, tmp);
 		execve(data->exec->cmd, tmp->cmd_array, NULL);
 		error_execve_multi(data, tmp);
 	}
@@ -94,12 +86,14 @@ void	exec_multi_pipe(t_data *data)
 	if (!data->exec->pid)
 		error_init(data, "Failed to int pid!\n");
 	init_tubes(data);
+	init_tmp_struct(data);
 	while(++(data->exec->index) < data->exec->nb_node)
 	{
 		if(!data->exec->multi_tube)
 			init_tubes(data);
 		children_process(data);
 	}
+	// free_tmp_struct(data);
 	close_tubes(data);
 	int j = 0;
 	while (j < data->exec->nb_node)
