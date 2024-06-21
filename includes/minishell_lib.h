@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 19:22:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 11:29:31 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void init_tool_box(t_cd *tool_box);
 t_list_arg *find_key_user(t_data *data);
 t_list_arg *find_key_old_pwd(t_data *data);
 t_list_arg *find_key_pwd(t_data *data);
+void skip_spacepromt(t_data *data, char *input);
 /**[PROMPT FUNCTIONS]**/
 
 int						display_prompt(t_data *data);
