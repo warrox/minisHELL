@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:54:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:20:07 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define COMMAND_NOT_FOUND 1
 # define UNCLOSED_QUOTES 2
 # define SYNTAX_ERROR 3
+# define UNEXPECTEDTOKEN 8
 
 # define STDINS 4
 # define STDOUTS 5

@@ -1,5 +1,4 @@
 #include "../../includes/minishell_lib.h"
-#include <stdio.h>
 bool ifPipe(char c)
 {
 	return(c == '|');
@@ -28,6 +27,15 @@ int fileAfterRedirSign(char *input, int i)
 	return(-1);
 
 }
+int tripleSignDetector(char *input,int i)
+{
+	if(ft_strncmp(&input[i], "<<<", 3)== 0 || ft_strncmp(&input[i], "<<>", 3) == 0 
+		|| ft_strncmp(&input[i], ">>>", 3) == 0 ||ft_strncmp(&input[i], ">><", 3) == 0)
+	{
+		return(-1);
+	}
+	return(0);	
+} 
 int	unexpectedToken(char *input)
 {
 	int i;
@@ -44,6 +52,13 @@ int	unexpectedToken(char *input)
 				signal = SYNTAX_ERROR;
 				msg_error_handler(&signal);
 				return(-1);
+			}
+			if(tripleSignDetector(input, i) == -1)
+			{
+				signal = UNEXPECTEDTOKEN;
+				msg_error_handler(&signal);
+				return(-1);
+
 			}
 		}
 		// if(redirsign(input[i]))

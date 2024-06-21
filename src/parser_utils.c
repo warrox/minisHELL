@@ -19,5 +19,7 @@ void	msg_error_handler(int *signal)
 	{
 		ft_printf("syntax error\n");
 	}
+	if(*signal == UNEXPECTEDTOKEN)
+		printf("minishell: syntax error near unexpected token\n");
 	// add other signals in the future
 }
