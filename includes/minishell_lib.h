@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 19:22:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 12:02:59 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,8 @@ int	get_word_size(char *str);
 char *flush_redir(char *str, t_data *data); 
 void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
 void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
-char **split_pipe_cust(char *input, char c); 
+char **split_pipe_cust(char *input, char c);
+int skip_ws_prompt(t_data *data, char *input);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

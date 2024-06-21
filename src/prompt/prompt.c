@@ -6,25 +6,12 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 18:12:58 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 12:02:32 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell_lib.h"
-
-void	free_prompt(t_data *data)
-{
-	if(data->prompt)
-	{
-		free(data->prompt->usr_name);
-		free(data->prompt->usr_pwd);
-		free(data->prompt->usr_prompt);
-		free(data->prompt->usr_build_one);
-		free(data->prompt->usr_build_two);
-		free(data->prompt);
-	}
-}
 
 int	display_prompt(t_data *data)
 {
@@ -42,16 +29,8 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);	
-		int j = 0;
-		while(ft_isws(input[j]))			
-			j++;
-		if(input[j] == '\0' || input[0] == '\0')
-		{
-			add_history(input);
-			free_prompt(data);
-			ft_clear_tokenizer(data);
+		if(skip_ws_prompt(data, input))
 			continue;
-		}
 		int_nbr = ft_exit(data, input);
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
