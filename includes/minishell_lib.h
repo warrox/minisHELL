@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 12:02:59 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:46:10 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/wait.h>
+#include <stdbool.h>
 
 /*all structures*/
 
@@ -163,9 +164,9 @@ void					ft_lst_arg_delone(t_list_arg *lst);
 void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
 char					*parser(char *input, t_data *data);
-void					msg_error_handler(int *signal, t_data *data);
+void					msg_error_handler(int *signal);
 int					cutting_input(t_data *data, char *input);
-int						check_quote(char *input, int i, t_data *data);
+int						check_quote(char *input);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
 int						check_pipe(char *input, int i, t_data *data);
@@ -187,7 +188,7 @@ int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
 int ft_current_directory(char *path,t_data *data);
-void expander(t_data *data);
+void expander(t_data *data, char *input);
 char	*expansion(char *input, t_data *data);
 int	get_word_size(char *str);
 char *flush_redir(char *str, t_data *data); 
@@ -195,6 +196,8 @@ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
 void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
 char **split_pipe_cust(char *input, char c);
 int skip_ws_prompt(t_data *data, char *input);
+int syntax_checker(char *input);
+int	unexpectedToken(char *input);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

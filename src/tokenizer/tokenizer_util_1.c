@@ -1,28 +1,28 @@
 #include "../../includes/minishell_lib.h"
 #include <stdio.h>
 
-t_list_arg	*ft_lst_cut_new(char *content)
-{
-	t_list_arg	*new_node;
-
-	new_node = (t_list_arg *)malloc(sizeof(t_list_arg));
-	if (!new_node)
-		return (NULL);
-	new_node->key_and_val = NULL_INIT;
-	new_node->next = NULL_INIT;
-	if (content[0] == '$')
-		new_node->input_splited = ft_strdup_cust(content);
-	else
-	{
-		new_node->input_splited = ft_strdup(content);
-	}
-	if (!new_node->input_splited)
-	{
-		free(new_node);
-		return (NULL);
-	}
-	return (new_node);
-}
+// t_list_arg	*ft_lst_cut_new(char *content)
+// {
+// 	t_list_arg	*new_node;
+//
+// 	new_node = (t_list_arg *)malloc(sizeof(t_list_arg));
+// 	if (!new_node)
+// 		return (NULL);
+// 	new_node->key_and_val = NULL_INIT;
+// 	new_node->next = NULL_INIT;
+// 	if (content[0] == '$')
+// 		new_node->input_splited = ft_strdup_cust(content);
+// 	else
+// 	{
+// 		new_node->input_splited = ft_strdup(content);
+// 	}
+// 	if (!new_node->input_splited)
+// 	{
+// 		free(new_node);
+// 		return (NULL);
+// 	}
+// 	return (new_node);
+// }
 
 void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 {

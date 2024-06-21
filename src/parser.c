@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 10:13:23 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 19:08:34 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,12 @@ char	*parser(char *input, t_data *data)
 	if (*input == '\0')
 		return (input);
 	result = NULL;
-	if(cutting_input(data, input) == -1)
-		return (NULL);
-	if(parse_cmd_arg(data) == -1)
-		return (NULL);
-	expander(data);
+	if(syntax_checker(input) == -1)
+		return(NULL);
+	expander(data, input);
+	// if(cutting_input(data, input) == -1)
+	// 	return (NULL);
+	// if(parse_cmd_arg(data) == -1)
+	// 	return (NULL);
 	return (input);
 }

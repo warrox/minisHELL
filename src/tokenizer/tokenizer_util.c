@@ -1,97 +1,64 @@
 #include "../../includes/minishell_lib.h"
-#include <string.h>
-int ft_is_oth_pipe(char *input, int i)
+#include <stdio.h>
+bool ifPipe(char c)
 {
-	i += 1;
-	while(input[i] && input[i] != '|')
-	{
-		while(input[i] == ' ' || input[i] == '\t')
-		{
-			i++;
-		}
-		if(input[i] == '|')
-		{
-			return(1);
-		}
-		else
-		{
-			return(0);
-		}
-	}
-	return(1);
+	return(c == '|');
 } 
-int	check_pipe(char *input, int i, t_data *data)
+int pipeAlone(char *input, int i)
 {
-	int	flag;
-	int	flag_s;
-
-	data->signal->signal = NULL_INIT;
-	flag = ZERO_INIT;
-	flag_s = ZERO_INIT;
-	while (input[i])
-	{
-		if (input[i] == '|')
-		{
-			if (input[i + 1] == '|' || ft_is_oth_pipe(input,i) == 1)
-			{
-				data->signal->signal = SYNTAX_ERROR;
-				return(1); // to check
-			}
-			flag += 1;
-		}
+	i++;
+	while(ft_isws(input[i]))
 		i++;
-	}
-	if (input[i] == '\0' && flag >= 1)
-	{
-		return (0);
-	}
-	return (1);
+	if(input[i] && ft_isascii(input[i]))
+		return(0);
+	return(-1);
+}
+bool redirsign(char c)
+{
+	return(c == '<' || c == '>');	
 }
 
-int	checker_err_pipe(char *input, t_data *data)
+int fileAfterRedirSign(char *input, int i)
 {
-	int	i;
-	int	is_valid;
-	int	not_valid;
-
-	not_valid = 0;
-	is_valid = 1;
-	i = ZERO_INIT;
-	while (input[i])
-	{
-		if (input[i] == '|')
-			break ;
+	i++;
+	while(ft_isws(input[i]))
 		i++;
-	}
-	if (input[i] == '\0')
-		return (is_valid);
-	if (check_pipe(input, i, data) == 0) // bloc inverse cense renvoye not valid
-		return (is_valid);
-	if (data->signal->signal != NULL_INIT)
-		msg_error_handler(&data->signal->signal, data);
-	return (not_valid);
+	if(input[i] && ft_isascii(input[i]))
+		return(0);
+	return(-1);
+
 }
-
-char	*ft_strdup_cust(const char *source)
+int	unexpectedToken(char *input)
 {
-	int		i;
-	char	*copied_s;
+	int i;
+	int signal;
 
+	signal = 0;
 	i = 0;
-	copied_s = malloc(ft_strlen(source) + 1);
-	if (!copied_s)
-		return (NULL);
-	while (source[i])
+	while(input[i])
 	{
-		while (source[i] == ' ' || source[i] == '\t')
-			i++;
-		copied_s[i] = source[i];
+		if(ifPipe(input[i]) || redirsign(input[i]))
+		{
+			if(pipeAlone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
+			{
+				signal = SYNTAX_ERROR;
+				msg_error_handler(&signal);
+				return(-1);
+			}
+		}
+		// if(redirsign(input[i]))
+		// {
+		// 	if(fileAfterRedirSign(input,i)== -1)
+		// 	{
+		// 		signal = SYNTAX_ERROR;
+		// 		msg_error_handler(&signal);
+		// 		return(-1);
+		// 	}
+		// }
 		i++;
 	}
-	copied_s[i] = '\0';
-	return (copied_s);
+	return(0);
 }
-// ------------------------------------
 
 int	sign_cmp(char *str)
 {

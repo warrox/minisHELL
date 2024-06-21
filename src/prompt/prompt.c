@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 12:02:32 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:26:09 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int	display_prompt(t_data *data)
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		print_exec_utils(data);
-		if(is_a_builtin(data))
-		{
-			add_history(input);
-			free_prompt(data);
-			ft_clear_tokenizer(data);
-			continue;
-		}
+		// print_exec_utils(data);
+		// if(is_a_builtin(data))
+		// {
+		// 	add_history(input);
+		// 	free_prompt(data);
+		// 	ft_clear_tokenizer(data);
+		// 	continue;
+		// }
 		init_exec(data);
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);
