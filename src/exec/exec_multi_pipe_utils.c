@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:01:39 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 19:38:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/21 14:38:29 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	intermediate_pipe(t_data *data, t_list_arg *tok)
 	{
 		while(tok->array_sign[i] != 0)
 		{
-			if (data->exec->infile != 0 && data->exec->infile > 0)
-				close(data->exec->infile);
-			if (data->exec->outfile != 1 && data->exec->outfile > 0)
-				close(data->exec->outfile);
+			// if (data->exec->infile != 0 && data->exec->infile > 0)
+			// 	close(data->exec->infile);
+			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
+			// 	close(data->exec->outfile);
 			init_files_multi(data, tok, i++);
 		}
 	}
@@ -60,10 +60,10 @@ void	last_pipe(t_data *data, t_list_arg *tok)
 	{
 		while(tok->file_array[i])
 		{
-			if (data->exec->infile != 0 && data->exec->infile > 0)
-				close(data->exec->infile);
-			if (data->exec->outfile != 1 && data->exec->outfile > 0)
-				close(data->exec->outfile);
+			// if (data->exec->infile != 0 && data->exec->infile > 0)
+			// 	close(data->exec->infile);
+			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
+			// 	close(data->exec->outfile);
 			init_files_multi(data, tok, i++);
 		}
 	}
@@ -97,19 +97,21 @@ void	first_pipe(t_data *data, t_list_arg *tok)
 	{
 		while(tok->file_array[i])
 		{
-			if (data->exec->infile != 0 && data->exec->infile > 0)
-				close(data->exec->infile);
-			if (data->exec->outfile != 1 && data->exec->outfile > 0)
-				close(data->exec->outfile);
+			// if (data->exec->infile != 0 && data->exec->infile > 0)
+			// 	close(data->exec->infile);
+			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
+			// 	close(data->exec->outfile);
 			init_files_multi(data, tok, i++);
 		}
 	}
+	dprintf(2, "IN : %d || OUT : %d\n", data->exec->infile, data->exec->outfile);
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
 	{
 		hd_or_rdr_no_cmd_multi(data);
 	}
 	if (data->exec->infile != 0)
 	{
+		dprintf(2, "INFILE!\n");
 		dup2(data->exec->infile, STDIN_FILENO);
 		close(data->exec->infile);
 	}
@@ -117,6 +119,8 @@ void	first_pipe(t_data *data, t_list_arg *tok)
 		dup2(0, STDIN_FILENO);
 	if (data->exec->outfile != 1)
 	{
+		dprintf(2, "%s\n", tok->file_array[1]);
+		dprintf(2, "OUTFILE!\n");
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close(data->exec->outfile);
 	}

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 18:40:15 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:01:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	exec_multi_pipe(t_data *data)
 		error_init(data, "Failed to int pid!\n");
 	init_tubes(data);
 	init_tmp_struct(data);
+	// print_exec_utils(data);
 	while(++(data->exec->index) < data->exec->nb_node)
 	{
 		if(!data->exec->multi_tube)

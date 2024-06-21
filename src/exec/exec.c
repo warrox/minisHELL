@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 17:57:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:58:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,4 @@ void	init_exec(t_data *data)
 		exec_one_pipe(data);
 	else
 		exec_multi_pipe(data);
-	// free_tmp_struct(data);
 }
