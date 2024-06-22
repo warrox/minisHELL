@@ -6,12 +6,13 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 19:08:34 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/22 17:46:45 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 int	expand_stopper(char c)
 {
@@ -67,17 +68,16 @@ t_list_arg	*init_tokenizer(void)
 	tokenizer->input_splited = NULL_INIT;
 	return (tokenizer);
 }
-
 char	*parser(char *input, t_data *data)
 {
 	char	*result;
-
 	if (*input == '\0')
 		return (input);
 	result = NULL;
 	if(syntax_checker(input) == -1)
 		return(NULL);
 	expander(data, input);
+	printf("IS PASSING PARSE : %s\n", data->tokenizer->final_cmd);
 	// if(cutting_input(data, input) == -1)
 	// 	return (NULL);
 	// if(parse_cmd_arg(data) == -1)

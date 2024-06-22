@@ -1,0 +1,87 @@
+#include "../includes/minishell_lib.h"
+#include "stdbool.h"
+#include <stdio.h>
+
+
+bool isExitCode(char *input, int *i)
+{
+	return(!ft_strncmp(&input[*i],"$?", 2));
+}
+bool isSingleQuote(char c)
+{
+	return (c == '\'');
+}
+
+void passTilNextQuote(char *input, int *i) 
+{
+	(*i)++;
+	while (input[*i] && !isSingleQuote(input[*i]))
+		(*i)++;
+	if(input[(*i)] != '\0')
+	{
+		(*i)++;
+	}
+}
+bool isHereDoc(char *input, int*i)
+{
+	return(!ft_strncmp(&input[*i],"<<",2));
+}
+
+void passVarDoc(char *input, int *i)
+{
+	(*i) += 2;
+	while(input[*i] && ft_isws(input[*i]))
+		(*i)++;
+	while(input[*i] && !ft_isws(input[*i]))
+		(*i)++;
+}
+
+bool isVariable(char *input,int *i)
+{
+	return(!ft_strncmp(&input[*i], "$", 1));
+}
+
+void expandVariable(t_data *data, char *input, int *i)
+{
+	(void) input;
+	(void) i;
+
+	int j =0;
+	data->arrayIntExpand[j] = 5;
+	printf("KOI : %d\n",data->arrayIntExpand[0]);
+	j++;
+	data->arrayIntExpand[j] = 1200;
+	printf("KOI : %d\n",data->arrayIntExpand[1]);
+
+}
+void expander(t_data *data, char *input) 
+{
+	(void) data;
+	int i;
+
+	i = 0;
+	while(input[i]) 
+	{
+		if (isSingleQuote(input[i]))
+			passTilNextQuote(input, &i);
+		if (isHereDoc(input, &i)) 
+		{
+			printf("TRUE\n");
+			passVarDoc(input, &i);
+		} 
+		else 
+			i++;
+		if (isExitCode(input,&i)) 
+		{
+			printf("ENTER EXIT CODE DO THE FUNC\n");
+			// expandExitCode();
+		} 
+		if (isVariable(input,&i)) 
+		{
+			printf("XXXX\n");
+			expandVariable(data,input,&i);
+		}
+		printf("STRING : %s\n",&input[i]);
+	}
+}
+
