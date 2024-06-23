@@ -40,11 +40,15 @@ int	unexpectedToken(char *input)
 {
 	int i;
 	int signal;
+	int flag;
 
+	flag = 0;
 	signal = 0;
 	i = 0;
 	while(input[i])
 	{
+		if(input[i] == '\"')
+			flag += 1;
 		if(ifPipe(input[i]) || redirsign(input[i]))
 		{
 			if(pipeAlone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
@@ -53,7 +57,7 @@ int	unexpectedToken(char *input)
 				msg_error_handler(&signal);
 				return(-1);
 			}
-			if(tripleSignDetector(input, i) == -1)
+			if(tripleSignDetector(input, i) == -1 && flag == 0)
 			{
 				signal = UNEXPECTEDTOKEN;
 				msg_error_handler(&signal);
