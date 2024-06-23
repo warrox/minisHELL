@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/22 14:44:43 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/23 11:23:32 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
 char					*parser(char *input, t_data *data);
 void					msg_error_handler(int *signal);
-int					cutting_input(t_data *data, char *input);
 int						check_quote(char *input);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
@@ -200,6 +199,7 @@ char **split_pipe_cust(char *input, char c);
 int skip_ws_prompt(t_data *data, char *input);
 int syntax_checker(char *input);
 int	unexpectedToken(char *input);
+int	cutting_input(t_data *data, char *input); 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

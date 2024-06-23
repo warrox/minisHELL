@@ -1,4 +1,5 @@
 #include "../../includes/minishell_lib.h"
+
 int count_splits(char *input, char c) 
 {
     int count;
@@ -30,14 +31,37 @@ char **allocate_splits(char *input, char c, int *num_splits)
     return result;
 }
 
-
 void add_token(char **result, char *start, char *end, int *index) 
 {
     int length; 
-	length = end - start;
+    char *token_start = start;
+    char *token_end = end;
+
+    // Trim leading spaces
+    while (token_start < token_end && (*token_start == ' ' || *token_start == '\t'))
+        token_start++;
+
+    // Trim trailing spaces
+    while (token_end > token_start && (*(token_end - 1) == ' ' || *(token_end - 1) == '\t'))
+        token_end--;
+
+    // Remove double quotes
+    char *temp = (char *)malloc((token_end - token_start + 1) * sizeof(char));
+    char *temp_ptr = temp;
+    while (token_start < token_end) {
+        if (*token_start != '"') {
+            *temp_ptr++ = *token_start;
+        }
+        token_start++;
+    }
+    *temp_ptr = '\0';
+
+    length = temp_ptr - temp;
     result[*index] = (char *)malloc((length + 1) * sizeof(char));
-    strncpy(result[*index], start, length);
+    strncpy(result[*index], temp, length);
     result[*index][length] = '\0';
+
+    free(temp);
     (*index)++;
 }
 
@@ -59,7 +83,7 @@ void fill_splits(char **result, char *input, char c)
         else if (*input == '"')
             in_double_quote = !in_double_quote;
         else if (*input == c && !in_single_quote && !in_double_quote) 
-		{
+        {
             add_token(result, token_start, input, &index);
             token_start = input + 1;
         }
@@ -68,6 +92,7 @@ void fill_splits(char **result, char *input, char c)
     add_token(result, token_start, input, &index);
     result[index] = NULL;
 }
+
 char **split_pipe_cust(char *input, char c) 
 {
     char **result;

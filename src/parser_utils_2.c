@@ -1,4 +1,5 @@
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 char	*ft_strdup_cust(const char *source)
 {
@@ -29,12 +30,7 @@ t_list_arg	*ft_lst_cut_new(char *content)
 		return (NULL);
 	new_node->key_and_val = NULL_INIT;
 	new_node->next = NULL_INIT;
-	if (content[0] == '$')
-		new_node->input_splited = ft_strdup_cust(content);
-	else
-	{
-		new_node->input_splited = ft_strdup(content);
-	}
+	new_node->input_splited = ft_strdup(content);
 	if (!new_node->input_splited)
 	{
 		free(new_node);
@@ -62,7 +58,7 @@ void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 	}
 }
 
-void	cutting_input(t_data *data, char *input)
+int	cutting_input(t_data *data, char *input) 
 {
 	int			i;
 	char		**split;
@@ -70,10 +66,9 @@ void	cutting_input(t_data *data, char *input)
 	t_list_arg	*tmp;
 
 	i = 0;
-	checker_err_pipe(input, data);
-	split = ft_split(input, '|');
+	split = split_pipe_cust(input, '|');
 	if (!split)
-		return ;
+		return(-1) ;
 	data->tokenizer = ft_lst_cut_new(split[i]);
 	i = 1;
 	while (split[i])
@@ -93,6 +88,8 @@ void	cutting_input(t_data *data, char *input)
 	// test if the list is well copied. A VIRER
 	while (tmp)
 	{
+		printf("tmp : %s\n", tmp->input_splited);
 		tmp = tmp->next;
 	}
+	return(0);
 }
