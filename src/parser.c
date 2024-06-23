@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/23 11:47:55 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/23 15:56:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,9 @@ char	*parser(char *input, t_data *data)
 	if(syntax_checker(input) == -1)
 		return(NULL);
 	expander(data, input);
-	printf("IS PASSING PARSE : %s\n", data->tokenizer->final_cmd);
 	if(cutting_input(data, data->tokenizer->final_cmd) == -1)
 		return (NULL);
-	// if(parse_cmd_arg(data) == -1)
-	// 	return (NULL);
+	if(parse_cmd_arg(data,input) == -1)
+		return (NULL);
 	return (input);
 }

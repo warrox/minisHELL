@@ -58,15 +58,14 @@ void	ft_lstadd_cut_back(t_list_arg **lst, t_list_arg *new_node)
 	}
 }
 
-int	cutting_input(t_data *data, char *input) 
+int	cutting_input(t_data *data, char *ex_input) 
 {
 	int			i;
 	char		**split;
 	t_list_arg	*new_node;
-	t_list_arg	*tmp;
 
 	i = 0;
-	split = split_pipe_cust(input, '|');
+	split = split_pipe_cust(ex_input, '|');
 	if (!split)
 		return(-1) ;
 	data->tokenizer = ft_lst_cut_new(split[i]);
@@ -84,12 +83,5 @@ int	cutting_input(t_data *data, char *input)
 	while (split[i])
 		free(split[i++]);
 	free(split);
-	tmp = data->tokenizer;
-	// test if the list is well copied. A VIRER
-	while (tmp)
-	{
-		printf("tmp : %s\n", tmp->input_splited);
-		tmp = tmp->next;
-	}
-	return(0);
+		return(0);
 }
