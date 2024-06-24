@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/23 15:25:58 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/24 09:00:33 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,9 @@ int						check_quote(char *input);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
 int						check_pipe(char *input, int i, t_data *data);
-int					parse_cmd_arg(t_data *data,char *og_input);
+int	parse_cmd_arg(t_data *data);
 char					**split_tokenizer(char const *s, char c);
-int					sort_sign(t_list_arg *tmp, t_data *data, char *og_input);
+int					sort_sign(t_list_arg *tmp, t_data *data);
 void					ft_clear_tokenizer(t_data *data);
 t_list_arg				*init_tokenizer(void);
 char					*ft_strdup_cust(const char *source);
@@ -200,6 +200,8 @@ int skip_ws_prompt(t_data *data, char *input);
 int syntax_checker(char *input);
 int	unexpectedToken(char *input);
 int	cutting_input(t_data *data, char *input); 
+bool isSingleQuote(char c);
+bool isDoubleQuote(char c);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

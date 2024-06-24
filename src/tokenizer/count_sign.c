@@ -1,29 +1,9 @@
 
 #include "../../includes/minishell_lib.h"
-int handle_double_quote(char **ptr, int *i) {
-    if ((*ptr)[*i] == '\"') {
-        if ((*ptr)[*i + 1])
-            (*i)++;
-        *ptr = ft_strchr(*ptr, '\"');
-        if (!*ptr)
-            return 1;
-    }
-    return 0;
-}
 
-int handle_single_quote(char **ptr, int *i) 
+bool isDoubleQuote(char c) 
 {
-    if(!ptr)
-		return(0);
-	if ((*ptr)[*i] == '\'') 
-	{
-        if ((*ptr)[*i + 1])
-            (*i)++;
-        *ptr = ft_strchr(*ptr, '\'');
-        if (!*ptr)
-            return 1;
-    }
-    return 0;
+	return (c == '"');
 }
 
 int count_sign(char *input) 
@@ -33,13 +13,22 @@ int count_sign(char *input)
     int i = 0;
     char *ptr = input;
     
+	printf("%s\n", input);
     if(!ptr)
 		return(count);
 	while (ptr[i]) {
-        if (handle_double_quote(&ptr, &i))
-            return count;
-        if (handle_single_quote(&ptr, &i))
-            return count;
+		if (isSingleQuote(ptr[i])) {
+			i++;
+			while(ptr[i] && !isSingleQuote(ptr[i]))
+				i++;
+			i++;
+		}
+		if (isDoubleQuote(ptr[i])) {
+			i++;
+			while(ptr[i] && !isDoubleQuote(ptr[i]))
+				i++;
+			i++;
+		}
         tmp = sign_cmp(&ptr[i]);
         if (tmp != 0) {
             count++;

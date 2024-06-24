@@ -58,23 +58,30 @@ bool isVariable(char *input, int *i)
 
 void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j)
 {
-    (*i)++;
+    int flag;
+	size_t key_len;
+	flag = 0;
+	(*i)++;
     t_list_arg *current = data->lst;
+	key_len = 0;
     while (current)
     {
-        size_t key_len = ft_strlen(current->key_and_val[0]);
-        if (!ft_strncmp(&input[*i], current->key_and_val[0], key_len))
-        {
-            ft_strlcat(buffer, current->key_and_val[1], 4096);
-            *j += ft_strlen(current->key_and_val[1]);
-            *i += key_len;
-            break;
-        }
+        key_len = ft_strlen(current->key_and_val[0]);
+		if (!ft_strncmp(&input[*i], current->key_and_val[0], key_len) && (ft_strlen(current->key_and_val[0]) == ft_strlen(&input[*i])))
+		{
+			flag = 1;
+			ft_strlcat(buffer, current->key_and_val[1], 4096);
+			*j += ft_strlen(current->key_and_val[1]);
+			*i += key_len;
+			break;
+		}
         current = current->next;
     }
-    buffer[*j] = ' ';
-    (*j)++;
-    buffer[*j] = '\0';
+	if(flag == 0)
+	{
+		while(input[*i] && !ft_isws(input[*i]))
+			(*i)++;
+	}
 }
 
 void expander(t_data *data, char *input)
@@ -83,11 +90,15 @@ void expander(t_data *data, char *input)
     int j = 0;
     char strExpanded[4096];
     ft_bzero(strExpanded, 4096);
+	int sq = 0;
+	int dq = 0;
 
     while (input[i])
     {
-        if (isSingleQuote(input[i]))
-            passTilNextQuote(input, &i, strExpanded, &j);
+		if (isDoubleQuote(input[i]) && !sq)
+			dq = !dq;
+        if (isSingleQuote(input[i]) && !dq)
+			sq = !sq;
         else if (isHereDoc(input, &i))
             passVarDoc(input, &i, strExpanded, &j);
         else if (isExitCode(input, &i))
@@ -95,14 +106,10 @@ void expander(t_data *data, char *input)
             printf("ENTER EXIT CODE DO THE FUNC\n");
             // expandExitCode();
         }
-        else if (isVariable(input, &i))
-            expandVariable(data, input, &i, strExpanded, &j);
+        if (isVariable(input, &i) && !sq)
+			expandVariable(data, input, &i, strExpanded, &j);
         else
-        {
-    //         if(input[i] == '\"')
-				// i++;
 			strExpanded[j++] = input[i++];
-        }
     }
     strExpanded[j] = '\0';
     data->tokenizer->final_cmd = ft_strdup(strExpanded);

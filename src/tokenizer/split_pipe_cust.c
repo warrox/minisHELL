@@ -37,21 +37,17 @@ void add_token(char **result, char *start, char *end, int *index)
     char *token_start = start;
     char *token_end = end;
 
-    // Trim leading spaces
     while (token_start < token_end && (*token_start == ' ' || *token_start == '\t'))
         token_start++;
 
-    // Trim trailing spaces
     while (token_end > token_start && (*(token_end - 1) == ' ' || *(token_end - 1) == '\t'))
         token_end--;
 
-    // Remove double quotes
     char *temp = (char *)malloc((token_end - token_start + 1) * sizeof(char));
     char *temp_ptr = temp;
-    while (token_start < token_end) {
-        if (*token_start != '"') {
-            *temp_ptr++ = *token_start;
-        }
+    while (token_start < token_end)
+	{
+        *temp_ptr++ = *token_start;
         token_start++;
     }
     *temp_ptr = '\0';
@@ -60,7 +56,6 @@ void add_token(char **result, char *start, char *end, int *index)
     result[*index] = (char *)malloc((length + 1) * sizeof(char));
     strncpy(result[*index], temp, length);
     result[*index][length] = '\0';
-
     free(temp);
     (*index)++;
 }
@@ -76,8 +71,8 @@ void fill_splits(char **result, char *input, char c)
     in_single_quote = 0;
     in_double_quote = 0;
     index = 0;
-
-    while (*input) {
+    while (*input) 
+	{
         if (*input == '\'')
             in_single_quote = !in_single_quote;
         else if (*input == '"')

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/10 16:01:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:34:18 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	print_prompt_struct(t_data *data)
 {
