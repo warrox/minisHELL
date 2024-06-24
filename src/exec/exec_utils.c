@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 18:47:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:23:28 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,17 @@ int	is_redir(t_list_arg *tok)
 	return (0);
 }
 
-char	*build_cmd(t_data *data, t_list_arg *tok)
+char *build_cmd(t_data *data, t_list_arg *tok)
 {
-	int	i;
+	int i;
 	char *tmp_c;
-	t_list_arg	*tmp;
-	
-	tmp = tok;
-	i = 0;
-	// dprintf(2, "LA %s\n", tmp->cmd_array[0]);
-	if (!data->exec->path || data->exec->path == NULL)
-		return (data->tokenizer->cmd_array[0]);
-	if(!tmp->cmd_array)
-		return (NULL); 
-	if(tmp->cmd_array[0] == NULL)
+	t_list_arg *tmp = tok;
+
+	if (!data->exec->path || !tmp->cmd_array || !tmp->cmd_array[0])
 		return (NULL);
 	if (access(tmp->cmd_array[0], F_OK | X_OK) == 0)
 		return (tmp->cmd_array[0]);
-	while(data->exec->path_cmd[i])
+	for (i = 0; data->exec->path_cmd[i]; i++)
 	{
 		tmp_c = ft_strjoin(data->exec->path_cmd[i], "/");
 		data->exec->final_cmd = ft_strjoin(tmp_c, tmp->cmd_array[0]);
@@ -67,9 +60,8 @@ char	*build_cmd(t_data *data, t_list_arg *tok)
 		if (access(data->exec->final_cmd, F_OK | X_OK) == 0)
 			return (data->exec->final_cmd);
 		free(data->exec->final_cmd);
-		i++;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 void	free_exec(t_data *data)

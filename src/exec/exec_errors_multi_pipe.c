@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/17 18:58:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:21:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,12 @@ void	error_execve_multi(t_data *data, t_list_arg *tok)
 	exit(127);
 }
 
-void	error_cmd(t_data *data, t_list_arg *tok)
+void error_cmd(t_data *data, t_list_arg *tok)
 {
-	if (tok->cmd_array != NULL)
+	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": command not found\n", 21);
-	free_prompt(data);
-	free(data->signal);
-	ft_lst_arg_clear(&data->lst);
-	ft_clear_tokenizer(data);
-	free(data->exec->multi_tube);
-	free(data->exec->pid);
-	free_exec(data);
-	exit(127);
+	write(2, ": command not found\n", 20);
+	cleanup_and_exit(data, 127);
 }
 
 void	error_init(t_data *data, char *str)
@@ -72,4 +65,12 @@ void	error_init(t_data *data, char *str)
 		free(data->exec->pid);
 	free_exec(data);
 	exit(1); // need to be checked !
+}
+
+void error_permission_denied(t_data *data, t_list_arg *tok)
+{
+	if (tok->cmd_array && tok->cmd_array[0])
+		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(2, ": Permission denied\n", 20);
+	cleanup_and_exit(data, 1);
 }

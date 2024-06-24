@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 17:01:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:24:06 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,17 @@ void	children_process(t_data *data)
 {
 	int i;
 	t_list_arg *tmp = data->tokenizer;
-	
-	
-	i = ZERO_INIT;
+
+	i = 0;
 	check_here_doc(data);
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
 	{
 		close_tubes(data);
-		free(data->exec->multi_tube);
-		free_exec(data);
-		free_tmp_struct(data);
+		free_resources(data);
 		exit(1);
 	}
-	if (!data->exec->pid[data->exec->index])
+	if (data->exec->pid[data->exec->index] == 0)
 	{
 		while(i != data->exec->index && tmp)
 		{
@@ -59,12 +56,15 @@ void	children_process(t_data *data)
 			i++;
 		}
 		data->exec->cmd = build_cmd(data, tmp);
-		if (data->exec->index == 0)
-			first_pipe(data, tmp);
-		else if (data->exec->index == data->exec->nb_node - 1)
-			last_pipe(data, tmp);
-		else
-			intermediate_pipe(data, tmp);
+		if (data->exec->cmd == NULL)
+			error_cmd(data, tmp);
+		setup_pipes(data, tmp);
+		if (access(data->exec->cmd, F_OK) != 0)
+			error_dir_file_not_found(data, tmp);
+		if (access(data->exec->cmd, X_OK) != 0)
+			error_permission_denied(data, tmp);
+		if (check_dir(data->exec->cmd) == -1)
+			error_is_a_dir_mup(data, tmp);
 		close_tubes(data);
 		execve(data->exec->cmd, tmp->cmd_array, NULL);
 		error_execve_multi(data, tmp);
@@ -101,4 +101,21 @@ void	exec_multi_pipe(t_data *data)
 		waitpid(data->exec->pid[j++], &status, 0);
 	free(data->exec->multi_tube);
 	free(data->exec->pid);
+}
+void error_dir_file_not_found(t_data *data, t_list_arg *tok)
+{
+	if (tok->cmd_array && tok->cmd_array[0])
+		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(2, ": No such file or directory\n", 28);
+	cleanup_and_exit(data, 1);
+}
+
+void setup_pipes(t_data *data, t_list_arg *tmp)
+{
+	if (data->exec->index == 0)
+		first_pipe(data, tmp);
+	else if (data->exec->index == data->exec->nb_node - 1)
+		last_pipe(data, tmp);
+	else
+		intermediate_pipe(data, tmp);
 }
