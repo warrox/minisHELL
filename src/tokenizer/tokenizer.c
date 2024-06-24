@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 10:37:19 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/24 16:41:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	parse_cmd_arg(t_data *data)
 			create_signed(tmp);
 		tmp->final_cmd = flush_redir(tmp->input_splited, data);
 		printf("FINAL CMD : %s\n",tmp->final_cmd);
-		tmp->cmd_array = ft_split(tmp->final_cmd,' ');
+		tmp->cmd_array = split_tokenizer(tmp->final_cmd,' ');
 		tmp = tmp->next;
 	}
 	return(0);

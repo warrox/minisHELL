@@ -56,18 +56,18 @@ bool isVariable(char *input, int *i)
     return (!ft_strncmp(&input[*i], "$", 1));
 }
 
-void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j)
+void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int *dq)
 {
-    int flag;
 	size_t key_len;
-	flag = 0;
+	int flag;
 	(*i)++;
     t_list_arg *current = data->lst;
 	key_len = 0;
-    while (current)
+	flag = 0;
+	while (current)
     {
         key_len = ft_strlen(current->key_and_val[0]);
-		if (!ft_strncmp(&input[*i], current->key_and_val[0], key_len) && (ft_strlen(current->key_and_val[0]) == ft_strlen(&input[*i])))
+		if (!ft_strncmp(&input[*i], current->key_and_val[0], key_len) || (!dq && (ft_strlen(current->key_and_val[0]) == ft_strlen(&input[*i]))))
 		{
 			flag = 1;
 			ft_strlcat(buffer, current->key_and_val[1], 4096);
@@ -79,7 +79,7 @@ void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j)
     }
 	if(flag == 0)
 	{
-		while(input[*i] && !ft_isws(input[*i]))
+		while(input[*i] && !ft_isws(input[*i])) // ou comp 
 			(*i)++;
 	}
 }
@@ -92,23 +92,23 @@ void expander(t_data *data, char *input)
     ft_bzero(strExpanded, 4096);
 	int sq = 0;
 	int dq = 0;
-
     while (input[i])
     {
 		if (isDoubleQuote(input[i]) && !sq)
 			dq = !dq;
-        if (isSingleQuote(input[i]) && !dq)
+		else if (isSingleQuote(input[i]) && !dq)
 			sq = !sq;
-        else if (isHereDoc(input, &i))
-            passVarDoc(input, &i, strExpanded, &j);
-        else if (isExitCode(input, &i))
-        {
-            printf("ENTER EXIT CODE DO THE FUNC\n");
-            // expandExitCode();
-        }
-        if (isVariable(input, &i) && !sq)
-			expandVariable(data, input, &i, strExpanded, &j);
-        else
+		else if (isHereDoc(input, &i))
+			passVarDoc(input, &i, strExpanded, &j);
+		else if (isExitCode(input, &i))
+		{
+			// expandExitCode();
+		} 
+		if (isVariable(input, &i) && !sq)
+		{
+			expandVariable(data, input, &i, strExpanded, &j, &dq);
+		}
+		else
 			strExpanded[j++] = input[i++];
     }
     strExpanded[j] = '\0';

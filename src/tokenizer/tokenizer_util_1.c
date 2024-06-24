@@ -14,11 +14,11 @@ char	*get_filename(char *str)
 	char	*new;
 
 	i = 0;
-	while (str[i] && ft_isws(str[i]) == 1)
+	while (str[i] && ft_isws(str[i]))
 		i++;
 	start = i;
 	end = i;
-	while (str[end] && !ft_isws(str[end]))
+	while (str[end] && (!ft_isws(str[end]) && !sign_cmp(&str[end])))
 		end++;
 	if (end == start)
 		NULL; // CHECK
@@ -31,7 +31,6 @@ void	create_signed(t_list_arg *lst)
 	int	i;
 	int	j;
 	int	tmp;
-
 	i = 0;
 	j = 0;
 	tmp = 0;
@@ -40,7 +39,7 @@ void	create_signed(t_list_arg *lst)
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);
-		if(i > 1)
+		if(i > 1) // maybe useless now
 		{
 			if(lst->input_splited[i - 1] == '\'')
 			tmp = 0;
