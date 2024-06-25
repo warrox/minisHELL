@@ -6,11 +6,33 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 15:29:17 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:20:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void init_files_builtin(t_data *data, t_list_arg *tok, int i)
+{
+    if (tok->array_sign[i] == STDOUTS)
+    {
+        data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
+        if (data->exec->outfile < 0)
+            file_not_found(data, tok);
+    }
+    else if (tok->array_sign[i] == STDINS)
+    {
+        data->exec->infile = open(tok->file_array[i], O_RDONLY);
+        if (data->exec->infile < 0)
+            file_not_found(data, tok);
+    }
+	else if (tok->array_sign[i] == APPEND)
+	{
+		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
+		if (data->exec->outfile < 0)
+			file_not_found(data, tok);
+	}
+}
 
 void init_files(t_data *data, t_list_arg *tok, int i)
 {
@@ -93,7 +115,7 @@ void	first_child_process(t_data *data)
 {
 	int i;
 	i = 0;
-
+	
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (data->exec->cmd == NULL)
 		error_cmd_op(data, data->tokenizer);
@@ -165,6 +187,16 @@ void	 exec_sub_proc(t_data *data)
 	int	i;
 	
 	i = ZERO_INIT; 
+	if (is_a_builtin(data) >= 10 && is_a_builtin(data) <= 16) 
+	{
+		init_files_builtin(data, data->tokenizer, i);
+		exec_builtin(data, is_a_builtin(data));
+		if (data->exec->outfile != 1)
+			close(data->exec->outfile);
+		if (data->exec->infile != 0)
+			close (data->exec->infile);
+		return ;
+	}
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (data->exec->cmd == NULL)
 		error_cmd_single(data, data->tokenizer);
@@ -198,6 +230,6 @@ void	 exec_sub_proc(t_data *data)
 		ft_lst_arg_clear(&data->lst);
 		exit(1);
 	}
-	execve(data->exec->cmd, data->tokenizer->cmd_array, data->exec->my_envp);
+	execve(data->exec->cmd, data->tokenizer->cmd_array, data->exec->my_envp);	
 	error_excve(data);
 }

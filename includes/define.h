@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:54:10 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:49:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
 #define CMD_INVOKED_CANTEXEC 126 
 #define CMD_NOT_FOUND 127
 #define INVALID_ARG_EXIT 128
+
+# define ECHO 10
+# define CD 11
+# define PWD 12
+# define EXPORT 13
+# define UNSET 14
+# define ENV 15
+# define EXIT 16
 
 /*     Exit code 1: General errors, such as “divide by zero” and other impermissible operations
     Exit code 2: Misuse of shell builtins, according to Bash documentation

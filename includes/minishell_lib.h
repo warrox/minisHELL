@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 15:27:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:05:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_data
 
 /**[PRINT FUNCTIONS]**/
 
-void					print_lst(t_list_arg *lst);
+void					print_lst(t_data *data, t_list_arg *lst);
 void					print_lst_cmdarg(t_list_arg *lst);
 void					print_lst_token(t_list_arg *lst);
 void					print_prompt_struct(t_data *data);
@@ -259,5 +259,7 @@ void error_is_a_dir_op(t_data *data, t_list_arg *tok);
 void error_permission_denied_op(t_data *data, t_list_arg *tok);
 void	build_tab_env(t_data *data);
 void 	print_env(t_data *data);
+void	exec_builtin(t_data *data, int builtin);
+void init_files_builtin(t_data *data, t_list_arg *tok, int i);
 
 #endif

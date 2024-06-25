@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 15:33:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:19:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,22 @@ void	exec_single_cmd(t_data *data)
 {
 	init_tmp_struct(data);
 	check_here_doc(data);
-	data->exec->pid_1 = fork();
-	if (data->exec->pid_1 == -1)
-		return;
-	if (data->exec->pid_1 == 0)
-		exec_sub_proc(data);
+	if (is_a_builtin(data) == -1)
+	{
+		dprintf(2, "TETSTSsegGWGS\n");
+		data->exec->pid_1 = fork();
+		if (data->exec->pid_1 == -1)
+			return;
+		if (data->exec->pid_1 == 0)
+			exec_sub_proc(data);
+		else
+			waitpid(data->exec->pid_1, NULL, 0);
+	}
 	else
-		waitpid(data->exec->pid_1, NULL, 0);
-	free_tmp_struct(data);
+	{
+		exec_sub_proc(data);
+		free_tmp_struct(data);
+	}
 }
 
 void	init_exec(t_data *data)
@@ -81,4 +89,5 @@ void	init_exec(t_data *data)
 		exec_one_pipe(data);
 	else
 		exec_multi_pipe(data);
+	dprintf(2, "TETSTSS\n");
 }
