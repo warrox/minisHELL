@@ -13,10 +13,10 @@ int count_sign(char *input)
     int i = 0;
     char *ptr = input;
     
-	printf("%s\n", input);
     if(!ptr)
 		return(count);
-	while (ptr[i]) {
+	while (ptr[i]) 
+	{
 		if (isSingleQuote(ptr[i])) 
 		{
 			i++;

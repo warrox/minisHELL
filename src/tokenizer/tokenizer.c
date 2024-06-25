@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 16:45:48 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:05:04 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	sort_sign(t_list_arg *tmp, t_data *data)
 	data->i = 0;
 
 	tmp->count_size = count_sign(tmp->input_splited);
+	printf("TMP : %d\n", tmp->count_size);
 	tmp->array_sign = ft_calloc(tmp->count_size + 1, sizeof(int));
 	if(!tmp->array_sign)
 		return(-1);
