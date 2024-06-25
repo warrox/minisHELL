@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:26:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:29:08 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,5 +245,10 @@ void cleanup_and_exit(t_data *data, int exit_code);
 void setup_pipes(t_data *data, t_list_arg *tmp);
 int	check_dir(char *file);
 void error_is_a_dir_mup(t_data *data, t_list_arg *tok);
+void error_cmd_single(t_data *data, t_list_arg *tok);
+void cleanup_and_exit_single(t_data *data, int exit_code);
+void free_resources_single(t_data *data);
+void error_is_a_dir_sgl(t_data *data, t_list_arg *tok);
+void error_permission_denied_sgl(t_data *data, t_list_arg *tok);
 
 #endif
