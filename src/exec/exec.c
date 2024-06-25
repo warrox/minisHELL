@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 16:58:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:33:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	init_exec(t_data *data)
 	if(data->tokenizer->final_cmd == NULL)
 		return;
 	init_struct_exec(data);
+	build_tab_env(data);
+	// print_env(data);
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
 	if (nb_node(data) == 1)

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 14:50:03 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:29:17 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	second_child_process(t_data *data)
 		error_is_a_dir_op(data, tmp);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
-	execve(data->exec->cmd, tmp->cmd_array, NULL);
+	execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
 	error_excve(data);
 }
 
@@ -132,7 +132,7 @@ void	first_child_process(t_data *data)
 			error_is_a_dir_op(data, data->tokenizer);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
-	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
+	execve(data->exec->cmd, data->tokenizer->cmd_array, data->exec->my_envp);
 	error_excve(data);
 }
 
@@ -179,7 +179,7 @@ void	 exec_sub_proc(t_data *data)
 	}
 	if (data->exec->here_doc && data->exec->cmd)
 	{
-		execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
+		execve(data->exec->cmd, data->tokenizer->cmd_array, data->exec->my_envp);
 		error_excve(data);
 		exit(1);
 	}
@@ -198,6 +198,6 @@ void	 exec_sub_proc(t_data *data)
 		ft_lst_arg_clear(&data->lst);
 		exit(1);
 	}
-	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
+	execve(data->exec->cmd, data->tokenizer->cmd_array, data->exec->my_envp);
 	error_excve(data);
 }

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:23:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:26:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,25 @@ char *build_cmd(t_data *data, t_list_arg *tok)
 	return (NULL);
 }
 
-void	free_exec(t_data *data)
+void free_exec(t_data *data)
 {
-	if (data->exec->path_cmd)
-		free_split(data->exec->path_cmd);
-	free(data->exec);
+    if (data->exec->path_cmd)
+        free_split(data->exec->path_cmd);
+    if (data->exec->my_envp) {
+        // Free each string in the array
+        int i = 0;
+        while (data->exec->my_envp[i] != NULL) 
+		{
+            free(data->exec->my_envp[i]);
+            i++;
+        }
+        // Free the array itself
+        free(data->exec->my_envp);
+    }
+    free(data->exec);
 }
+
+
 
 char	*get_path(t_data *data)
 {

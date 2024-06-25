@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 13:47:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:29:31 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	children_process(t_data *data)
 		if (check_dir(data->exec->cmd) == -1)
 			error_is_a_dir_mup(data, tmp);
 		close_tubes(data);
-		execve(data->exec->cmd, tmp->cmd_array, NULL);
+		execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
 		error_execve_multi(data, tmp);
 	}
 }
