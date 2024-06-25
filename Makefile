@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/25 14:47:03 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/06/25 15:17:13 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SOURCE = ./src/
 MAIN = main.c parser.c parser_utils.c parser_utils_3.c expander.c
 LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c 
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
-UTILS = ./utils/print_utils.c
+UTILS = ./utils/print_utils.c ./utils/trans_env.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c ./builtins/exit.c ./builtins/cd_utils.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c ./tokenizer/count_sign.c /tokenizer/flush_redir.c ./tokenizer/cutting_input.c
 EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_init_multi_pipe.c exec/exec_errors_multi_pipe.c exec/here_doc.c exec/here_doc_utils.c exec/exec_checks_exit.c exec/exec_single_cmd_errors.c exec/exec_one_pipe__errors.c
