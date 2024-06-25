@@ -37,7 +37,13 @@ bool isHereDoc(char *input, int *i)
 
 void passVarDoc(char *input, int *i, char *buffer, int *j)
 {
-    (*i) += 2;
+	buffer[(*j)] = input[(*i)];
+	(*i) += 1;
+	(*j)++;
+	buffer[(*j)] = input[(*i)];
+	(*i) += 1;
+	(*j)++;
+
     while (input[*i] && ft_isws(input[*i]))
     {
         (*i)++;
@@ -64,18 +70,14 @@ char *buff_copy(char *input)
 	int flag;
 	len = 0;
 	flag = 0;
-	// printf("PD : %s\n", input);
 	while(input[len] && input[len] != ' ')
 	{
-		// printf("Letter : %c\n",input[len]);
 		if(input[len] == '$' || input[len] == '\'')
 		{
-			// len -= 1;
 			break;
 		}
 		if(input[len] == '\"' || input[len] == '\'')
 		{
-			printf("GO\n");
 			flag = 1;
 		}
 		len++;
@@ -83,9 +85,6 @@ char *buff_copy(char *input)
 	if(flag == 1)
 		len --;
 	buffer = ft_substr(input, 0, len);
-	// len = (*i);
-	// while(input[len] && (!ft_isws(input[len]) || input[(len)] != '$'))
-	// 	buffer[j++] = input[len++];
 	return(buffer);
 }
 void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int *dq)
@@ -100,16 +99,6 @@ void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int
 	while (current)
     {
         key_len = ft_strlen(current->key_and_val[0]);
-		// printf("B_COPY : %s\n", b_copy);
-		// printf("B_LENGHT : %zu\n",ft_strlen(b_copy));
-		// printf("XXX : %s\n", current->key_and_val[0]);
-		// printf("R_LENGHT : %zu\n", ft_strlen(current->key_and_val[0]));
-		// if(!ft_strncmp(&input[(*i)], current->key_and_val[0],key_len))
-		// 	printf("TRUEEEE FDP\n");
-		// if(!dq && ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))
-		// {
-		// 	printf("TRYEEEE AGAIN \n");
-		// }
 		if (!ft_strncmp(&input[(*i)], current->key_and_val[0], key_len) && (dq && (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
 		{
 			// printf("GOIN\n");
@@ -127,6 +116,18 @@ void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int
 			(*i)++;
 	}
 }
+void expandExitCode(int *i, t_data *data, char *strExpanded, int *j)
+{
+	char *itoa_exitCode;
+	int k;
+	k = 0;
+	(*i)+= 2;
+	itoa_exitCode = ft_itoa(data->exit_status);
+	while(itoa_exitCode[k])
+	{
+		strExpanded[(*j)++] = itoa_exitCode[k++];
+	}
+}
 
 void expander(t_data *data, char *input)
 {
@@ -136,18 +137,17 @@ void expander(t_data *data, char *input)
     ft_bzero(strExpanded, 4096);
 	int sq = 0;
 	int dq = 0;
-    while (input[i])
+	while (input[i])
     {
-		// echo "salut '$PWD'" 
 		if (isDoubleQuote(input[i]) && !sq)
 			dq = !dq;
 		else if (isSingleQuote(input[i]) && !dq)
 			sq = !sq;
 		else if (isHereDoc(input, &i))
 			passVarDoc(input, &i, strExpanded, &j);
-		else if (isExitCode(input, &i))
+		else if (isExitCode(input, &i) && !sq)
 		{
-			// expandExitCode();
+			expandExitCode(&i,data,strExpanded, &j);
 		} 
 		if (isVariable(input, &i) && !sq)
 		{

@@ -6,26 +6,26 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 10:04:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/25 17:07:51 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
-int code_exit(int flag, int value)
-{
-	static int exitnb;
-
-	if (flag != 0)
-		exitnb = value;
-	return (exitnb);
-}
+// int code_exit(int flag, int value)
+// {
+// 	static int exitnb;
+//
+// 	if (flag != 0)
+// 		exitnb = value;
+// 	return (exitnb);
+// }
 
 void	erase_file_array(char **array, char **array_2)
 {
 	int	i;
-	code_exit(1, 127);
-	code_exit(0, 0); // exemple from nathan
+	// code_exit(1, 127);// code exit
+	// int nbr = code_exit(0, 0); // exemple from nathan
 
 	i = 0;
 	if (!array || !array_2)
@@ -79,7 +79,7 @@ void	ft_clear_tokenizer(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-
+	data.exit_status = 0;
 	if (argc > 1)
 	{
 		ft_printf("Too many arguments... exit the program\n");

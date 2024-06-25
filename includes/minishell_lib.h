@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 09:00:33 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:54:20 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_data
 	int					quote_flag;
 	//----new var----
 	int					*arrayIntExpand;
+	int					exit_status;
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/

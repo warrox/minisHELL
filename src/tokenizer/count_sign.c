@@ -1,5 +1,6 @@
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 bool isDoubleQuote(char c) 
 {
@@ -12,7 +13,6 @@ int count_sign(char *input)
     int tmp;
     int i = 0;
     char *ptr = input;
-    
     if(!ptr)
 		return(count);
 	while (ptr[i]) 
