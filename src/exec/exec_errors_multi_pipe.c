@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:21:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:50:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,3 +74,20 @@ void error_permission_denied(t_data *data, t_list_arg *tok)
 	write(2, ": Permission denied\n", 20);
 	cleanup_and_exit(data, 1);
 }
+
+void error_dir_file_not_found(t_data *data, t_list_arg *tok)
+{
+	if (tok->cmd_array && tok->cmd_array[0])
+		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(2, ": No such file or directory\n", 28);
+	cleanup_and_exit(data, 1);
+}
+
+void error_is_a_dir_mup(t_data *data, t_list_arg *tok)
+{
+	if (tok->cmd_array && tok->cmd_array[0])
+		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(2, ": Is a directory\n", 17);
+	cleanup_and_exit(data, 1);
+}
+

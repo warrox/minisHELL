@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_checks.c                                      :+:      :+:    :+:   */
+/*   exec_checks_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:47:07 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:22:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:46:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-
-void error_is_a_dir_mup(t_data *data, t_list_arg *tok)
-{
-	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": Is a directory\n", 17);
-	cleanup_and_exit(data, 1);
-}
 
 void	error_is_a_dir_onep(t_data *data, t_list_arg *tmp)
 {
@@ -86,4 +78,19 @@ void free_resources(t_data *data)
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);
 	ft_clear_tokenizer(data);
+}
+
+void	close_tubes(t_data *data)
+{
+	int	i;
+
+	i = ZERO_INIT;
+	if (data->exec->multi_tube)
+	{
+		while(i < data->exec->nb_tube)
+		{
+			close(data->exec->multi_tube[i]);
+			i++;
+		}
+	}
 }

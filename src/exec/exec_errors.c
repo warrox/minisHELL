@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 18:34:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:55:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	file_not_found(t_data *data, t_list_arg *tok)
 	ft_clear_tokenizer(data);
 	close(data->exec->tube[1]);
 	close(data->exec->tube[0]);
+	free(data->tmp_files);
 	free_exec(data);
 	free_prompt(data);
 	free(data->signal);

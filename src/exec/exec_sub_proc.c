@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 18:20:04 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:29:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,14 @@ void	 exec_sub_proc(t_data *data)
 	int	i;
 	
 	i = ZERO_INIT; 
+	data->exec->cmd = build_cmd(data, data->tokenizer);
+	if (data->exec->cmd == NULL)
+		error_cmd_single(data, data->tokenizer);
 	if(is_redir(data->tokenizer))
 	{
 		while(data->tokenizer->file_array[i] != 0)
 			init_files(data, data->tokenizer, i++);
 	}
-	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(data->tokenizer) != 0)))
 	{
 		hd_or_rdr_no_cmd(data);
@@ -165,9 +167,15 @@ void	 exec_sub_proc(t_data *data)
 		error_excve(data);
 		exit(1);
 	}
-	if (!data->exec->cmd)
-		cmd_not_found(data);
-	else if (data->exec->here_doc)
+	// if (!data->exec->cmd)
+	// 	cmd_not_found(data);
+	if (access(data->exec->cmd, F_OK) != 0)
+			error_dir_file_not_found(data, data->tokenizer);
+	if (access(data->exec->cmd, X_OK) != 0)
+			error_permission_denied_sgl(data, data->tokenizer);
+	if (check_dir(data->exec->cmd) == -1)
+			error_is_a_dir_sgl(data, data->tokenizer);
+	if (data->exec->here_doc)
 	{
 		ft_clear_tokenizer(data);
 		free_prompt(data);

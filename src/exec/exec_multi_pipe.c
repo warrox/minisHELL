@@ -6,34 +6,103 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:24:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:47:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	init_files_multi(t_data *data, t_list_arg *tok, int i)
+void	intermediate_pipe(t_data *data, t_list_arg *tok)
 {
-    if (tok->array_sign[i] == STDOUTS)
-    {
-        data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
-        if (data->exec->outfile < 0)
-            file_not_found_multi(data, tok);
-    }
-    else if (tok->array_sign[i] == STDINS)
-    {
-        data->exec->infile = open(tok->file_array[i], O_RDONLY);
-        if (data->exec->infile < 0)
-            file_not_found_multi(data, tok);
-    }
-	else if (tok->array_sign[i] == APPEND)
+	int	i;
+
+	i = 0; 
+	if (is_redir(tok))
 	{
-		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
-		if (data->exec->outfile < 0)
-			file_not_found_multi(data, tok);
+		while(tok->array_sign[i] != 0)
+			init_files_multi(data, tok, i++);
 	}
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
+		hd_or_rdr_no_cmd_multi(data);
+	if (data->exec->infile != 0)
+	{
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
+	}
+	else 
+		dup2(data->exec->multi_tube[2 * data->exec->index - 2], STDIN_FILENO);
+	if (data->exec->outfile != 1)
+	{
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
+	}
+	else
+		dup2(data->exec->multi_tube[2 * data->exec->index + 1], STDOUT_FILENO);
 }
 
+void	last_pipe(t_data *data, t_list_arg *tok)
+{
+	int	i;
+	i = 0;
+	if (is_redir(tok))
+	{
+		while(tok->file_array[i])
+			init_files_multi(data, tok, i++);
+	}
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
+	{
+		dprintf(2, "TAMERE %d\n", data->exec->infile);
+		hd_or_rdr_no_cmd_multi(data);
+	}
+	if (data->exec->infile != 0)
+	{
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
+	}
+	else
+		dup2(data->exec->multi_tube[data->exec->index * 2 - 2], STDIN_FILENO);
+	if (data->exec->outfile != 1)
+	{
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close (data->exec->outfile);
+	}
+	else
+		dup2 (1, STDOUT_FILENO);
+}
+
+void	first_pipe(t_data *data, t_list_arg *tok)
+{
+	int	i;
+	
+	i = ZERO_INIT;
+	if (is_redir(tok))
+	{
+		while(tok->file_array[i])
+			init_files_multi(data, tok, i++);
+	}
+	dprintf(2, "IN : %d || OUT : %d\n", data->exec->infile, data->exec->outfile);
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
+	{
+		hd_or_rdr_no_cmd_multi(data);
+	}
+	if (data->exec->infile != 0)
+	{
+		dprintf(2, "INFILE!\n");
+		dup2(data->exec->infile, STDIN_FILENO);
+		close(data->exec->infile);
+	}
+	else
+		dup2(0, STDIN_FILENO);
+	if (data->exec->outfile != 1)
+	{
+		dprintf(2, "%s\n", tok->file_array[1]);
+		dprintf(2, "OUTFILE!\n");
+		dup2(data->exec->outfile, STDOUT_FILENO);
+		close(data->exec->outfile);
+	}
+	else
+		dup2(data->exec->multi_tube[1], STDOUT_FILENO);
+}
 void	children_process(t_data *data)
 {
 	int i;
@@ -87,35 +156,16 @@ void	exec_multi_pipe(t_data *data)
 		error_init(data, "Failed to int pid!\n");
 	init_tubes(data);
 	init_tmp_struct(data);
-	// print_exec_utils(data);
 	while(++(data->exec->index) < data->exec->nb_node)
 	{
 		if(!data->exec->multi_tube)
 			init_tubes(data);
 		children_process(data);
 	}
-	// free_tmp_struct(data);
 	close_tubes(data);
 	int j = 0;
 	while (j < data->exec->nb_node)
 		waitpid(data->exec->pid[j++], &status, 0);
 	free(data->exec->multi_tube);
 	free(data->exec->pid);
-}
-void error_dir_file_not_found(t_data *data, t_list_arg *tok)
-{
-	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": No such file or directory\n", 28);
-	cleanup_and_exit(data, 1);
-}
-
-void setup_pipes(t_data *data, t_list_arg *tmp)
-{
-	if (data->exec->index == 0)
-		first_pipe(data, tmp);
-	else if (data->exec->index == data->exec->nb_node - 1)
-		last_pipe(data, tmp);
-	else
-		intermediate_pipe(data, tmp);
 }
