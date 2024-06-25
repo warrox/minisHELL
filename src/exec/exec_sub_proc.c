@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 14:29:15 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:50:03 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,19 @@ void	second_child_process(t_data *data)
 	
 	while(tmp && tmp->next)
 		tmp = tmp->next;
+	data->exec->cmd = build_cmd(data, tmp);
+	if (data->exec->cmd == NULL)
+		error_cmd_op(data, tmp);
 	if (is_redir(tmp))
 	{
 		while(tmp->file_array[i] != 0)
 		{
-			if (data->exec->infile != 0 && data->exec->infile > 0)
-				close(data->exec->infile);
-			if (data->exec->outfile != 1 && data->exec->outfile > 0)
-				close(data->exec->outfile);
+			// if (data->exec->infile != 0 && data->exec->infile > 0)
+			// 	close(data->exec->infile);
+			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
+			// 	close(data->exec->outfile);
 			init_files(data, tmp, i++);
 		}
-	}
-	data->exec->cmd = build_cmd(data, tmp);
-	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tmp) != 0)))
-	{
-		hd_or_rdr_no_cmd(data);
 	}
 	if (data->exec->infile != 0)
 	{
@@ -75,6 +73,16 @@ void	second_child_process(t_data *data)
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close (data->exec->outfile);
 	}
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tmp) != 0)))
+	{
+		hd_or_rdr_no_cmd(data);
+	}
+	if (access(data->exec->cmd, F_OK) != 0)
+		error_dir_file_not_found(data, tmp);
+	if (access(data->exec->cmd, X_OK) != 0)
+		error_permission_denied_op(data, tmp);
+	if (check_dir(data->exec->cmd) == -1)
+		error_is_a_dir_op(data, tmp);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
 	execve(data->exec->cmd, tmp->cmd_array, NULL);
@@ -86,21 +94,19 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 
+	data->exec->cmd = build_cmd(data, data->tokenizer);
+	if (data->exec->cmd == NULL)
+		error_cmd_op(data, data->tokenizer);
 	if (is_redir(data->tokenizer))
 	{
 		while(data->tokenizer->file_array[i])
 		{
-			if (data->exec->infile != 0 && data->exec->infile > 0)
-				close(data->exec->infile);
-			if (data->exec->outfile != 1 && data->exec->outfile > 0)
-				close(data->exec->outfile);
+			// if (data->exec->infile != 0 && data->exec->infile > 0)
+			// 	close(data->exec->infile);
+			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
+			// 	close(data->exec->outfile);
 			init_files(data, data->tokenizer, i++);
 		}
-	}
-	data->exec->cmd = build_cmd(data, data->tokenizer);
-	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(data->tokenizer) != 0)))
-	{
-		hd_or_rdr_no_cmd(data);
 	}
 	if (data->exec->infile != 0)
 	{
@@ -114,6 +120,16 @@ void	first_child_process(t_data *data)
 	}
 	else
 		dup2(data->exec->tube[1], STDOUT_FILENO);
+	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(data->tokenizer) != 0)))
+	{
+		hd_or_rdr_no_cmd(data);
+	}
+	if (access(data->exec->cmd, F_OK) != 0)
+			error_dir_file_not_found(data, data->tokenizer);
+	if (access(data->exec->cmd, X_OK) != 0)
+			error_permission_denied_op(data, data->tokenizer);
+	if (check_dir(data->exec->cmd) == -1)
+			error_is_a_dir_op(data, data->tokenizer);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
 	execve(data->exec->cmd, data->tokenizer->cmd_array, NULL);
@@ -167,8 +183,6 @@ void	 exec_sub_proc(t_data *data)
 		error_excve(data);
 		exit(1);
 	}
-	// if (!data->exec->cmd)
-	// 	cmd_not_found(data);
 	if (access(data->exec->cmd, F_OK) != 0)
 			error_dir_file_not_found(data, data->tokenizer);
 	if (access(data->exec->cmd, X_OK) != 0)

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 14:29:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:46:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ int ft_current_directory(char *path,t_data *data);
 void expander(t_data *data);
 char	*expansion(char *input, t_data *data);
 int	get_word_size(char *str);
-char *flush_redir(char *str, t_data *data); 
+char *flush_redir(char *str, t_data *data);
+ 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);
@@ -250,5 +251,10 @@ void cleanup_and_exit_single(t_data *data, int exit_code);
 void free_resources_single(t_data *data);
 void error_is_a_dir_sgl(t_data *data, t_list_arg *tok);
 void error_permission_denied_sgl(t_data *data, t_list_arg *tok);
+void error_cmd_op(t_data *data, t_list_arg *tok);
+void cleanup_and_exit_op(t_data *data, int exit_code);
+void free_resources_op(t_data *data);
+void error_is_a_dir_op(t_data *data, t_list_arg *tok);
+void error_permission_denied_op(t_data *data, t_list_arg *tok);
 
 #endif

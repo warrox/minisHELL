@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 18:42:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:55:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	is_here_doc(t_data *data, t_list_arg *tok)
 		i++;
 	}
 }
-
 void	check_here_doc(t_data *data)
 {
 	t_list_arg *tmp = data->tokenizer;

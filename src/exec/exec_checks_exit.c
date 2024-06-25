@@ -6,39 +6,39 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:47:07 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 13:46:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:53:07 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	error_is_a_dir_onep(t_data *data, t_list_arg *tmp)
-{
-	if (tmp->cmd_array != NULL)
-		write(2, tmp->cmd_array[0], ft_strlen(tmp->cmd_array[0]));
-	write(2, ": Is a directory\n", 18);
-	ft_clear_tokenizer(data);
-	free_prompt(data);
-	free_exec(data);
-	free(data->signal);
-	free_tmp_struct(data);
-	ft_lst_arg_clear(&data->lst);
-	exit(126);
-}
+// void	error_is_a_dir_onep(t_data *data, t_list_arg *tmp)
+// {
+// 	if (tmp->cmd_array != NULL)
+// 		write(2, tmp->cmd_array[0], ft_strlen(tmp->cmd_array[0]));
+// 	write(2, ": Is a directory\n", 18);
+// 	ft_clear_tokenizer(data);
+// 	free_prompt(data);
+// 	free_exec(data);
+// 	free(data->signal);
+// 	free_tmp_struct(data);
+// 	ft_lst_arg_clear(&data->lst);
+// 	exit(126);
+// }
 
-void	error_is_a_dir(t_data *data)
-{
-	if (data->tokenizer->cmd_array != NULL)
-		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
-	write(2, ": Is a directory\n", 18);
-	ft_clear_tokenizer(data);
-	free_prompt(data);
-	free_exec(data);
-	free(data->signal);
-	free_tmp_struct(data);
-	ft_lst_arg_clear(&data->lst);
-	exit(126);
-}
+// void	error_is_a_dir(t_data *data)
+// {
+// 	if (data->tokenizer->cmd_array != NULL)
+// 		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+// 	write(2, ": Is a directory\n", 18);
+// 	ft_clear_tokenizer(data);
+// 	free_prompt(data);
+// 	free_exec(data);
+// 	free(data->signal);
+// 	free_tmp_struct(data);
+// 	ft_lst_arg_clear(&data->lst);
+// 	exit(126);
+// }
 
 int	check_dir(char *file)
 {

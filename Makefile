@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/25 14:25:29 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/06/25 14:47:03 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 UTILS = ./utils/print_utils.c
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c ./builtins/exit.c ./builtins/cd_utils.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c ./tokenizer/count_sign.c /tokenizer/flush_redir.c ./tokenizer/cutting_input.c
-EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_init_multi_pipe.c exec/exec_errors_multi_pipe.c exec/here_doc.c exec/here_doc_utils.c exec/exec_checks_exit.c exec/exec_single_cmd_errors.c
+EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_init_multi_pipe.c exec/exec_errors_multi_pipe.c exec/here_doc.c exec/here_doc_utils.c exec/exec_checks_exit.c exec/exec_single_cmd_errors.c exec/exec_one_pipe__errors.c
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS) $(EXEC))
 
 SRC = $(MINISHELL)
