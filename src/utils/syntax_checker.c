@@ -54,9 +54,12 @@ int check_quote(char *input)
     return (0);
 }
 
-int syntax_checker(char *input)
+int syntax_checker(char *input, t_data *data)
 {
-    if (unexpectedToken(input) != 0 || check_quote(input) != 0) 
-        return (-1);
+    if (unexpectedToken(input) != 0 || check_quote(input) != 0)
+	{
+		data->exit_status = 2;	
+		return (-1);
+	} 
     return (0);
 }

@@ -101,7 +101,6 @@ void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int
         key_len = ft_strlen(current->key_and_val[0]);
 		if (!ft_strncmp(&input[(*i)], current->key_and_val[0], key_len) && (dq && (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
 		{
-			// printf("GOIN\n");
 			flag = 1;
 			ft_strlcat(buffer, current->key_and_val[1], 4096);
 			*j += ft_strlen(current->key_and_val[1]);

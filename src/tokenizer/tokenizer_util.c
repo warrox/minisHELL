@@ -36,7 +36,7 @@ int tripleSignDetector(char *input,int i)
 	}
 	return(0);	
 } 
-int	unexpectedToken(char *input)
+int	unexpectedToken(char *input, t_data *data)
 {
 	int i;
 	int signal;
@@ -54,13 +54,13 @@ int	unexpectedToken(char *input)
 			if(pipeAlone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
 			{
 				signal = SYNTAX_ERROR;
-				msg_error_handler(&signal);
+				msg_error_handler(&signal, data);
 				return(-1);
 			}
 			if(tripleSignDetector(input, i) == -1 && flag == 0)
 			{
 				signal = UNEXPECTEDTOKEN;
-				msg_error_handler(&signal);
+				msg_error_handler(&signal, data);
 				return(-1);
 
 			}

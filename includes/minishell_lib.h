@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 16:54:20 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/25 17:53:06 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void					ft_lst_arg_delone(t_list_arg *lst);
 void					ft_lst_arg_clear(t_list_arg **lst);
 void					parser_list_init(t_data *data, char **envp);
 char					*parser(char *input, t_data *data);
-void					msg_error_handler(int *signal);
+void					msg_error_handler(int *signal, t_data *data);
 int						check_quote(char *input);
 t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
@@ -198,8 +198,8 @@ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
 void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
 char **split_pipe_cust(char *input, char c);
 int skip_ws_prompt(t_data *data, char *input);
-int syntax_checker(char *input);
-int	unexpectedToken(char *input);
+int syntax_checker(char *input, t_data *data);
+int	unexpectedToken(char *input, t_data *data);
 int	cutting_input(t_data *data, char *input); 
 bool isSingleQuote(char c);
 bool isDoubleQuote(char c);

@@ -40,7 +40,7 @@ int ft_exit(t_data *data, char *input)
 		{
 			i = 0;
 			int j = 3;
-			while(!ft_isws(input[j]))
+			while(input[j] && !ft_isws(input[j]))
 				j++;
 			j++;
 			while(input[j] && ft_isdigit(input[j]))
@@ -56,6 +56,7 @@ int ft_exit(t_data *data, char *input)
 				if(nbr > 2147483646 || nbr < -214730)
 				{
 					ft_printf("bash: exit: %d: numeric argument required",nbr);
+					data->exit_status = 2;
 					return(2);
 				}
 				return(nbr % 255); // renvoie le int du code erreur
@@ -67,6 +68,7 @@ int ft_exit(t_data *data, char *input)
 			}
 			str[i] = '\0';
 			ft_printf("minishell: %s: numeric argument required\n",str);
+			data->exit_status = 2;
 		}
 		else if(input[i] == '\0')
 		{
