@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 14:46:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:27:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_exec
 	int tube[2];
 	int *multi_tube;
 	int index;
+	char	**my_envp;
 }			t_exec;
 
 typedef struct s_prompt
@@ -256,5 +257,7 @@ void cleanup_and_exit_op(t_data *data, int exit_code);
 void free_resources_op(t_data *data);
 void error_is_a_dir_op(t_data *data, t_list_arg *tok);
 void error_permission_denied_op(t_data *data, t_list_arg *tok);
+void	build_tab_env(t_data *data);
+void 	print_env(t_data *data);
 
 #endif
