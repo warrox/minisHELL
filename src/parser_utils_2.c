@@ -83,5 +83,6 @@ int	cutting_input(t_data *data, char *ex_input)
 	while (split[i])
 		free(split[i++]);
 	free(split);
+	free(ex_input);
 		return(0);
 }
