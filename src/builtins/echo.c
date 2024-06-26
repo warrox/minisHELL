@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 17:29:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:47:02 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	print_echo(t_data *data)
 	while(data->tokenizer->cmd_array[i])
 	{
 		flag--;
-		printf("%s",data->tokenizer->cmd_array[i]);
+		write(data->exec->outfile, data->tokenizer->cmd_array[i], ft_strlen(data->tokenizer->cmd_array[i]));
 		if (flag > 0)
 		{
-			printf(" ");
+			write(data->exec->outfile, " ", 1);		
 		}
 		i++;
 	}
-	printf("\n");
+	write(data->exec->outfile, "\n", 1);
 }
 
 int	check_flag(t_data *data)
@@ -68,7 +68,7 @@ int	check_echo_cmd(t_data *data)
 	if (ft_strncmp(data->tokenizer->final_cmd, "echo", 5) == 0
 		&& data->lst != NULL)
 	{
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", data->exec->outfile);
 		return (1);
 	}
 	return (0);
