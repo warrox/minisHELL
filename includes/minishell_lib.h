@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 11:01:16 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:09:04 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_data
 	int					exit_status;
 	int					sq;
 	int					dq;
+	size_t				key_len;	
 
 }						t_data;
 

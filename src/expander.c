@@ -89,27 +89,27 @@ char *buff_copy(char *input)
 }
 void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int *dq)
 {
-	size_t key_len;
-	int flag;
+    t_list_arg *current; 
+	char *b_copy;
+	current = data->lst;
+	data->key_len = 0;
+	data->flag = 0;
 	(*i)++;
-    t_list_arg *current = data->lst;
-	key_len = 0;
-	flag = 0;
-	char *b_copy = buff_copy(&input[*i]);
+	b_copy = buff_copy(&input[*i]);
 	while (current)
     {
-        key_len = ft_strlen(current->key_and_val[0]);
-		if (!ft_strncmp(&input[(*i)], current->key_and_val[0], key_len) && (dq && (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
+        data->key_len = ft_strlen(current->key_and_val[0]);
+		if (!ft_strncmp(&input[(*i)], current->key_and_val[0], data->key_len) && (dq && (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
 		{
-			flag = 1;
+			data->flag = 1;
 			ft_strlcat(buffer, current->key_and_val[1], 4096);
 			*j += ft_strlen(current->key_and_val[1]);
-			*i += key_len;
+			*i += data->key_len;
 			break;
 		}
         current = current->next;
     }
-	if(flag == 0)
+	if(data->flag == 0)
 	{
 		while(input[*i] && !ft_isws(input[*i])) // ou comp 
 			(*i)++;
