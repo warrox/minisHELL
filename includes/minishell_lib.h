@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 10:21:02 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:01:16 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ typedef struct s_data
 	//----new var----
 	int					*arrayIntExpand;
 	int					exit_status;
+	int					sq;
+	int					dq;
+
 }						t_data;
 
 /**[PRINT FUNCTIONS]**/

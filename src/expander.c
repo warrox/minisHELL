@@ -130,31 +130,27 @@ void expandExitCode(int *i, t_data *data, char *strExpanded, int *j)
 
 void expander(t_data *data, char *input)
 {
-    int i = 0;
-    int j = 0;
     char strExpanded[4096];
     ft_bzero(strExpanded, 4096);
-	int sq = 0;
-	int dq = 0;
-	while (input[i])
+	data->i = 0;
+	data->j = 0;
+	data->sq = 0;
+	data->dq = 0;
+	while (input[data->i])
     {
-		if (isDoubleQuote(input[i]) && !sq)
-			dq = !dq;
-		else if (isSingleQuote(input[i]) && !dq)
-			sq = !sq;
-		else if (isHereDoc(input, &i))
-			passVarDoc(input, &i, strExpanded, &j);
-		else if (isExitCode(input, &i) && !sq)
-		{
-			expandExitCode(&i,data,strExpanded, &j);
-		} 
-		if (isVariable(input, &i) && !sq)
-		{
-			expandVariable(data, input, &i, strExpanded, &j, &dq);
-		}
+		if (isDoubleQuote(input[data->i]) && !data->sq)
+			data->dq = !data->dq;
+		else if (isSingleQuote(input[data->i]) && !data->dq)
+			data->sq = !data->sq;
+		else if (isHereDoc(input, &data->i))
+			passVarDoc(input, &data->i, strExpanded, &data->j);
+		else if (isExitCode(input, &data->i) && !data->sq)
+			expandExitCode(&data->i,data,strExpanded, &data->j);
+		if (isVariable(input, &data->i) && !data->sq)
+			expandVariable(data, input, &data->i, strExpanded, &data->j, &data->dq);
 		else
-			strExpanded[j++] = input[i++];
+			strExpanded[data->j++] = input[data->i++];
     }
-    strExpanded[j] = '\0';
+    strExpanded[data->j] = '\0';
     data->tokenizer->final_cmd = ft_strdup(strExpanded);
 }
