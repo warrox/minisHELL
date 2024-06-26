@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:30 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 17:07:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:28:37 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 // int code_exit(int flag, int value)
 // {
@@ -69,7 +70,9 @@ void	ft_clear_tokenizer(t_data *data)
 			free(current->key_and_val[1]);
 		}
 		if (current->file_array)
+		{
 			erase_file_array(current->file_array, current->cmd_array);
+		}
 		free(current);
 		current = next;
 	}

@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 12:37:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:22:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	display_prompt(t_data *data)
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		print_exec_utils(data);
+		// print_exec_utils(data);
 		// if(is_a_builtin(data))
 		// {
 		// 	add_history(input);

@@ -1,17 +1,4 @@
 #include "../../includes/minishell_lib.h"
-bool ifPipe(char c)
-{
-	return(c == '|');
-} 
-int pipeAlone(char *input, int i)
-{
-	i++;
-	while(ft_isws(input[i]))
-		i++;
-	if(input[i] && ft_isascii(input[i]))
-		return(0);
-	return(-1);
-}
 bool redirsign(char c)
 {
 	return(c == '<' || c == '>');	
@@ -64,16 +51,7 @@ int	unexpectedToken(char *input, t_data *data)
 				return(-1);
 
 			}
-		}
-		// if(redirsign(input[i]))
-		// {
-		// 	if(fileAfterRedirSign(input,i)== -1)
-		// 	{
-		// 		signal = SYNTAX_ERROR;
-		// 		msg_error_handler(&signal);
-		// 		return(-1);
-		// 	}
-		// }
+		}	
 		i++;
 	}
 	return(0);

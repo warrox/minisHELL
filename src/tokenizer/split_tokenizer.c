@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 12:19:59 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:44:28 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,28 @@ static void	*free_tab(char **split)
 char	**split_fill_c(char const *s, char c, char **split, t_data *data)
 {
 	int	index;
-	int	i;
 	int	j;
 
 	index = -1;
-	i = -1;
+	data->i = -1;
 	j = 0;
-	while (s[++i] != '\0')
+	while (s[++data->i] != '\0')
 	{
-		if (s[i] != c && index < 0)
-			index = i;
-		else if (s[i] == c && index >= 0)
+		if (s[data->i] != c && index < 0)
+			index = data->i;
+		else if (s[data->i] == c && index >= 0)
 		{
-			split[j++] = word_dup(s, index, i, data);
+			split[j++] = word_dup(s, index, data->i, data);
 			if (!split[j - 1])
 				return (free_tab(split));
 			index = -1;
 			break ;
 		}
 	}
-	if (s[i] == c)
-		i++;
-	if (s[i] != '\0')
-		split[j++] = word_dup(s, i, strlen(s), data);
+	if (s[data->i] == c)
+		data->i++;
+	if (s[data->i] != '\0')
+		split[j++] = word_dup(s, data->i, strlen(s), data);
 	split[j] = NULL;
 	return (split);
 }
