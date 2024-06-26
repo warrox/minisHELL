@@ -1,4 +1,5 @@
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy) 
 {
@@ -40,7 +41,8 @@ int handle_signs(char *str, int *i)
 {
     int tmp;
     tmp = sign_cmp(&str[*i]);
-    if (tmp) {
+    if (tmp) 
+	{
         *i += tmp;
         *i += get_word_size(&str[*i]);
     }
@@ -72,5 +74,5 @@ char *flush_redir(char *str, t_data *data)
 		}
     }
     buffer[data->j] = 0;
-    return ft_strdup(buffer);
+	return ft_strdup(buffer);
 }

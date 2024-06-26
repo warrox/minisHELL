@@ -47,6 +47,7 @@ int cd_check_opt(char *path, t_data *data)
 	t_list_arg *tmp;
 	t_list_arg *save_current;
 	t_cd toolbox;
+
 	data->i = 0;
 	save_current = data->lst;
 	tmp = NULL;

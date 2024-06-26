@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/05/27 10:13:32 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:19:59 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 #include "../../includes/minishell_lib.h"
 
-static char	*word_dup(char const *str, int start, int finish)
+static char	*word_dup(char const *str, int start, int finish, t_data *data)
 {
 	char	*word;
 	int		i;
@@ -26,8 +26,12 @@ static char	*word_dup(char const *str, int start, int finish)
 	j = 0;
 	while (start < finish)
 	{
-		if (str[start] != '<' && str[start] != '>')
-			word[j++] = str[start];
+		if ((str[start] == '<' || str[start] == '>') && data->pansement == 1)
+			word[j] = str[start];
+		else if((str[start] == '<' || str[start] == '>') && data->pansement == 0)
+			start++;
+		word[j] = str[start];
+		j++;
 		start++;
 	}
 	word[j] = '\0';
@@ -48,7 +52,7 @@ static void	*free_tab(char **split)
 	return (NULL);
 }
 
-char	**split_fill_c(char const *s, char c, char **split)
+char	**split_fill_c(char const *s, char c, char **split, t_data *data)
 {
 	int	index;
 	int	i;
@@ -63,7 +67,7 @@ char	**split_fill_c(char const *s, char c, char **split)
 			index = i;
 		else if (s[i] == c && index >= 0)
 		{
-			split[j++] = word_dup(s, index, i);
+			split[j++] = word_dup(s, index, i, data);
 			if (!split[j - 1])
 				return (free_tab(split));
 			index = -1;
@@ -73,12 +77,12 @@ char	**split_fill_c(char const *s, char c, char **split)
 	if (s[i] == c)
 		i++;
 	if (s[i] != '\0')
-		split[j++] = word_dup(s, i, strlen(s));
+		split[j++] = word_dup(s, i, strlen(s), data);
 	split[j] = NULL;
 	return (split);
 }
 
-char	**split_tokenizer(char const *s, char c)
+char	**split_tokenizer(char const *s, char c, t_data *data)
 {
 	char	**split;
 
@@ -87,6 +91,6 @@ char	**split_tokenizer(char const *s, char c)
 	split = malloc(3 * sizeof(char *));
 	if (!split)
 		return (NULL);
-	split = split_fill_c(s, c, split);
+	split = split_fill_c(s, c, split, data);
 	return (split);
 }
