@@ -69,7 +69,10 @@ char *flush_redir(char *str, t_data *data)
 			tmp = handle_signs(str, &data->i);
 		if (!tmp) 
 		{
-			buffer[data->j++] = str[data->i];
+			if (str[data->i] != '\"' && str[data->i] != '\'')
+			{
+				buffer[data->j++] = str[data->i];
+			}	
 			data->i++;
 		}
     }
