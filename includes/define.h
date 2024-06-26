@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/21 19:20:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 17:06:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@
 #define CMD_INVOKED_CANTEXEC 126 
 #define CMD_NOT_FOUND 127
 #define INVALID_ARG_EXIT 128
+
+enum {
+    ENV,
+    CMD,
+    PWD,
+    CD,
+    EXPORT,
+    UNSET,
+    ECHO,
+};
 
 /*     Exit code 1: General errors, such as “divide by zero” and other impermissible operations
     Exit code 2: Misuse of shell builtins, according to Bash documentation

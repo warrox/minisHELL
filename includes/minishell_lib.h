@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 14:39:17 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 17:10:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@
 
 /*all structures*/
 
+
+typedef struct s_tmp_files
+{
+	char	*file_name;
+	struct s_tmp_files	*next;
+}			t_tmp_files;
+
 typedef struct s_exec
 {
 	pid_t	pid_1;
@@ -49,6 +56,7 @@ typedef struct s_exec
 	int tube[2];
 	int *multi_tube;
 	int index;
+	char	**my_envp;
 }			t_exec;
 
 typedef struct s_prompt
@@ -88,6 +96,8 @@ typedef struct s_list_arg
 	// -------------------------------
 }						t_list_arg;
 
+
+
 typedef struct s_data
 {
 	t_list_arg			*lst;
@@ -96,6 +106,7 @@ typedef struct s_data
 	t_prompt			*prompt;
 	t_signal			*signal;
 	t_exec				*exec;
+	t_tmp_files			*tmp_files;
 	int					i;
 	int					j;
 	int					pansement;
@@ -108,13 +119,21 @@ typedef struct s_data
 	int					exit_status;
 	int					sq;
 	int					dq;
-	size_t				key_len;	
-
+	size_t				key_len;
 }						t_data;
+
+typedef int (*builtin_ptr)(t_data *);
+
+typedef struct s_builtin
+{
+	builtin_ptr		*builtin_func;
+	int				stdin_save;
+	int				stdout_save;
+}		t_builtin;
 
 /**[PRINT FUNCTIONS]**/
 
-void					print_lst(t_list_arg *lst);
+void					print_lst(t_data *data, t_list_arg *lst);
 void					print_lst_cmdarg(t_list_arg *lst);
 void					print_lst_token(t_list_arg *lst);
 void					print_prompt_struct(t_data *data);
@@ -122,7 +141,7 @@ void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
-int					is_a_builtin(t_data *data);
+int	is_a_builtin(t_list_arg *tok);
 int					cmd_unset(t_data *data);
 void					case_egal(t_data *data);
 int					cmd_env(t_data *data);
@@ -209,6 +228,7 @@ bool isSingleQuote(char c);
 bool isDoubleQuote(char c);
 bool ifPipe(char c);
 int pipeAlone(char *input, int i);
+ 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);
@@ -218,7 +238,7 @@ void	exec_single_cmd(t_data *data);
 int	nb_node(t_data *data);
 char	*get_path(t_data *data);
 void	free_exec(t_data *data);
-void	exec_sub_proc(t_data *data);
+void	 exec_sub_proc(t_data *data);
 int	is_redir(t_list_arg *tok);
 char	*build_cmd(t_data *data, t_list_arg *tok);
 void	file_not_found(t_data *data, t_list_arg *tok);
@@ -241,8 +261,35 @@ void	error_cmd(t_data *data, t_list_arg *tok);
 void	error_execve_multi(t_data *data, t_list_arg *tok);
 void	file_not_found_multi(t_data *data, t_list_arg *tok);
 void	init_files_multi(t_data *data, t_list_arg *tok, int i);
-void	init_here_doc(t_data *data, t_list_arg *tok);
-int	gnl_hd(int fd, char **line);
-int is_here_doc(t_list_arg *tok);
+void	init_here_doc(t_data *data, t_list_arg *tok, int idx, char *file);
+void	check_here_doc(t_data *data);
+void	init_tmp_struct(t_data *data);
+void	is_here_doc(t_data *data, t_list_arg *tok);
+void rm_tmp_file(t_data *data);
+void add_tmp_file(t_data *data, const char *file_name);
+void	hd_or_rdr_no_cmd(t_data *data);
+void free_tmp_struct(t_data *data);
+void	hd_or_rdr_no_cmd_multi(t_data *data);
+void error_dir_file_not_found(t_data *data, t_list_arg *tok);
+void error_permission_denied(t_data *data, t_list_arg *tok);
+void free_resources(t_data *data);
+void cleanup_and_exit(t_data *data, int exit_code);
+void setup_pipes(t_data *data, t_list_arg *tmp);
+int	check_dir(char *file);
+void error_is_a_dir_mup(t_data *data, t_list_arg *tok);
+void error_cmd_single(t_data *data, t_list_arg *tok);
+void cleanup_and_exit_single(t_data *data, int exit_code);
+void free_resources_single(t_data *data);
+void error_is_a_dir_sgl(t_data *data, t_list_arg *tok);
+void error_permission_denied_sgl(t_data *data, t_list_arg *tok);
+void error_cmd_op(t_data *data, t_list_arg *tok);
+void cleanup_and_exit_op(t_data *data, int exit_code);
+void free_resources_op(t_data *data);
+void error_is_a_dir_op(t_data *data, t_list_arg *tok);
+void error_permission_denied_op(t_data *data, t_list_arg *tok);
+void	build_tab_env(t_data *data);
+void 	print_env(t_data *data);
+void	exec_builtin(t_data *data, int builtin);
+void init_files_builtin(t_data *data, t_list_arg *tok, int i);
 
 #endif

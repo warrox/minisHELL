@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:34:00 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 17:34:58 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:04:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,78 +26,48 @@
 
 #include "../../includes/minishell_lib.h"
 
-int	exit_free_error(char *str)
+void free_tmp_struct(t_data *data)
 {
-	if (str)
-		free(str);
-	exit(1);
+	//dprintf(2, "SALOPE\n");
+    rm_tmp_file(data);
+    free(data->tmp_files);
+    data->tmp_files = NULL;
 }
 
-int	find_new_line(char *str)
+void	init_tmp_struct(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-		{
-			if (str[i] == '\n')
-				return (1);
-			i++;
-		}
-	}
-	return (0);
+	data->tmp_files = (t_tmp_files *)malloc(sizeof(t_tmp_files));
+	if (!data->tmp_files)
+		return;
+	data->tmp_files->file_name = NULL_INIT;
+	data->tmp_files->next = NULL_INIT;
 }
 
-char	*obtain_line(char *str)
+void rm_tmp_file(t_data *data)
 {
-	int		i;
-	int		j;
-	char	*new_line;
-
-	i = 0;
-	j = 0;
-	if (!str)
-		return (NULL);
-	while (str[i] != '\n' && str[i] != '\0')
-		i++;
-	new_line = (char *)malloc(i + 1);
-	if (!new_line)
-		return (NULL);
-	while (str[j] != '\n' && str[j] != '\0')
-	{
-		new_line[j] = str[j];
-		j++;
-	}
-	new_line[j] = '\0';
-	return (new_line);
+    t_tmp_files *current = data->tmp_files;
+    t_tmp_files *next;
+	
+	// dprintf(2, "SALOPE\n");
+    while (current)
+    {
+		// dprintf(2, "SALOPE\n");
+        next = current->next;
+		if (current->file_name)
+    		unlink(current->file_name);
+        free(current->file_name);
+        free(current);
+        current = next;
+    }
+    data->tmp_files = NULL;
 }
 
-int	gnl_hd(int fd, char **line)
+void add_tmp_file(t_data *data, const char *file_name)
 {
-	char	*buffer;
-	int		read_line;
-
-	if (fd < 0 || BUFFER_SIZE < 1 || !line)
-		return (-1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (exit_free_error(buffer));
-	read_line = 1;
-	while (read_line != 0 && (!*buffer || buffer[ft_strlen(buffer)
-				- 1] != '\n'))
-	{
-		read_line = read(fd, buffer, BUFFER_SIZE);
-		if (read_line == 0)
-		{
-			*line = buffer;
-			return (0);
-		}
-		if (read_line < 0)
-			exit_free_error(buffer);
-	}
-	buffer[ft_strlen(buffer) - 1] = 0;
-	*line = buffer;
-	return (1);
+    t_tmp_files *new_file = (t_tmp_files *)malloc(sizeof(t_tmp_files));
+    if (!new_file)
+        return;
+    new_file->file_name = strdup(file_name);
+    new_file->next = data->tmp_files;
+    data->tmp_files = new_file;
 }

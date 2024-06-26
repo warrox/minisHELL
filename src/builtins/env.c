@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:06:15 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 18:05:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:34:45 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	cmd_env(t_data *data)
 {	
 	if (data->tokenizer->cmd_array[0] == NULL)
 		return (0);
-	if (ft_strncmp(data->tokenizer->cmd_array[0], "env", 4) == 0 && data->lst != NULL)
+	if (data->lst != NULL)
 	{
-		print_lst(data->lst);
+		print_lst(data, data->lst);
 		return (1);
 	}
 	else

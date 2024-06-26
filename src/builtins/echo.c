@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 17:29:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 17:01:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,52 +23,49 @@ void	print_echo(t_data *data)
 	while(data->tokenizer->cmd_array[i])
 	{
 		flag--;
-		printf("%s",data->tokenizer->cmd_array[i]);
+		write(data->exec->outfile, data->tokenizer->cmd_array[i], ft_strlen(data->tokenizer->cmd_array[i]));
 		if (flag > 0)
 		{
-			printf(" ");
+			write(data->exec->outfile, " ", 1);		
 		}
 		i++;
 	}
-	printf("\n");
+	write(data->exec->outfile, "\n", 1);
 }
 
 int	check_flag(t_data *data)
 {
 	int	i;
-	int flag;
+	int	flag;
 
-	flag = ZERO_INIT;
-	i = ZERO_INIT;
+	flag = 0;
+	i = 0;
 	while (data->tokenizer->final_cmd[i])
 	{
-		if (data->tokenizer->final_cmd[i] && data->tokenizer->final_cmd[i] == '-')
+		if (data->tokenizer->final_cmd[i] == '-')
 		{
-			i++;
-			while (data->tokenizer->final_cmd[i] == 'n')
-				i++;
-			if (data->tokenizer->final_cmd[i] == ' ' || data->tokenizer->final_cmd[i] == '\0')
+			int j = i + 1;
+			while (data->tokenizer->final_cmd[j] == 'n')
+				j++;
+			if ((data->tokenizer->final_cmd[j] == ' ' || data->tokenizer->final_cmd[j] == '\0') && j > i + 1)
 			{
-				int j = i;
-				while(data->tokenizer->final_cmd[j] == ' ' || data->tokenizer->final_cmd[j] == '\t')
-					j++;
-				if(data->tokenizer->final_cmd[j] != '-')
-					break;
 				flag++;
-				continue;
+				i = j - 1; // Avancer i au dernier 'n' pour continuer à chercher d'autres flags après l'espace
 			}
 		}
 		i++;
 	}
-	return (0);
+	return (flag);
 }
+
+
 
 int	check_echo_cmd(t_data *data)
 {
 	if (ft_strncmp(data->tokenizer->final_cmd, "echo", 5) == 0
 		&& data->lst != NULL)
 	{
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", data->exec->outfile);
 		return (1);
 	}
 	return (0);
@@ -76,8 +73,6 @@ int	check_echo_cmd(t_data *data)
 
 int	cmd_echo(t_data *data)
 {
-	// for(int i = 0; data->tokenizer->cmd_array[i]; i++)
-	// 	dprintf(2, "%s\n", data->tokenizer->cmd_array[i]);
 	if (data->tokenizer->cmd_array[0] == NULL)
 		return (0);
 	if (ft_strstr(data->tokenizer->final_cmd, "echo"))
@@ -85,7 +80,9 @@ int	cmd_echo(t_data *data)
 		if (check_echo_cmd(data))
 			return (1);
 		if (check_flag(data))
+		{
 			return (1);
+		}
 		if (!check_flag(data))
 		{
 			print_echo(data);

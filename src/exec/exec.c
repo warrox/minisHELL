@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 15:22:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:18:55 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,26 @@ void	init_struct_exec(t_data *data)
 
 void	exec_single_cmd(t_data *data)
 {
-	data->exec->pid_1 = fork();
-	if (data->exec->pid_1 == -1)
-		return;
-	if (data->exec->pid_1 == 0)
-		exec_sub_proc(data);
+	init_tmp_struct(data);
+	check_here_doc(data);
+	if (is_a_builtin(data->tokenizer) == -1 || is_a_builtin(data->tokenizer) == -2)
+	{
+		// dprintf(2, "eioarufgaeo\n");
+		data->exec->pid_1 = fork();
+		if (data->exec->pid_1 == -1)
+			return;
+		if (data->exec->pid_1 == 0)
+			exec_sub_proc(data);
+		else
+			waitpid(data->exec->pid_1, NULL, 0);
+	}
 	else
-		waitpid(data->exec->pid_1, NULL, 0);
+	{
+	// 	builtin->stdin_save = dup(STDIN_FILENO);
+    // 	builtin->stdout_save = dup(STDOUT_FILENO);
+		exec_sub_proc(data);
+		free_tmp_struct(data);
+	}
 }
 
 void	init_exec(t_data *data)
@@ -68,9 +81,9 @@ void	init_exec(t_data *data)
 	if(data->tokenizer->final_cmd == NULL)
 		return;
 	init_struct_exec(data);
+	build_tab_env(data);
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
-	//dprintf(2, "ICI %d\n", nb_node(data));
 	if (nb_node(data) == 1)
 		exec_single_cmd(data);
 	else if (nb_node(data) == 2)

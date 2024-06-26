@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:54:02 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/18 18:08:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:43:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	pwd_cmd(t_data *data)
 	if (ft_strncmp(data->tokenizer->cmd_array[0], "pwd", 4) == 0)
 	{
 		value = getcwd(NULL, 0);
-		ft_printf("%s\n", value);
+		write(data->exec->outfile, value, ft_strlen(value));
+		write(data->exec->outfile, "\n", 1);
 		free(value);
 		return (1);
 	}

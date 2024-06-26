@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/03 17:40:43 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:42:04 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,32 @@ void	parser_list_init(t_data *data, char **envp)
 		ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, envp[i]));
 		i++;
 	}
+	i = ZERO_INIT;
 }
 
-void	print_lst(t_list_arg *lst)
+void	print_lst(t_data *data, t_list_arg *lst)
 {
-	while (lst)
+	if (is_a_builtin(data->tokenizer) != -1 && is_a_builtin(data->tokenizer) != 2)
 	{
-		ft_printf("%s=", lst->key_and_val[0]);
-		ft_printf("%s\n", lst->key_and_val[1]);
-		lst = lst->next;
+		//dprintf(2, "TOP %d\n", data->exec->outfile);
+		while (lst)
+		{
+			ft_putstr_fd(lst->key_and_val[0], data->exec->outfile);
+			ft_putstr_fd("=", data->exec->outfile);
+			ft_putstr_fd(lst->key_and_val[1], data->exec->outfile);
+			ft_putstr_fd("\n", data->exec->outfile);
+			lst = lst->next;
+		}
+	}
+	else
+	{
+		dprintf(2, "\n\n\nUTWCIYWCIYSC\n");
+		while (lst)
+		{
+			ft_printf("%s=", lst->key_and_val[0]);
+			ft_printf("%s\n", lst->key_and_val[1]);
+			lst = lst->next;
+		}
 	}
 }
 

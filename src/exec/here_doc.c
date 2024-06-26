@@ -6,33 +6,73 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/19 16:28:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:55:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-// int is_here_doc(t_list_arg *tok)
-// {
-// 	t_list_arg *tmp;
+char	*build_tmp_file(int idx)
+{
+	char *tmp_1;
+	char *tmp_2;
+	char *final;
+	
+	tmp_1 = NULL_INIT;
+	tmp_2 = NULL_INIT;
+	final = NULL_INIT;
+	tmp_1 = ft_strdup(".here_doc_tmp_");
+	tmp_2 = ft_itoa(idx);
+	final = ft_strjoin(tmp_1, tmp_2);
+	free(tmp_1);
+	free(tmp_2);
+	return (final);
+}
 
-// 	tmp = tok;
-// 	if (!tmp)
-// 		return (0);
-// 	if (tmp->array_sign[0] == HEREDOCS)
-// 		return (1);
-// 	return (0);
-// }
+void	is_here_doc(t_data *data, t_list_arg *tok)
+{
+	int	i;
+	static int idx = ZERO_INIT;
+	char	*file;
+	
+	file = NULL_INIT;
+	i = 0;
+	while (tok->file_array[i])
+	{
+		if (tok->array_sign[i] == HEREDOCS)
+		{
+			file = build_tmp_file(idx++);
+			init_here_doc(data, tok, i, file);
+			tok->array_sign[i] = STDINS;
+			free(tok->file_array[i]);
+			tok->file_array[i] = ft_strdup(file);
+			add_tmp_file(data, file);
+			free(file);
+			data->exec->here_doc++;
+		}
+		i++;
+	}
+}
+void	check_here_doc(t_data *data)
+{
+	t_list_arg *tmp = data->tokenizer;
+	char *file;
+	
+	file = NULL_INIT;
+	while(tmp)
+	{
+		is_here_doc(data, tmp);
+		tmp = tmp->next;
+	}
+}
 
-void	init_here_doc(t_data *data, t_list_arg *tok)
+void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 {
 	int	fd;
-	// char *buffer;
 
-	// buffer = NULL_INIT;
 	char *input = NULL_INIT;
 	fd = ZERO_INIT;
-	fd = open(".here_doc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		file_not_found(data, tok);
 	while(1)
@@ -41,24 +81,10 @@ void	init_here_doc(t_data *data, t_list_arg *tok)
 		if (!input){
 			break;
 		}
-		// if (gnl_hd(0, &buffer) <= 0)
-		// 	break;
-		//dprintf(2, "ICI %s\n", tok->file_array[0]);
-		if (ft_strncmp(tok->file_array[0], input, ft_strlen(tok->file_array[0]) + 1) == 0)
-		{
-			// write(fd, "\n", 1);
+		if (ft_strcmp(tok->file_array[i], input) == 0)
 			break;
-		}
 		write(fd, input, ft_strlen(input));
 		write(fd, "\n", 1);
-		// free(buffer);
 	}
-	// free(buffer);
 	close(fd);
-	data->exec->infile = open(".here_doc_tmp", O_RDONLY);
-	if (data->exec->infile < 0)
-	{
-		unlink(".here_doc_tmp");
-		file_not_found(data, tok);
-	}
 }
