@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 11:32:46 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:51:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);	
-		// dprintf(2, "NOMDEZEUS\n");
 		int j = 0;
 		while(ft_isws(input[j]))			
 			j++;
@@ -57,16 +56,7 @@ int	display_prompt(t_data *data)
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		// print_exec_utils(data);
-		// if(is_a_builtin(data))
-		// {
-		// 	add_history(input);
-		// 	free_prompt(data);
-		// 	ft_clear_tokenizer(data);
-		// 	continue;
-		// }
 		init_exec(data);
-		// dprintf(2, "NOM\n");
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);
 		ft_clear_tokenizer(data);

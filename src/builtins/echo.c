@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 11:47:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:51:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	check_echo_cmd(t_data *data)
 
 int	cmd_echo(t_data *data)
 {
-	// for(int i = 0; data->tokenizer->cmd_array[i]; i++)
-	// 	dprintf(2, "%s\n", data->tokenizer->cmd_array[i]);
 	if (data->tokenizer->cmd_array[0] == NULL)
 		return (0);
 	if (ft_strstr(data->tokenizer->final_cmd, "echo"))

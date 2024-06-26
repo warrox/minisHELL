@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 18:05:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:18:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/wait.h>
 
 /*all structures*/
+
 
 typedef struct s_tmp_files
 {
@@ -94,6 +95,8 @@ typedef struct s_list_arg
 	// -------------------------------
 }						t_list_arg;
 
+
+
 typedef struct s_data
 {
 	t_list_arg			*lst;
@@ -108,7 +111,17 @@ typedef struct s_data
 	int					pansement;
 	int					flag; 
 	int					sq_flag;
+
 }						t_data;
+
+typedef int (*builtin_ptr)(t_data *);
+
+typedef struct s_builtin
+{
+	builtin_ptr		*builtin_func;
+	int				stdin_save;
+	int				stdout_save;
+}		t_builtin;
 
 /**[PRINT FUNCTIONS]**/
 
@@ -120,7 +133,7 @@ void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
 
-int					is_a_builtin(t_data *data);
+int	is_a_builtin(t_list_arg *tok);
 int					cmd_unset(t_data *data);
 void					case_egal(t_data *data);
 int					cmd_env(t_data *data);
@@ -207,7 +220,7 @@ void	exec_single_cmd(t_data *data);
 int	nb_node(t_data *data);
 char	*get_path(t_data *data);
 void	free_exec(t_data *data);
-void	exec_sub_proc(t_data *data);
+void	 exec_sub_proc(t_data *data);
 int	is_redir(t_list_arg *tok);
 char	*build_cmd(t_data *data, t_list_arg *tok);
 void	file_not_found(t_data *data, t_list_arg *tok);

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 11:35:11 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:57:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i)
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
         if (data->exec->outfile < 0)
             file_not_found(data, tok);
+		printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
     }
     else if (tok->array_sign[i] == STDINS)
     {
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
+		printf("Opened infile for builtin: %s\n", tok->file_array[i]);
     }
 	else if (tok->array_sign[i] == APPEND)
 	{
 		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (data->exec->outfile < 0)
 			file_not_found(data, tok);
+		printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
 	}
 }
 
@@ -67,33 +70,59 @@ void	second_child_process(t_data *data)
 	int i = ZERO_INIT;
 	t_list_arg *tmp = data->tokenizer;
 	
+	printf("Redirected second\n");
 	while(tmp && tmp->next)
 		tmp = tmp->next;
+	if (is_a_builtin(tmp) >= 10 && is_a_builtin(tmp) <= 16)
+	{
+		init_files_builtin(data, tmp, i);
+		dprintf(2, "%d\n", data->exec->infile);
+		if (data->exec->infile != 0)
+		{
+			dup2(data->exec->infile, STDIN_FILENO);
+			close (data->exec->infile);
+		}
+		else
+			dup2(data->exec->tube[0], STDIN_FILENO);
+		if (data->exec->outfile != 1)
+		{
+			dup2(data->exec->outfile, STDOUT_FILENO);
+			close (data->exec->outfile);
+		}
+		exec_builtin(data, is_a_builtin(tmp));
+		if (data->exec->outfile != 1)
+			close(data->exec->outfile);
+		if (data->exec->infile != 0)
+			close (data->exec->infile);
+		close(data->exec->tube[0]);
+		close(data->exec->tube[1]);
+		free_resources_single(data);
+		exit(1) ;
+	}
 	data->exec->cmd = build_cmd(data, tmp);
 	if (data->exec->cmd == NULL)
 		error_cmd_op(data, tmp);
 	if (is_redir(tmp))
 	{
 		while(tmp->file_array[i] != 0)
-		{
-			// if (data->exec->infile != 0 && data->exec->infile > 0)
-			// 	close(data->exec->infile);
-			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
-			// 	close(data->exec->outfile);
 			init_files(data, tmp, i++);
-		}
 	}
 	if (data->exec->infile != 0)
 	{
 		dup2(data->exec->infile, STDIN_FILENO);
 		close (data->exec->infile);
+		printf("Redirected stdin for builtin\n");
 	}
 	else
+	{
+		printf("Redirected stdin for builtin\n");
 		dup2(data->exec->tube[0], STDIN_FILENO);
+	}
 	if (data->exec->outfile != 1)
 	{
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close (data->exec->outfile);
+		printf("Redirected stdout for builtin\n");
 	}
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tmp) != 0)))
 	{
@@ -116,19 +145,44 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 	
+	printf("Redirected fisrt\n");
+	if (is_a_builtin(data->tokenizer) >= 10 && is_a_builtin(data->tokenizer) <= 16)
+	{
+		init_files_builtin(data, data->tokenizer, i);
+		if (data->exec->infile != 0)
+		{
+			dup2(data->exec->infile, STDIN_FILENO);
+			close (data->exec->infile);
+			printf("Redirected stdin for builtin\n");
+		}
+		if (data->exec->outfile != 1)
+		{
+			dup2(data->exec->outfile, STDOUT_FILENO);
+			close (data->exec->outfile);
+			printf("Redirected stdout for builtin\n");
+		}
+		else
+		{
+			dup2(data->exec->tube[1], STDOUT_FILENO);
+			printf("Redirected stdout for builtin\n");
+		}
+		exec_builtin(data, is_a_builtin(data->tokenizer));
+		if (data->exec->outfile != 1)
+			close(data->exec->outfile);
+		if (data->exec->infile != 0)
+			close (data->exec->infile);
+		close(data->exec->tube[0]);
+		close(data->exec->tube[1]);
+		free_resources_single(data);
+		exit(1) ;
+	}
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (data->exec->cmd == NULL)
 		error_cmd_op(data, data->tokenizer);
 	if (is_redir(data->tokenizer))
 	{
 		while(data->tokenizer->file_array[i])
-		{
-			// if (data->exec->infile != 0 && data->exec->infile > 0)
-			// 	close(data->exec->infile);
-			// if (data->exec->outfile != 1 && data->exec->outfile > 0)
-			// 	close(data->exec->outfile);
 			init_files(data, data->tokenizer, i++);
-		}
 	}
 	if (data->exec->infile != 0)
 	{
@@ -186,11 +240,11 @@ void	 exec_sub_proc(t_data *data)
 {
 	int	i;
 	
-	i = ZERO_INIT; 
-	if (is_a_builtin(data) >= 10 && is_a_builtin(data) <= 16) 
+	i = ZERO_INIT;
+	if (is_a_builtin(data->tokenizer) != -1 && is_a_builtin(data->tokenizer) != -2) 
 	{
 		init_files_builtin(data, data->tokenizer, i);
-		exec_builtin(data, is_a_builtin(data));
+		exec_builtin(data, is_a_builtin(data->tokenizer));
 		if (data->exec->outfile != 1)
 			close(data->exec->outfile);
 		if (data->exec->infile != 0)
