@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 15:23:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:15:50 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i)
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
         if (data->exec->outfile < 0)
             file_not_found(data, tok);
-		printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
+		// printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
     }
     else if (tok->array_sign[i] == STDINS)
     {
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
-		printf("Opened infile for builtin: %s\n", tok->file_array[i]);
+		// printf("Opened infile for builtin: %s\n", tok->file_array[i]);
     }
 	else if (tok->array_sign[i] == APPEND)
 	{
 		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (data->exec->outfile < 0)
 			file_not_found(data, tok);
-		printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
+		// printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
 	}
 }
 
@@ -70,7 +70,7 @@ void	second_child_process(t_data *data)
 	int i = ZERO_INIT;
 	t_list_arg *tmp = data->tokenizer;
 	
-	printf("Redirected second\n");
+	// printf("Redirected second\n");
 	while(tmp && tmp->next)
 		tmp = tmp->next;
 	if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
@@ -111,18 +111,18 @@ void	second_child_process(t_data *data)
 	{
 		dup2(data->exec->infile, STDIN_FILENO);
 		close (data->exec->infile);
-		printf("Redirected stdin for builtin\n");
+		// printf("Redirected stdin for builtin\n");
 	}
 	else
 	{
-		printf("Redirected stdin for builtin\n");
+		// printf("Redirected stdin for builtin\n");
 		dup2(data->exec->tube[0], STDIN_FILENO);
 	}
 	if (data->exec->outfile != 1)
 	{
 		dup2(data->exec->outfile, STDOUT_FILENO);
 		close (data->exec->outfile);
-		printf("Redirected stdout for builtin\n");
+		// printf("Redirected stdout for builtin\n");
 	}
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tmp) != 0)))
 	{

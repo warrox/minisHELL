@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 11:51:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:01:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,29 @@ void	print_echo(t_data *data)
 int	check_flag(t_data *data)
 {
 	int	i;
-	int flag;
+	int	flag;
 
-	flag = ZERO_INIT;
-	i = ZERO_INIT;
+	flag = 0;
+	i = 0;
 	while (data->tokenizer->final_cmd[i])
 	{
-		if (data->tokenizer->final_cmd[i] && data->tokenizer->final_cmd[i] == '-')
+		if (data->tokenizer->final_cmd[i] == '-')
 		{
-			i++;
-			while (data->tokenizer->final_cmd[i] == 'n')
-				i++;
-			if (data->tokenizer->final_cmd[i] == ' ' || data->tokenizer->final_cmd[i] == '\0')
+			int j = i + 1;
+			while (data->tokenizer->final_cmd[j] == 'n')
+				j++;
+			if ((data->tokenizer->final_cmd[j] == ' ' || data->tokenizer->final_cmd[j] == '\0') && j > i + 1)
 			{
-				int j = i;
-				while(data->tokenizer->final_cmd[j] == ' ' || data->tokenizer->final_cmd[j] == '\t')
-					j++;
-				if(data->tokenizer->final_cmd[j] != '-')
-					break;
 				flag++;
-				continue;
+				i = j - 1; // Avancer i au dernier 'n' pour continuer à chercher d'autres flags après l'espace
 			}
 		}
 		i++;
 	}
-	return (0);
+	return (flag);
 }
+
+
 
 int	check_echo_cmd(t_data *data)
 {
@@ -83,7 +80,9 @@ int	cmd_echo(t_data *data)
 		if (check_echo_cmd(data))
 			return (1);
 		if (check_flag(data))
+		{
 			return (1);
+		}
 		if (!check_flag(data))
 		{
 			print_echo(data);
