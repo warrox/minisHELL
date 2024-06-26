@@ -34,7 +34,7 @@ void check_quotes(char *input, int *flag_s, int *flag_d, int *signal)
         *signal = SYNTAX_ERROR;
 }
 
-int check_quote(char *input)
+int check_quote(char *input, t_data *data)
 {
     int flag_s; 
 	int flag_d; 
@@ -48,7 +48,7 @@ int check_quote(char *input)
     check_quotes(input, &flag_s, &flag_d, &signal);
     if (signal == SYNTAX_ERROR)
     {
-        msg_error_handler(&signal);
+        msg_error_handler(&signal, data);
         return (-1);
     }
     return (0);
@@ -56,7 +56,7 @@ int check_quote(char *input)
 
 int syntax_checker(char *input, t_data *data)
 {
-    if (unexpectedToken(input) != 0 || check_quote(input) != 0)
+    if (unexpectedToken(input, data) != 0 || check_quote(input, data) != 0)
 	{
 		data->exit_status = 2;	
 		return (-1);
