@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 18:01:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:40:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ void	print_lst(t_data *data, t_list_arg *lst)
 {
 	if (is_a_builtin(data) >= 10 && is_a_builtin(data) <= 16)
 	{
-		dprintf(2, "TOP %d\n", data->exec->outfile);
+		// dprintf(2, "TOP %d\n", data->exec->outfile);
 		while (lst)
 		{
 			ft_putstr_fd(lst->key_and_val[0], data->exec->outfile);
-			ft_putstr_fd("\n", data->exec->outfile);
+			ft_putstr_fd("=", data->exec->outfile);
 			ft_putstr_fd(lst->key_and_val[1], data->exec->outfile);
+			ft_putstr_fd("\n", data->exec->outfile);
 			lst = lst->next;
 		}
 	}
 	else
 	{
-		dprintf(2, "\n\n\nUTWCIYWCIYSC\n");
+		// dprintf(2, "\n\n\nUTWCIYWCIYSC\n");
 		while (lst)
 		{
 			ft_printf("%s=", lst->key_and_val[0]);
