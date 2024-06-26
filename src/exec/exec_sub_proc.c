@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 14:57:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:23:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	second_child_process(t_data *data)
 	printf("Redirected second\n");
 	while(tmp && tmp->next)
 		tmp = tmp->next;
-	if (is_a_builtin(tmp) >= 10 && is_a_builtin(tmp) <= 16)
+	if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
 	{
 		init_files_builtin(data, tmp, i);
-		dprintf(2, "%d\n", data->exec->infile);
+		// dprintf(2, "%d\n", data->exec->infile);
 		if (data->exec->infile != 0)
 		{
 			dup2(data->exec->infile, STDIN_FILENO);
@@ -145,7 +145,7 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 	
-	printf("Redirected fisrt\n");
+	//printf("Redirected fisrt\n");
 	if (is_a_builtin(data->tokenizer) >= 10 && is_a_builtin(data->tokenizer) <= 16)
 	{
 		init_files_builtin(data, data->tokenizer, i);
@@ -153,18 +153,18 @@ void	first_child_process(t_data *data)
 		{
 			dup2(data->exec->infile, STDIN_FILENO);
 			close (data->exec->infile);
-			printf("Redirected stdin for builtin\n");
+			//printf("Redirected stdin for builtin\n");
 		}
 		if (data->exec->outfile != 1)
 		{
 			dup2(data->exec->outfile, STDOUT_FILENO);
 			close (data->exec->outfile);
-			printf("Redirected stdout for builtin\n");
+			//printf("Redirected stdout for builtin\n");
 		}
 		else
 		{
 			dup2(data->exec->tube[1], STDOUT_FILENO);
-			printf("Redirected stdout for builtin\n");
+			//printf("Redirected stdout for builtin\n");
 		}
 		exec_builtin(data, is_a_builtin(data->tokenizer));
 		if (data->exec->outfile != 1)

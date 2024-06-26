@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 15:29:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:32:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,21 @@ void	children_process(t_data *data)
 		{
 			tmp = tmp->next;
 			i++;
+		}
+		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
+		{
+			init_files_builtin(data, tmp, i);
+			setup_pipes(data, tmp);
+			exec_builtin(data, is_a_builtin(tmp));
+			if (data->exec->outfile != 1)
+				close(data->exec->outfile);
+			if (data->exec->infile != 0)
+				close (data->exec->infile);
+			close(data->exec->tube[0]);
+			close(data->exec->tube[1]);
+			close_tubes(data);
+			free_resources(data);
+			exit(1);
 		}
 		data->exec->cmd = build_cmd(data, tmp);
 		if (data->exec->cmd == NULL)
