@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 13:35:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:22:36 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,10 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i);
 
 /**[SIGNALS]**/
 
-void	handle_signal(void);
+void	handle_signal_prompt(void);
+void	handle_signal_children(void);
 void	ft_ctrl_c(int sig);
+void	ft_ctrl_c_children(int sig);
+void	ft_back_slash(int sig);
 
 #endif
