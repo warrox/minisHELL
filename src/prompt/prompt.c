@@ -6,12 +6,13 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 17:11:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:36:23 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell_lib.h"
+
+int g_sig;
 
 int	display_prompt(t_data *data)
 {
@@ -25,6 +26,7 @@ int	display_prompt(t_data *data)
 	init_signal(data);
 	while (1)
 	{
+		handle_signal();
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
