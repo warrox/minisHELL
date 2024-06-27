@@ -6,90 +6,99 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 14:44:28 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/27 16:12:37 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
 #include "../../includes/minishell_lib.h"
-
-static char	*word_dup(char const *str, int start, int finish, t_data *data)
+#include <stdio.h>
+void	*free_tab_clean(char *split[])
 {
-	char	*word;
-	int		i;
-	int		j;
+	size_t	i;
 
-	word = malloc((finish - start + 1) * sizeof(char));
-	if (!word)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (start < finish)
-	{
-		if ((str[start] == '<' || str[start] == '>') && data->pansement == 1)
-			word[j] = str[start];
-		else if((str[start] == '<' || str[start] == '>') && data->pansement == 0)
-			start++;
-		word[j] = str[start];
-		j++;
-		start++;
-	}
-	word[j] = '\0';
-	return (word);
-}
-
-static void	*free_tab(char **split)
-{
-	size_t	j;
-
-	j = 0;
-	while (split[j] != NULL)
-	{
-		free(split[j]);
-		j++;
-	}
+	i = -1;
+	while (split[++i] != NULL)
+		free(split[i]);
 	free(split);
 	return (NULL);
 }
 
-char	**split_fill_c(char const *s, char c, char **split, t_data *data)
+int	ft_parts_count(char *str, t_data *data)
 {
-	int	index;
-	int	j;
+	int	parts;
 
-	index = -1;
-	data->i = -1;
-	j = 0;
-	while (s[++data->i] != '\0')
+	parts = 0;
+	data->i = 0;
+	data->spl = 0;
+	data->dbl = 0;
+	while (str[data->i])
 	{
-		if (s[data->i] != c && index < 0)
-			index = data->i;
-		else if (s[data->i] == c && index >= 0)
+		if (str[data->i] == 34)
+			data->dbl = !data->dbl;
+		if (str[data->i] == 39)
+			data->spl = !data->spl;
+		if (str[data->i] != ' ' && (str[data->i + 1] == ' '
+				|| str[data->i + 1] == '\0'))
 		{
-			split[j++] = word_dup(s, index, data->i, data);
-			if (!split[j - 1])
-				return (free_tab(split));
-			index = -1;
-			break ;
+			if ((!data->spl && !data->dbl) || ((data->spl || data->dbl)
+					&& str[data->i + 1] == '\0'))
+				parts++;
 		}
-	}
-	if (s[data->i] == c)
 		data->i++;
-	if (s[data->i] != '\0')
-		split[j++] = word_dup(s, data->i, strlen(s), data);
-	split[j] = NULL;
-	return (split);
+	}
+	return (parts);
 }
 
-char	**split_tokenizer(char const *s, char c, t_data *data)
+int	create_part(t_data *data, char *str, char **result)
 {
-	char	**split;
+	result[data->size] = malloc((data->j + 1) * sizeof(char));
+	if (!result[data->size])
+		return (0);
+	write_part(str + data->i, result[data->size], data->j);
+	data->i += data->j;
+	data->size++;
+	return (1);
+}
 
-	if (!s)
+int	write_split_clean(char **result, char *str, t_data *data)
+{
+	data->size = 0;
+	data->i = 0;
+	while (str[data->i])
+	{
+		if (str[data->i] == ' ')
+			data->i++;
+		else
+		{
+			data->j = 0;
+			while (str[data->i + data->j] != '\0')
+			{
+				while (str[data->i + data->j] && (str[data->i + data->j] == 34
+						|| str[data->i + data->j] == 39))
+					data->j += to_next_q(str + data->i + data->j, str[data->i
+							+ data->j]);
+				if (str[data->i + data->j] == ' ' || str[data->i
+						+ data->j] == '\0')
+					break ;
+				data->j++;
+			}
+			if (!create_part(data, str, result))
+				return (0);
+		}
+	}
+	return (1);
+}
+
+char	**split_tokenizer(t_list_arg *cmd, t_data *data)
+{
+	char	**result;
+	int		size;
+	size = ft_parts_count(cmd->final_cmd, data);
+	result = malloc((size + 1) * sizeof(char *));
+	if (!result)
 		return (NULL);
-	split = malloc(3 * sizeof(char *));
-	if (!split)
-		return (NULL);
-	split = split_fill_c(s, c, split, data);
-	return (split);
+	result[size] = NULL;
+	if (!write_split_clean(result, cmd->final_cmd, data))
+		return (free_tab_clean(result), NULL);
+	return (result);
 }

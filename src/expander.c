@@ -85,7 +85,6 @@ char *buff_copy(char *input)
 	if(flag == 1)
 		len --;
 	buffer = ft_substr(input, 0, len);
-	printf("EXPANDER : %s\n", buffer);
 	return(buffer);
 }
 void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int *dq)
@@ -112,7 +111,7 @@ void expandVariable(t_data *data, char *input, int *i, char *buffer, int *j, int
     }
 	if(data->flag == 0)
 	{
-		while(input[*i] && !ft_isws(input[*i])) // ou comp 
+		while(input[*i] && !ft_isws(input[*i])) 
 			(*i)++;
 	}
 }

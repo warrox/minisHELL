@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 17:10:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:39:34 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_list_arg
 	int					count_size;
 	// ----variable pour ton exec ----
 	char				**file_array;
+	char				**tmp_cmd_array;
 	char				**cmd_array;
 	int					*array_sign;
 	// -------------------------------
@@ -120,6 +121,9 @@ typedef struct s_data
 	int					sq;
 	int					dq;
 	size_t				key_len;
+	int					spl;
+	int					dbl;
+	int					size;
 }						t_data;
 
 typedef int (*builtin_ptr)(t_data *);
@@ -196,7 +200,7 @@ t_data					*init_signal(t_data *data);
 int						checker_err_pipe(char *input, t_data *data);
 int						check_pipe(char *input, int i, t_data *data);
 int	parse_cmd_arg(t_data *data);
-char					**split_tokenizer(char const *s, char c, t_data *data);
+char **split_tokenizer(t_list_arg *cmd, t_data *data);
 int					sort_sign(t_list_arg *tmp, t_data *data);
 void					ft_clear_tokenizer(t_data *data);
 t_list_arg				*init_tokenizer(void);
@@ -228,7 +232,12 @@ bool isSingleQuote(char c);
 bool isDoubleQuote(char c);
 bool ifPipe(char c);
 int pipeAlone(char *input, int i);
- 
+ void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
+ void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
+int handle_signs(char *str, int *i);
+int	to_next_q(char *str, char c);
+void	write_part(const char *str, char *result, int size);
+char	**split_tokenizer(t_list_arg *cmd, t_data *data);
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

@@ -14,14 +14,20 @@ char	*get_filename(char *str)
 	char	*new;
 
 	i = 0;
+	end = 0;
+	// printf("STR : %s\n", str);
 	while (str[i] && ft_isws(str[i]))
 		i++;
 	start = i;
+	if(str[start] == '\"' || str[start] == '\'')
+		start++;
 	end = i;
 	while (str[end] && (!ft_isws(str[end]) && !sign_cmp(&str[end])))
 		end++;
 	if (end == start)
-		NULL; // CHECK
+		NULL;
+	if(str[end - 1] == '\"' || str[end - 1] == '\'')
+		end--;
 	new = ft_substr(str, start, end - start);
 	return (new);
 }
@@ -39,7 +45,7 @@ void	create_signed(t_list_arg *lst)
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);
-		if(i > 1) // maybe useless now
+		if(i > 1)
 		{
 			if(lst->input_splited[i - 1] == '\'')
 			tmp = 0;
