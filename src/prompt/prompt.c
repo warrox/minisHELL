@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 14:48:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:15:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	display_prompt(t_data *data)
 	init_signal(data);
 	while (1)
 	{
-		handle_signal();
+		handle_signal_prompt();
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
@@ -46,7 +46,6 @@ int	display_prompt(t_data *data)
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		// print_exec_utils(data);
 		init_exec(data);
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);
