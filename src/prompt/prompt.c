@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 17:05:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/27 17:59:38 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell_lib.h"
+
+int g_sig;
 
 int	display_prompt(t_data *data)
 {
@@ -25,17 +26,26 @@ int	display_prompt(t_data *data)
 	init_signal(data);
 	while (1)
 	{
+		handle_signal_prompt();
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		input = readline(data->prompt->usr_prompt);	
+		if(input == NULL)
+		{
+			dprintf(2, "CTRL_D DETECTED\n");
+			free_prompt(data);
+			free(data->signal);
+			ft_lst_arg_clear(&data->tokenizer);
+			ft_clear_tokenizer(data);
+			exit(0);
+		}
 		if(skip_ws_prompt(data, input))
 			continue;
 		int_nbr = ft_exit(data, input);
 		if(int_nbr >= 0 && int_nbr <= 255)
 			return(int_nbr);
 		input_cpy = parser(input, data);
-		// print_exec_utils(data);
 		init_exec(data);
 		if (data->tokenizer->final_cmd != NULL)
 			free_exec(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 14:39:34 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/27 17:58:17 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/wait.h>
-#include <stdbool.h>
+# include <stdbool.h>
+# include <signal.h>
+
+/*global var*/
+
+extern int g_sig;
 
 /*all structures*/
-
 
 typedef struct s_tmp_files
 {
@@ -164,6 +168,7 @@ void					create_new_var(t_data *data, char *key, char *value);
 int					cmd_echo(t_data *data);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
+void	print_echo_flag(t_data *data, int start);
 int ft_exit(t_data *data, char *input);
 int	check_export_nothing(t_data *data);
 void exec_cd_with_opt(t_data *data, t_list_arg *tmp, t_list_arg *save_current, char *buffer);
@@ -300,5 +305,13 @@ void	build_tab_env(t_data *data);
 void 	print_env(t_data *data);
 void	exec_builtin(t_data *data, int builtin);
 void init_files_builtin(t_data *data, t_list_arg *tok, int i);
+
+/**[SIGNALS]**/
+
+void	handle_signal_prompt(void);
+void	handle_signal_children(void);
+void	ft_ctrl_c(int sig);
+void	ft_ctrl_c_children(int sig);
+void	ft_back_slash(int sig);
 
 #endif

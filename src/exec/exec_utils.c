@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 11:24:43 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/27 17:59:22 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void free_exec(t_data *data)
     }
     free(data->exec);
 }
-
-
 
 char	*get_path(t_data *data)
 {
