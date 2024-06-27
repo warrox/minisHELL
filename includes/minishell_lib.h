@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 17:10:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:35:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/wait.h>
-#include <stdbool.h>
+# include <stdbool.h>
+# include <signal.h>
+
+/*global var*/
+
+extern int g_sig;
 
 /*all structures*/
-
 
 typedef struct s_tmp_files
 {
@@ -291,5 +295,10 @@ void	build_tab_env(t_data *data);
 void 	print_env(t_data *data);
 void	exec_builtin(t_data *data, int builtin);
 void init_files_builtin(t_data *data, t_list_arg *tok, int i);
+
+/**[SIGNALS]**/
+
+void	handle_signal(void);
+void	ft_ctrl_c(int sig);
 
 #endif
