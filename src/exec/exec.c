@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 15:24:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:07:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	exec_single_cmd(t_data *data)
 	check_here_doc(data);
 	if (is_a_builtin(data->tokenizer) == -1 || is_a_builtin(data->tokenizer) == -2)
 	{
-		// dprintf(2, "eioarufgaeo\n");
 		data->exec->pid_1 = fork();
 		if (data->exec->pid_1 == -1)
 			return;

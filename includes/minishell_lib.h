@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 15:22:36 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:19:25 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void					create_new_var(t_data *data, char *key, char *value);
 int					cmd_echo(t_data *data);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data);
+void	print_echo_flag(t_data *data, int start);
 int ft_exit(t_data *data, char *input);
 int	check_export_nothing(t_data *data);
 void exec_cd_with_opt(t_data *data, t_list_arg *tmp, t_list_arg *save_current, char *buffer);
