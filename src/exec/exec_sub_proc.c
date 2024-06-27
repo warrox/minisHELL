@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 17:25:48 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:48:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,6 @@ void	 exec_sub_proc(t_data *data)
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (data->exec->cmd == NULL)
 	{
-		
 		error_cmd_single(data, data->tokenizer);
 	}
 	if(is_redir(data->tokenizer))
