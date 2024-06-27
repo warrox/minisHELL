@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 17:15:53 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/06/27 17:29:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,13 @@ char *clean_quotes(char *str)
 
     int i = start; 
 	int j = 0;
-    while (i <= end) 
+    // printf("SF : %d\n", sf);
+	// printf("DF : %d\n", df);
+	while (i <= end) 
 	{
 		while(str[i] && str[i] == '\"' && !sf)
 			i++;
-	while(str[i] && str[i] == '\"' && !df)
+		while(str[i] && str[i] == '\'' && !df)
 			i++;
 		cleaned_str[j++] = str[i++];
     }
