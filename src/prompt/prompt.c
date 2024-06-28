@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 17:59:38 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:04:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	display_prompt(t_data *data)
 		input = readline(data->prompt->usr_prompt);	
 		if(input == NULL)
 		{
-			dprintf(2, "CTRL_D DETECTED\n");
+		//	dprintf(2, "CTRL_D DETECTED\n");
 			free_prompt(data);
 			free(data->signal);
 			ft_lst_arg_clear(&data->tokenizer);
