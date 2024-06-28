@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 17:58:17 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:08:07 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void	write_part(const char *str, char *result, int size);
 char	**split_tokenizer(t_list_arg *cmd, t_data *data);
 /**[EXEC]**/
 
-void	init_exec(t_data *data);
+int	init_exec(t_data *data);
 void	init_struct_exec(t_data *data);
 void	init_files(t_data *data, t_list_arg *tok, int i);
 void	exec_single_cmd(t_data *data);

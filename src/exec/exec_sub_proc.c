@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 13:48:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:30:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	second_child_process(t_data *data)
 	int i = ZERO_INIT;
 	t_list_arg *tmp = data->tokenizer;
 	
+	reset_in_out(data);
 	// printf("Redirected second\n");
 	while(tmp && tmp->next)
 		tmp = tmp->next;
@@ -145,6 +146,7 @@ void	first_child_process(t_data *data)
 	int i;
 	i = 0;
 	
+	reset_in_out(data);
 	//printf("Redirected fisrt\n");
 	if (is_a_builtin(data->tokenizer) >= 10 && is_a_builtin(data->tokenizer) <= 16)
 	{
@@ -241,6 +243,7 @@ void	 exec_sub_proc(t_data *data)
 	int	i;
 	
 	i = ZERO_INIT;
+	//reset_in_out(data);
 	if (is_a_builtin(data->tokenizer) != -1 && is_a_builtin(data->tokenizer) != -2) 
 	{
 		init_files_builtin(data, data->tokenizer, i);
