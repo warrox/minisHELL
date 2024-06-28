@@ -32,6 +32,7 @@ char	*get_filename(char *str)
 	return (new);
 }
 
+
 void	create_signed(t_list_arg *lst)
 {
 	int	i;
@@ -50,10 +51,11 @@ void	create_signed(t_list_arg *lst)
 			if(lst->input_splited[i - 1] == '\'')
 			tmp = 0;
 		}
-		if (tmp != 0)
+		if (&lst->input_splited[i] && tmp != 0)
 		{
 			i += tmp;
-			lst->file_array[j++] = get_filename(&lst->input_splited[i]);
+			if(lst->count_size != 0)
+				lst->file_array[j++] = get_filename(&lst->input_splited[i]);
 		}
 		else
 			i++;
