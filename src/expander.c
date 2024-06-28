@@ -146,7 +146,7 @@ void expander(t_data *data, char *input)
 			passVarDoc(input, &data->i, strExpanded, &data->j);
 		else if (isExitCode(input, &data->i) && !data->sq)
 			expandExitCode(&data->i,data,strExpanded, &data->j);
-		if (isVariable(input, &data->i) && !data->sq)
+		if (isVariable(input, &data->i) && !data->sq && (input[data->i + 1] && ft_isalnum(input[data->i+1])))
 			expandVariable(data, input, &data->i, strExpanded, &data->j, &data->dq);
 		else
 			strExpanded[data->j++] = input[data->i++];
