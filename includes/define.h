@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:51:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 17:06:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/05 00:41:12 by cyprien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ enum {
     EXPORT,
     UNSET,
     ECHO,
+    EXIT
 };
 
 /*     Exit code 1: General errors, such as “divide by zero” and other impermissible operations

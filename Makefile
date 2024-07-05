@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/27 17:58:43 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/07/04 23:23:07 by cyprien          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Werror -Wextra -g3
-# -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined -fsanitize=integer -fsanitize=null -fsanitize=unreachable
+CFLAGS =  -g3
+LDFLAGS = -lreadline -lncurses
 
 LIBFT_MINISHELL_PATH = libft
 LIBFT_MINISHELL = libft/libft.a
@@ -56,12 +56,12 @@ OBJS = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		@echo "$(BOLD)Linking...$(RESET)"
-		@make -sC $(LIBFT_MINISHELL_PATH)
-		@make -sC $(FT_PRINTF_PATH)
-		$(CC) $(CFLAGS) -lreadline $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME)
-		@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"	
-		
+	@echo "$(BOLD)Linking...$(RESET)"
+	@make -sC $(LIBFT_MINISHELL_PATH)
+	@make -sC $(FT_PRINTF_PATH)
+	$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF) $(LIBFT_MINISHELL) -o $(NAME) $(LDFLAGS)
+	@echo "$(GREEN)Executable '$(NAME)' created successfully!$(RESET)"
+
 %.o: %.c
 	@echo "$(BOLD)Compiling $<...$(RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -73,19 +73,19 @@ clean:
 	@make -s clean -C $(LIBFT_MINISHELL_PATH)
 	@make -s clean -C $(FT_PRINTF_PATH)
 	@echo "$(GREEN)Object files cleaned successfully!$(RESET)"
-	
+
 fclean: clean
 	@echo "$(BOLD)Cleaning object files...$(RESET)"
 	@make -s fclean -C $(LIBFT_MINISHELL_PATH)
 	@make -s fclean -C $(FT_PRINTF_PATH)
 	$(RM) $(NAME)
 	@echo "$(GREEN)Executable cleaned successfully!$(RESET)"
-	
+
 leak:
 	valgrind --suppressions=ignore_readline --trace-children=yes    \
-    --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -q  \
-    ./minishell
-	
+		--leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -q  \
+		./minishell
+
 re: fclean all
 
 .PHONY: all clean fclean re

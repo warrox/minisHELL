@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_one.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 15:02:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/04 23:42:38 by cyprien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void case_egal(t_data *data)
     char **split_arg;
     int i = 1;
 
-    print_exec_utils(data);
+    // print_exec_utils(data);
     while (data->tokenizer->cmd_array[i])
     {
         // dprintf(2, "HELLO\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 17:08:07 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/05 00:19:05 by cyprien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,9 @@ int						check_export_cmd(t_data *data);
 void					print_lst_export(t_list_arg *lst);
 int						is_env_var(t_data *data, char **split_key);
 void					create_new_var(t_data *data, char *key, char *value);
-int					cmd_echo(t_data *data);
+int	cmd_echo(t_data *data, t_list_arg *tok);
 int						check_echo_cmd(t_data *data);
-void					print_echo(t_data *data);
+void					print_echo(t_data *data, t_list_arg *tok);
 void	print_echo_flag(t_data *data, int start);
 int ft_exit(t_data *data, char *input);
 int	check_export_nothing(t_data *data);
@@ -303,7 +303,7 @@ void error_is_a_dir_op(t_data *data, t_list_arg *tok);
 void error_permission_denied_op(t_data *data, t_list_arg *tok);
 void	build_tab_env(t_data *data);
 void 	print_env(t_data *data);
-void	exec_builtin(t_data *data, int builtin);
+void	exec_builtin(t_data *data, t_list_arg *tok, int builtin);
 void init_files_builtin(t_data *data, t_list_arg *tok, int i);
 
 /**[SIGNALS]**/
