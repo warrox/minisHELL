@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 13:55:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:02:58 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	error_excve(t_data *data)
 {
 	if (data->tokenizer->cmd_array != NULL)
 		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+	data->exit_status = 126;
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
 	free_prompt(data);
@@ -53,6 +54,7 @@ void	cmd_not_found(t_data *data)
 {
 	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
 		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+	data->exit_status = 127;
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
 	free_prompt(data);

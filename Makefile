@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/06/27 17:58:43 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/07/08 10:58:22 by whamdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ GREY    = \e[38;5;254m
 RESET   = \e[00m
 
 SOURCE = ./src/
-MAIN = main.c parser.c parser_utils.c parser_utils_3.c expander.c parser_utils_2.c
+MAIN = main.c parser.c parser_utils.c parser_utils_3.c expander.c parser_utils_2.c split_env.c
 LST = ./lst/lst_custom.c ./lst/lst_custom_utils.c 
 PROMPT = ./prompt/prompt.c ./prompt/prompt_utils.c
 UTILS = ./utils/print_utils.c ./utils/cleaner.c ./utils/syntax_checker.c ./utils/trans_env.c

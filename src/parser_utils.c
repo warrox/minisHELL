@@ -15,7 +15,8 @@ void	msg_error_handler(int *signal, t_data *data)
 {
 	if (*signal == COMMAND_NOT_FOUND)
 	{
-		data->exit_status = 127;	
+		data->exit_status = 126;
+		ft_printf("EXIT : %d\n",data->exit_status);
 		ft_printf("command not found\n");
 	}
 	if (*signal == SYNTAX_ERROR)

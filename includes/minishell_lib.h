@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 17:58:17 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:52:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ int handle_signs(char *str, int *i);
 int	to_next_q(char *str, char c);
 void	write_part(const char *str, char *result, int size);
 char	**split_tokenizer(t_list_arg *cmd, t_data *data);
+char **split_first_equal(const char *s); 
 /**[EXEC]**/
 
 void	init_exec(t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_custom.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 15:03:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:52:52 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_list_arg	*ft_lst_arg_new(t_list_arg *new, char *content)
 	new->count_size = 0;
 	new->key_and_val = NULL_INIT;
 	new->next = NULL_INIT;
-	new->key_and_val = ft_split(content, '=');
+	new->key_and_val = split_first_equal(content);
 	return (new);
 }
 
