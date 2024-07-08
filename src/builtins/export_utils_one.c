@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_one.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 09:34:46 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/08 14:33:03 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+int	is_valid_name(t_data *data)
+{
+	char	**split_cmd;
+	int	i;
+
+	// print_exec_utils(data);
+	i = ZERO_INIT;
+	split_cmd = NULL;
+	split_cmd = ft_split(data->tokenizer->cmd_array[1], '=');
+	if (!split_cmd)
+		return (-1);
+	if (split_cmd[0] && (split_cmd[0][i] == '_' || ft_isalpha(split_cmd[0][i])))
+	{
+		i++;
+		while (ft_isalpha(split_cmd[0][i]) || ft_isalnum(split_cmd[0][i]) || split_cmd[0][i] == '_')
+			i++;
+		if (split_cmd[0][i] != '\0')
+		{
+			printf("not an identifier: %s\n", split_cmd[0]);
+			free_split(split_cmd);
+			return(0);
+		}
+		else
+		{
+			free_split(split_cmd);
+			return (1);
+		}
+	}
+	printf("not an identifier: %s\n", split_cmd[0]);
+	free_split(split_cmd);
+	return (0);
+}
 
 int	check_export_nothing(t_data *data)
 {

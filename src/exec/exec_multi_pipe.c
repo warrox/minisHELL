@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multi_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 15:03:16 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/05 00:21:26 by cyprien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	children_process(t_data *data)
 		{
 			init_files_builtin(data, tmp, i);
 			setup_pipes(data, tmp);
-			exec_builtin(data, is_a_builtin(tmp));
+			exec_builtin(data, tmp, is_a_builtin(tmp));
 			if (data->exec->outfile != 1)
 				close(data->exec->outfile);
 			if (data->exec->infile != 0)

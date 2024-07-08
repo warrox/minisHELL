@@ -6,11 +6,17 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 16:07:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:05:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void	reset_in_out(t_data *data)
+{
+	data->exec->infile = 0;
+	data->exec->outfile = 1;
+}
 
 int	nb_node(t_data *data)
 {
@@ -50,36 +56,36 @@ void	init_struct_exec(t_data *data)
 	data->exec->index = -1;
 }
 
-void	exec_single_cmd(t_data *data)
+void  exec_single_cmd(t_data *data)
 {
-	handle_signal_children();
-	init_tmp_struct(data);
-	check_here_doc(data);
-	if (is_a_builtin(data->tokenizer) == -1 || is_a_builtin(data->tokenizer) == -2)
-	{
-		data->exec->pid_1 = fork();
-		if (data->exec->pid_1 == -1)
-			return;
-		if (data->exec->pid_1 == 0)
-			exec_sub_proc(data);
-		else
-			waitpid(data->exec->pid_1, NULL, 0);
-	}
-	else
-	{
-	// 	builtin->stdin_save = dup(STDIN_FILENO);
-    // 	builtin->stdout_save = dup(STDOUT_FILENO);
-		exec_sub_proc(data);
-		free_tmp_struct(data);
-	}
+    handle_signal_children();
+    init_tmp_struct(data);
+    check_here_doc(data);
+    if (is_a_builtin(data->tokenizer) == -1 || is_a_builtin(data->tokenizer) == -2)
+    {
+        data->exec->pid_1 = fork();
+        if (data->exec->pid_1 == -1)
+            return;
+        if (data->exec->pid_1 == 0)
+            exec_sub_proc(data);
+        else
+        {
+            int status;
+            waitpid(data->exec->pid_1, &status, 0);
+            data->exit_status = WEXITSTATUS(status);
+        }
+    }
+    else
+    {
+        exec_sub_proc(data);
+        free_tmp_struct(data);
+    }
 }
 
-void	init_exec(t_data *data)
+int	init_exec(t_data *data)
 {
 	int	i;
 	i = ZERO_INIT;
-	if(data->tokenizer->final_cmd == NULL)
-		return;
 	init_struct_exec(data);
 	build_tab_env(data);
 	data->exec->path = get_path(data);
@@ -90,4 +96,5 @@ void	init_exec(t_data *data)
 		exec_one_pipe(data);
 	else
 		exec_multi_pipe(data);
-}
+	return (WEXITSTATUS(data->exit_status));
+}	

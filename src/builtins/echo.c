@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 14:15:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/05 00:27:34 by cyprien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,20 @@ void print_echo_flag(t_data *data, int start)
     // write(data->exec->outfile, "\n", 1);
 }
 
-void	print_echo(t_data *data)
+void	print_echo(t_data *data, t_list_arg *tok)
 {
 	int i = 1;
 	int flag = 0;
-	while(data->tokenizer->cmd_array[flag + 1]){
+    // dprintf(2, "ICI %d\n", data->exec->outfile);
+    // dprintf(2, "ICI %s\n", tok->cmd_array[i]);
+	while(tok->cmd_array[flag + 1]){
 		// printf("%s",data->tokenizer->cmd_array[i]);
 		flag++;	
 	}
-	while(data->tokenizer->cmd_array[i])
+	while(tok->cmd_array[i])
 	{
 		flag--;
-		write(data->exec->outfile, data->tokenizer->cmd_array[i], ft_strlen(data->tokenizer->cmd_array[i]));
+		write(data->exec->outfile, tok->cmd_array[i], ft_strlen(tok->cmd_array[i]));
 		if (flag > 0)
 		{
 			write(data->exec->outfile, " ", 1);		
@@ -102,26 +104,21 @@ int	check_echo_cmd(t_data *data)
 	return (0);
 }
 
-int	cmd_echo(t_data *data)
+int	cmd_echo(t_data *data, t_list_arg *tok)
 {
-	if (data->tokenizer->cmd_array[0] == NULL)
-		return (0);
-	if (ft_strstr(data->tokenizer->final_cmd, "echo"))
+	if (check_echo_cmd(data))
+		return (1);
+	if (check_flag(data))
 	{
-		if (check_echo_cmd(data))
-			return (1);
-		if (check_flag(data))
-		{
-			// dprintf(2, "TEST %s\n", data->tokenizer->cmd_array[]);
-			// dprintf(2, "%d\n", check_flag(data));
-			print_echo_flag(data, check_flag(data));
-			return (1);
-		}
-		if (!check_flag(data))
-		{
-			print_echo(data);
-			return (1);
-		}
+		// dprintf(2, "TEST %s\n", data->tokenizer->cmd_array[]);
+		// dprintf(2, "%d\n", check_flag(data));
+		print_echo_flag(data, check_flag(data));
+		return (1);
+	}
+	if (!check_flag(data))
+	{
+		print_echo(data, tok);
+		return (1);
 	}
 	return (0);
 }
