@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/24 10:34:18 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/08 15:00:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	print_exec_utils(t_data *data)
 		{
 			if(tmp->count_size > 0)
 			{
+				dprintf(2, "ICI\n");
 				printf("---------------REDIRECTION ARRAY on node [%d]----------------\n",j);
 				i = 0;
 				while (i < tmp->count_size)

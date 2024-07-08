@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:28:47 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/05 00:42:57 by cyprien          ###   ########.fr       */
+/*   Updated: 2024/07/08 15:17:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	exec_builtin(t_data *data, t_list_arg *tok, int builtin)
 {	
+	//dprintf(2, "INT BLT = %d\n", builtin);
 	if (builtin == ENV)
 		cmd_env(data);
 	else if (builtin == PWD)
@@ -24,7 +25,10 @@ void	exec_builtin(t_data *data, t_list_arg *tok, int builtin)
 	else if (builtin == UNSET)
 		cmd_unset(data);
 	else if (builtin == ECHO)
+	{
+		//dprintf(2, "TESTS\n");
 		cmd_echo(data, tok);
+	}
 	else if (builtin == CD)
 		ft_current_directory(data->tokenizer->cmd_array[1], data);
 	else if (builtin == EXIT)
@@ -33,7 +37,7 @@ void	exec_builtin(t_data *data, t_list_arg *tok, int builtin)
 
 int	is_a_builtin(t_list_arg *tok)
 {
-	//dprintf(2, "ICI %s\n", data->tokenizer->cmd_array[0]);
+	//dprintf(2, "ICI %s\n", tok->cmd_array[0]);
 	if(tok->cmd_array[0] == NULL)
 		return(-2);
 	if (ft_strncmp(tok->cmd_array[0], "env", 4) == 0)
@@ -45,7 +49,10 @@ int	is_a_builtin(t_list_arg *tok)
 	else if (ft_strncmp(tok->cmd_array[0], "unset", 5) == 0)
 		return (UNSET);
 	else if (ft_strncmp(tok->cmd_array[0], "echo", 5) == 0)
+	{
+		//dprintf(2, "OUIII\n");
 		return (ECHO);
+	}
 	else if (ft_strncmp(tok->cmd_array[0], "cd", 3) == 0)
 		return (CD);
 	else if (ft_strncmp(tok->cmd_array[0], "exit", 5) == 0)

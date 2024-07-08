@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:33:03 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:45:11 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_valid_name(t_data *data)
 {
+	char	*join_1;
+	char	*final_join;
 	char	**split_cmd;
 	int	i;
 
@@ -23,6 +25,11 @@ int	is_valid_name(t_data *data)
 	split_cmd = ft_split(data->tokenizer->cmd_array[1], '=');
 	if (!split_cmd)
 		return (-1);
+	if (split_cmd[0] == NULL)
+	{
+		ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
+		return (0);
+	} 
 	if (split_cmd[0] && (split_cmd[0][i] == '_' || ft_isalpha(split_cmd[0][i])))
 	{
 		i++;
@@ -30,7 +37,11 @@ int	is_valid_name(t_data *data)
 			i++;
 		if (split_cmd[0][i] != '\0')
 		{
-			printf("not an identifier: %s\n", split_cmd[0]);
+			join_1 = ft_strjoin("bash: export: ", split_cmd[0]);
+			final_join = ft_strjoin(join_1, ": not a valid identifier\n");
+			ft_putstr_fd(final_join, STDERR_FILENO);
+			free(join_1);
+			free(final_join);
 			free_split(split_cmd);
 			return(0);
 		}
@@ -40,7 +51,7 @@ int	is_valid_name(t_data *data)
 			return (1);
 		}
 	}
-	printf("not an identifier: %s\n", split_cmd[0]);
+	ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 	free_split(split_cmd);
 	return (0);
 }

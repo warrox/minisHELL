@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/05 00:27:34 by cyprien          ###   ########.fr       */
+/*   Updated: 2024/07/08 15:02:19 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	check_echo_cmd(t_data *data)
 
 int	cmd_echo(t_data *data, t_list_arg *tok)
 {
+   // dprintf(2, "TESTS\n");
 	if (check_echo_cmd(data))
 		return (1);
 	if (check_flag(data))

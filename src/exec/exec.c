@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:05:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:41:31 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->final_cmd = NULL_INIT;
 	data->exec->nb_tube = ZERO_INIT;
 	data->exec->index = -1;
+	data->exit_status = 0;
 }
 
 void  exec_single_cmd(t_data *data)
@@ -77,7 +78,8 @@ void  exec_single_cmd(t_data *data)
     }
     else
     {
-        exec_sub_proc(data);
+        // data->exit_status = 1;
+		exec_sub_proc(data);
         free_tmp_struct(data);
     }
 }

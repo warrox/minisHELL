@@ -79,8 +79,14 @@ int ft_current_directory(char *path,t_data *data)
 	t_list_arg *tmp;
 	
 	tmp = data->lst;
-	init_tool_box(&tool_box);	
-	if (ft_strstr(data->tokenizer->final_cmd, "cd") || (ft_strstr(data->tokenizer->final_cmd, "cd") && (data->tokenizer->final_cmd[2] == ' ' && data->tokenizer->final_cmd[3] == '\0')))
+	init_tool_box(&tool_box);
+	if(data->tokenizer->cmd_array[2])
+	{
+		ft_putstr_fd(" too many arguments\n",STDERR_FILENO);
+		data->exit_status = 1;
+		return(1);
+	}	
+	if (ft_strstr(data->tokenizer->cmd_array[0], "cd") || (ft_strstr(data->tokenizer->cmd_array[0], "cd") && (data->tokenizer->cmd_array[0][2] == ' ' && data->tokenizer->cmd_array[0][3] == '\0')))
 	{		
 		tool_box.j = iterate_in_str(data->tokenizer->final_cmd);
 		if(data->tokenizer->final_cmd[tool_box.i + 2] == '\0' || data->tokenizer->final_cmd[tool_box.j] == '\0')
@@ -92,7 +98,8 @@ int ft_current_directory(char *path,t_data *data)
 			return (1);
 		if(chdir(path)== -1)
 		{
-			ft_printf("no such file or directory: %s\n",path);
+			ft_putstr_fd(" No such file or directory\n", STDERR_FILENO);
+			data->exit_status = 1;
 			return (1);
 		}
 		getcwd(tool_box.buffer_old, 4096);

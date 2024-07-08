@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:01:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:26:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	cmd_export(t_data *data)
 {
 	if (is_valid_name(data) != 1)
 	{
-		return (1);
+		return (data->exit_status = 1);
 	}
 	if (check_export_cmd(data))
 	{

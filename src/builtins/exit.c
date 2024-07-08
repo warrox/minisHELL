@@ -8,6 +8,7 @@ long	ft_atoi_long(const char *str)
 	i = 0;
 	count = 0;
 	sign = 1;
+	//dprintf(2, "TESTS : %s\n", str);
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32 || str[i] == 34
 		|| str[i] == 39 || str[i] == '-' || str[i] == '+')
 	{
@@ -29,11 +30,28 @@ int ft_exit(t_data *data, char *input)
 	char str[4096];
 	char s_nbr[4096];
 	int nbr;
+	char *nbr_char;
+	int neg = 1;
+	int	quote = 0;
+	char **tmp = data->tokenizer->cmd_array;
 
+	ft_bzero(s_nbr,4096);
 	nbr = 0;
+	int count = 0;
+	while (tmp[i])
+	{
+		count++;
+		i++;
+	}
+	i = 0;
+	if (count > 2)
+	{
+		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
+		data->exit_status = 1;
+		exit (data->exit_status);
+	}
 	if (ft_strncmp(input, "exit", 4) == 0)
 	{
-		
 		while(ft_isprint(input[i]))
 			i++;
 		if(ft_strlen(input) > 4)
@@ -43,6 +61,23 @@ int ft_exit(t_data *data, char *input)
 			while(input[j] && !ft_isws(input[j]))
 				j++;
 			j++;
+			if(input[j] == '+' || input[j] == '-')
+			{
+				if (input[j] == '-')
+					neg = - neg;
+				j++;
+			}
+			if (input[j] == '"')
+			{
+				quote = 1;
+				j++;
+			}
+			if(input[j] == '+' || input[j] == '-')
+			{
+				if (input[j] == '-')
+					neg = - neg;
+				j++;
+			}
 			while(input[j] && ft_isdigit(input[j]))
 			{
 				s_nbr[i] = input[j]; // copie les char digit dans s_nbr		
@@ -50,16 +85,43 @@ int ft_exit(t_data *data, char *input)
 				j++;
 			}
 			s_nbr[j] = '\0';
+			//dprintf (2, "input = %s || s_nbr = %s\n", input, s_nbr);
 			nbr = ft_atoi_long(s_nbr); //convertit le code d'erreur en int
+			if (neg == -1)
+				nbr = -nbr;
+			nbr_char = ft_itoa((int)nbr);
+			//dprintf(2, "cmd_array = %s || nbr_char = %s || s_nbr = %s\n", data->tokenizer->cmd_array[1], nbr_char, s_nbr);
+			if (neg == -1)
+			{
+				if (ft_strncmp(data->tokenizer->cmd_array[1], nbr_char, ft_strlen(data->tokenizer->cmd_array[1])) != 0)
+				{
+					//dprintf(2, "nbr = %d\n", nbr);
+					//dprintf(2, "SALOPE\n");
+					data->exit_status = nbr % 256;
+					exit(EXIT_FAILURE);
+				}
+			}
+			else
+			{
+				if (ft_strncmp(s_nbr, nbr_char, ft_strlen(s_nbr)) != 0)
+				{
+					//dprintf(2, "nbr = %d\n", nbr);
+					//dprintf(2, "SALOPE\n");
+					data->exit_status = nbr % 256;
+					exit(EXIT_FAILURE);
+				}
+			}
 			if(input[j] == '\0')
 			{
-				if(nbr > 2147483646 || nbr < -214730)
+				if(nbr > 2147483647 || nbr < -2147483648)
 				{
-					ft_printf("bash: exit: %d: numeric argument required",nbr);
-					data->exit_status = 2;
+					// ft_printf("TES^T: %s: numeric argument required",nbr_char);
+					// ft_printf("bash: exit: %d: numeric argument required",nbr);
+					data->exit_status = nbr;
 					return(2);
 				}
-				return(nbr % 255); // renvoie le int du code erreur
+				data->exit_status = nbr % 256;
+				exit(data->exit_status); // renvoie le int du code erreur
 			}
 			while(input[i] != '\0')// && !ft_isalnum(input[i]))
 			{
@@ -67,17 +129,26 @@ int ft_exit(t_data *data, char *input)
 				i++;
 			}
 			str[i] = '\0';
-			ft_printf("minishell: %s: numeric argument required\n",str);
-			data->exit_status = 2;
+			if (quote)
+			{
+				data->exit_status = nbr % 256;
+				exit (data->exit_status);
+			}
+			else
+			{
+				ft_putstr_fd(" numeric argument required\n", STDERR_FILENO);
+				data->exit_status = 2;
+				exit (data->exit_status);
+			}
 		}
 		else if(input[i] == '\0')
 		{
 			free_prompt(data);
 			ft_clear_tokenizer(data);
 			free(data->signal);
-			if (input)
-				free(input);
-			return(0);
+			// if (input)
+			// 	free(input);
+			exit(0);
 		}
 	}
 return(256);

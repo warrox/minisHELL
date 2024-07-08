@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 15:04:34 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:52:26 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ int	display_prompt(t_data *data)
 		}
 		if(skip_ws_prompt(data, input))
 			continue;
-		int_nbr = ft_exit(data, input);
-		if(int_nbr >= 0 && int_nbr <= 255)
-			return(int_nbr);
 		input_cpy = parser(input, data);
+		// int_nbr = ft_exit(data, input);
+		// if(int_nbr >= 0 && int_nbr <= 255)
+		// 	return(int_nbr);
+		// print_exec_utils(data);
 		init_exec(data);
-		if (data->tokenizer->final_cmd != NULL)
+		if (input != NULL)
 			free_exec(data);
 		ft_clear_tokenizer(data);
 		add_history(input);

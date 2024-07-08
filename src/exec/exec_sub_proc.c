@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_sub_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/05 00:33:29 by cyprien          ###   ########.fr       */
+/*   Updated: 2024/07/08 15:26:11 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i)
     }
     else if (tok->array_sign[i] == STDINS)
     {
+		dprintf(2, "FILE_ARRAY: %s\n", tok->file_array[i]);
         data->exec->infile = open(tok->file_array[i], O_RDONLY);
         if (data->exec->infile < 0)
             file_not_found(data, tok);
@@ -246,8 +247,9 @@ void	 exec_sub_proc(t_data *data)
 	i = ZERO_INIT;
 	//reset_in_out(data);
 	if (is_a_builtin(data->tokenizer) != -1 && is_a_builtin(data->tokenizer) != -2) 
-	{
+	{	
 		init_files_builtin(data, data->tokenizer, i);
+		//dprintf(2, "ENTER\n");
 		exec_builtin(data, data->tokenizer, is_a_builtin(data->tokenizer));
 		if (data->exec->outfile != 1)
 			close(data->exec->outfile);
