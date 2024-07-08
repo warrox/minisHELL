@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 17:28:03 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:05:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->index = -1;
 }
 
-void exec_single_cmd(t_data *data)
+void  exec_single_cmd(t_data *data)
 {
     handle_signal_children();
     init_tmp_struct(data);

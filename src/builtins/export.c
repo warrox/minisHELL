@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 14:19:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:01:59 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,26 @@ void	print_lst_export(t_list_arg *lst)
 
 int	cmd_export(t_data *data)
 {
-	if (ft_strstr(data->tokenizer->final_cmd, "export"))
+	if (is_valid_name(data) != 1)
 	{
-		if (check_export_cmd(data))
-			return (1);
-		if (check_plus_egal(data))
-		{
-			case_plus_egal(data);
-			return (1);
-		}
-		if (check_egals(data))
-		{
-			case_egal(data);
-			return (1);
-		}
-		if (check_export_nothing(data))
-			return (1);
+		return (1);
 	}
+	if (check_export_cmd(data))
+	{
+		//dprintf(2, "ICI\n");
+		return (1);
+	}
+	if (check_plus_egal(data))
+	{
+		case_plus_egal(data);
+		return (1);
+	}
+	if (check_egals(data))
+	{
+		case_egal(data);
+		return (1);
+	}
+	if (check_export_nothing(data))
+		return (1);
 	return (0);
 }

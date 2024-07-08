@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/05 00:19:05 by cyprien          ###   ########.fr       */
+/*   Updated: 2024/07/08 12:16:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void					case_egal(t_data *data);
 int					cmd_env(t_data *data);
 int					pwd_cmd(t_data *data);
 int					cmd_export(t_data *data);
+int	is_valid_name(t_data *data);
 void					case_plus_egal(t_data *data);
 void					set_value(t_data *data, char **split_arg);
 int						check_plus_egal(t_data *data);
