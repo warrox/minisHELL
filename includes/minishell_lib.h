@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 11:05:44 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/09 11:22:30 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,12 @@ void	write_part(const char *str, char *result, int size);
 char	**split_tokenizer(t_list_arg *cmd, t_data *data);
 char **split_first_equal(const char *s);
 void	*free_tab_clean(char *split[]);
+bool isExitCode(char *input, int *i);
+bool isSingleQuote(char c);
+bool isVariable(char *input, int *i);
+char *passTilNextQuote(char *input, int *i, char *buffer, int *j);
+bool isHereDoc(char *input, int *i);
+
 /**[EXEC]**/
 
 int	init_exec(t_data *data);
