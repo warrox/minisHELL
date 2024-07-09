@@ -1,13 +1,16 @@
-#include "../../includes/minishell_lib.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_checker.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/09 11:05:58 by whamdi            #+#    #+#             */
+/*   Updated: 2024/07/09 11:07:51 by whamdi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void init_check_quote(int *i, int *first_enter, int *flag_s, int *flag_d, int *signal)
-{
-    (*i) = 0;
-    (*flag_s) = 0;
-    (*flag_d) = 0;
-    (*first_enter) = 0;
-    (*signal) = 0;
-}
+#include "../../includes/minishell_lib.h"
 
 int is_single_quote(char c)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 07:12:46 by bvan-pae         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:05:44 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void init_tool_box(t_cd *tool_box);
 t_list_arg *find_key_user(t_data *data);
 t_list_arg *find_key_old_pwd(t_data *data);
 t_list_arg *find_key_pwd(t_data *data);
+void init_check_quote(int *i, int *first_enter, int *flag_s, int *flag_d, int *signal);
 /**[PROMPT FUNCTIONS]**/
 
 int						display_prompt(t_data *data);
