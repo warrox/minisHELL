@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 15:26:11 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:31:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 void init_files_builtin(t_data *data, t_list_arg *tok, int i)
 {
-    if (tok->array_sign[i] == STDOUTS)
-    {
-        data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
-        if (data->exec->outfile < 0)
-            file_not_found(data, tok);
+	//dprintf(2, "HERE %s\n", tok->file_array[i]);
+	if (tok->file_array[0] == NULL)
+		return;
+	if (tok->array_sign[i] == STDOUTS)
+	{
+		data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
+		if (data->exec->outfile < 0)
+			file_not_found(data, tok);
 		// printf("Opened outfile for builtin: %s\n", tok->file_array[i]);
-    }
-    else if (tok->array_sign[i] == STDINS)
-    {
+	}
+	else if (tok->array_sign[i] == STDINS)		
+	{
 		dprintf(2, "FILE_ARRAY: %s\n", tok->file_array[i]);
-        data->exec->infile = open(tok->file_array[i], O_RDONLY);
-        if (data->exec->infile < 0)
-            file_not_found(data, tok);
+		data->exec->infile = open(tok->file_array[i], O_RDONLY);
+		if (data->exec->infile < 0)
+			file_not_found(data, tok);
 		// printf("Opened infile for builtin: %s\n", tok->file_array[i]);
-    }
+	}
 	else if (tok->array_sign[i] == APPEND)
 	{
 		data->exec->outfile = open(tok->file_array[i], O_APPEND | O_CREAT | O_WRONLY, 0644);
@@ -40,6 +43,8 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i)
 
 void init_files(t_data *data, t_list_arg *tok, int i)
 {
+	if (tok->file_array[0] == NULL)
+		return;
     if (tok->array_sign[i] == STDOUTS)
     {
         data->exec->outfile = open(tok->file_array[i], O_TRUNC | O_CREAT | O_WRONLY, 0644);
@@ -236,6 +241,7 @@ void	exec_one_pipe(t_data *data)
 		second_child_process(data);
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
+	data->exit_status = WEXITSTATUS(status);
 	waitpid(data->exec->pid_1, &status, 0);
 	waitpid(data->exec->pid_2, &status, 0);
 }
@@ -257,6 +263,8 @@ void	 exec_sub_proc(t_data *data)
 			close (data->exec->infile);
 		return ;
 	}
+	// if (ft_strncmp(data->tokenizer->cmd_array[0], "./", 2) == 0)
+	
 	data->exec->cmd = build_cmd(data, data->tokenizer);
 	if (data->exec->cmd == NULL)
 	{
