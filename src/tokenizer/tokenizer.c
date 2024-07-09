@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 17:11:14 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/09 07:13:13 by bvan-pae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ int	parse_cmd_arg(t_data *data)
 		// 	tmp->tmp_cmd_array[0] = ft_strdup(tmp->final_cmd);
 		// 	tmp->tmp_cmd_array[1] = NULL;
 		// }
+		free_tab_clean(tmp->tmp_cmd_array);
 		tmp = tmp->next;
 	}
 	return(0);

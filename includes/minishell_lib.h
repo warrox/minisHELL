@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 14:32:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/09 07:12:46 by bvan-pae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,8 @@ int handle_signs(char *str, int *i);
 int	to_next_q(char *str, char c);
 void	write_part(const char *str, char *result, int size);
 char	**split_tokenizer(t_list_arg *cmd, t_data *data);
-char **split_first_equal(const char *s); 
+char **split_first_equal(const char *s);
+void	*free_tab_clean(char *split[]);
 /**[EXEC]**/
 
 int	init_exec(t_data *data);
