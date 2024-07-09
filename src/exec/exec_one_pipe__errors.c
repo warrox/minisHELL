@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 14:54:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:04:37 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void error_permission_denied_op(t_data *data, t_list_arg *tok)
 	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
 	write(2, ": Permission denied\n", 20);
+	data->exit_status = 1;
 	cleanup_and_exit_op(data, 1);
 }
 

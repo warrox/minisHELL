@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 13:50:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:51:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	file_not_found_multi(t_data *data, t_list_arg *tok)
 	free_prompt(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);
-	exit(1);
+	return;
 }
 
 void	error_execve_multi(t_data *data, t_list_arg *tok)

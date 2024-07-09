@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 16:51:48 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:05:11 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void cleanup_and_exit_single(t_data *data, int exit_code)
 	// close_tubes(data);
 	data->exit_status = exit_code;
 	free_resources_single(data);
-	exit(data->exit_status);
+	exit(exit_code);
 }
 void error_cmd_single(t_data *data, t_list_arg *tok)
 {
