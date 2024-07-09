@@ -6,10 +6,9 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 17:06:17 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/09 15:32:58 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell_lib.h"
 #include <stdio.h>
@@ -38,18 +37,20 @@ t_list_arg	*init_tokenizer(void)
 	tokenizer->input_splited = NULL_INIT;
 	return (tokenizer);
 }
+
 char	*parser(char *input, t_data *data)
 {
 	char	*result;
+
 	if (*input == '\0')
 		return (input);
 	result = NULL;
-	if(syntax_checker(input, data) == -1)
-		return(NULL);
-	expander(data, input);
-	if(cutting_input(data, data->tokenizer->final_cmd) == -1)
+	if (syntax_checker(input, data) == -1)
 		return (NULL);
-	if(parse_cmd_arg(data) == -1)
+	expander(data, input);
+	if (cutting_input(data, data->tokenizer->final_cmd) == -1)
+		return (NULL);
+	if (parse_cmd_arg(data) == -1)
 		return (NULL);
 	return (input);
 }

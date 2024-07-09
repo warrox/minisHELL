@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 11:22:30 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/09 16:11:47 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,10 @@ bool isSingleQuote(char c);
 bool isVariable(char *input, int *i);
 char *passTilNextQuote(char *input, int *i, char *buffer, int *j);
 bool isHereDoc(char *input, int *i);
-
+int triple_sign_checker(char *str, t_data *data);
+void fill_array_sign(t_data *data, char *str, t_list_arg *tmp);
+int	sort_sign(t_list_arg *tmp, t_data *data);
+int	get_word_size(char *str);
 /**[EXEC]**/
 
 int	init_exec(t_data *data);
