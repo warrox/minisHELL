@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multi_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyprien <cyprien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/05 00:21:26 by cyprien          ###   ########.fr       */
+/*   Updated: 2024/07/09 16:11:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,9 @@ void	children_process(t_data *data)
 void	exec_multi_pipe(t_data *data)
 {
 	int	i;
-	int status = 0;
-
+	// int status = 0;
+	int status;
+	
 	i = ZERO_INIT;
 	data->exec->nb_node = nb_node(data);
 	data->exec->nb_tube = (data->exec->nb_node - 1) * 2;
@@ -181,6 +182,7 @@ void	exec_multi_pipe(t_data *data)
 	int j = 0;
 	while (j < data->exec->nb_node)
 		waitpid(data->exec->pid[j++], &status, 0);
+	data->exit_status = WEXITSTATUS(status);
 	free(data->exec->multi_tube);
 	free(data->exec->pid);
 }

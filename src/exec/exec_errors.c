@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/28 17:02:58 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/09 16:54:45 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,13 @@ void	cmd_not_found(t_data *data)
 
 void	file_not_found(t_data *data, t_list_arg *tok)
 {
+	char *join = NULL;
+	
 	if (tok->file_array[0] != NULL)
-		write(2, tok->file_array[0], ft_strlen(tok->file_array[0]));
-	write(2, ": No such file or directory\n", 29);
+		join = ft_strjoin(tok->file_array[0], ": No such file or directory\n");
+	if (!join)
+		return;
+	ft_putstr_fd(join, STDERR_FILENO);
 	free(data->exec->cmd);
 	ft_clear_tokenizer(data);
 	close(data->exec->tube[1]);
