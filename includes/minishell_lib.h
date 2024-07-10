@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 12:42:52 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 13:42:17 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,8 +251,6 @@ void expander(t_data *data, char *input);
 char	*expansion(char *input, t_data *data);
 int	get_word_size(char *str);
 char *flush_redir(char *str, t_data *data); 
-void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
-void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
 char **split_pipe_cust(char *input, char c);
 int skip_ws_prompt(t_data *data, char *input);
 int syntax_checker(char *input, t_data *data);
@@ -262,8 +260,8 @@ bool is_single_quote(char c);
 bool is_double_quote(char c);
 bool if_pipe(char c);
 int pipe_alone(char *input, int i);
- void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
- void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);
+void handle_double_quotes_flush(char *str, char *buffer,t_data *data);
+void handle_single_quotes_flush(char *str, char *buffer,t_data *data); 
 int handle_signs(char *str, int *i);
 int	to_next_q(char *str, char c);
 void	write_part(const char *str, char *result, int size);
@@ -282,6 +280,7 @@ int	get_word_size(char *str);
 void free_cleaned_array(char **array);
 void free_cleaned_str(char *str);
 void init_quote(t_quote *tool_box, char *str);
+void handle_single_quotes_t(char *str,t_data *data); 
 /**[EXEC]**/
 
 int	init_exec(t_data *data);

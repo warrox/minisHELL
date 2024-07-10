@@ -6,35 +6,52 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:09:52 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/09 16:12:02 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 13:28:05 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
+void	handle_double_quotes_t(char *str, t_data *data)
+{
+	data->pansement = 0;
+	data->pansement_2 = 0;
+	data->i++;
+	while (str[data->i] && str[data->i] != '\"')
+	{
+		data->i++;
+	}
+	if (str[data->i] == '\"')
+	{
+		data->pansement = 1;
+		data->pansement_2 = 1;
+		data->i++;
+	}
+}
+
 int	triple_sign_checker(char *str, t_data *data)
 {
-	int	i;
 	int	j;
 
-	i = 0;
+	data->i = 0;
 	j = 0;
-	handle_double_quotes_flush(str, NULL, &j, 0, data, 0);
+	handle_double_quotes_t(str, data);
 	j = 0;
 	if (data->pansement == 0)
-		handle_single_quotes_flush(str, NULL, &j, 0, data, 0);
+		handle_single_quotes_t(str, data);
 	if (data->pansement == 1)
 		return (-2);
-	while (str[i])
+	while (str[data->i])
 	{
-		if (ft_strncmp(&str[i], "<<<", 3) == 0 || ft_strncmp(&str[i], "<<>",
-				3) == 0 || ft_strncmp(&str[i], ">>>", 3) == 0
-			|| ft_strncmp(&str[i], ">><", 3) == 0)
+		if (ft_strncmp(&str[data->i], "<<<", 3) == 0
+			|| ft_strncmp(&str[data->i], "<<>", 3) == 0
+			|| ft_strncmp(&str[data->i], ">>>", 3) == 0
+			|| ft_strncmp(&str[data->i], ">><", 3) == 0)
 		{
 			ft_printf("minishell: syntax error near unexpected token\n");
 			return (-1);
 		}
-		i++;
+		data->i++;
 	}
 	return (0);
 }
