@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 09:40:11 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 10:39:23 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,14 @@ typedef struct s_quote
 	int i;
 	int j;
 }t_quote;
+typedef struct s_tool
+{
+	int	i;
+	int	j;
+	int	tmp;
+	int ii;
+
+}t_tool;
 
 typedef int (*builtin_ptr)(t_data *);
 
@@ -230,7 +238,7 @@ t_list_arg				*ft_lst_cut_new(char *content);
 void					ft_lstadd_cut_back(t_list_arg **lst,
 							t_list_arg *new_node);
 int						ft_isws(char c);
-char					*get_filename(char *str);
+char					*get_filename(char *str, t_tool *tool);
 void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);

@@ -1,37 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_util_1.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/10 10:11:44 by whamdi            #+#    #+#             */
+/*   Updated: 2024/07/10 10:40:24 by whamdi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell_lib.h"
-#include <stdio.h>
 
 int	ft_isws(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-char	*get_filename(char *str)
+char	*get_filename(char *str, t_tool *tool)
 {
-	int		i;
 	int		start;
 	int		end;
 	char	*new;
 	int		dq;
 
-	i = 0;
+	tool->ii = 0;
 	end = 0;
 	dq = 0;
-	// printf("STR : %s\n", str);
-	while (str[i] && ft_isws(str[i]))
-		i++;
-	start = i;
+	while (str[tool->ii] && ft_isws(str[tool->ii]))
+		tool->ii++;
+	start = tool->ii;
 	if (str[start] == '\"' || str[start] == '\'')
 	{
 		start++;
 		dq = !dq;
 	}
-	end = i;
+	end = tool->ii;
 	while (str[end] && (!ft_isws(str[end]) || (dq && !isDoubleQuote(str[end]))))
-	{
-		// printf("end = %s\n", &str[end]);
 		end++;
-	}
 	if (end == start)
 		NULL;
 	if (str[end - 1] == '\"' || str[end - 1] == '\'')
@@ -40,37 +46,39 @@ char	*get_filename(char *str)
 	return (new);
 }
 
-void	create_signed(t_list_arg *lst)
+void	init_tool(t_tool *tool, t_list_arg *lst)
 {
-	int	i;
-	int	j;
-	int	tmp;
-
-	i = 0;
-	j = 0;
-	tmp = 0;
+	tool->i = 0;
+	tool->j = 0;
+	tool->tmp = 0;
 	lst->file_array = NULL;
+}
+
+void	create_signed(t_list_arg *lst)
+{	
+	t_tool	tool;
+
+	init_tool(&tool, lst);
 	lst->file_array = ft_calloc(lst->count_size + 1, sizeof(char *));
-	// printf("count_size = %d\n", lst->count_size);
-	while (lst->input_splited[i])
+	while (lst->input_splited[tool.i])
 	{
-		tmp = sign_cmp(&lst->input_splited[i]);
-		if (i > 1)
+		tool.tmp = sign_cmp(&lst->input_splited[tool.i]);
+		if (tool.i > 1)
 		{
-			if (lst->input_splited[i - 1] == '\'')
-				tmp = 0;
+			if (lst->input_splited[tool.i - 1] == '\'')
+				tool.tmp = 0;
 		}
-		if (&lst->input_splited[i] && tmp != 0)
+		if (&lst->input_splited[tool.i] && tool.tmp != 0)
 		{
-			i += tmp;
+			tool.i += tool.tmp;
 			if (lst->count_size != 0)
 			{
-				// printf("ICI\n");
-				lst->file_array[j++] = get_filename(&lst->input_splited[i]);
+				lst->file_array[tool.j++] = get_filename
+					(&lst->input_splited[tool.i], &tool);
 				lst->count_size--;
 			}
 		}
 		else
-			i++;
+			tool.i++;
 	}
 }
