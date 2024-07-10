@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:47:07 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 17:55:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:27:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void cleanup_and_exit(t_data *data, int exit_code)
 
 void free_resources(t_data *data)
 {
+	rm_tmp_file(data);
 	free(data->exec->multi_tube);
 	free(data->exec->pid);
 	free_tmp_struct(data);

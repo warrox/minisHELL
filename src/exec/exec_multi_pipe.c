@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 16:11:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:11:53 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ void	intermediate_pipe(t_data *data, t_list_arg *tok)
 {
 	int	i;
 
-	i = 0; 
+	i = 0;
 	if (is_redir(tok))
 	{
-		while(tok->array_sign[i] != 0)
+		while(tok->file_array[i])
 			init_files_multi(data, tok, i++);
 	}
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
 		hd_or_rdr_no_cmd_multi(data);
 	if (data->exec->infile != 0)
 	{
+		// dprintf(2, "tok -> %s\n", tok->cmd_array[0]);
 		dup2(data->exec->infile, STDIN_FILENO);
 		close(data->exec->infile);
 	}
@@ -107,8 +108,10 @@ void	children_process(t_data *data)
 {
 	int i;
 	t_list_arg *tmp = data->tokenizer;
-
+	t_tmp_files *tempo = data->tmp_files;
+	
 	i = 0;
+	//handle_signal_children();
 	check_here_doc(data);
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
@@ -133,8 +136,8 @@ void	children_process(t_data *data)
 				close(data->exec->outfile);
 			if (data->exec->infile != 0)
 				close (data->exec->infile);
-			close(data->exec->tube[0]);
-			close(data->exec->tube[1]);
+			// close(data->exec->tube[0]);
+			// close(data->exec->tube[1]);
 			close_tubes(data);
 			free_resources(data);
 			exit(1);
@@ -149,7 +152,19 @@ void	children_process(t_data *data)
 			error_permission_denied(data, tmp);
 		if (check_dir(data->exec->cmd) == -1)
 			error_is_a_dir_mup(data, tmp);
+		//dprintf(2, "IN %d| OUT %d | cmd %s\n", data->exec->infile, data->exec->outfile, data->exec->cmd);
 		close_tubes(data);
+		if (data->exec->outfile != 1)
+			close(data->exec->outfile);
+		if (data->exec->infile != 0)
+			close (data->exec->infile);
+		tempo = data->tmp_files;
+		while(tempo)
+		{
+			if (tempo->fd && tempo->fd > 0)
+				close(tempo->fd);
+			tempo = tempo->next;
+		}
 		execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
 		error_execve_multi(data, tmp);
 	}
@@ -179,6 +194,14 @@ void	exec_multi_pipe(t_data *data)
 		children_process(data);
 	}
 	close_tubes(data);
+	//dprintf(2, "IN %d| OUT %d\n", data->exec->infile, data->exec->outfile);
+	if (data->exec->outfile != 1)
+		close(data->exec->outfile);
+	if (data->exec->infile != 0)
+	{
+		//dprintf(2, "PARENTS\n");
+		close (data->exec->infile);
+	}
 	int j = 0;
 	while (j < data->exec->nb_node)
 		waitpid(data->exec->pid[j++], &status, 0);

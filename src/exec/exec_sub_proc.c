@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 16:31:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:30:09 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void init_files_builtin(t_data *data, t_list_arg *tok, int i)
 	}
 	else if (tok->array_sign[i] == STDINS)		
 	{
-		dprintf(2, "FILE_ARRAY: %s\n", tok->file_array[i]);
+		//dprintf(2, "FILE_ARRAY: %s\n", tok->file_array[i]);
 		data->exec->infile = open(tok->file_array[i], O_RDONLY);
 		if (data->exec->infile < 0)
 			file_not_found(data, tok);
@@ -144,6 +144,7 @@ void	second_child_process(t_data *data)
 	close(data->exec->tube[0]);
 	close(data->exec->tube[1]);
 	execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
+	//dprintf(2, "SALOPE\n");
 	error_excve(data);
 }
 

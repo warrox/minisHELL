@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 15:02:19 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:31:44 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	print_echo(t_data *data, t_list_arg *tok)
 	write(data->exec->outfile, "\n", 1);
 }
 
-int check_flag(t_data *data) {
+int check_flag(t_data *data) 
+{
     int i;
     int j;
     int flag;
@@ -67,31 +68,34 @@ int check_flag(t_data *data) {
     flag = 0;
     i = 0;
     j = 0;
-    while (data->tokenizer->cmd_array[i]) {
+    while (data->tokenizer->cmd_array[i]) 
+    {
         j = 0;
-        while (data->tokenizer->cmd_array[i][j]) {
-            if (data->tokenizer->cmd_array[i][j] == '-') {
+        while (data->tokenizer->cmd_array[i][j]) 
+        {
+            if (data->tokenizer->cmd_array[i][j] == '-') 
+            {
                 j++;
-                // Ensure j is within bounds before further checks
                 while (data->tokenizer->cmd_array[i][j] == 'n' && data->tokenizer->cmd_array[i][j] != '\0')
                     j++;
-                // Check if current character is a space or null terminator, and ensure it's within bounds
-                if (data->tokenizer->cmd_array[i][j] == ' ' || data->tokenizer->cmd_array[i][j] == '\0') {
-                    start++;
-                } else {
+                if (data->tokenizer->cmd_array[i][j] == ' ' || data->tokenizer->cmd_array[i][j] == '\0') 
+                {
+                    //dprintf(2, "I = %d\n", i);
+                    if (start + 1 == i)
+                        start = i;
+                } 
+                else 
+                {
                     break;
                 }
             }
-            // Ensure j is incremented safely within bounds
             if (data->tokenizer->cmd_array[i][j] != '\0')
                 j++;
         }
         i++;
     }
-    // dprintf(2, "ICI START %d\n", start);
     return (start);
 }
-
 
 int	check_echo_cmd(t_data *data)
 {

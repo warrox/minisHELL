@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 18:52:26 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:43:27 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	display_prompt(t_data *data)
 		// int_nbr = ft_exit(data, input);
 		// if(int_nbr >= 0 && int_nbr <= 255)
 		// 	return(int_nbr);
-		// print_exec_utils(data);
+		//print_exec_utils(data);
 		init_exec(data);
 		if (input != NULL)
 			free_exec(data);

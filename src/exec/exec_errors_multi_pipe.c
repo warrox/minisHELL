@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 17:51:09 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:19:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	file_not_found_multi(t_data *data, t_list_arg *tok)
 	if (tok->file_array[0] != NULL)
 		write(2, tok->file_array[0], ft_strlen(tok->file_array[0]));
 	write(2, ": No such file or directory\n", 29);
+	dprintf(STDERR_FILENO, "CONNASSE@\n");
 	free(data->exec->cmd);
 	ft_clear_tokenizer(data);
 	close_tubes(data);
@@ -40,6 +41,11 @@ void	error_execve_multi(t_data *data, t_list_arg *tok)
 	write(2, ": command not found\n", 21);
 	free_prompt(data);
 	free(data->signal);
+	if (data->exec->outfile != 1)
+		close(data->exec->outfile);
+	if (data->exec->infile != 0)
+		close(data->exec->infile);
+	rm_tmp_file(data);
 	ft_lst_arg_clear(&data->lst);
 	ft_clear_tokenizer(data);
 	free(data->exec->multi_tube);
@@ -79,7 +85,8 @@ void error_dir_file_not_found(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": No such file or directory\n", 28);
+	dprintf(STDERR_FILENO, "CONNASSE\n");
+	write(2, ": No such file or directory\n", 29);
 	cleanup_and_exit(data, 1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 09:40:11 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 14:27:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_tmp_files
 {
 	char	*file_name;
 	struct s_tmp_files	*next;
+	int fd;
 }			t_tmp_files;
 
 typedef struct s_exec
@@ -129,6 +130,7 @@ typedef struct s_data
 	int					spl;
 	int					dbl;
 	int					size;
+
 }						t_data;
 
 typedef struct s_quote
