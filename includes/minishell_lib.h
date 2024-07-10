@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 18:31:40 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 18:53:06 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_data
 	int					dbl;
 	int					size;
 	int					signal_int;
+	char				strExpanded[4096];
 }						t_data;
 
 typedef struct s_quote
