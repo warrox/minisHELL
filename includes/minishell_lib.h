@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 16:11:47 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 09:40:11 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_data
 	int					flag; 
 	int					sq_flag;
 	int					quote_flag;
+	int					data_count;
 	//----new var----
 	int					*arrayIntExpand;
 	int					exit_status;
@@ -129,6 +130,17 @@ typedef struct s_data
 	int					dbl;
 	int					size;
 }						t_data;
+
+typedef struct s_quote
+{
+	int len;
+	int start;
+	int end;
+	int sf;
+	int df;
+	int i;
+	int j;
+}t_quote;
 
 typedef int (*builtin_ptr)(t_data *);
 
@@ -256,6 +268,9 @@ int triple_sign_checker(char *str, t_data *data);
 void fill_array_sign(t_data *data, char *str, t_list_arg *tmp);
 int	sort_sign(t_list_arg *tmp, t_data *data);
 int	get_word_size(char *str);
+void free_cleaned_array(char **array);
+void free_cleaned_str(char *str);
+void init_quote(t_quote *tool_box, char *str);
 /**[EXEC]**/
 
 int	init_exec(t_data *data);
