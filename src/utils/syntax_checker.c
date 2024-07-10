@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:05:58 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 11:23:29 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:43:24 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int check_quote(char *input, t_data *data)
 
 int syntax_checker(char *input, t_data *data)
 {
-    if (unexpectedToken(input, data) != 0 || check_quote(input, data) != 0)
+    if (unexpectedtoken(input, data) != 0 || check_quote(input, data) != 0)
 	{
 		data->exit_status = 2;	
 		return (-1);

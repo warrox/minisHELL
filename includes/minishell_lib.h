@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 11:18:21 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:42:52 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_data
 	int					spl;
 	int					dbl;
 	int					size;
+	int					signal_int;
 }						t_data;
 
 typedef struct s_quote
@@ -147,6 +148,8 @@ typedef struct s_tool
 	int	j;
 	int	tmp;
 	int ii;
+	int end;
+	int dq;
 
 }t_tool;
 
@@ -212,7 +215,7 @@ void					free_prompt(t_data *data);
 void					free_split(char **split);
 
 /**[PARSER FUNCTION LONGUE COMME MON AUBERGINE]**/
-
+bool	redirsign(char c);
 void					parser_list_init(t_data *data, char **envp);
 t_list_arg				*ft_lst_arg_new(t_list_arg *new, char *content);
 void					ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new);
@@ -238,7 +241,7 @@ t_list_arg				*ft_lst_cut_new(char *content);
 void					ft_lstadd_cut_back(t_list_arg **lst,
 							t_list_arg *new_node);
 int						ft_isws(char c);
-char					*get_filename(char *str, t_tool *tool);
+char					*gn(char *str, t_tool *tool);
 void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
@@ -253,7 +256,7 @@ void handle_single_quotes_flush(char *str, char *buffer, int *i, int *j, t_data 
 char **split_pipe_cust(char *input, char c);
 int skip_ws_prompt(t_data *data, char *input);
 int syntax_checker(char *input, t_data *data);
-int	unexpectedToken(char *input, t_data *data);
+int	unexpectedtoken(char *input, t_data *data);
 int	cutting_input(t_data *data, char *input); 
 bool is_single_quote(char c);
 bool is_double_quote(char c);

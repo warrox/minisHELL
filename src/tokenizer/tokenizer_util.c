@@ -1,60 +1,71 @@
-#include "../../includes/minishell_lib.h"
-bool redirsign(char c)
-{
-	return(c == '<' || c == '>');	
-}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_util.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/10 12:30:24 by whamdi            #+#    #+#             */
+/*   Updated: 2024/07/10 12:39:17 by whamdi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int fileAfterRedirSign(char *input, int i)
+#include "../../includes/minishell_lib.h"
+
+int	fileafterredirsign(char *input, int i)
 {
 	i++;
-	while(ft_isws(input[i]))
+	while (ft_isws(input[i]))
 		i++;
-	if(input[i] && ft_isascii(input[i]))
-		return(0);
-	return(-1);
-
+	if (input[i] && ft_isascii(input[i]))
+		return (0);
+	return (-1);
 }
-int tripleSignDetector(char *input,int i)
-{
-	if(ft_strncmp(&input[i], "<<<", 3)== 0 || ft_strncmp(&input[i], "<<>", 3) == 0 
-		|| ft_strncmp(&input[i], ">>>", 3) == 0 ||ft_strncmp(&input[i], ">><", 3) == 0)
-	{
-		return(-1);
-	}
-	return(0);	
-} 
-int	unexpectedToken(char *input, t_data *data)
-{
-	int i;
-	int signal;
-	int flag;
 
-	flag = 0;
-	signal = 0;
-	i = 0;
-	while(input[i])
+int	triplesigndetector(char *input, int i)
+{
+	if (ft_strncmp(&input[i], "<<<", 3) == 0 || ft_strncmp(&input[i], "<<>",
+			3) == 0 || ft_strncmp(&input[i], ">>>", 3) == 0
+		|| ft_strncmp(&input[i], ">><", 3) == 0)
 	{
-		if(input[i] == '\"')
-			flag += 1;
-		if(if_pipe(input[i]) || redirsign(input[i]))
+		return (-1);
+	}
+	return (0);
+}
+
+void	init_unexpectedtoken(t_data *data)
+{
+	data->flag = 0;
+	data->signal_int = 0;
+	data->i = 0;
+}
+
+int	unexpectedtoken(char *input, t_data *data)
+{
+	init_unexpectedtoken(data);
+	while (input[data->i])
+	{
+		if (input[data->i] == '\"')
+			data->flag += 1;
+		if (if_pipe(input[data->i]) || redirsign(input[data->i]))
 		{
-			if(pipe_alone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
+			if (pipe_alone(input, data->i) == -1 || fileafterredirsign(input,
+					data->i) == -1)
 			{
-				signal = SYNTAX_ERROR;
-				msg_error_handler(&signal, data);
-				return(-1);
+				data->signal_int = SYNTAX_ERROR;
+				msg_error_handler(&data->signal_int, data);
+				return (-1);
 			}
-			if(tripleSignDetector(input, i) == -1 && flag == 0)
+			if (triplesigndetector(input, data->i) == -1 && data->flag == 0)
 			{
-				signal = UNEXPECTEDTOKEN;
-				msg_error_handler(&signal, data);
-				return(-1);
-
+				data->signal_int = UNEXPECTEDTOKEN;
+				msg_error_handler(&data->signal_int, data);
+				return (-1);
 			}
-		}	
-		i++;
+		}
+		data->i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	sign_cmp(char *str)
@@ -69,4 +80,3 @@ int	sign_cmp(char *str)
 		return (1);
 	return (0);
 }
-
