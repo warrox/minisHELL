@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:11:44 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 10:40:24 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:19:43 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_filename(char *str, t_tool *tool)
 		dq = !dq;
 	}
 	end = tool->ii;
-	while (str[end] && (!ft_isws(str[end]) || (dq && !isDoubleQuote(str[end]))))
+	while (str[end] && (!ft_isws(str[end]) || (dq && !is_double_quote(str[end]))))
 		end++;
 	if (end == start)
 		NULL;

@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:00 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/09 11:21:00 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:26:44 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool isExitCode(char *input, int *i)
     return (!ft_strncmp(&input[*i], "$?", 2));
 }
 
-bool isSingleQuote(char c)
+bool is_single_quote(char c)
 {
     return (c == '\'');
 }
@@ -30,7 +30,7 @@ bool isVariable(char *input, int *i)
 char *passTilNextQuote(char *input, int *i, char *buffer, int *j)
 {
     (*i)++;  // Pass the opening quote
-    while (input[*i] && !isSingleQuote(input[*i]))
+    while (input[*i] && !is_single_quote(input[*i]))
     {
         buffer[(*j)++] = input[*i];
         (*i)++;

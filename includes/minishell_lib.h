@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 10:53:05 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:18:21 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,8 +255,8 @@ int skip_ws_prompt(t_data *data, char *input);
 int syntax_checker(char *input, t_data *data);
 int	unexpectedToken(char *input, t_data *data);
 int	cutting_input(t_data *data, char *input); 
-bool isSingleQuote(char c);
-bool isDoubleQuote(char c);
+bool is_single_quote(char c);
+bool is_double_quote(char c);
 bool if_pipe(char c);
 int pipe_alone(char *input, int i);
  void handle_double_quotes_flush(char *str, char *buffer, int *i, int *j, t_data *data, int flag_for_copy);

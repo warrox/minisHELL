@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/09 11:21:03 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:19:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ void expander(t_data *data, char *input)
 	data->dq = 0;
 	while (input[data->i])
     {
-		if (isDoubleQuote(input[data->i]) && !data->sq)
+		if (is_double_quote(input[data->i]) && !data->sq)
 			data->dq = !data->dq;
-		else if (isSingleQuote(input[data->i]) && !data->dq)
+		else if (is_single_quote(input[data->i]) && !data->dq)
 			data->sq = !data->sq;
 		else if (isHereDoc(input, &data->i))
 			passVarDoc(input, &data->i, strExpanded, &data->j);

@@ -6,18 +6,18 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:05:58 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/09 11:07:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:23:29 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int is_single_quote(char c)
+int is_singlequote(char c)
 {
     return (c == '\'');
 }
 
-int is_double_quote(char c)
+int is_doublequote(char c)
 {
     return (c == '\"');
 }
@@ -27,9 +27,9 @@ void check_quotes(char *input, int *flag_s, int *flag_d, int *signal)
     int i = 0;
     while (input[i])
     {
-        if (is_double_quote(input[i]) && (*flag_s == 0))
+        if (is_doublequote(input[i]) && (*flag_s == 0))
             *flag_d = !(*flag_d);
-        else if (is_single_quote(input[i]) && (*flag_d == 0))
+        else if (is_singlequote(input[i]) && (*flag_d == 0))
             *flag_s = !(*flag_s);
         i++;
     }
