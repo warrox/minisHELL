@@ -6,11 +6,21 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 16:11:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:45:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+void print_tmp_files(t_data *data) {
+    t_tmp_files *current = data->tmp_files;
+    
+    printf("Liste des fichiers temporaires :\n");
+    while (current != NULL) {
+        printf("Nom du fichier : %s, Descripteur de fichier : %d\n", current->file_name, current->fd);
+        current = current->next;
+    }
+}
 
 void	intermediate_pipe(t_data *data, t_list_arg *tok)
 {
@@ -108,7 +118,6 @@ void	children_process(t_data *data)
 {
 	int i;
 	t_list_arg *tmp = data->tokenizer;
-	t_tmp_files *tempo = data->tmp_files;
 	
 	i = 0;
 	//handle_signal_children();
@@ -142,6 +151,7 @@ void	children_process(t_data *data)
 			free_resources(data);
 			exit(1);
 		}
+		// print_tmp_files(data);
 		data->exec->cmd = build_cmd(data, tmp);
 		if (data->exec->cmd == NULL)
 			error_cmd(data, tmp);
@@ -158,13 +168,12 @@ void	children_process(t_data *data)
 			close(data->exec->outfile);
 		if (data->exec->infile != 0)
 			close (data->exec->infile);
-		tempo = data->tmp_files;
-		while(tempo)
-		{
-			if (tempo->fd && tempo->fd > 0)
-				close(tempo->fd);
-			tempo = tempo->next;
-		}
+		// while(tempo)
+		// {
+		// 	if (tempo->fd && tempo->fd > 0)
+		// 		close(tempo->fd);
+		// 	tempo = tempo->next;
+		// }
 		execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
 		error_execve_multi(data, tmp);
 	}
@@ -194,12 +203,10 @@ void	exec_multi_pipe(t_data *data)
 		children_process(data);
 	}
 	close_tubes(data);
-	//dprintf(2, "IN %d| OUT %d\n", data->exec->infile, data->exec->outfile);
 	if (data->exec->outfile != 1)
 		close(data->exec->outfile);
 	if (data->exec->infile != 0)
 	{
-		//dprintf(2, "PARENTS\n");
 		close (data->exec->infile);
 	}
 	int j = 0;

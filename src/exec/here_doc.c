@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 16:29:45 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:07:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 		write(data->tmp_files->fd, input, ft_strlen(input));
 		write(data->tmp_files->fd, "\n", 1);
 	}
+	dprintf(2, "YES\n");
 	close(data->tmp_files->fd);
 }

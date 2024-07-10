@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:34:00 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 16:29:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:14:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void rm_tmp_file(t_data *data)
 
     while (current)
     {
+        // dprintf(2, "TESTdasasadsSTSTS : %p\n", current);
         next = current->next;
         if (current->file_name)
             unlink(current->file_name);
@@ -66,7 +67,7 @@ void add_tmp_file(t_data *data, const char *file_name)
     if (!new_file)
         return;
     new_file->fd = -1;
-    new_file->file_name = strdup(file_name);
+    new_file->file_name = ft_strdup(file_name);
     new_file->next = data->tmp_files;
     data->tmp_files = new_file;
 }
