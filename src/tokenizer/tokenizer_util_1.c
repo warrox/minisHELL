@@ -12,39 +12,40 @@ char	*get_filename(char *str)
 	int		start;
 	int		end;
 	char	*new;
+	int		dq;
 
 	i = 0;
 	end = 0;
-	int dq = 0;
+	dq = 0;
 	// printf("STR : %s\n", str);
 	while (str[i] && ft_isws(str[i]))
 		i++;
 	start = i;
-	if(str[start] == '\"' || str[start] == '\'') 
+	if (str[start] == '\"' || str[start] == '\'')
 	{
 		start++;
 		dq = !dq;
 	}
 	end = i;
 	while (str[end] && (!ft_isws(str[end]) || (dq && !isDoubleQuote(str[end]))))
-    {
+	{
 		// printf("end = %s\n", &str[end]);
 		end++;
-    }
+	}
 	if (end == start)
 		NULL;
-	if(str[end - 1] == '\"' || str[end - 1] == '\'')
+	if (str[end - 1] == '\"' || str[end - 1] == '\'')
 		end--;
 	new = ft_substr(str, start, end - start);
 	return (new);
 }
-
 
 void	create_signed(t_list_arg *lst)
 {
 	int	i;
 	int	j;
 	int	tmp;
+
 	i = 0;
 	j = 0;
 	tmp = 0;
@@ -54,20 +55,20 @@ void	create_signed(t_list_arg *lst)
 	while (lst->input_splited[i])
 	{
 		tmp = sign_cmp(&lst->input_splited[i]);
-		if(i > 1)
+		if (i > 1)
 		{
-			if(lst->input_splited[i - 1] == '\'')
-			tmp = 0;
+			if (lst->input_splited[i - 1] == '\'')
+				tmp = 0;
 		}
 		if (&lst->input_splited[i] && tmp != 0)
 		{
 			i += tmp;
-			if(lst->count_size != 0)
-            {
+			if (lst->count_size != 0)
+			{
 				// printf("ICI\n");
 				lst->file_array[j++] = get_filename(&lst->input_splited[i]);
 				lst->count_size--;
-            }
+			}
 		}
 		else
 			i++;
