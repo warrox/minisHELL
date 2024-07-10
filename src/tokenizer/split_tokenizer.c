@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 12:53:49 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:00:19 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	ft_parts_count(char *str, t_data *data)
 			data->dbl = !data->dbl;
 		if (str[data->i] == 39)
 			data->spl = !data->spl;
-		if (str[data->i] != ' ' && (str[data->i + 1] == ' '
-				|| str[data->i + 1] == '\0'))
+		if (str[data->i] != ' ' && (str[data->i + 1] == ' ' || str[data->i
+					+ 1] == '\0'))
 		{
 			if ((!data->spl && !data->dbl) || ((data->spl || data->dbl)
 					&& str[data->i + 1] == '\0'))

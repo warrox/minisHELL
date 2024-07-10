@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_ws_prompt.c                                   :+:      :+:    :+:   */
+/*   split_pipe_cust_util.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 13:45:22 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 13:45:38 by whamdi           ###   ########.fr       */
+/*   Created: 2024/07/10 15:45:23 by whamdi            #+#    #+#             */
+/*   Updated: 2024/07/10 15:54:32 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int	skip_ws_prompt(t_data *data, char *input)
+void	s_pipe_init(t_tool *tool)
 {
-	data->j = 0;
-	while (ft_isws(input[data->j]))
-		data->j++;
-	if (input[data->j] == '\0' || input[0] == '\0')
-	{
-		add_history(input);
-		free_prompt(data);
-		ft_clear_tokenizer(data);
-		return (1);
-	}
-	return (0);
+	tool->len = 0;
+	tool->temp = NULL;
+	tool->temp_ptr = NULL;
+}
+
+void	token_ws(char **token_start, char **token_end)
+{
+	while (*token_start < *token_end && (**token_start == ' '
+			|| **token_start == '\t'))
+		token_start++;
 }

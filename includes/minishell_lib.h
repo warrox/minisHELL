@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 13:42:17 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 15:55:49 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,14 @@ typedef struct s_tool
 	int ii;
 	int end;
 	int dq;
+	int len;
+	char *token_start;
+	char *temp;
+    char *temp_ptr; 
+    int in_single_quote;
+    int in_double_quote;
+    int index;
+
 
 }t_tool;
 
@@ -215,6 +223,8 @@ void					free_prompt(t_data *data);
 void					free_split(char **split);
 
 /**[PARSER FUNCTION LONGUE COMME MON AUBERGINE]**/
+void token_ws(char **token_start, char **token_end);
+void s_pipe_init(t_tool *tool);
 bool	redirsign(char c);
 void					parser_list_init(t_data *data, char **envp);
 t_list_arg				*ft_lst_arg_new(t_list_arg *new, char *content);
