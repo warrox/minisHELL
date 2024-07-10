@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@42.fr>                      +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:13:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/27 16:12:37 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:53:49 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-#include <stdio.h>
+
 void	*free_tab_clean(char *split[])
 {
 	size_t	i;
@@ -93,6 +93,7 @@ char	**split_tokenizer(t_list_arg *cmd, t_data *data)
 {
 	char	**result;
 	int		size;
+
 	size = ft_parts_count(cmd->final_cmd, data);
 	result = malloc((size + 1) * sizeof(char *));
 	if (!result)
