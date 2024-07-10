@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 15:55:49 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 18:31:40 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ typedef struct s_data
 	int					j;
 	int					pansement;
 	int					pansement_2;
-	int					flag; 
+	int					flag;
+	int					flag_s;
+	int					flag_d;
 	int					sq_flag;
 	int					quote_flag;
 	int					data_count;
@@ -211,7 +213,7 @@ void init_tool_box(t_cd *tool_box);
 t_list_arg *find_key_user(t_data *data);
 t_list_arg *find_key_old_pwd(t_data *data);
 t_list_arg *find_key_pwd(t_data *data);
-void init_check_quote(int *i, int *first_enter, int *flag_s, int *flag_d, int *signal);
+void	init_check_quote(int *first_enter,int *signal, t_data *data);
 /**[PROMPT FUNCTIONS]**/
 
 int						display_prompt(t_data *data);

@@ -14,7 +14,7 @@
 
 void	free_prompt(t_data *data)
 {
-	if(data->prompt)
+	if (data->prompt)
 	{
 		free(data->prompt->usr_name);
 		free(data->prompt->usr_pwd);
@@ -24,4 +24,3 @@ void	free_prompt(t_data *data)
 		free(data->prompt);
 	}
 }
-
