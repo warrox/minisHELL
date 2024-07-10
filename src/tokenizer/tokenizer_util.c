@@ -36,9 +36,9 @@ int	unexpectedToken(char *input, t_data *data)
 	{
 		if(input[i] == '\"')
 			flag += 1;
-		if(ifPipe(input[i]) || redirsign(input[i]))
+		if(if_pipe(input[i]) || redirsign(input[i]))
 		{
-			if(pipeAlone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
+			if(pipe_alone(input, i) == -1 || fileAfterRedirSign(input, i) == -1)
 			{
 				signal = SYNTAX_ERROR;
 				msg_error_handler(&signal, data);
