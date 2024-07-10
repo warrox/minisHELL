@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:35 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 11:52:52 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:35:57 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	parser_list_init(t_data *data, char **envp)
 
 void	print_lst(t_data *data, t_list_arg *lst)
 {
-	if (is_a_builtin(data->tokenizer) != -1 && is_a_builtin(data->tokenizer) != 2)
+	if (is_a_builtin(data->tokenizer) != -1
+		&& is_a_builtin(data->tokenizer) != 2)
 	{
-		//dprintf(2, "TOP %d\n", data->exec->outfile);
 		while (lst)
 		{
 			ft_putstr_fd(lst->key_and_val[0], data->exec->outfile);
@@ -70,7 +70,6 @@ void	print_lst(t_data *data, t_list_arg *lst)
 	}
 	else
 	{
-		// dprintf(2, "\n\n\nUTWCIYWCIYSC\n");
 		while (lst)
 		{
 			ft_printf("%s=", lst->key_and_val[0]);
@@ -85,38 +84,6 @@ void	print_lst_token(t_list_arg *lst)
 	while (lst)
 	{
 		ft_printf("input_splitted : %s\n", lst->input_splited);
-		lst = lst->next;
-	}
-}
-void	print_lst_cmdarg(t_list_arg *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		// ft_printf("cmd_arg[0] : %s\n", lst->cmd_and_arg[0]);
-		// ft_printf("cmd_arg[1] : %s\n", lst->cmd_and_arg[1]);
-		ft_printf("FINAL_CMD = %s\n", lst->final_cmd);
-		ft_printf("RESULT : %s\n", lst->result);
-		i = 0;
-		if (lst->array_sign)
-		{
-			ft_printf("----Array Signs----\n");
-			while (i < lst->count_size)
-			{
-				ft_printf("[%d]\t[%s]\n", lst->array_sign[i],
-					lst->file_array[i]);
-				i++;
-			}
-		}
-		i = 0;
-		while (lst->cmd_array[i])
-		{
-			ft_printf("----ARRAY_CMD[%d]----\n", i);
-			ft_printf("[%s]\n", lst->cmd_array[i]);
-			i++;
-		}
 		lst = lst->next;
 	}
 }
