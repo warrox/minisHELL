@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 18:53:06 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:04:42 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,9 @@ void					free_prompt(t_data *data);
 void					free_split(char **split);
 
 /**[PARSER FUNCTION LONGUE COMME MON AUBERGINE]**/
+
+void initexpandvariable(t_data *data);
+void passpartstring(int *flag, int *i ,char *input);
 void token_ws(char **token_start, char **token_end);
 void s_pipe_init(t_tool *tool);
 bool	redirsign(char c);
@@ -281,11 +284,11 @@ void	write_part(const char *str, char *result, int size);
 char	**split_tokenizer(t_list_arg *cmd, t_data *data);
 char **split_first_equal(const char *s);
 void	*free_tab_clean(char *split[]);
-bool isExitCode(char *input, int *i);
+bool isexitcode(char *input, int *i);
 bool isSingleQuote(char c);
-bool isVariable(char *input, int *i);
-char *passTilNextQuote(char *input, int *i, char *buffer, int *j);
-bool isHereDoc(char *input, int *i);
+bool isvariable(char *input, int *i);
+char *passtilnextquote(char *input, int *i, char *buffer, int *j);
+bool isheredoc(char *input, int *i);
 int triple_sign_checker(char *str, t_data *data);
 void fill_array_sign(t_data *data, char *str, t_list_arg *tmp);
 int	sort_sign(t_list_arg *tmp, t_data *data);
@@ -293,7 +296,8 @@ int	get_word_size(char *str);
 void free_cleaned_array(char **array);
 void free_cleaned_str(char *str);
 void init_quote(t_quote *tool_box, char *str);
-void handle_single_quotes_t(char *str,t_data *data); 
+void handle_single_quotes_t(char *str,t_data *data);
+void init_expand(t_data *data);
 /**[EXEC]**/
 
 int	init_exec(t_data *data);

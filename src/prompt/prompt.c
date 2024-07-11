@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 18:52:26 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:36:51 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int	display_prompt(t_data *data)
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
+		//check if empty string of whitespace only
 		input = readline(data->prompt->usr_prompt);	
 		if(input == NULL)
 		{
 		//	dprintf(2, "CTRL_D DETECTED\n");
+			dprintf(2, "exit\n");
 			free_prompt(data);
 			free(data->signal);
 			ft_lst_arg_clear(&data->tokenizer);

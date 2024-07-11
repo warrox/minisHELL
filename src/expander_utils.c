@@ -6,48 +6,49 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:00 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 11:26:44 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 09:46:02 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
 
-bool isExitCode(char *input, int *i)
+bool	is_single_quote(char c)
 {
-    return (!ft_strncmp(&input[*i], "$?", 2));
+	return (c == '\'');
 }
 
-bool is_single_quote(char c)
+bool	isvariable(char *input, int *i)
 {
-    return (c == '\'');
+	return (!ft_strncmp(&input[*i], "$", 1));
 }
 
-bool isVariable(char *input, int *i)
+char	*passtilnextquote(char *input, int *i, char *buffer, int *j)
 {
-    return (!ft_strncmp(&input[*i], "$", 1));
+	(*i)++;
+	while (input[*i] && !is_single_quote(input[*i]))
+	{
+		buffer[(*j)++] = input[*i];
+		(*i)++;
+	}
+	if (input[*i] == '\'')
+	{
+		(*i)++;
+	}
+	buffer[*j] = ' ';
+	(*j)++;
+	buffer[*j] = '\0';
+	return (buffer);
 }
 
-char *passTilNextQuote(char *input, int *i, char *buffer, int *j)
+bool	isheredoc(char *input, int *i)
 {
-    (*i)++;  // Pass the opening quote
-    while (input[*i] && !is_single_quote(input[*i]))
-    {
-        buffer[(*j)++] = input[*i];
-        (*i)++;
-    }
-    if (input[*i] == '\'')
-    {
-        (*i)++;
-    }
-    buffer[*j] = ' ';
-    (*j)++;
-    buffer[*j] = '\0'; 
-    return buffer;
+	return (!ft_strncmp(&input[*i], "<<", 2));
 }
 
-bool isHereDoc(char *input, int *i)
+void	init_expand(t_data *data)
 {
-    return (!ft_strncmp(&input[*i], "<<", 2));
+	data->i = 0;
+	data->j = 0;
+	data->sq = 0;
+	data->dq = 0;
 }
-
-
