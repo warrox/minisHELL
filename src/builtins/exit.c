@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 11:37:05 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/07/11 11:37:36 by cyferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell_lib.h"
+
 long	ft_atoi_long(const char *str)
 {
 	int		i;
@@ -8,7 +21,6 @@ long	ft_atoi_long(const char *str)
 	i = 0;
 	count = 0;
 	sign = 1;
-	
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32 || str[i] == 34
 		|| str[i] == 39 || str[i] == '-' || str[i] == '+')
 	{
@@ -24,20 +36,27 @@ long	ft_atoi_long(const char *str)
 	count = count * sign;
 	return (count);
 }
-int ft_exit(t_data *data, char *input)
-{
-	int i = 0;
-	char str[4096];
-	char s_nbr[4096];
-	int nbr;
-	char *nbr_char;
-	int neg = 1;
-	int	quote = 0;
-	char **tmp = data->tokenizer->cmd_array;
 
-	ft_bzero(s_nbr,4096);
+int	ft_exit(t_data *data, char *input)
+{
+	int		i;
+	char	str[4096];
+	char	s_nbr[4096];
+	int		nbr;
+	char	*nbr_char;
+	int		neg;
+	int		quote;
+	char	**tmp;
+	int		count;
+	int		j;
+
+	i = 0;
+	neg = 1;
+	quote = 0;
+	tmp = data->tokenizer->cmd_array;
+	ft_bzero(s_nbr, 4096);
 	nbr = 0;
-	int count = 0;
+	count = 0;
 	while (tmp[i])
 	{
 		count++;
@@ -48,23 +67,23 @@ int ft_exit(t_data *data, char *input)
 	{
 		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
 		data->exit_status = 1;
-		exit (data->exit_status);
+		exit(data->exit_status);
 	}
 	if (ft_strncmp(input, "exit", 4) == 0)
 	{
-		while(ft_isprint(input[i]))
+		while (ft_isprint(input[i]))
 			i++;
-		if(ft_strlen(input) > 4)
+		if (ft_strlen(input) > 4)
 		{
 			i = 0;
-			int j = 3;
-			while(input[j] && !ft_isws(input[j]))
+			j = 3;
+			while (input[j] && !ft_isws(input[j]))
 				j++;
 			j++;
-			if(input[j] == '+' || input[j] == '-')
+			if (input[j] == '+' || input[j] == '-')
 			{
 				if (input[j] == '-')
-					neg = - neg;
+					neg = -neg;
 				j++;
 			}
 			if (input[j] == '"')
@@ -72,15 +91,15 @@ int ft_exit(t_data *data, char *input)
 				quote = 1;
 				j++;
 			}
-			if(input[j] == '+' || input[j] == '-')
+			if (input[j] == '+' || input[j] == '-')
 			{
 				if (input[j] == '-')
-					neg = - neg;
+					neg = -neg;
 				j++;
 			}
-			while(input[j] && ft_isdigit(input[j]))
+			while (input[j] && ft_isdigit(input[j]))
 			{
-				s_nbr[i] = input[j];	
+				s_nbr[i] = input[j];
 				i++;
 				j++;
 			}
@@ -91,7 +110,8 @@ int ft_exit(t_data *data, char *input)
 			nbr_char = ft_itoa((int)nbr);
 			if (neg == -1)
 			{
-				if (ft_strncmp(data->tokenizer->cmd_array[1], nbr_char, ft_strlen(data->tokenizer->cmd_array[1])) != 0)
+				if (ft_strncmp(data->tokenizer->cmd_array[1], nbr_char,
+						ft_strlen(data->tokenizer->cmd_array[1])) != 0)
 				{
 					data->exit_status = nbr % 256;
 					free(nbr_char);
@@ -119,13 +139,8 @@ int ft_exit(t_data *data, char *input)
 					exit(EXIT_FAILURE);
 				}
 			}
-			if(input[j] == '\0')
+			if (input[j] == '\0')
 			{
-				// if(nbr > 2147483647 || nbr < -2147483648)
-				// {
-				// 	data->exit_status = nbr;
-				// 	return(2);
-				// }
 				free(nbr_char);
 				free_prompt(data);
 				free(data->signal);
@@ -133,11 +148,10 @@ int ft_exit(t_data *data, char *input)
 				free_tmp_struct(data);
 				ft_lst_arg_clear(&data->lst);
 				ft_clear_tokenizer(data);
-				//dprintf(2, "SALOPE\n");
 				data->exit_status = nbr % 256;
 				exit(data->exit_status);
 			}
-			while(input[i] != '\0')
+			while (input[i] != '\0')
 			{
 				str[i] = input[i];
 				i++;
@@ -153,16 +167,16 @@ int ft_exit(t_data *data, char *input)
 				free_tmp_struct(data);
 				ft_lst_arg_clear(&data->lst);
 				ft_clear_tokenizer(data);
-				exit (data->exit_status);
+				exit(data->exit_status);
 			}
 			else
 			{
 				ft_putstr_fd(" numeric argument required\n", STDERR_FILENO);
 				data->exit_status = 2;
-				exit (data->exit_status);
+				exit(data->exit_status);
 			}
 		}
-		else if(input[i] == '\0')
+		else if (input[i] == '\0')
 		{
 			free_prompt(data);
 			free(data->signal);
@@ -173,6 +187,5 @@ int ft_exit(t_data *data, char *input)
 			exit(0);
 		}
 	}
-	return(256);
+	return (256);
 }
-
