@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 12:53:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:28:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,33 +136,32 @@ typedef struct s_data
 
 typedef struct s_quote
 {
-	int len;
-	int start;
-	int end;
-	int sf;
-	int df;
-	int i;
-	int j;
-}t_quote;
+	int					len;
+	int					start;
+	int					end;
+	int					sf;
+	int					df;
+	int					i;
+	int					j;
+}						t_quote;
 
 typedef struct s_tool
 {
-	int	i;
-	int	j;
-	int	tmp;
-	int ii;
-	int end;
-	int dq;
-	int len;
-	char *token_start;
-	char *temp;
-    char *temp_ptr; 
-    int in_single_quote;
-    int in_double_quote;
-    int index;
+	int					i;
+	int					j;
+	int					tmp;
+	int					ii;
+	int					end;
+	int					dq;
+	int					len;
+	char				*token_start;
+	char				*temp;
+	char				*temp_ptr;
+	int					in_single_quote;
+	int					in_double_quote;
+	int					index;
 
-
-}t_tool;
+}						t_tool;
 
 /**[PRINT FUNCTIONS]**/
 
@@ -197,18 +196,21 @@ int						cmd_echo(t_data *data, t_list_arg *tok);
 int						is_valid_flag_n(char *cmd);
 int						check_echo_cmd(t_data *data);
 void					print_echo(t_data *data, t_list_arg *tok);
-void	print_echo_flag(t_data *data, int start);
-int ft_exit(t_data *data, char *input);
-int	check_export_nothing(t_data *data);
-void exec_cd_with_opt(t_data *data, t_list_arg *tmp, t_list_arg *save_current, char *buffer);
-void exec_cd(t_data *data, t_list_arg *tmp, char *buffer, char *buffer_old, int buffer_size);
-int no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
-int iterate_in_str(char *str);
-void init_tool_box(t_cd *tool_box);
-t_list_arg *find_key_user(t_data *data);
-t_list_arg *find_key_old_pwd(t_data *data);
-t_list_arg *find_key_pwd(t_data *data);
-void	init_check_quote(int *first_enter,int *signal, t_data *data);
+void					print_echo_flag(t_data *data, int start);
+int						ft_exit(t_data *data, char *input);
+int						check_export_nothing(t_data *data);
+void					exec_cd_with_opt(t_data *data, t_list_arg *tmp,
+							t_list_arg *save_current, char *buffer);
+void					exec_cd(t_data *data, t_list_arg *tmp, char *buffer,
+							char *buffer_old, int buffer_size);
+int						no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
+int						iterate_in_str(char *str);
+void					init_tool_box(t_cd *tool_box);
+t_list_arg				*find_key_user(t_data *data);
+t_list_arg				*find_key_old_pwd(t_data *data);
+t_list_arg				*find_key_pwd(t_data *data);
+void					init_check_quote(int *first_enter, int *signal,
+							t_data *data);
 
 /**[PROMPT FUNCTIONS]**/
 
@@ -218,15 +220,17 @@ void					free_prompt(t_data *data);
 
 /**[UTILS FUNCTIONS]**/
 
+void					create_var_tab(t_data *data, t_list_arg *tmp, int i);
 void					free_split(char **split);
+void					free_tokenizer(t_list_arg *current);
 
 /**[PARSER FUNCTION]**/
 
-void initexpandvariable(t_data *data);
-void passpartstring(int *flag, int *i ,char *input);
-void token_ws(char **token_start, char **token_end);
-void s_pipe_init(t_tool *tool);
-bool	redirsign(char c);
+void					initexpandvariable(t_data *data);
+void					passpartstring(int *flag, int *i, char *input);
+void					token_ws(char **token_start, char **token_end);
+void					s_pipe_init(t_tool *tool);
+bool					redirsign(char c);
 void					parser_list_init(t_data *data, char **envp);
 t_list_arg				*ft_lst_arg_new(t_list_arg *new, char *content);
 void					ft_lstadd_arg_back(t_list_arg **lst, t_list_arg *new);
@@ -257,42 +261,46 @@ void					create_signed(t_list_arg *lst);
 int						check_redir(char *input, int i, t_data *data);
 int						checker_err(char *input, t_data *data);
 char					*search_occurence(char *input, t_data *data);
-int ft_current_directory(char *path,t_data *data);
-void expander(t_data *data, char *input);
-char	*expansion(char *input, t_data *data);
-int	get_word_size(char *str);
-char *flush_redir(char *str, t_data *data); 
-char **split_pipe_cust(char *input, char c);
-int skip_ws_prompt(t_data *data, char *input);
-int syntax_checker(char *input, t_data *data);
-int	unexpectedtoken(char *input, t_data *data);
-int	cutting_input(t_data *data, char *input); 
-bool is_single_quote(char c);
-bool is_double_quote(char c);
-bool if_pipe(char c);
-int pipe_alone(char *input, int i);
-void handle_double_quotes_flush(char *str, char *buffer,t_data *data);
-void handle_single_quotes_flush(char *str, char *buffer,t_data *data); 
-int handle_signs(char *str, int *i);
-int	to_next_q(char *str, char c);
-void	write_part(const char *str, char *result, int size);
-char	**split_tokenizer(t_list_arg *cmd, t_data *data);
-char **split_first_equal(const char *s);
-void	*free_tab_clean(char *split[]);
-bool isexitcode(char *input, int *i);
-bool isSingleQuote(char c);
-bool isvariable(char *input, int *i);
-char *passtilnextquote(char *input, int *i, char *buffer, int *j);
-bool isheredoc(char *input, int *i);
-int triple_sign_checker(char *str, t_data *data);
-void fill_array_sign(t_data *data, char *str, t_list_arg *tmp);
-int	sort_sign(t_list_arg *tmp, t_data *data);
-int	get_word_size(char *str);
-void free_cleaned_array(char **array);
-void free_cleaned_str(char *str);
-void init_quote(t_quote *tool_box, char *str);
-void handle_single_quotes_t(char *str,t_data *data);
-void init_expand(t_data *data);
+int						ft_current_directory(char *path, t_data *data);
+void					expander(t_data *data, char *input);
+char					*expansion(char *input, t_data *data);
+int						get_word_size(char *str);
+char					*flush_redir(char *str, t_data *data);
+char					**split_pipe_cust(char *input, char c);
+int						skip_ws_prompt(t_data *data, char *input);
+int						syntax_checker(char *input, t_data *data);
+int						unexpectedtoken(char *input, t_data *data);
+int						cutting_input(t_data *data, char *input);
+bool					is_single_quote(char c);
+bool					is_double_quote(char c);
+bool					if_pipe(char c);
+int						pipe_alone(char *input, int i);
+void					handle_double_quotes_flush(char *str, char *buffer,
+							t_data *data);
+void					handle_single_quotes_flush(char *str, char *buffer,
+							t_data *data);
+int						handle_signs(char *str, int *i);
+int						to_next_q(char *str, char c);
+void					write_part(const char *str, char *result, int size);
+char					**split_tokenizer(t_list_arg *cmd, t_data *data);
+char					**split_first_equal(const char *s);
+void					*free_tab_clean(char *split[]);
+bool					isexitcode(char *input, int *i);
+bool					isSingleQuote(char c);
+bool					isvariable(char *input, int *i);
+char					*passtilnextquote(char *input, int *i, char *buffer,
+							int *j);
+bool					isheredoc(char *input, int *i);
+int						triple_sign_checker(char *str, t_data *data);
+void					fill_array_sign(t_data *data, char *str,
+							t_list_arg *tmp);
+int						sort_sign(t_list_arg *tmp, t_data *data);
+int						get_word_size(char *str);
+void					free_cleaned_array(char **array);
+void					free_cleaned_str(char *str);
+void					init_quote(t_quote *tool_box, char *str);
+void					handle_single_quotes_t(char *str, t_data *data);
+void					init_expand(t_data *data);
 
 /**[EXEC]**/
 
@@ -312,15 +320,25 @@ void					error_excve(t_data *data);
 void					exec_one_pipe(t_data *data);
 void					exit_error(char *str);
 void					first_child_process(t_data *data);
+void					check_and_dup_fisrt(t_data *data);
+void					check_and_dup_second(t_data *data);
+void					execute_builtin_first_pipe(t_data *data,
+							t_list_arg *rpl, int i);
+void					execute_builtin_second_pipe(t_data *data,
+							t_list_arg *tmp, int i);
 void					second_child_process(t_data *data);
 void					exec_multi_pipe(t_data *data);
 void					init_tubes(t_data *data);
+void					check_dir_and_perm_op(t_data *data, t_list_arg *rpl);
 void					close_tubes(t_data *data);
 void					children_process(t_data *data);
 void					first_pipe(t_data *data, t_list_arg *tok);
 void					last_pipe(t_data *data, t_list_arg *tok);
 void					intermediate_pipe(t_data *data, t_list_arg *tok);
 void					reset_in_out(t_data *data);
+void					init_outfile_cmd(t_data *data, t_list_arg *tok, int i);
+void					init_outfile_builtin(t_data *data, t_list_arg *tok,
+							int i);
 void					error_init(t_data *data, char *str);
 void					error_cmd(t_data *data, t_list_arg *tok);
 void					error_execve_multi(t_data *data, t_list_arg *tok);
@@ -335,6 +353,7 @@ void					rm_tmp_file(t_data *data);
 void					add_tmp_file(t_data *data, const char *file_name);
 void					hd_or_rdr_no_cmd(t_data *data);
 void					free_tmp_struct(t_data *data);
+
 void					hd_or_rdr_no_cmd_multi(t_data *data);
 void					error_dir_file_not_found(t_data *data, t_list_arg *tok);
 void					error_permission_denied(t_data *data, t_list_arg *tok);
@@ -346,19 +365,31 @@ void					error_is_a_dir_mup(t_data *data, t_list_arg *tok);
 void					error_cmd_single(t_data *data, t_list_arg *tok);
 void					cleanup_and_exit_single(t_data *data, int exit_code);
 void					free_resources_single(t_data *data);
+void					init_outfile(t_data *data, t_list_arg *tok, int i);
 void					error_is_a_dir_sgl(t_data *data, t_list_arg *tok);
 void					error_permission_denied_sgl(t_data *data,
 							t_list_arg *tok);
 void					error_cmd_op(t_data *data, t_list_arg *tok);
 void					cleanup_and_exit_op(t_data *data, int exit_code);
 void					free_resources_op(t_data *data);
+void					exit_cmd_here_doc(t_data *data, t_list_arg *rpl);
+void					execute_builtin_sub_proc(t_data *data, t_list_arg *rpl,
+							int i);
 void					error_is_a_dir_op(t_data *data, t_list_arg *tok);
+void					exit_only_here_doc(t_data *data);
 void					error_permission_denied_op(t_data *data,
 							t_list_arg *tok);
 void					build_tab_env(t_data *data);
 void					print_env(t_data *data);
 void					exec_builtin(t_data *data, t_list_arg *tok,
 							int builtin);
+void					execute_builtin(t_data *data, t_list_arg *tmp, int i);
+void					check_open_files(t_data *data);
+void					check_dir_and_perm(t_data *data, t_list_arg *tmp);
+void					init_multi_pipe(t_data *data);
+void					error_pid(t_data *data);
+void					setup_and_check(t_data *data, t_list_arg *tmp);
+void					check_dir_and_perm_sgl(t_data *data, t_list_arg *rpl);
 void					init_files_builtin(t_data *data, t_list_arg *tok,
 							int i);
 

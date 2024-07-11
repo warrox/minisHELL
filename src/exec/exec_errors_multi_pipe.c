@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 12:19:57 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:04:42 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void	file_not_found_multi(t_data *data, t_list_arg *tok)
 {
 	if (tok->file_array[0] != NULL)
-		write(2, tok->file_array[0], ft_strlen(tok->file_array[0]));
-	write(2, ": No such file or directory\n", 29);
-	dprintf(STDERR_FILENO, "CONNASSE@\n");
+		write(STDERR_FILENO, tok->file_array[0], ft_strlen(tok->file_array[0]));
+	write(STDERR_FILENO, ": No such file or directory\n", 29);
 	free(data->exec->cmd);
 	ft_clear_tokenizer(data);
 	close_tubes(data);
@@ -31,14 +30,14 @@ void	file_not_found_multi(t_data *data, t_list_arg *tok)
 	free_prompt(data);
 	free(data->signal);
 	ft_lst_arg_clear(&data->lst);
-	return;
+	return ;
 }
 
 void	error_execve_multi(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array != NULL)
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": command not found\n", 21);
+		write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(STDERR_FILENO, ": command not found\n", 21);
 	free_prompt(data);
 	free(data->signal);
 	if (data->exec->outfile != 1)
@@ -54,47 +53,29 @@ void	error_execve_multi(t_data *data, t_list_arg *tok)
 	exit(127);
 }
 
-void error_cmd(t_data *data, t_list_arg *tok)
+void	error_cmd(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": command not found\n", 20);
+		write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(STDERR_FILENO, ": command not found\n", 20);
 	cleanup_and_exit(data, 127);
 }
 
 void	error_init(t_data *data, char *str)
 {
-	ft_putstr_fd(str, 2);
+	ft_putstr_fd(str, STDERR_FILENO);
 	if (data->exec->multi_tube)
 		free(data->exec->multi_tube);
 	if (data->exec->pid)
 		free(data->exec->pid);
 	free_exec(data);
-	exit(1); // need to be checked !
+	exit(1);
 }
 
-void error_permission_denied(t_data *data, t_list_arg *tok)
+void	error_permission_denied(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": Permission denied\n", 20);
+		write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(STDERR_FILENO, ": Permission denied\n", 20);
 	cleanup_and_exit(data, 1);
 }
-
-void error_dir_file_not_found(t_data *data, t_list_arg *tok)
-{
-	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	dprintf(STDERR_FILENO, "CONNASSE\n");
-	write(2, ": No such file or directory\n", 29);
-	cleanup_and_exit(data, 1);
-}
-
-void error_is_a_dir_mup(t_data *data, t_list_arg *tok)
-{
-	if (tok->cmd_array && tok->cmd_array[0])
-		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
-	write(2, ": Is a directory\n", 17);
-	cleanup_and_exit(data, 1);
-}
-

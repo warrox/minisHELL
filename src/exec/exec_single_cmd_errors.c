@@ -6,13 +6,13 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 11:42:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:21:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void error_permission_denied_sgl(t_data *data, t_list_arg *tok)
+void	error_permission_denied_sgl(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
@@ -20,7 +20,7 @@ void error_permission_denied_sgl(t_data *data, t_list_arg *tok)
 	cleanup_and_exit_single(data, 1);
 }
 
-void error_is_a_dir_sgl(t_data *data, t_list_arg *tok)
+void	error_is_a_dir_sgl(t_data *data, t_list_arg *tok)
 {
 	if (data->exec->final_cmd)
 		free(data->exec->final_cmd);
@@ -30,7 +30,7 @@ void error_is_a_dir_sgl(t_data *data, t_list_arg *tok)
 	cleanup_and_exit_single(data, 126);
 }
 
-void free_resources_single(t_data *data)
+void	free_resources_single(t_data *data)
 {
 	free(data->exec->pid);
 	free_tmp_struct(data);
@@ -41,18 +41,18 @@ void free_resources_single(t_data *data)
 	ft_clear_tokenizer(data);
 }
 
-void cleanup_and_exit_single(t_data *data, int exit_code)
+void	cleanup_and_exit_single(t_data *data, int exit_code)
 {
 	if (data->exec->outfile != 1)
 		close(data->exec->outfile);
 	if (data->exec->infile != 0)
 		close(data->exec->infile);
-	// close_tubes(data);
 	data->exit_status = exit_code;
 	free_resources_single(data);
 	exit(exit_code);
 }
-void error_cmd_single(t_data *data, t_list_arg *tok)
+
+void	error_cmd_single(t_data *data, t_list_arg *tok)
 {
 	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));

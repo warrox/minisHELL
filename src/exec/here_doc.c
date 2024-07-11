@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 19:07:13 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:29:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*build_tmp_file(int idx)
 {
-	char *tmp_1;
-	char *tmp_2;
-	char *final;
-	
+	char	*tmp_1;
+	char	*tmp_2;
+	char	*final;
+
 	tmp_1 = NULL_INIT;
 	tmp_2 = NULL_INIT;
 	final = NULL_INIT;
@@ -31,10 +31,10 @@ char	*build_tmp_file(int idx)
 
 void	is_here_doc(t_data *data, t_list_arg *tok)
 {
-	int	i;
-	static int idx = ZERO_INIT;
-	char	*file;
-	
+	int			i;
+	static int	idx = ZERO_INIT;
+	char		*file;
+
 	file = NULL_INIT;
 	i = 0;
 	while (tok->file_array[i])
@@ -53,11 +53,13 @@ void	is_here_doc(t_data *data, t_list_arg *tok)
 		i++;
 	}
 }
+
 void	check_here_doc(t_data *data)
 {
-	t_list_arg *tmp = data->tokenizer;
+	t_list_arg	*tmp;
 
-	while(tmp)
+	tmp = data->tokenizer;
+	while (tmp)
 	{
 		is_here_doc(data, tmp);
 		tmp = tmp->next;
@@ -66,25 +68,21 @@ void	check_here_doc(t_data *data)
 
 void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 {
-	//int	fd;
+	char	*input;
 
-	char *input = NULL_INIT;
+	input = NULL_INIT;
 	data->tmp_files->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (data->tmp_files->fd < 0)
 		file_not_found(data, tok);
-	while(1)
+	while (1)
 	{
 		input = readline(">");
-		if (!input){
-			break;
-		}
+		if (!input)
+			break ;
 		if (ft_strcmp(tok->file_array[i], input) == 0)
-		{
-			break;
-		}
+			break ;
 		write(data->tmp_files->fd, input, ft_strlen(input));
 		write(data->tmp_files->fd, "\n", 1);
 	}
-	dprintf(2, "YES\n");
 	close(data->tmp_files->fd);
 }

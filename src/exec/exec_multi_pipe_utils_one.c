@@ -1,47 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   exec_multi_pipe_utils_one.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 13:52:27 by cyferrei         ###   ########.fr       */
+/*   Created: 2024/07/11 15:12:23 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/07/11 15:24:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	ft_ctrl_c(int sig)
+void	init_multi_pipe(t_data *data)
 {
-	(void)sig;
-	ft_putstr_fd("\n", 2);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_sig = 2;
+	data->exec->nb_node = nb_node(data);
+	data->exec->nb_tube = (data->exec->nb_node - 1) * 2;
+	data->exec->multi_tube = (int *)malloc(sizeof(int) * (data->exec->nb_tube));
 }
 
-void	ft_ctrl_c_children(int sig)
+void	error_pid(t_data *data)
 {
-	(void)sig;
-	g_sig = 2;
-}
-
-void	ft_back_slash(int sig)
-{
-	(void)sig;
-	g_sig = 3;
-}
-
-void	handle_signal_children(void)
-{
-	signal(SIGQUIT, ft_back_slash);
-	signal(SIGINT, ft_ctrl_c_children);
-}
-
-void	handle_signal_prompt(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_ctrl_c);
+	close_tubes(data);
+	free_resources(data);
+	exit(1);
 }
