@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:34:00 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/20 17:04:32 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:18:36 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void rm_tmp_file(t_data *data)
         free(current);
         current = next;
     }
-    data->tmp_files = NULL;
+    // free(data->tmp_files); // ADD by warren check if cyp ok
+	data->tmp_files = NULL;
 }
 
 void add_tmp_file(t_data *data, const char *file_name)
