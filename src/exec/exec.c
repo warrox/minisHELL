@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 15:41:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:13:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,19 @@ int	init_exec(t_data *data)
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
 	if (nb_node(data) == 1)
+	{
+		//dprintf(2, "TEST1\n");
 		exec_single_cmd(data);
+	}
 	else if (nb_node(data) == 2)
+	{
+		//dprintf(2, "TEST2\n");
 		exec_one_pipe(data);
+	}
 	else
+	{
+		//dprintf(2, "TEST3\n");
 		exec_multi_pipe(data);
+	}
 	return (WEXITSTATUS(data->exit_status));
 }	

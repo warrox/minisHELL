@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/25 14:55:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:07:13 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void	is_here_doc(t_data *data, t_list_arg *tok)
 void	check_here_doc(t_data *data)
 {
 	t_list_arg *tmp = data->tokenizer;
-	char *file;
-	
-	file = NULL_INIT;
+
 	while(tmp)
 	{
 		is_here_doc(data, tmp);
@@ -68,12 +66,11 @@ void	check_here_doc(t_data *data)
 
 void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 {
-	int	fd;
+	//int	fd;
 
 	char *input = NULL_INIT;
-	fd = ZERO_INIT;
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
+	data->tmp_files->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (data->tmp_files->fd < 0)
 		file_not_found(data, tok);
 	while(1)
 	{
@@ -82,9 +79,12 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 			break;
 		}
 		if (ft_strcmp(tok->file_array[i], input) == 0)
+		{
 			break;
-		write(fd, input, ft_strlen(input));
-		write(fd, "\n", 1);
+		}
+		write(data->tmp_files->fd, input, ft_strlen(input));
+		write(data->tmp_files->fd, "\n", 1);
 	}
-	close(fd);
+	dprintf(2, "YES\n");
+	close(data->tmp_files->fd);
 }

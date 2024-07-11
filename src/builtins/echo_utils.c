@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 14:06:15 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 13:34:45 by cyferrei         ###   ########.fr       */
+/*   Created: 2024/07/11 12:02:53 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/07/11 12:44:34 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int	cmd_env(t_data *data)
+int	is_valid_flag_n(char *cmd)
 {
-	if (data->tokenizer->cmd_array[0] == NULL)
-		return (0);
-	if (data->lst != NULL)
+	int	j;
+
+	j = ZERO_INIT;
+	if (cmd[j] == '-')
 	{
-		print_lst(data, data->lst);
-		return (1);
+		j++;
+		while (cmd[j] == 'n' && cmd[j] != '\0')
+			j++;
+		if (cmd[j] == ' ' || cmd[j] == '\0')
+			return (1);
 	}
-	else
-		return (0);
+	return (0);
 }

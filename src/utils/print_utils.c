@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 01:56:57 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 15:00:27 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:42:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void	print_exec_utils(t_data *data)
 	{
 		if (tmp->array_sign)
 		{
+			//dprintf(2, "ICI COUNT %d\n", tmp->count_size);
 			if(tmp->count_size > 0)
 			{
-				dprintf(2, "ICI\n");
+				//dprintf(2, "ICI\n");
 				printf("---------------REDIRECTION ARRAY on node [%d]----------------\n",j);
 				i = 0;
 				while (i < tmp->count_size)

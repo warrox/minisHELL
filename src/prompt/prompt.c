@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 09:36:51 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 13:00:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	display_prompt(t_data *data)
 		if(input == NULL)
 		{
 		//	dprintf(2, "CTRL_D DETECTED\n");
-			dprintf(2, "exit\n");
+			//dprintf(2, "exit\n");
 			free_prompt(data);
 			free(data->signal);
 			ft_lst_arg_clear(&data->tokenizer);
@@ -48,7 +48,7 @@ int	display_prompt(t_data *data)
 		// int_nbr = ft_exit(data, input);
 		// if(int_nbr >= 0 && int_nbr <= 255)
 		// 	return(int_nbr);
-		// print_exec_utils(data);
+		//print_exec_utils(data);
 		init_exec(data);
 		if (input != NULL)
 			free_exec(data);
