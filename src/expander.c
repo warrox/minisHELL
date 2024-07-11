@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/11 10:07:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:45:22 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	passvardoc(char *input, int *i, char *buffer, int *j)
 {
@@ -82,6 +83,7 @@ void	expandvariable(t_data *data, char *input, char *buffer)
 		}
 		current = current->next;
 	}
+	free(b_copy);
 	passpartstring(&data->flag, &data->i, input);
 }
 
@@ -120,6 +122,8 @@ void	expander(t_data *data, char *input)
 			expandvariable(data, input, strexpanded);
 		else
 			strexpanded[data->j++] = input[data->i++];
+		if (data->i > (int)ft_strlen(input))
+			break ;
 	}
 	strexpanded[data->j] = '\0';
 	data->tokenizer->final_cmd = ft_strdup(strexpanded);
