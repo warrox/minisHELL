@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:13:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:30:31 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void	exec_sub_proc(t_data *data)
 	if (is_a_builtin(rpl) != -1 && is_a_builtin(rpl) != -2)
 		return (execute_builtin_sub_proc(data, rpl, i));
 	data->exec->cmd = build_cmd(data, rpl);
-	if (data->exec->cmd == NULL)
-		error_cmd_single(data, rpl);
 	if (is_redir(rpl))
 	{
 		while (rpl->file_array[i] != 0)
@@ -114,6 +112,9 @@ void	exec_sub_proc(t_data *data)
 	}
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(rpl) != 0)))
 		hd_or_rdr_no_cmd(data);
+	if (data->exec->cmd == NULL)
+		error_cmd_single(data, rpl);
+	dprintf(2, "ICI --> %s\n", data->exec->cmd);
 	if (data->exec->here_doc && data->exec->cmd)
 		exit_cmd_here_doc(data, rpl);
 	check_dir_and_perm_sgl(data, rpl);

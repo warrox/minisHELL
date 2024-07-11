@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 13:00:58 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:26:38 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ int	display_prompt(t_data *data)
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
-		//check if empty string of whitespace only
 		input = readline(data->prompt->usr_prompt);	
 		if(input == NULL)
 		{
-		//	dprintf(2, "CTRL_D DETECTED\n");
-			//dprintf(2, "exit\n");
+			//ft_putstr_fd("exit\n", STDERR_FILENO);
 			free_prompt(data);
 			free(data->signal);
 			ft_lst_arg_clear(&data->tokenizer);
@@ -44,19 +42,17 @@ int	display_prompt(t_data *data)
 		}
 		if(skip_ws_prompt(data, input))
 			continue;
-		input_cpy = parser(input, data);
-		// int_nbr = ft_exit(data, input);
-		// if(int_nbr >= 0 && int_nbr <= 255)
-		// 	return(int_nbr);
-		//print_exec_utils(data);
-		init_exec(data);
-		if (input != NULL)
+		input_cpy = parser(input, data);	
+		if(input_cpy != NULL)
+		{
+			init_exec(data);
 			free_exec(data);
-		ft_clear_tokenizer(data);
-		add_history(input);
-		free_tmp_struct(data);
+			add_history(input);
+			ft_clear_tokenizer(data);
+			free(input);
+			free_tmp_struct(data);
+		}
 		free_prompt(data);
-		free(input);
 	}
 	return (0);
 }
