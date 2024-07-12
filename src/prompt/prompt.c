@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 18:41:12 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 18:48:15 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	display_prompt(t_data *data)
 		data->input_cpy = parser(data->input, data);
 		if (data->input_cpy != NULL)
 			not_input_cpy(data);
+		ft_clear_tokenizer(data);
 		free_prompt(data);
 	}
 	return (0);
