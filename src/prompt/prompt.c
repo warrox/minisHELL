@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 09:41:19 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 09:52:07 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 int		g_sig;
 
@@ -46,9 +47,9 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		data->input = readline(data->prompt->usr_prompt);
-		data->input_cpy = parser(data->input, data);
 		if (skip_ws_prompt(data, data->input))
 			continue ;
+		data->input_cpy = parser(data->input, data);
 		if (data->input_cpy != NULL)
 		{
 			init_exec(data);

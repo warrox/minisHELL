@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_sub_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:30:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:54:10 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	exec_sub_proc(t_data *data)
 		hd_or_rdr_no_cmd(data);
 	if (data->exec->cmd == NULL)
 		error_cmd_single(data, rpl);
-	dprintf(2, "ICI --> %s\n", data->exec->cmd);
 	if (data->exec->here_doc && data->exec->cmd)
 		exit_cmd_here_doc(data, rpl);
 	check_dir_and_perm_sgl(data, rpl);
