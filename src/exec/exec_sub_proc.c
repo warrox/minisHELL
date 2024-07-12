@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 14:49:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:17:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	second_child_process(t_data *data)
 	if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
 		execute_builtin_second_pipe(data, tmp, i);
 	data->exec->cmd = build_cmd(data, tmp);
-	if (data->exec->cmd == NULL)
+	if (data->exec->cmd == NULL || tmp->cmd_array[0][0] == '\0')
 		error_cmd_op(data, tmp);
 	if (is_redir(tmp))
 	{
@@ -52,7 +52,7 @@ void	first_child_process(t_data *data)
 	if (is_a_builtin(rpl) != -1 && is_a_builtin(rpl) != -2)
 		execute_builtin_first_pipe(data, rpl, i);
 	data->exec->cmd = build_cmd(data, rpl);
-	if (data->exec->cmd == NULL)
+	if (data->exec->cmd == NULL || data->tokenizer->cmd_array[0][0] == '\0')
 		error_cmd_op(data, rpl);
 	if (is_redir(rpl))
 	{
@@ -112,7 +112,7 @@ void	exec_sub_proc(t_data *data)
 	}
 	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(rpl) != 0)))
 		hd_or_rdr_no_cmd(data);
-	if (data->exec->cmd == NULL)
+	if (data->exec->cmd == NULL || data->tokenizer->cmd_array[0][0] == '\0')
 		error_cmd_single(data, rpl);
 	if (data->exec->here_doc && data->exec->cmd)
 		exit_cmd_here_doc(data, rpl);

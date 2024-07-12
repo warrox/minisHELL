@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 15:20:26 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:17:39 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	children_process(t_data *data)
 		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
 			execute_builtin(data, tmp, i);
 		data->exec->cmd = build_cmd(data, tmp);
-		if (data->exec->cmd == NULL)
+		if (data->exec->cmd == NULL || tmp->cmd_array[0][0] == '\0')
 			error_cmd(data, tmp);
 		setup_and_check(data, tmp);
 	}
