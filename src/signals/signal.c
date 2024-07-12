@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 16:07:18 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 18:22:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,18 @@ void	ft_ctrl_c(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_sig = 2;
-	// exit 130;
 }
 
 void	ft_ctrl_c_children(int sig)
 {
 	(void)sig;
 	g_sig = 2;
-	//exit 130
 }
+
 void	ft_back_slash(int sig)
 {
 	(void)sig;
 	g_sig = 3;
-	// exit 131
 }
 
 void	handle_signal_children(void)
@@ -44,9 +42,9 @@ void	handle_signal_children(void)
 
 void	handle_signal_prompt(void)
 {
-	if(g_sig == 2)
+	if (g_sig == 2)
 		ft_putstr_fd("exit\n", 2);
-	if(g_sig == 3)
+	if (g_sig == 3)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ft_ctrl_c);

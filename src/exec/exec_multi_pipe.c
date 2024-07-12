@@ -6,183 +6,102 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 16:11:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:20:26 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	intermediate_pipe(t_data *data, t_list_arg *tok)
+void	check_dir_and_perm(t_data *data, t_list_arg *tmp)
 {
-	int	i;
+	if (access(data->exec->cmd, F_OK) != 0)
+		error_dir_file_not_found(data, tmp);
+	if (access(data->exec->cmd, X_OK) != 0)
+		error_permission_denied(data, tmp);
+	if (check_dir(data->exec->cmd) == -1)
+		error_is_a_dir_mup(data, tmp);
+}
 
-	i = 0; 
-	if (is_redir(tok))
-	{
-		while(tok->array_sign[i] != 0)
-			init_files_multi(data, tok, i++);
-	}
-	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
-		hd_or_rdr_no_cmd_multi(data);
-	if (data->exec->infile != 0)
-	{
-		dup2(data->exec->infile, STDIN_FILENO);
-		close(data->exec->infile);
-	}
-	else 
-		dup2(data->exec->multi_tube[2 * data->exec->index - 2], STDIN_FILENO);
+void	execute_builtin(t_data *data, t_list_arg *tmp, int i)
+{
+	init_files_builtin(data, tmp, i);
+	setup_pipes(data, tmp);
+	exec_builtin(data, tmp, is_a_builtin(tmp));
 	if (data->exec->outfile != 1)
-	{
-		dup2(data->exec->outfile, STDOUT_FILENO);
 		close(data->exec->outfile);
-	}
-	else
-		dup2(data->exec->multi_tube[2 * data->exec->index + 1], STDOUT_FILENO);
+	if (data->exec->infile != 0)
+		close(data->exec->infile);
+	close_tubes(data);
+	free_resources(data);
+	exit(1);
 }
 
-void	last_pipe(t_data *data, t_list_arg *tok)
+void	print_tmp_files(t_data *data)
 {
-	int	i;
-	i = 0;
-	if (is_redir(tok))
+	t_tmp_files	*current;
+
+	current = data->tmp_files;
+	printf("Liste des fichiers temporaires :\n");
+	while (current != NULL)
 	{
-		while(tok->file_array[i])
-			init_files_multi(data, tok, i++);
+		printf("Nom du fichier : %s, Descripteur de fichier : %d\n",
+			current->file_name, current->fd);
+		current = current->next;
 	}
-	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
-	{
-		// dprintf(2, "TAMERE %d\n", data->exec->infile);
-		hd_or_rdr_no_cmd_multi(data);
-	}
-	if (data->exec->infile != 0)
-	{
-		dup2(data->exec->infile, STDIN_FILENO);
-		close(data->exec->infile);
-	}
-	else
-		dup2(data->exec->multi_tube[data->exec->index * 2 - 2], STDIN_FILENO);
-	if (data->exec->outfile != 1)
-	{
-		dup2(data->exec->outfile, STDOUT_FILENO);
-		close (data->exec->outfile);
-	}
-	else
-		dup2 (1, STDOUT_FILENO);
 }
 
-void	first_pipe(t_data *data, t_list_arg *tok)
-{
-	int	i;
-	
-	i = ZERO_INIT;
-	if (is_redir(tok))
-	{
-		while(tok->file_array[i])
-			init_files_multi(data, tok, i++);
-	}
-	// dprintf(2, "IN : %d || OUT : %d\n", data->exec->infile, data->exec->outfile);
-	if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
-	{
-		hd_or_rdr_no_cmd_multi(data);
-	}
-	if (data->exec->infile != 0)
-	{
-		// dprintf(2, "INFILE!\n");
-		dup2(data->exec->infile, STDIN_FILENO);
-		close(data->exec->infile);
-	}
-	else
-		dup2(0, STDIN_FILENO);
-	if (data->exec->outfile != 1)
-	{
-		// dprintf(2, "%s\n", tok->file_array[1]);
-		// dprintf(2, "OUTFILE!\n");
-		dup2(data->exec->outfile, STDOUT_FILENO);
-		close(data->exec->outfile);
-	}
-	else
-		dup2(data->exec->multi_tube[1], STDOUT_FILENO);
-}
 void	children_process(t_data *data)
 {
-	int i;
-	t_list_arg *tmp = data->tokenizer;
+	int			i;
+	t_list_arg	*tmp;
 
+	tmp = data->tokenizer;
 	i = 0;
 	check_here_doc(data);
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
-	{
-		close_tubes(data);
-		free_resources(data);
-		exit(1);
-	}
+		error_pid(data);
 	if (data->exec->pid[data->exec->index] == 0)
 	{
-		while(i != data->exec->index && tmp)
+		while (i != data->exec->index && tmp)
 		{
 			tmp = tmp->next;
 			i++;
 		}
 		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
-		{
-			init_files_builtin(data, tmp, i);
-			setup_pipes(data, tmp);
-			exec_builtin(data, tmp, is_a_builtin(tmp));
-			if (data->exec->outfile != 1)
-				close(data->exec->outfile);
-			if (data->exec->infile != 0)
-				close (data->exec->infile);
-			close(data->exec->tube[0]);
-			close(data->exec->tube[1]);
-			close_tubes(data);
-			free_resources(data);
-			exit(1);
-		}
+			execute_builtin(data, tmp, i);
 		data->exec->cmd = build_cmd(data, tmp);
 		if (data->exec->cmd == NULL)
 			error_cmd(data, tmp);
-		setup_pipes(data, tmp);
-		if (access(data->exec->cmd, F_OK) != 0)
-			error_dir_file_not_found(data, tmp);
-		if (access(data->exec->cmd, X_OK) != 0)
-			error_permission_denied(data, tmp);
-		if (check_dir(data->exec->cmd) == -1)
-			error_is_a_dir_mup(data, tmp);
-		close_tubes(data);
-		execve(data->exec->cmd, tmp->cmd_array, data->exec->my_envp);
-		error_execve_multi(data, tmp);
+		setup_and_check(data, tmp);
 	}
 }
 
 void	exec_multi_pipe(t_data *data)
 {
 	int	i;
-	// int status = 0;
-	int status;
-	
+	int	status;
+	int	j;
+
 	i = ZERO_INIT;
-	data->exec->nb_node = nb_node(data);
-	data->exec->nb_tube = (data->exec->nb_node - 1) * 2;
-	data->exec->multi_tube = (int *)malloc(sizeof(int) * (data->exec->nb_tube));
+	init_multi_pipe(data);
 	if (!data->exec->multi_tube)
 		error_init(data, "Failed to allocate memory for pipes!\n");
 	data->exec->pid = ft_calloc(data->exec->nb_node + 1, sizeof(pid_t));
 	if (!data->exec->pid)
 		error_init(data, "Failed to int pid!\n");
-	init_tubes(data);
-	init_tmp_struct(data);
-	while(++(data->exec->index) < data->exec->nb_node)
+	(init_tmp_struct(data), init_tubes(data));
+	while (++(data->exec->index) < data->exec->nb_node)
 	{
-		if(!data->exec->multi_tube)
+		if (!data->exec->multi_tube)
 			init_tubes(data);
 		children_process(data);
 	}
 	close_tubes(data);
-	int j = 0;
+	check_open_files(data);
+	j = 0;
 	while (j < data->exec->nb_node)
 		waitpid(data->exec->pid[j++], &status, 0);
 	data->exit_status = WEXITSTATUS(status);
-	free(data->exec->multi_tube);
-	free(data->exec->pid);
+	(free(data->exec->pid), free(data->exec->multi_tube));
 }

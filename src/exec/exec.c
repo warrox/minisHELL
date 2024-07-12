@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/08 15:41:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:59:49 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	reset_in_out(t_data *data)
 
 int	nb_node(t_data *data)
 {
-	int	i;
-	t_list_arg *tmp = NULL_INIT;
-	
+	int			i;
+	t_list_arg	*tmp;
+
+	tmp = NULL_INIT;
 	tmp = data->tokenizer;
 	i = ZERO_INIT;
 	while (tmp)
@@ -57,36 +58,39 @@ void	init_struct_exec(t_data *data)
 	data->exit_status = 0;
 }
 
-void  exec_single_cmd(t_data *data)
+void	exec_single_cmd(t_data *data)
 {
-    handle_signal_children();
-    init_tmp_struct(data);
-    check_here_doc(data);
-    if (is_a_builtin(data->tokenizer) == -1 || is_a_builtin(data->tokenizer) == -2)
-    {
-        data->exec->pid_1 = fork();
-        if (data->exec->pid_1 == -1)
-            return;
-        if (data->exec->pid_1 == 0)
-            exec_sub_proc(data);
-        else
-        {
-            int status;
-            waitpid(data->exec->pid_1, &status, 0);
-            data->exit_status = WEXITSTATUS(status);
-        }
-    }
-    else
-    {
-        // data->exit_status = 1;
+	int			status;
+	t_list_arg	*rpl;
+
+	rpl = data->tokenizer;
+	handle_signal_children();
+	init_tmp_struct(data);
+	check_here_doc(data);
+	if (is_a_builtin(rpl) == -1 || is_a_builtin(rpl) == -2)
+	{
+		data->exec->pid_1 = fork();
+		if (data->exec->pid_1 == -1)
+			return ;
+		if (data->exec->pid_1 == 0)
+			exec_sub_proc(data);
+		else
+		{
+			waitpid(data->exec->pid_1, &status, 0);
+			data->exit_status = WEXITSTATUS(status);
+		}
+	}
+	else
+	{
 		exec_sub_proc(data);
-        free_tmp_struct(data);
-    }
+		free_tmp_struct(data);
+	}
 }
 
 int	init_exec(t_data *data)
 {
 	int	i;
+
 	i = ZERO_INIT;
 	init_struct_exec(data);
 	build_tab_env(data);
@@ -99,4 +103,4 @@ int	init_exec(t_data *data)
 	else
 		exec_multi_pipe(data);
 	return (WEXITSTATUS(data->exit_status));
-}	
+}

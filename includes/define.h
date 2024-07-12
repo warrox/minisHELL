@@ -26,28 +26,30 @@
 # define APPEND 7
 # define BUFFER_SIZE 1024
 
-#define GENERAL_ERRORS 1
-#define MISUSE_BULTINS 2
-#define CMD_INVOKED_CANTEXEC 126 
-#define CMD_NOT_FOUND 127
-#define INVALID_ARG_EXIT 128
+# define GENERAL_ERRORS 1
+# define MISUSE_BULTINS 2
+# define CMD_INVOKED_CANTEXEC 126
+# define CMD_NOT_FOUND 127
+# define INVALID_ARG_EXIT 128
 
-enum {
-    ENV,
-    CMD,
-    PWD,
-    CD,
-    EXPORT,
-    UNSET,
-    ECHO,
-    EXIT
+enum
+{
+	ENV,
+	CMD,
+	PWD,
+	CD,
+	EXPORT,
+	UNSET,
+	ECHO,
+	EXIT
 };
 
-/*     Exit code 1: General errors, such as “divide by zero” and other impermissible operations
-    Exit code 2: Misuse of shell builtins, according to Bash documentation
-    Exit code 126: Command invoked cannot execute
-    Exit code 127: “command not found”
-    Exit code 128: Invalid argument to exit
-    Exit codes 128+n: Fatal error signal “n”*/
+/*     Exit code 1: General errors,
+	such as “divide by zero” and other impermissible operations
+	Exit code 2: Misuse of shell builtins, according to Bash documentation
+	Exit code 126: Command invoked cannot execute
+	Exit code 127: “command not found”
+	Exit code 128: Invalid argument to exit
+	Exit codes 128+n: Fatal error signal “n”*/
 
 #endif

@@ -49,10 +49,10 @@ static void	unset_var(t_list_arg **head, t_list_arg *node_to_delete)
 
 int	cmd_unset(t_data *data)
 {
-	if (data->tokenizer->cmd_array[0] == NULL)
-		return (0);
 	t_list_arg	*tmp;
 
+	if (data->tokenizer->cmd_array[0] == NULL)
+		return (0);
 	tmp = NULL_INIT;
 	tmp = data->lst;
 	if (ft_strncmp(data->tokenizer->final_cmd, "unset", 5) == 0

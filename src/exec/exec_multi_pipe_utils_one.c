@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exec_multi_pipe_utils_one.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 14:06:15 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/26 13:34:45 by cyferrei         ###   ########.fr       */
+/*   Created: 2024/07/11 15:12:23 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/07/11 15:24:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int	cmd_env(t_data *data)
+void	init_multi_pipe(t_data *data)
 {
-	if (data->tokenizer->cmd_array[0] == NULL)
-		return (0);
-	if (data->lst != NULL)
-	{
-		print_lst(data, data->lst);
-		return (1);
-	}
-	else
-		return (0);
+	data->exec->nb_node = nb_node(data);
+	data->exec->nb_tube = (data->exec->nb_node - 1) * 2;
+	data->exec->multi_tube = (int *)malloc(sizeof(int) * (data->exec->nb_tube));
+}
+
+void	error_pid(t_data *data)
+{
+	close_tubes(data);
+	free_resources(data);
+	exit(1);
 }

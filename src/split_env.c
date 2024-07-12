@@ -1,53 +1,69 @@
-#include "../includes/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 17:31:38 by cyferrei          #+#    #+#             */
+/*   Updated: 2024/07/11 17:37:36 by cyferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell_lib.h"
 
-static char *strdup_until(const char *str, char delimiter) {
-    size_t len = 0;
-    while (str[len] && str[len] != delimiter)
-        len++;
-    char *dup = malloc((len + 1) * sizeof(char));
-    if (!dup)
-        return NULL;
-    size_t i = 0;
-    while (i < len) {
-        dup[i] = str[i];
-        i++;
-    }
-    dup[len] = '\0';
-    return dup;
+void	case_not_equal_pos(char **result, const char *s)
+{
+	result = malloc(2 * sizeof(char *));
+	result[0] = strdup(s);
+	result[1] = NULL;
 }
 
-char **split_first_equal(const char *s) {
-    char **result;
-    char *first_part;
-    char *second_part;
-    char *equal_pos;
+static char	*strdup_until(const char *str, char delimiter)
+{
+	size_t	len;
+	char	*dup;
+	size_t	i;
 
-    if (!s)
-        return NULL;
+	len = 0;
+	while (str[len] && str[len] != delimiter)
+		len++;
+	dup = malloc((len + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	dup[len] = '\0';
+	return (dup);
+}
 
-    equal_pos = ft_strchr(s, '=');
-    if (!equal_pos) {
-        result = malloc(2 * sizeof(char *));
-        result[0] = strdup(s);
-        result[1] = NULL;
-        return result;
-    }
+char	**split_first_equal(const char *s)
+{
+	char	**result;
+	char	*first_part;
+	char	*second_part;
+	char	*equal_pos;
 
-    first_part = strdup_until(s, '=');
-    second_part = ft_strdup(equal_pos + 1);
-
-    result = malloc(3 * sizeof(char *));
-    if (!result || !first_part || !second_part) {
-        free(first_part);
-        free(second_part);
-        free(result);
-        return NULL;
-    }
-
-    result[0] = first_part;
-    result[1] = second_part;
-    result[2] = NULL;
-
-    return result;
+	result = NULL;
+	if (!s)
+		return (NULL);
+	equal_pos = ft_strchr(s, '=');
+	if (!equal_pos)
+	{
+		case_not_equal_pos(result, s);
+		return (result);
+	}
+	first_part = strdup_until(s, '=');
+	second_part = ft_strdup(equal_pos + 1);
+	result = malloc(3 * sizeof(char *));
+	if (!result || !first_part || !second_part)
+		return (free(first_part), free(second_part), free(result), NULL);
+	result[0] = first_part;
+	result[1] = second_part;
+	result[2] = NULL;
+	return (result);
 }

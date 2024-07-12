@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell_lib.h"
 
-void	init_check_quote(int *first_enter,
-		int *signal, t_data *data)
+void	init_check_quote(int *first_enter, int *signal, t_data *data)
 {
 	data->i = 0;
 	data->flag_s = 0;

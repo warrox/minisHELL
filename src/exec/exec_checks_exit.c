@@ -6,39 +6,11 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:47:07 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/09 17:55:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:00:46 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-
-// void	error_is_a_dir_onep(t_data *data, t_list_arg *tmp)
-// {
-// 	if (tmp->cmd_array != NULL)
-// 		write(2, tmp->cmd_array[0], ft_strlen(tmp->cmd_array[0]));
-// 	write(2, ": Is a directory\n", 18);
-// 	ft_clear_tokenizer(data);
-// 	free_prompt(data);
-// 	free_exec(data);
-// 	free(data->signal);
-// 	free_tmp_struct(data);
-// 	ft_lst_arg_clear(&data->lst);
-// 	exit(126);
-// }
-
-// void	error_is_a_dir(t_data *data)
-// {
-// 	if (data->tokenizer->cmd_array != NULL)
-// 		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
-// 	write(2, ": Is a directory\n", 18);
-// 	ft_clear_tokenizer(data);
-// 	free_prompt(data);
-// 	free_exec(data);
-// 	free(data->signal);
-// 	free_tmp_struct(data);
-// 	ft_lst_arg_clear(&data->lst);
-// 	exit(126);
-// }
 
 int	check_dir(char *file)
 {
@@ -57,7 +29,7 @@ int	check_dir(char *file)
 	return (0);
 }
 
-void cleanup_and_exit(t_data *data, int exit_code)
+void	cleanup_and_exit(t_data *data, int exit_code)
 {
 	if (data->exec->outfile != 1)
 		close(data->exec->outfile);
@@ -68,8 +40,9 @@ void cleanup_and_exit(t_data *data, int exit_code)
 	exit(exit_code);
 }
 
-void free_resources(t_data *data)
+void	free_resources(t_data *data)
 {
+	rm_tmp_file(data);
 	free(data->exec->multi_tube);
 	free(data->exec->pid);
 	free_tmp_struct(data);
@@ -87,7 +60,7 @@ void	close_tubes(t_data *data)
 	i = ZERO_INIT;
 	if (data->exec->multi_tube)
 	{
-		while(i < data->exec->nb_tube)
+		while (i < data->exec->nb_tube)
 		{
 			close(data->exec->multi_tube[i]);
 			i++;

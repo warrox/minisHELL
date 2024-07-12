@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/06/04 16:20:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:33:43 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	create_new_var(t_data *data, char *key, char *value)
 	build_var = ft_strjoin(key, "=");
 	final_var = ft_strjoin(build_var, value);
 	ft_lstadd_arg_back(&data->lst, ft_lst_arg_new(data->lst, &final_var[i]));
-	// IL FAUT FREE DATA->LST
 	free(build_var);
 	free(final_var);
 }
