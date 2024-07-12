@@ -6,12 +6,11 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/12 12:56:18 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 13:25:01 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
-#include <stdio.h>
 
 void	passvardoc(char *input, int *i, char *buffer, int *j)
 {
@@ -72,8 +71,7 @@ void	expandvariable(t_data *data, char *input, char *buffer)
 	{
 		data->key_len = ft_strlen(current->key_and_val[0]);
 		if (!ft_strncmp(&input[data->i], current->key_and_val[0], data->key_len)
-			|| (!data->dq
-				&& (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
+			&& ((!data->dq || data->dq) && (ft_strlen(current->key_and_val[0]) == ft_strlen(b_copy))))
 		{
 			data->flag = 1;
 			ft_strlcat(buffer, current->key_and_val[1], 4096);
