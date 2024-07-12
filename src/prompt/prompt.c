@@ -6,13 +6,23 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:20:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:28:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
 extern int		g_sig;
+
+void	not_input_cpy(t_data *data)
+{
+	init_exec(data);
+	free_exec(data);
+	add_history(data->input);
+	ft_clear_tokenizer(data);
+	free(data->input);
+	free_tmp_struct(data);
+}
 
 void	init_display(char *input, int *int_nbr, char *input_cpy, t_data *data)
 {
@@ -58,14 +68,7 @@ int	display_prompt(t_data *data)
 			continue ;
 		data->input_cpy = parser(data->input, data);
 		if (data->input_cpy != NULL)
-		{
-			init_exec(data);
-			free_exec(data);
-			add_history(data->input);
-			ft_clear_tokenizer(data);
-			free(data->input);
-			free_tmp_struct(data);
-		}
+			not_input_cpy(data);
 		free_prompt(data);
 	}
 	return (0);
