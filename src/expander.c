@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/12 13:25:01 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 13:46:20 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	passvardoc(char *input, int *i, char *buffer, int *j)
 {
