@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 13:55:42 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:22:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 /*global var*/
 
-extern int				g_sig;
+// extern int				g_sig;
 
 /*all structures*/
 
@@ -116,49 +116,6 @@ typedef struct s_list_arg
 	// -------------------------------
 }						t_list_arg;
 
-typedef struct s_data
-{
-	t_list_arg			*lst;
-	t_list_arg			*tokenizer;
-	t_list_arg			*sign_to_exe;
-	t_prompt			*prompt;
-	t_signal			*signal;
-	t_exec				*exec;
-	t_tmp_files			*tmp_files;
-	int					i;
-	int					j;
-	int					pansement;
-	int					pansement_2;
-	int					flag;
-	int					flag_s;
-	int					flag_d;
-	int					sq_flag;
-	int					quote_flag;
-	int					data_count;
-	//----new var----
-	int					*arrayIntExpand;
-	int					exit_status;
-	int					sq;
-	int					dq;
-	size_t				key_len;
-	int					spl;
-	int					dbl;
-	int					size;
-	int					signal_int;
-	char				strExpanded[4096];
-}						t_data;
-
-typedef struct s_quote
-{
-	int					len;
-	int					start;
-	int					end;
-	int					sf;
-	int					df;
-	int					i;
-	int					j;
-}						t_quote;
-
 typedef struct s_tool
 {
 	int					i;
@@ -176,6 +133,53 @@ typedef struct s_tool
 	int					index;
 
 }						t_tool;
+typedef struct s_data
+{
+	t_list_arg			*lst;
+	t_list_arg			*tokenizer;
+	t_list_arg			*sign_to_exe;
+	t_prompt			*prompt;
+	t_signal			*signal;
+	t_exec				*exec;
+	t_tmp_files			*tmp_files;
+	t_cd				tool_box;
+	int					i;
+	int					j;
+	int					pansement;
+	int					pansement_2;
+	int					buffer_size;
+	int					flag;
+	int					flag_2;
+	int					flag_s;
+	int					flag_d;
+	int					sq_flag;
+	int					quote_flag;
+	int					data_count;
+	//----new var----
+	int					exit_status;
+	int					sq;
+	int					dq;
+	size_t				key_len;
+	int					spl;
+	int					dbl;
+	int					size;
+	int					signal_int;
+	char				strexpanded[4096];
+	char				*input;
+	int					int_nbr;
+	char				*input_cpy;
+}						t_data;
+
+typedef struct s_quote
+{
+	int					len;
+	int					start;
+	int					end;
+	int					sf;
+	int					df;
+	int					i;
+	int					j;
+}						t_quote;
 
 /**[PRINT FUNCTIONS]**/
 
@@ -186,7 +190,8 @@ void					print_prompt_struct(t_data *data);
 void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
-
+int						count_word(char const *str, char c);
+t_list_arg				*find_key_pwd(t_data *data);
 int						is_a_builtin(t_list_arg *tok);
 int						cmd_unset(t_data *data);
 void					case_egal(t_data *data);
@@ -216,10 +221,10 @@ int						check_export_nothing(t_data *data);
 void					exec_cd_with_opt(t_data *data, t_list_arg *tmp,
 							t_list_arg *save_current, char *buffer);
 void					exec_cd(t_data *data, t_list_arg *tmp, char *buffer,
-							char *buffer_old, int buffer_size);
+							char *buffer_old);
 int						no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
 int						iterate_in_str(char *str);
-void					init_tool_box(t_cd *tool_box);
+void					init_tool_box(t_data *data);
 t_list_arg				*find_key_user(t_data *data);
 t_list_arg				*find_key_old_pwd(t_data *data);
 t_list_arg				*find_key_pwd(t_data *data);

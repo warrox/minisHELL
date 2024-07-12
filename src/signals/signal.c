@@ -6,11 +6,13 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:22:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:22:00 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+
+int	g_sig;
 
 void	ft_ctrl_c(int sig)
 {

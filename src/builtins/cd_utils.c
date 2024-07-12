@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:20:15 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 11:20:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:48:11 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	exec_cd_with_opt(t_data *data, t_list_arg *tmp,
 	ft_printf("%s\n", save_current->key_and_val[1]);
 }
 
-void	exec_cd(t_data *data, t_list_arg *tmp, char *buffer, char *buffer_old,
-		int buffer_size)
+void	exec_cd(t_data *data, t_list_arg *tmp, char *buffer, char *buffer_old)
 {
+	data->buffer_size = 4096;
 	tmp = find_key_pwd(data);
 	free(data->lst->key_and_val[1]);
 	data->lst->key_and_val[1] = NULL;
-	getcwd(buffer, buffer_size);
+	getcwd(buffer, data->buffer_size);
 	free(tmp->key_and_val[1]);
 	tmp->key_and_val[1] = NULL;
 	tmp->key_and_val[1] = ft_strdup(buffer);
@@ -73,8 +73,8 @@ int	iterate_in_str(char *str)
 	return (j);
 }
 
-void	init_tool_box(t_cd *tool_box)
+void	init_tool_box(t_data *data)
 {
-	tool_box->i = 0;
-	tool_box->j = 0;
+	data->tool_box.i = 0;
+	data->tool_box.j = 0;
 }

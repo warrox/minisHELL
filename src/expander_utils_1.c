@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 09:45:51 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/11 10:06:45 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 13:46:09 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	initexpandvariable(t_data *data)
 
 void	passpartstring(int *flag, int *i, char *input)
 {
-	if (flag == 0)
+	if (*flag == 0)
 	{
 		while (input[*i] && !ft_isws(input[*i]))
-			i++;
+			(*i)++;
 	}
 }
