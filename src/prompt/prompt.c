@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:11:40 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 18:41:12 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include <stdio.h>
 
 extern int		g_sig;
+
+void	not_input_cpy(t_data *data)
+{
+	init_exec(data);
+	free_exec(data);
+	add_history(data->input);
+	ft_clear_tokenizer(data);
+	free(data->input);
+	free_tmp_struct(data);
+}
 
 void	init_display(char *input, int *int_nbr, char *input_cpy, t_data *data)
 {
@@ -47,18 +57,19 @@ int	display_prompt(t_data *data)
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		data->input = readline(data->prompt->usr_prompt);
+		if (data->input == NULL)
+		{
+			ft_putstr_fd("exit\n", 2);
+			free_prompt(data);
+			free(data->signal);
+			ft_clear_tokenizer(data);
+            break;
+		}
 		if (skip_ws_prompt(data, data->input))
 			continue ;
 		data->input_cpy = parser(data->input, data);
 		if (data->input_cpy != NULL)
-		{
-			init_exec(data);
-			free_exec(data);
-			add_history(data->input);
-			free(data->input);
-			free_tmp_struct(data);
-			ft_clear_tokenizer(data);
-		}
+			not_input_cpy(data);
 		free_prompt(data);
 	}
 	return (0);

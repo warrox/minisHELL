@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:11:32 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:16:55 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	cleanup_and_exit_single(t_data *data, int exit_code)
 
 void	error_cmd_single(t_data *data, t_list_arg *tok)
 {
+	if (data->tokenizer->cmd_array[0][0] == '\0')
+		free(data->exec->final_cmd);
 	if (tok->cmd_array && tok->cmd_array[0])
 		write(2, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
 	data->exit_status = 127;

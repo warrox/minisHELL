@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/12 14:55:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:43:59 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	expandexitcode(int *i, t_data *data, char *strexpanded, int *j)
 	{
 		strexpanded[(*j)++] = itoa_exitcode[k++];
 	}
+	free(itoa_exitcode);
 }
 
 void	expander(t_data *data, char *input)

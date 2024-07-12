@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:11:44 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 12:39:26 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 18:45:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	init_tool(t_tool *tool, t_list_arg *lst)
 	tool->ii = 0;
 	tool->tmp = 0;
 	lst->file_array = NULL;
+	tool->dq = 0;
+	tool->end = 0;
 }
 
 void	create_signed(t_list_arg *lst)
