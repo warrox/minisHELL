@@ -6,7 +6,7 @@
 #    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/07/12 16:33:05 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/07/12 15:01:15 by cyferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra
+# -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined -fsanitize=integer -fsanitize=null -fsanitize=unreachable
 
 LIBFT_MINISHELL_PATH = libft
 LIBFT_MINISHELL = libft/libft.a
@@ -79,6 +80,11 @@ fclean: clean
 	@make -s fclean -C $(FT_PRINTF_PATH)
 	$(RM) $(NAME)
 	@echo "$(GREEN)Executable cleaned successfully!$(RESET)"
+	
+leak:
+	valgrind --suppressions=ignore_readline --trace-children=yes    \
+    --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -q  \
+    ./minishell
 	
 re: fclean all
 
