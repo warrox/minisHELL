@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:15:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 16:23:07 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 15:47:53 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*parser(char *input, t_data *data)
 {
 	char	*result;
 
+	if (!ft_strncmp(input, "\"\"", 2))
+		return (NULL);
 	if (*input == '\0')
 		return (input);
 	result = NULL;

@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:57:55 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 13:41:03 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 15:36:06 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	handle_double_quotes_flush(char *str, char *buffer, t_data *data)
 {

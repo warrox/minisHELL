@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 15:22:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:58:05 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 extern int		g_sig;
 
@@ -54,10 +55,10 @@ int	display_prompt(t_data *data)
 			init_exec(data);
 			free_exec(data);
 			add_history(data->input);
-			ft_clear_tokenizer(data);
 			free(data->input);
 			free_tmp_struct(data);
 		}
+		ft_clear_tokenizer(data);
 		free_prompt(data);
 	}
 	return (0);
