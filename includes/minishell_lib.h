@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 11:32:45 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 11:47:11 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_data
 	int					j;
 	int					pansement;
 	int					pansement_2;
+	int					buffer_size;
 	int					flag;
 	int					flag_2;
 	int					flag_s;
@@ -208,7 +209,7 @@ int						check_export_nothing(t_data *data);
 void					exec_cd_with_opt(t_data *data, t_list_arg *tmp,
 							t_list_arg *save_current, char *buffer);
 void					exec_cd(t_data *data, t_list_arg *tmp, char *buffer,
-							char *buffer_old, int buffer_size);
+							char *buffer_old);
 int						no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
 int						iterate_in_str(char *str);
 void					init_tool_box(t_data *data);

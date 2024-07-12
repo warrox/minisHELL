@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:34:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 11:40:52 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 11:47:51 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	check_cd(t_data *data, t_list_arg *tmp, char *path)
 		getcwd(data->tool_box.buffer_old, 4096);
 		if (chdir(path) == 0)
 			return (exec_cd(data, tmp, data->tool_box.buffer,
-					data->tool_box.buffer_old, 4096), 1);
+					data->tool_box.buffer_old), 1);
 	}
 	return (0);
 }
