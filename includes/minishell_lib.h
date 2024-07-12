@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 09:39:10 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 11:32:45 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,23 @@ typedef struct s_list_arg
 	// -------------------------------
 }						t_list_arg;
 
+typedef struct s_tool
+{
+	int					i;
+	int					j;
+	int					tmp;
+	int					ii;
+	int					end;
+	int					dq;
+	int					len;
+	char				*token_start;
+	char				*temp;
+	char				*temp_ptr;
+	int					in_single_quote;
+	int					in_double_quote;
+	int					index;
+
+}						t_tool;
 typedef struct s_data
 {
 	t_list_arg			*lst;
@@ -111,6 +128,7 @@ typedef struct s_data
 	t_signal			*signal;
 	t_exec				*exec;
 	t_tmp_files			*tmp_files;
+	t_cd				tool_box;
 	int					i;
 	int					j;
 	int					pansement;
@@ -149,23 +167,6 @@ typedef struct s_quote
 	int					j;
 }						t_quote;
 
-typedef struct s_tool
-{
-	int					i;
-	int					j;
-	int					tmp;
-	int					ii;
-	int					end;
-	int					dq;
-	int					len;
-	char				*token_start;
-	char				*temp;
-	char				*temp_ptr;
-	int					in_single_quote;
-	int					in_double_quote;
-	int					index;
-
-}						t_tool;
 
 /**[PRINT FUNCTIONS]**/
 
@@ -176,7 +177,8 @@ void					print_prompt_struct(t_data *data);
 void					print_exec_utils(t_data *data);
 
 /**[BUILTINS FUNCTIONS]**/
-
+int	count_word(char const *str, char c);
+t_list_arg	*find_key_pwd(t_data *data);
 int						is_a_builtin(t_list_arg *tok);
 int						cmd_unset(t_data *data);
 void					case_egal(t_data *data);
@@ -209,7 +211,7 @@ void					exec_cd(t_data *data, t_list_arg *tmp, char *buffer,
 							char *buffer_old, int buffer_size);
 int						no_arg(t_data *data, t_list_arg *tmp, char *path_hu);
 int						iterate_in_str(char *str);
-void					init_tool_box(t_cd *tool_box);
+void					init_tool_box(t_data *data);
 t_list_arg				*find_key_user(t_data *data);
 t_list_arg				*find_key_old_pwd(t_data *data);
 t_list_arg				*find_key_pwd(t_data *data);

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:34:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 11:35:22 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:40:52 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-#include <unistd.h>
 
 t_list_arg	*find_key_user(t_data *data)
 {
@@ -43,25 +42,10 @@ t_list_arg	*find_key_old_pwd(t_data *data)
 	return (tmp);
 }
 
-t_list_arg	*find_key_pwd(t_data *data)
-{
-	t_list_arg	*tmp;
-
-	tmp = data->lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->key_and_val[0], "PWD") == 0)
-			break ;
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
 int	cd_check_opt(char *path, t_data *data)
 {
 	t_list_arg	*tmp;
 	t_list_arg	*save_current;
-	t_cd		toolbox;
 
 	data->i = 0;
 	save_current = data->lst;
@@ -76,43 +60,26 @@ int	cd_check_opt(char *path, t_data *data)
 			data->i++;
 		if (path[data->i + 1] == '\0')
 		{
-			exec_cd_with_opt(data, tmp, save_current, toolbox.buffer);
+			exec_cd_with_opt(data, tmp, save_current, data->tool_box.buffer);
 			return (1);
 		}
 		else
-		{
-			ft_printf("cd: string not in pwd: -\n");
-			return (1);
-		}
+			return (ft_printf("cd: string not in pwd: -\n", 1));
 	}
 	return (0);
 }
 
-int	ft_current_directory(char *path, t_data *data)
+int	check_cd(t_data *data, t_list_arg *tmp, char *path)
 {
-	t_cd		tool_box;
-	t_list_arg	*tmp;
-
-	tmp = data->lst;
-	init_tool_box(&tool_box);
-	if (data->tokenizer->cmd_array[2])
-	{
-		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
-		data->exit_status = 1;
-		return (1);
-	}
 	if (ft_strstr(data->tokenizer->cmd_array[0], "cd")
 		|| (ft_strstr(data->tokenizer->cmd_array[0], "cd")
 			&& (data->tokenizer->cmd_array[0][2] == ' '
-				&& data->tokenizer->cmd_array[0][3] == '\0')))
+			&& data->tokenizer->cmd_array[0][3] == '\0')))
 	{
-		tool_box.j = iterate_in_str(data->tokenizer->final_cmd);
-		if (data->tokenizer->final_cmd[tool_box.i + 2] == '\0'
-			|| data->tokenizer->final_cmd[tool_box.j] == '\0')
-		{
-			no_arg(data, tmp, tool_box.path_hu);
-			return (1);
-		}
+		data->tool_box.j = iterate_in_str(data->tokenizer->final_cmd);
+		if (data->tokenizer->final_cmd[data->tool_box.i + 2] == '\0'
+			|| data->tokenizer->final_cmd[data->tool_box.j] == '\0')
+			return (no_arg(data, tmp, data->tool_box.path_hu));
 		if (cd_check_opt(path, data))
 			return (1);
 		if (chdir(path) == -1)
@@ -121,10 +88,32 @@ int	ft_current_directory(char *path, t_data *data)
 			data->exit_status = 1;
 			return (1);
 		}
-		getcwd(tool_box.buffer_old, 4096);
+		getcwd(data->tool_box.buffer_old, 4096);
 		if (chdir(path) == 0)
-			return (exec_cd(data, tmp, tool_box.buffer, tool_box.buffer_old,
-					4096), 1);
+			return (exec_cd(data, tmp, data->tool_box.buffer,
+					data->tool_box.buffer_old, 4096), 1);
 	}
+	return (0);
+}
+
+int	ft_current_directory(char *path, t_data *data)
+{
+	t_list_arg	*tmp;
+	int			i;
+	int			count;
+
+	tmp = data->lst;
+	i = 0;
+	count = 0;
+	init_tool_box(data);
+	while (data->tokenizer->cmd_array[i])
+		count += count_word(data->tokenizer->cmd_array[i++], ' ');
+	if (count > 2)
+	{
+		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
+		data->exit_status = 1;
+		return (1);
+	}
+	check_cd(data, tmp, path);
 	return (0);
 }
