@@ -42,9 +42,9 @@ void	handle_signal_children(void)
 
 void	handle_signal_prompt(void)
 {
-	if(g_sig == 2)
+	if (g_sig == 2)
 		ft_putstr_fd("exit\n", 2);
-	if(g_sig == 3)
+	if (g_sig == 3)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ft_ctrl_c);

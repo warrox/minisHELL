@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 17:28:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:55:42 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@
 extern int				g_sig;
 
 /*all structures*/
+
+typedef struct s_exit_data
+{
+	int					i;
+	char				str[4096];
+	char				s_nbr[4096];
+	int					nbr;
+	char				*nbr_char;
+	int					neg;
+	int					quote;
+	char				**tmp;
+	int					count;
+	int					j;
+}						t_exit_data;
 
 typedef struct s_tmp_files
 {
@@ -400,5 +414,18 @@ void					handle_signal_children(void);
 void					ft_ctrl_c(int sig);
 void					ft_ctrl_c_children(int sig);
 void					ft_back_slash(int sig);
+
+void					exit_helper(t_data *data);
+void					exit_args(t_data *data);
+void					exit_num(t_data *data, char *nbr_char);
+void					exit_quote(t_data *data, char *nbr_char, int nbr);
+void					exit_minus(t_data *data, int nbr, char *nbr_char);
+void					exit_plus(t_data *data, char *nbr_char, int nbr);
+void					exit_normal(t_data *data, char *nbr_char, int nbr);
+void					init_struct(t_exit_data *e, t_data *data);
+void					check_plus_minus(char *input, t_exit_data *e);
+void					check_helper(t_exit_data *e, t_data *data, char *input);
+void					execute_exit(char *input, t_exit_data *e, t_data *data);
+long					ft_atoi_long(const char *str);
 
 #endif
