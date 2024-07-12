@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 15:22:00 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:18:46 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	handle_signal_children(void)
 
 void	handle_signal_prompt(void)
 {
-	if (g_sig == 2)
-		ft_putstr_fd("exit\n", 2);
-	if (g_sig == 3)
-		ft_putstr_fd("Quit (core dumped)\n", 2);
+	// if (g_sig == 2)
+	// 	ft_putstr_fd("exit\n", 2);
+	// if (g_sig == 3)
+	// 	ft_putstr_fd("Quit (core dumped)\n", 2);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ft_ctrl_c);
 }
