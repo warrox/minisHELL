@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 10:04:42 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/11 17:40:05 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_data
 	int					pansement;
 	int					pansement_2;
 	int					flag;
+	int					flag_2;
 	int					flag_s;
 	int					flag_d;
 	int					sq_flag;
@@ -133,6 +134,9 @@ typedef struct s_data
 	int					size;
 	int					signal_int;
 	char				strExpanded[4096];
+	char				*input;
+	int					int_nbr;
+	char				*input_cpy;
 }						t_data;
 
 typedef struct s_quote
