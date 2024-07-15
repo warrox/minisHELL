@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 15:29:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:39:55 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,48 @@ void	check_here_doc(t_data *data)
 		tmp = tmp->next;
 	}
 }
+int g_sig;
 
 void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 {
 	char	*input;
-
+	char	*join;
+	char	*join_2;
+	data->spe_fd = ZERO_INIT;
 	input = NULL_INIT;
 	data->tmp_files->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (data->tmp_files->fd < 0)
 		file_not_found(data, tok);
+	if (data->exec->ctrl_heredoc)
+	{
+		close(data->tmp_files->fd);
+		return;
+	}
 	while (1)
 	{
+		handle_signal_here_doc();
 		input = readline(">");
-		if (!input)
+		if (!input && g_sig != 2) 
+		{
+			join = ft_strjoin("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", tok->file_array[i]);
+			join_2 = ft_strjoin(join, "')\n");
+			ft_putstr_fd(join_2, STDERR_FILENO);
+			free(join);
+			free(join_2);
 			break ;
+		} 
+		else if(g_sig == 2) 
+		{
+			write(1, "^C\n", 3);
+			data->spe_fd = open("/dev/tty", O_RDONLY);
+			data->exec->ctrl_heredoc = 1;
+			close(data->tmp_files->fd);
+			break;
+			//n'execute pas la commande ni les autres here_doc
+		}
 		if (ft_strcmp(tok->file_array[i], input) == 0)
 			break ;
 		write(data->tmp_files->fd, input, ft_strlen(input));
-		write(data->tmp_files->fd, "\n", 1);
 	}
 	close(data->tmp_files->fd);
 }

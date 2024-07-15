@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:39:20 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:16:29 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:38:53 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exit_cmd_here_doc(t_data *data, t_list_arg *rpl)
 
 void	exit_only_here_doc(t_data *data)
 {
+	close(data->spe_fd);
 	ft_clear_tokenizer(data);
 	free_prompt(data);
 	free_exec(data);

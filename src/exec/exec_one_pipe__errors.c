@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:17:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:06:56 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,21 @@ void	cleanup_and_exit_op(t_data *data, int exit_code)
 
 void	error_cmd_op(t_data *data, t_list_arg *tok)
 {
+	if (!tok->cmd_array[0])
+	{
+		//dprintf(2, "TESTS\n");
+		free(data->exec->final_cmd);
+		free(data->signal);
+		free_prompt(data);
+		free_tmp_struct(data);
+		//rm_tmp_file(data);
+		close(data->exec->tube[0]);
+		close(data->exec->tube[1]);
+		free_exec(data);
+		ft_lst_arg_clear(&data->lst);
+		ft_clear_tokenizer(data);
+		exit(127);
+	}
 	if (tok->cmd_array[0][0] == '\0')
 		free(data->exec->final_cmd);
 	if (tok->cmd_array && tok->cmd_array[0])

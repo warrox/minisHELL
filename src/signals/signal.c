@@ -6,13 +6,13 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:26:37 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:06:49 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-int	g_sig;
+extern int	g_sig;
 
 void	ft_ctrl_c(int sig)
 {
@@ -30,10 +30,23 @@ void	ft_ctrl_c_children(int sig)
 	g_sig = 2;
 }
 
+void	ft_ctrl_c_here_doc(int sig)
+{
+	(void)sig;
+	g_sig = 2;
+	close(STDIN_FILENO);
+}
+
 void	ft_back_slash(int sig)
 {
 	(void)sig;
 	g_sig = 3;
+}
+
+void	handle_signal_here_doc(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_ctrl_c_here_doc);
 }
 
 void	handle_signal_children(void)

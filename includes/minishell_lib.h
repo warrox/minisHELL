@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 15:22:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:59:51 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_exec
 	int					*multi_tube;
 	int					index;
 	char				**my_envp;
+	int					ctrl_heredoc;
 }						t_exec;
 
 typedef struct s_prompt
@@ -168,6 +169,7 @@ typedef struct s_data
 	char				*input;
 	int					int_nbr;
 	char				*input_cpy;
+	int					spe_fd;
 }						t_data;
 
 typedef struct s_quote
@@ -432,5 +434,7 @@ void					check_plus_minus(char *input, t_exit_data *e);
 void					check_helper(t_exit_data *e, t_data *data, char *input);
 void					execute_exit(char *input, t_exit_data *e, t_data *data);
 long					ft_atoi_long(const char *str);
+
+void	handle_signal_here_doc(void);
 
 #endif

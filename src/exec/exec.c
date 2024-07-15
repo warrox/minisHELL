@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 13:59:49 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:11:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_struct_exec(t_data *data)
 	data->exec->nb_tube = ZERO_INIT;
 	data->exec->index = -1;
 	data->exit_status = 0;
+	data->exec->ctrl_heredoc = 0;
 }
 
 void	exec_single_cmd(t_data *data)
@@ -64,16 +65,17 @@ void	exec_single_cmd(t_data *data)
 	t_list_arg	*rpl;
 
 	rpl = data->tokenizer;
-	handle_signal_children();
 	init_tmp_struct(data);
 	check_here_doc(data);
+	handle_signal_children();
 	if (is_a_builtin(rpl) == -1 || is_a_builtin(rpl) == -2)
 	{
 		data->exec->pid_1 = fork();
 		if (data->exec->pid_1 == -1)
 			return ;
-		if (data->exec->pid_1 == 0)
+		if (data->exec->pid_1 == 0) {
 			exec_sub_proc(data);
+		}
 		else
 		{
 			waitpid(data->exec->pid_1, &status, 0);
