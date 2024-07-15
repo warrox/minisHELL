@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:42:34 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:35:18 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ extern int	g_sig;
 void	ft_ctrl_c(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	rl_replace_line("", 1);
 	rl_redisplay();
 	g_sig = 2;
 }
@@ -27,6 +27,7 @@ void	ft_ctrl_c(int sig)
 void	ft_ctrl_c_children(int sig)
 {
 	(void)sig;
+	ft_putstr_fd("\n", 1);
 	g_sig = 2;
 }
 

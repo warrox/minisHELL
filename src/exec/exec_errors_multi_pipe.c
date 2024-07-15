@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:34:26 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:20 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	file_not_found_multi(t_data *data, t_list_arg *tok)
 {
-	dprintf(2, "TESTSififif\n");
 	if (tok->file_array[0] != NULL)
 		write(STDERR_FILENO, tok->file_array[0], ft_strlen(tok->file_array[0]));
 	write(STDERR_FILENO, ": No such file or directory\n", 29);
@@ -102,7 +101,6 @@ void	hd_or_rdr_no_cmd_multi(t_data *data, t_list_arg *tok)
 {
 	if (data->tokenizer->cmd_array != NULL)
 	{
-		dprintf(2, "ON PASSE\n");
 		if (tok->cmd_array[0] != NULL)
 			write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
 		write(STDERR_FILENO, ": command not found\n", 21);

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:41:44 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:32:24 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:23 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_outfile(t_data *data, t_list_arg *tok, int i)
 
 void	init_files_multi(t_data *data, t_list_arg *tok, int i)
 {
-	dprintf(2, "TOKTOK\n");
 	if (tok->array_sign[i] == STDOUTS)
 		init_outfile(data, tok, i);
 	else if (tok->array_sign[i] == STDINS)

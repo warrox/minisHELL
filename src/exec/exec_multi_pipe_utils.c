@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:22:59 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:31:31 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:31 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ void	first_pipe(t_data *data, t_list_arg *tok)
 		while (tok->file_array[i])
 			init_files_multi(data, tok, i++);
 	}
-	dprintf(2, "ICICICICICIC\n");
-	// if (!data->exec->cmd && (data->exec->here_doc || (is_redir(tok) != 0)))
-	// 	hd_or_rdr_no_cmd_multi(data, tok);
 	if (data->exec->infile != 0)
 	{
 		dup2(data->exec->infile, STDIN_FILENO);

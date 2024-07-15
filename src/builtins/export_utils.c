@@ -6,13 +6,13 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 11:33:43 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:01:57 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-void	create_new_var(t_data *data, char *key, char *value)
+void	 create_new_var(t_data *data, char *key, char *value)
 {
 	char	*build_var;
 	char	*final_var;

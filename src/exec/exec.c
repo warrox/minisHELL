@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:39:55 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:50:38 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	exec_single_cmd(t_data *data)
 	rpl = data->tokenizer;
 	init_tmp_struct(data);
 	check_here_doc(data);
-	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
-		return;
 	handle_signal_children();
 	if (is_a_builtin(rpl) == -1 || is_a_builtin(rpl) == -2)
 	{
@@ -81,7 +79,15 @@ void	exec_single_cmd(t_data *data)
 		else
 		{
 			waitpid(data->exec->pid_1, &status, 0);
-			data->exit_status = WEXITSTATUS(status);
+			if (WIFEXITED(status))
+			{
+				data->exit_status = WEXITSTATUS(status);
+			}
+			else if (WIFSIGNALED(status))
+			{
+				data->exit_status = (WTERMSIG(status));
+				data->exit_status += 128;
+			}
 		}
 	}
 	else
@@ -98,6 +104,7 @@ int	init_exec(t_data *data)
 	i = ZERO_INIT;
 	init_struct_exec(data);
 	build_tab_env(data);
+	g_sig = 0;
 	data->exec->path = get_path(data);
 	data->exec->path_cmd = ft_split(data->exec->path, ':');
 	if (nb_node(data) == 1)

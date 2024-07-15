@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 14:35:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:13:01 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_redir(t_list_arg *tok)
 	tmp = tok;
 	if (!tmp)
 		return (0);
-	if (tmp->array_sign[0])
+	if (tmp->file_array[0])
 		return (1);
 	return (0);
 }
