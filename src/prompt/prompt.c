@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 18:48:15 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/15 10:38:00 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	display_prompt2(t_data *data)
 {
 	if (data->input == NULL)
 	{
-		dprintf(2, "exit\n");
+		ft_putstr_fd("exit\n",1);
 		free_prompt(data);
 		free(data->signal);
 		ft_lst_arg_clear(&data->tokenizer);
