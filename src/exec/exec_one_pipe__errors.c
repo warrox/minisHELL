@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 12:06:56 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:51:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	error_cmd_op(t_data *data, t_list_arg *tok)
 {
 	if (!tok->cmd_array[0])
 	{
-		//dprintf(2, "TESTS\n");
+		write(2, ": command not found\n", 20);
 		free(data->exec->final_cmd);
 		free(data->signal);
 		free_prompt(data);

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 10:59:51 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:20:33 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 /*global var*/
 
-// extern int				g_sig;
+extern int				g_sig;
 
 /*all structures*/
 

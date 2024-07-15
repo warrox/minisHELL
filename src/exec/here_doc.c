@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 11:39:55 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:25:21 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,20 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 	data->tmp_files->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (data->tmp_files->fd < 0)
 		file_not_found(data, tok);
-	if (data->exec->ctrl_heredoc)
+	//dprintf(2, "ctrl_hd = %d\n", data->exec->ctrl_heredoc);
+	if (data->exec->ctrl_heredoc == 1)
 	{
 		close(data->tmp_files->fd);
 		return;
 	}
 	while (1)
 	{
+		g_sig = 0;
 		handle_signal_here_doc();
 		input = readline(">");
 		if (!input && g_sig != 2) 
 		{
+			data->exec->ctrl_heredoc = 2;
 			join = ft_strjoin("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", tok->file_array[i]);
 			join_2 = ft_strjoin(join, "')\n");
 			ft_putstr_fd(join_2, STDERR_FILENO);
@@ -95,11 +98,12 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 			free(join_2);
 			break ;
 		} 
-		else if(g_sig == 2) 
+		else if(g_sig == 2)
 		{
+			//dprintf(2, "ICI %d\n", g_sig);
+			data->exec->ctrl_heredoc = 1;
 			write(1, "^C\n", 3);
 			data->spe_fd = open("/dev/tty", O_RDONLY);
-			data->exec->ctrl_heredoc = 1;
 			close(data->tmp_files->fd);
 			break;
 			//n'execute pas la commande ni les autres here_doc
@@ -107,6 +111,7 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 		if (ft_strcmp(tok->file_array[i], input) == 0)
 			break ;
 		write(data->tmp_files->fd, input, ft_strlen(input));
+		write(data->tmp_files->fd, "\n", 1);
 	}
 	close(data->tmp_files->fd);
 }

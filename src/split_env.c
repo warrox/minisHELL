@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:31:38 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 17:37:36 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:40:03 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	case_not_equal_pos(char **result, const char *s)
 {
 	result = malloc(2 * sizeof(char *));
-	result[0] = strdup(s);
+	result[0] = ft_strdup(s);
 	result[1] = NULL;
 }
 

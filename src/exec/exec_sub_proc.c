@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:17:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:54:40 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ void	exec_one_pipe(t_data *data)
 		exit_error("pipe failed!\n");
 	init_tmp_struct(data);
 	check_here_doc(data);
+	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
+	{
+		close(data->exec->tube[0]);
+		close (data->exec->tube[1]);
+		return;
+	}
 	data->exec->pid_1 = fork();
 	if (data->exec->pid_1 == -1)
 		free_exec(data);
@@ -105,6 +111,7 @@ void	exec_sub_proc(t_data *data)
 	if (is_a_builtin(rpl) != -1 && is_a_builtin(rpl) != -2)
 		return (execute_builtin_sub_proc(data, rpl, i));
 	data->exec->cmd = build_cmd(data, rpl);
+	dprintf(2, "TOP-> %s\n", data->exec->cmd);
 	if (is_redir(rpl))
 	{
 		while (rpl->file_array[i] != 0)

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 11:11:58 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:35:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	exec_single_cmd(t_data *data)
 	rpl = data->tokenizer;
 	init_tmp_struct(data);
 	check_here_doc(data);
+	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
+		return;
 	handle_signal_children();
 	if (is_a_builtin(rpl) == -1 || is_a_builtin(rpl) == -2)
 	{

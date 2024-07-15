@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 14:01:16 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:34:06 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	hd_or_rdr_no_cmd(t_data *data)
 {
+	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
+		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
 	free_prompt(data);
 	free(data->signal);
@@ -53,10 +56,8 @@ void	error_excve(t_data *data)
 
 void	cmd_not_found(t_data *data)
 {
-	if (data->tokenizer->cmd_array != NULL
-		&& data->tokenizer->cmd_array[0] != NULL)
-		write(2, data->tokenizer->cmd_array[0],
-			ft_strlen(data->tokenizer->cmd_array[0]));
+	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
+		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
 	data->exit_status = 127;
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
@@ -78,10 +79,12 @@ void	file_not_found(t_data *data, t_list_arg *tok)
 	if (!join)
 		return ;
 	ft_putstr_fd(join, STDERR_FILENO);
+	free(join);
 	free(data->exec->cmd);
 	ft_clear_tokenizer(data);
 	close(data->exec->tube[1]);
 	close(data->exec->tube[0]);
+	free_tmp_struct(data);
 	free(data->tmp_files);
 	free_exec(data);
 	free_prompt(data);

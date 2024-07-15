@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:16:35 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:05:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,22 @@ void	error_execve_multi(t_data *data, t_list_arg *tok)
 
 void	error_cmd(t_data *data, t_list_arg *tok)
 {
+	if (data->tokenizer->cmd_array != NULL)
+	{
+		if (tok->cmd_array[0] != NULL)
+			write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+		write(STDERR_FILENO, ": command not found\n", 21);
+		close_tubes(data);
+		free(data->signal);
+		free_tmp_struct(data);
+		free(data->exec->multi_tube);
+		free(data->exec->pid);
+		free_exec(data);
+		ft_lst_arg_clear(&data->lst);
+		ft_clear_tokenizer(data);
+		free_prompt(data);
+		exit (127);
+	}
 	if (tok->cmd_array[0][0] == '\0')
 		free(data->exec->final_cmd);
 	if (tok->cmd_array && tok->cmd_array[0])

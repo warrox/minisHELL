@@ -6,11 +6,12 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 09:41:55 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:08:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 extern int		g_sig;
 
@@ -36,7 +37,7 @@ void	display_prompt2(t_data *data)
 {
 	if (data->input == NULL)
 	{
-		dprintf(2, "exit\n");
+		ft_putstr_fd("exit\n",1);
 		free_prompt(data);
 		free(data->signal);
 		ft_lst_arg_clear(&data->tokenizer);
@@ -69,6 +70,7 @@ int	display_prompt(t_data *data)
 		data->input_cpy = parser(data->input, data);
 		if (data->input_cpy != NULL)
 			not_input_cpy(data);
+		ft_clear_tokenizer(data);
 		free_prompt(data);
 	}
 	return (0);

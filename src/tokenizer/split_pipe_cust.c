@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:42:51 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/10 15:57:30 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/15 10:08:41 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void	add_token(char **result, char *start, char *end, int *index)
 	}
 	*tool.temp_ptr = '\0';
 	tool.len = tool.temp_ptr - tool.temp;
-	result[*index] = (char *)malloc((tool.len + 1) * sizeof(char));
-	strncpy(result[*index], tool.temp, tool.len);
-	result[*index][tool.len] = '\0';
+	result[*index] = ft_strdup(tool.temp);
 	free(tool.temp);
 	(*index)++;
 }

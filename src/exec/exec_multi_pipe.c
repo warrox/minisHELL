@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/12 16:17:39 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:13:06 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	print_tmp_files(t_data *data)
 	}
 }
 
+// int g_sig;
+
 void	children_process(t_data *data)
 {
 	int			i;
@@ -58,6 +60,11 @@ void	children_process(t_data *data)
 	tmp = data->tokenizer;
 	i = 0;
 	check_here_doc(data);
+	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
+	{
+		dprintf(2, "ICICICICICIC\n");
+		return;
+	}
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
 		error_pid(data);

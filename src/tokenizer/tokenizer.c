@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:37:13 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/10 09:38:17 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/12 15:45:09 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	clean_quotes_2(char *str, t_quote *tool_box)
 {
