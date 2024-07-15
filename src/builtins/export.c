@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 11:32:49 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:15:44 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	set_value(t_data *data, char **split_arg)
 {
@@ -69,13 +70,13 @@ void	print_lst_export(t_list_arg *lst)
 
 int	cmd_export(t_data *data)
 {
-	if (is_valid_name(data) != 1)
-	{
-		return (data->exit_status = 1);
-	}
 	if (check_export_cmd(data))
 	{
 		return (1);
+	}
+	if (is_valid_name(data) != 1)
+	{
+		return (data->exit_status = 1);
 	}
 	if (check_plus_egal(data))
 	{

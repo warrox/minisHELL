@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 11:33:43 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:12:02 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 void	create_new_var(t_data *data, char *key, char *value)
 {
