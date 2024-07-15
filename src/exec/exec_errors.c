@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:36:46 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:34:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:53:58 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	cmd_not_found(t_data *data)
 	exit(127);
 }
 
-void	file_not_found(t_data *data, t_list_arg *tok)
+void		file_not_found(t_data *data, t_list_arg *tok)
 {
 	char	*join;
 

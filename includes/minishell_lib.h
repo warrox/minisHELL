@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:20:33 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:34:02 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,6 @@ void					add_tmp_file(t_data *data, const char *file_name);
 void					hd_or_rdr_no_cmd(t_data *data);
 void					free_tmp_struct(t_data *data);
 
-void					hd_or_rdr_no_cmd_multi(t_data *data);
 void					error_dir_file_not_found(t_data *data, t_list_arg *tok);
 void					error_permission_denied(t_data *data, t_list_arg *tok);
 void					free_resources(t_data *data);
@@ -435,6 +434,8 @@ void					check_helper(t_exit_data *e, t_data *data, char *input);
 void					execute_exit(char *input, t_exit_data *e, t_data *data);
 long					ft_atoi_long(const char *str);
 
-void	handle_signal_here_doc(void);
+void					handle_signal_here_doc(void);
+void					hd_or_rdr_no_cmd_multi(t_data *data, t_list_arg *tok);
+void					rm_tmp_file_hd(t_data *data);
 
 #endif

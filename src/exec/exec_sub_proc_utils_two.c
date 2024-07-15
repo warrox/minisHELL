@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:08:53 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 17:15:57 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:17:54 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	init_files_builtin(t_data *data, t_list_arg *tok, int i)
 	}
 	else if (tok->array_sign[i] == APPEND)
 	{
+		if (data->exec->outfile != 1)
+			close (data->exec->outfile);
 		data->exec->outfile = open(tok->file_array[i],
 				O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (data->exec->outfile < 0)

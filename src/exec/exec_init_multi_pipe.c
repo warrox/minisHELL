@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:41:44 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 14:10:57 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:32:24 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_outfile(t_data *data, t_list_arg *tok, int i)
 
 void	init_files_multi(t_data *data, t_list_arg *tok, int i)
 {
+	dprintf(2, "TOKTOK\n");
 	if (tok->array_sign[i] == STDOUTS)
 		init_outfile(data, tok, i);
 	else if (tok->array_sign[i] == STDINS)
@@ -42,13 +43,16 @@ void	init_files_multi(t_data *data, t_list_arg *tok, int i)
 				O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (data->exec->outfile < 0)
 			file_not_found_multi(data, tok);
+		close(data->exec->outfile);
 	}
 }
 
 void	setup_pipes(t_data *data, t_list_arg *tmp)
 {
 	if (data->exec->index == 0)
+	{
 		first_pipe(data, tmp);
+	}
 	else if (data->exec->index == data->exec->nb_node - 1)
 		last_pipe(data, tmp);
 	else

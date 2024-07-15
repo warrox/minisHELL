@@ -13,7 +13,7 @@
 #include "../../includes/minishell_lib.h"
 #include <stdio.h>
 
-extern int		g_sig;
+extern int	g_sig;
 
 void	not_input_cpy(t_data *data)
 {
@@ -37,7 +37,7 @@ void	display_prompt2(t_data *data)
 {
 	if (data->input == NULL)
 	{
-		ft_putstr_fd("exit\n",1);
+		ft_putstr_fd("exit\n", 1);
 		free_prompt(data);
 		free(data->signal);
 		ft_lst_arg_clear(&data->tokenizer);
@@ -63,7 +63,7 @@ int	display_prompt(t_data *data)
 			free_prompt(data);
 			free(data->signal);
 			ft_clear_tokenizer(data);
-            break;
+			break ;
 		}
 		if (skip_ws_prompt(data, data->input))
 			continue ;

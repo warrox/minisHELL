@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:54:40 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:03:05 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	exec_sub_proc(t_data *data)
 	if (is_a_builtin(rpl) != -1 && is_a_builtin(rpl) != -2)
 		return (execute_builtin_sub_proc(data, rpl, i));
 	data->exec->cmd = build_cmd(data, rpl);
-	dprintf(2, "TOP-> %s\n", data->exec->cmd);
 	if (is_redir(rpl))
 	{
 		while (rpl->file_array[i] != 0)

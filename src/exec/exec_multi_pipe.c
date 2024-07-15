@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 14:13:06 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:46:41 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	check_dir_and_perm(t_data *data, t_list_arg *tmp)
 
 void	execute_builtin(t_data *data, t_list_arg *tmp, int i)
 {
-	init_files_builtin(data, tmp, i);
+	if (is_redir(tmp))
+	{
+		while (tmp->file_array[i] != 0)
+			init_files_builtin(data, tmp, i++);
+	}
+	// init_files_builtin(data, tmp, i);
 	setup_pipes(data, tmp);
 	exec_builtin(data, tmp, is_a_builtin(tmp));
 	if (data->exec->outfile != 1)
@@ -62,7 +67,6 @@ void	children_process(t_data *data)
 	check_here_doc(data);
 	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
 	{
-		dprintf(2, "ICICICICICIC\n");
 		return;
 	}
 	data->exec->pid[data->exec->index] = fork();
@@ -76,8 +80,10 @@ void	children_process(t_data *data)
 			i++;
 		}
 		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
-			execute_builtin(data, tmp, i);
+			execute_builtin_sub_proc(data, tmp, i);
 		data->exec->cmd = build_cmd(data, tmp);
+		if (data->exec->cmd == NULL && (data->exec->here_doc || (is_redir(tmp) != 0)))
+			hd_or_rdr_no_cmd_multi(data, tmp);
 		if (data->exec->cmd == NULL || tmp->cmd_array[0][0] == '\0')
 			error_cmd(data, tmp);
 		setup_and_check(data, tmp);

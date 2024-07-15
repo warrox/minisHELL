@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:34:00 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 18:22:28 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:34:17 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,22 @@ void	init_tmp_struct(t_data *data)
 	data->tmp_files->fd = -1;
 	data->tmp_files->file_name = NULL_INIT;
 	data->tmp_files->next = NULL_INIT;
+}
+
+void	rm_tmp_file_hd(t_data *data)
+{
+	t_tmp_files	*current;
+	t_tmp_files	*next;
+
+	current = data->tmp_files;
+	while (current)
+	{
+		next = current->next;
+		free(current->file_name);
+		free(current);
+		current = next;
+	}
+	data->tmp_files = NULL;
 }
 
 void	rm_tmp_file(t_data *data)
