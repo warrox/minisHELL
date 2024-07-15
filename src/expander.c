@@ -6,7 +6,7 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:19:10 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/12 18:43:59 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/15 16:19:38 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	expandexitcode(int *i, t_data *data, char *strexpanded, int *j)
 	{
 		strexpanded[(*j)++] = itoa_exitcode[k++];
 	}
+	if (isexitcode(data->input, i))
+		expandexitcode(i, data, strexpanded, &data->j);
 	free(itoa_exitcode);
 }
 
