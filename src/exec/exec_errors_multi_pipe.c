@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 17:03:32 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 14:05:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:20 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	error_execve_multi(t_data *data, t_list_arg *tok)
 		close(data->exec->outfile);
 	if (data->exec->infile != 0)
 		close(data->exec->infile);
-	rm_tmp_file(data);
 	ft_lst_arg_clear(&data->lst);
 	ft_clear_tokenizer(data);
 	free(data->exec->multi_tube);
@@ -96,4 +95,30 @@ void	error_permission_denied(t_data *data, t_list_arg *tok)
 		write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
 	write(STDERR_FILENO, ": Permission denied\n", 20);
 	cleanup_and_exit(data, 1);
+}
+
+void	hd_or_rdr_no_cmd_multi(t_data *data, t_list_arg *tok)
+{
+	if (data->tokenizer->cmd_array != NULL)
+	{
+		if (tok->cmd_array[0] != NULL)
+			write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+		write(STDERR_FILENO, ": command not found\n", 21);
+		close_tubes(data);
+		free(data->signal);
+		free(data->exec->multi_tube);
+		free(data->exec->pid);
+		rm_tmp_file_hd(data);
+		free_exec(data);
+		ft_lst_arg_clear(&data->lst);
+		ft_clear_tokenizer(data);
+		free_prompt(data);
+		exit (127);
+	}
+	if (tok->cmd_array[0][0] == '\0')
+		free(data->exec->final_cmd);
+	if (tok->cmd_array && tok->cmd_array[0])
+		write(STDERR_FILENO, tok->cmd_array[0], ft_strlen(tok->cmd_array[0]));
+	write(STDERR_FILENO, ": command not found\n", 20);
+	cleanup_and_exit(data, 127);
 }

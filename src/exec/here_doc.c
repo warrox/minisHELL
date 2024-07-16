@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:21:50 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:25:21 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 	input = NULL_INIT;
 	data->tmp_files->fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (data->tmp_files->fd < 0)
+	 {
 		file_not_found(data, tok);
-	//dprintf(2, "ctrl_hd = %d\n", data->exec->ctrl_heredoc);
+	}
 	if (data->exec->ctrl_heredoc == 1)
 	{
 		close(data->tmp_files->fd);
@@ -100,13 +101,11 @@ void	init_here_doc(t_data *data, t_list_arg *tok, int i, char *file)
 		} 
 		else if(g_sig == 2)
 		{
-			//dprintf(2, "ICI %d\n", g_sig);
 			data->exec->ctrl_heredoc = 1;
 			write(1, "^C\n", 3);
 			data->spe_fd = open("/dev/tty", O_RDONLY);
 			close(data->tmp_files->fd);
 			break;
-			//n'execute pas la commande ni les autres here_doc
 		}
 		if (ft_strcmp(tok->file_array[i], input) == 0)
 			break ;

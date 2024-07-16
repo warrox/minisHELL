@@ -6,14 +6,14 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 17:12:02 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/16 07:05:37 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 #include <stdio.h>
 
-void	create_new_var(t_data *data, char *key, char *value)
+void	 create_new_var(t_data *data, char *key, char *value)
 {
 	char	*build_var;
 	char	*final_var;

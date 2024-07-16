@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 12:00:57 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:01:02 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	exec_case_egual(t_data *data, int i)
 		tmp = tmp->next;
 	}
 	if (!found)
+	{
 		create_new_var(data, split_arg[0], split_arg[1]);
+		free_split(split_arg);
+	}
 }
 
 int	is_valid_name(t_data *data)

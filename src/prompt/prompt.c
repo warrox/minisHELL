@@ -6,14 +6,14 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 12:08:52 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:44:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 #include <stdio.h>
 
-extern int		g_sig;
+extern int	g_sig;
 
 void	not_input_cpy(t_data *data)
 {
@@ -37,7 +37,7 @@ void	display_prompt2(t_data *data)
 {
 	if (data->input == NULL)
 	{
-		ft_putstr_fd("exit\n",1);
+		ft_putstr_fd("exit\n", 1);
 		free_prompt(data);
 		free(data->signal);
 		ft_lst_arg_clear(&data->tokenizer);
@@ -52,18 +52,24 @@ int	display_prompt(t_data *data)
 	init_signal(data);
 	while (1)
 	{
+		g_sig = 0;
 		handle_signal_prompt();
 		init_prompt(data);
 		build_user_prompt(data);
 		data->tokenizer = init_tokenizer();
 		data->input = readline(data->prompt->usr_prompt);
+		if (g_sig != 0)
+		{
+			data->exit_status = g_sig + 128;
+			g_sig = 0;
+		}
 		if (data->input == NULL)
 		{
 			ft_putstr_fd("exit\n", 2);
 			free_prompt(data);
 			free(data->signal);
 			ft_clear_tokenizer(data);
-            break;
+			break ;
 		}
 		if (skip_ws_prompt(data, data->input))
 			continue ;

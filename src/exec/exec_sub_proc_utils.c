@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:39:20 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 10:38:53 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:46 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	exit_only_here_doc(t_data *data)
 
 void	execute_builtin_sub_proc(t_data *data, t_list_arg *rpl, int i)
 {
+	i = 0;
+	if (is_redir(rpl))
+	{
+		while (rpl->file_array && rpl->file_array[i] != 0)
+			init_files_builtin(data, rpl, i++);
+	}
 	init_files_builtin(data, rpl, i);
 	exec_builtin(data, rpl, is_a_builtin(rpl));
 	if (data->exec->outfile != 1)
