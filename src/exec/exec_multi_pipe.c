@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multi_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:46:41 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 07:39:57 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	execute_builtin(t_data *data, t_list_arg *tmp, int i)
 		while (tmp->file_array[i] != 0)
 			init_files_builtin(data, tmp, i++);
 	}
-	// init_files_builtin(data, tmp, i);
 	setup_pipes(data, tmp);
 	exec_builtin(data, tmp, is_a_builtin(tmp));
 	if (data->exec->outfile != 1)
@@ -55,8 +54,6 @@ void	print_tmp_files(t_data *data)
 	}
 }
 
-// int g_sig;
-
 void	children_process(t_data *data)
 {
 	int			i;
@@ -66,23 +63,19 @@ void	children_process(t_data *data)
 	i = 0;
 	check_here_doc(data);
 	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
-	{
-		return;
-	}
+		return ;
 	data->exec->pid[data->exec->index] = fork();
 	if (data->exec->pid[data->exec->index] == -1)
 		error_pid(data);
 	if (data->exec->pid[data->exec->index] == 0)
 	{
-		while (i != data->exec->index && tmp)
-		{
+		while (i++ != data->exec->index && tmp)
 			tmp = tmp->next;
-			i++;
-		}
 		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
 			execute_builtin_sub_proc(data, tmp, i);
 		data->exec->cmd = build_cmd(data, tmp);
-		if (data->exec->cmd == NULL && (data->exec->here_doc || (is_redir(tmp) != 0)))
+		if (data->exec->cmd == NULL && (data->exec->here_doc
+				|| (is_redir(tmp) != 0)))
 			hd_or_rdr_no_cmd_multi(data, tmp);
 		if (data->exec->cmd == NULL || tmp->cmd_array[0][0] == '\0')
 			error_cmd(data, tmp);

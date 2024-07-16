@@ -14,8 +14,10 @@
 
 void	hd_or_rdr_no_cmd(t_data *data)
 {
-	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
-		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+	if (data->tokenizer->cmd_array != NULL
+		&& data->tokenizer->cmd_array[0] != NULL)
+		write(2, data->tokenizer->cmd_array[0],
+			ft_strlen(data->tokenizer->cmd_array[0]));
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
 	free_prompt(data);
@@ -56,8 +58,10 @@ void	error_excve(t_data *data)
 
 void	cmd_not_found(t_data *data)
 {
-	if (data->tokenizer->cmd_array != NULL && data->tokenizer->cmd_array[0] != NULL)
-		write(2, data->tokenizer->cmd_array[0], ft_strlen(data->tokenizer->cmd_array[0]));
+	if (data->tokenizer->cmd_array != NULL
+		&& data->tokenizer->cmd_array[0] != NULL)
+		write(2, data->tokenizer->cmd_array[0],
+			ft_strlen(data->tokenizer->cmd_array[0]));
 	data->exit_status = 127;
 	write(2, ": command not found\n", 21);
 	ft_clear_tokenizer(data);
@@ -69,7 +73,7 @@ void	cmd_not_found(t_data *data)
 	exit(127);
 }
 
-void		file_not_found(t_data *data, t_list_arg *tok)
+void	file_not_found(t_data *data, t_list_arg *tok)
 {
 	char	*join;
 

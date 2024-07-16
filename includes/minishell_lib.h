@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 15:34:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:09:09 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,10 @@ typedef struct s_data
 	int					int_nbr;
 	char				*input_cpy;
 	int					spe_fd;
+	char				*input_hd;
+	char				*join;
+	char				*join_2;
+
 }						t_data;
 
 typedef struct s_quote
@@ -244,7 +248,10 @@ void					free_prompt(t_data *data);
 void					create_var_tab(t_data *data, t_list_arg *tmp, int i);
 void					free_split(char **split);
 void					free_tokenizer(t_list_arg *current);
-
+void					ft_ctrl_c_here_doc(int sig);
+void					ft_back_slash(int sig);
+void					error_permission_denied(t_data *data, t_list_arg *tok);
+void					reset_in_out(t_data *data);
 /**[PARSER FUNCTION]**/
 
 void					initexpandvariable(t_data *data);

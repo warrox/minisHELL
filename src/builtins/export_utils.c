@@ -13,7 +13,7 @@
 #include "../../includes/minishell_lib.h"
 #include <stdio.h>
 
-void	 create_new_var(t_data *data, char *key, char *value)
+void	create_new_var(t_data *data, char *key, char *value)
 {
 	char	*build_var;
 	char	*final_var;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_one_pipe__errors.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:21:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 13:51:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:33:08 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	error_cmd_op(t_data *data, t_list_arg *tok)
 		free(data->signal);
 		free_prompt(data);
 		free_tmp_struct(data);
-		//rm_tmp_file(data);
 		close(data->exec->tube[0]);
 		close(data->exec->tube[1]);
 		free_exec(data);

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 12:02:48 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 18:50:38 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:54:18 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-
-void	reset_in_out(t_data *data)
-{
-	data->exec->infile = 0;
-	data->exec->outfile = 1;
-}
 
 int	nb_node(t_data *data)
 {
@@ -59,30 +53,20 @@ void	init_struct_exec(t_data *data)
 	data->exec->ctrl_heredoc = 0;
 }
 
-void	exec_single_cmd(t_data *data)
+void	helper_single_cmd(t_data *data, t_list_arg *rpl, int status)
 {
-	int			status;
-	t_list_arg	*rpl;
-
-	rpl = data->tokenizer;
-	init_tmp_struct(data);
-	check_here_doc(data);
-	handle_signal_children();
 	if (is_a_builtin(rpl) == -1 || is_a_builtin(rpl) == -2)
 	{
 		data->exec->pid_1 = fork();
 		if (data->exec->pid_1 == -1)
 			return ;
-		if (data->exec->pid_1 == 0) {
+		if (data->exec->pid_1 == 0)
 			exec_sub_proc(data);
-		}
 		else
 		{
 			waitpid(data->exec->pid_1, &status, 0);
 			if (WIFEXITED(status))
-			{
 				data->exit_status = WEXITSTATUS(status);
-			}
 			else if (WIFSIGNALED(status))
 			{
 				data->exit_status = (WTERMSIG(status));
@@ -95,6 +79,19 @@ void	exec_single_cmd(t_data *data)
 		exec_sub_proc(data);
 		free_tmp_struct(data);
 	}
+}
+
+void	exec_single_cmd(t_data *data)
+{
+	int			status;
+	t_list_arg	*rpl;
+
+	status = 0;
+	rpl = data->tokenizer;
+	init_tmp_struct(data);
+	check_here_doc(data);
+	handle_signal_children();
+	helper_single_cmd(data, rpl, status);
 }
 
 int	init_exec(t_data *data)

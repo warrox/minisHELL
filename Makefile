@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 15:09:03 by cyferrei          #+#    #+#              #
-#    Updated: 2024/07/15 11:20:32 by cyferrei         ###   ########.fr        #
+#    Updated: 2024/07/16 07:17:08 by whamdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ UTILS = ./utils/print_utils.c ./utils/cleaner.c ./utils/syntax_checker.c ./utils
 BUILTINS = ./builtins/env.c ./builtins/pwd.c ./builtins/export.c ./builtins/export_utils.c ./builtins/unset.c ./builtins/export_utils_one.c ./builtins/builtins_utils.c ./builtins/echo.c ./builtins/cd.c ./builtins/exit.c ./builtins/cd_utils.c ./builtins/export_utils_two.c ./builtins/echo_utils.c ./builtins/exit_utils_one.c ./builtins/exit_utils.c ./builtins/cd_utils_1.c
 TOKENIZER = ./tokenizer/tokenizer.c ./tokenizer/tokenizer_util.c ./tokenizer/split_tokenizer.c ./tokenizer/tokenizer_util_1.c ./tokenizer/count_sign.c /tokenizer/flush_redir.c ./tokenizer/split_pipe_cust.c ./tokenizer/skip_ws_prompt.c ./tokenizer/tokenizer_util_2.c /tokenizer/split_tokenizer_1.c /tokenizer/tokenizer_util_3.c /tokenizer/tokenizer_util_4.c ./tokenizer/split_pipe_cust_util.c
 EXEC = ./exec/exec.c ./exec/exec_utils.c ./exec/exec_sub_proc.c ./exec/exec_errors.c exec/exec_multi_pipe.c exec/exec_init_multi_pipe.c exec/exec_errors_multi_pipe.c exec/here_doc.c exec/here_doc_utils.c exec/exec_checks_exit.c exec/exec_single_cmd_errors.c exec/exec_one_pipe__errors.c ./exec/exec_errors_multi_pipe_utils.c ./exec/exec_multi_pipe_utils.c ./exec/exec_multi_pipe_utils_one.c ./exec/exec_sub_proc_utils.c ./exec/exec_sub_proc_utils_one.c ./exec/exec_sub_proc_utils_two.c
-SIG = ./signals/signal.c
+SIG = ./signals/signal.c ./signals/signal_utils.c 
 MINISHELL = $(addprefix $(SOURCE), $(MAIN) $(LST) $(PROMPT) $(BUILTINS) $(TOKENIZER) $(UTILS) $(EXEC) $(SIG))
 
 SRC = $(MINISHELL)

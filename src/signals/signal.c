@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:48:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 18:35:18 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 07:15:53 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,6 @@ void	ft_ctrl_c_children(int sig)
 	(void)sig;
 	ft_putstr_fd("\n", 1);
 	g_sig = 2;
-}
-
-void	ft_ctrl_c_here_doc(int sig)
-{
-	(void)sig;
-	g_sig = 2;
-	close(STDIN_FILENO);
-}
-
-void	ft_back_slash(int sig)
-{
-	(void)sig;
-	g_sig = 3;
 }
 
 void	handle_signal_here_doc(void)

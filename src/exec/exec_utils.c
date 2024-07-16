@@ -3,32 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:56:28 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 17:13:01 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:08:42 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
 
-// void	hd_or_rdr_no_cmd_multi(t_data *data)
-// {
-// 	ft_clear_tokenizer(data);
-// 	free_prompt(data);
-// 	free(data->signal);
-// 	close_tubes(data);
-// 	free(data->exec->multi_tube);
-// 	free(data->exec->pid);
-// 	if (data->exec->outfile != 1)
-// 		close(data->exec->outfile);
-// 	if (data->exec->infile != 0)
-// 		close(data->exec->infile);
-// 	free_exec(data);
-// 	free_tmp_struct(data);
-// 	ft_lst_arg_clear(&data->lst);
-// 	exit(126);
-// }
+void	reset_in_out(t_data *data)
+{
+	data->exec->infile = 0;
+	data->exec->outfile = 1;
+}
 
 int	is_redir(t_list_arg *tok)
 {

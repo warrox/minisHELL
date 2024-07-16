@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_sub_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:49:19 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 16:03:05 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 07:48:10 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,17 @@ void	first_child_process(t_data *data)
 	error_excve(data);
 }
 
+int	exec_helper(int g_sig, t_data *data)
+{
+	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
+	{
+		close(data->exec->tube[0]);
+		close(data->exec->tube[1]);
+		return (-1);
+	}
+	return (0);
+}
+
 void	exec_one_pipe(t_data *data)
 {
 	int	status;
@@ -78,12 +89,8 @@ void	exec_one_pipe(t_data *data)
 		exit_error("pipe failed!\n");
 	init_tmp_struct(data);
 	check_here_doc(data);
-	if (g_sig == 2 || data->exec->ctrl_heredoc == 2)
-	{
-		close(data->exec->tube[0]);
-		close (data->exec->tube[1]);
-		return;
-	}
+	if (exec_helper(g_sig, data) == -1)
+		return ;
 	data->exec->pid_1 = fork();
 	if (data->exec->pid_1 == -1)
 		free_exec(data);

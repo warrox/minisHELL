@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 18:44:12 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 07:22:41 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
-#include <stdio.h>
 
 extern int	g_sig;
 
@@ -63,14 +62,7 @@ int	display_prompt(t_data *data)
 			data->exit_status = g_sig + 128;
 			g_sig = 0;
 		}
-		if (data->input == NULL)
-		{
-			ft_putstr_fd("exit\n", 2);
-			free_prompt(data);
-			free(data->signal);
-			ft_clear_tokenizer(data);
-			break ;
-		}
+		display_prompt2(data);
 		if (skip_ws_prompt(data, data->input))
 			continue ;
 		data->input_cpy = parser(data->input, data);
