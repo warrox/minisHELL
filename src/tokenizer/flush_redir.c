@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flush_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:57:55 by whamdi            #+#    #+#             */
-/*   Updated: 2024/07/12 15:36:06 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/16 15:11:12 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*flush_redir(char *str, t_data *data)
 	data->i = 0;
 	data->j = 0;
 	data->pansement = 0;
+	tmp = 0;
 	len = ft_strlen(str);
 	while (data->i < len)
 	{

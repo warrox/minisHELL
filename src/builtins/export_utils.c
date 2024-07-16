@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 12:14:11 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:17:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	is_env_var(t_data *data, char **split_key)
 
 int	check_export_cmd(t_data *data, t_list_arg *tok)
 {
-	// dprintf(2, "%s\n", tok->final_cmd);
 	if (tok->cmd_array[0] && !tok->cmd_array[1]
 		&& data->lst != NULL)
 	{

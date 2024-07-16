@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 13:55:14 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:16:55 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	print_echo_flag(t_data *data, int start)
 
 void	print_echo(t_data *data, t_list_arg *tok)
 {
-	(void) data;
 	int	i;
 	int	flag;
 
+	(void)data;
 	i = 1;
 	flag = 0;
 	while (tok->cmd_array[flag + 1])

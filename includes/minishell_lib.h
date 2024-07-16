@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:37:08 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 12:34:42 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:19:39 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,16 +203,18 @@ int						cmd_unset(t_data *data);
 void					case_egal(t_data *data);
 int						cmd_env(t_data *data);
 int						pwd_cmd(t_data *data, t_list_arg *tok);
-int	cmd_export(t_data *data, t_list_arg *tok);
-int	is_valid_name(t_list_arg *tok);
+int						cmd_export(t_data *data, t_list_arg *tok);
+int						is_valid_name(t_list_arg *tok);
 void					case_plus_egal(t_data *data, t_list_arg *tok);
 void					exec_case_egual(t_data *data, int i);
 void					not_valid_identifier(char **split_cmd);
 void					set_value(t_data *data, char **split_arg);
+void					exit_builtin_multi(t_data *data, t_list_arg *tmp,
+							int i);
 int						check_plus_egal(t_list_arg *tok);
 t_data					*build_user_prompt(t_data *data);
 void					concat_env_var(t_data *data, char *key, char *new);
-int	check_egals(t_list_arg *tok);
+int						check_egals(t_list_arg *tok);
 int						check_export_cmd(t_data *data, t_list_arg *tok);
 void					print_lst_export(t_list_arg *lst);
 int						is_env_var(t_data *data, char **split_key);
@@ -444,6 +446,7 @@ long					ft_atoi_long(const char *str);
 void					handle_signal_here_doc(void);
 void					hd_or_rdr_no_cmd_multi(t_data *data, t_list_arg *tok);
 void					rm_tmp_file_hd(t_data *data);
-void	execute_builtin_multi(t_data *data, t_list_arg *rpl, int i);
+void					execute_builtin_multi(t_data *data, t_list_arg *rpl,
+							int i);
 
 #endif

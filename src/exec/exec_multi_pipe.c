@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:27:54 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 12:54:08 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:20:15 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,7 @@ void	children_process(t_data *data)
 		while (i++ != data->exec->index && tmp)
 			tmp = tmp->next;
 		if (is_a_builtin(tmp) != -1 && is_a_builtin(tmp) != -2)
-		{
-			execute_builtin_multi(data, tmp, i);
-			close_tubes(data);
-			free(data->signal);
-			free_prompt(data);
-			ft_clear_tokenizer(data);
-			free(data->exec->multi_tube);
-			free(data->exec->pid);
-			free_tmp_struct(data);
-			ft_lst_arg_clear(&data->lst);
-			free_exec(data);
-			exit(1);
-		}
-		dprintf(2, "TEST\n");
+			exit_builtin_multi(data, tmp, i);
 		data->exec->cmd = build_cmd(data, tmp);
 		if (data->exec->cmd == NULL && (data->exec->here_doc
 				|| (is_redir(tmp) != 0)))

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:22:59 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 13:34:59 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:22:35 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,13 @@ void	intermediate_pipe(t_data *data, t_list_arg *tok)
 
 void	last_pipe(t_data *data, t_list_arg *tok)
 {
-	int	i;
-	int index;
-	
-	i = 0;
+	int	index;
+
+	data->i = 0;
 	if (is_redir(tok))
 	{
-		while (tok->file_array[i])
-			init_files_multi(data, tok, i++);
+		while (tok->file_array[data->i])
+			init_files_multi(data, tok, data->i++);
 	}
 	if (data->exec->infile != 0)
 	{
@@ -77,15 +76,11 @@ void	last_pipe(t_data *data, t_list_arg *tok)
 	else
 	{
 		index = data->exec->index * 2 - 2;
-        if (index >= 0 && index < data->exec->nb_tube)
-            dup2(data->exec->multi_tube[index], STDIN_FILENO);
+		if (index >= 0 && index < data->exec->nb_tube)
+			dup2(data->exec->multi_tube[index], STDIN_FILENO);
 	}
 	if (data->exec->outfile != 1)
-	{
-		dprintf(2, "DUPIIINN\n");
-		dup2(data->exec->outfile, STDOUT_FILENO);
-		close(data->exec->outfile);
-	}
+		(dup2(data->exec->outfile, STDOUT_FILENO), close(data->exec->outfile));
 	else
 		dup2(1, STDOUT_FILENO);
 }
