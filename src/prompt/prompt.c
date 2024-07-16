@@ -6,11 +6,12 @@
 /*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 19:17:55 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 07:22:41 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/16 10:19:38 by whamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell_lib.h"
+#include <stdio.h>
 
 extern int	g_sig;
 
@@ -34,6 +35,8 @@ void	init_display(char *input, int *int_nbr, char *input_cpy, t_data *data)
 
 void	display_prompt2(t_data *data)
 {
+	if (!ft_strncmp(data->input, "\"\"", 2))
+		ft_putstr_fd(": command not found\n", 2);
 	if (data->input == NULL)
 	{
 		ft_putstr_fd("exit\n", 1);
