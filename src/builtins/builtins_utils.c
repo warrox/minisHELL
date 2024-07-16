@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:28:47 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 18:40:07 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:22:52 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	exec_builtin(t_data *data, t_list_arg *tok, int builtin)
 	if (builtin == ENV)
 		cmd_env(data);
 	else if (builtin == PWD)
-		pwd_cmd(data);
+		pwd_cmd(data, tok);
 	else if (builtin == EXPORT)
-		cmd_export(data);
+		cmd_export(data, tok);
 	else if (builtin == UNSET)
 		cmd_unset(data);
 	else if (builtin == ECHO)
-	{
 		cmd_echo(data, tok);
-	}
 	else if (builtin == CD)
 		ft_current_directory(data->tokenizer->cmd_array[1], data);
 	else if (builtin == EXIT)

@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:27:12 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/11 12:41:15 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:55:14 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ void	print_echo_flag(t_data *data, int start)
 		last++;
 	while (data->tokenizer->cmd_array[i])
 	{
-		write(data->exec->outfile, data->tokenizer->cmd_array[i],
-			ft_strlen(data->tokenizer->cmd_array[i]));
+		printf("%s", data->tokenizer->cmd_array[i]);
 		if (i < last)
 		{
-			write(data->exec->outfile, " ", 1);
+			printf(" ");
 		}
 		i++;
 	}
@@ -35,6 +34,7 @@ void	print_echo_flag(t_data *data, int start)
 
 void	print_echo(t_data *data, t_list_arg *tok)
 {
+	(void) data;
 	int	i;
 	int	flag;
 
@@ -45,13 +45,12 @@ void	print_echo(t_data *data, t_list_arg *tok)
 	while (tok->cmd_array[i])
 	{
 		flag--;
-		write(data->exec->outfile, tok->cmd_array[i],
-			ft_strlen(tok->cmd_array[i]));
+		printf("%s", tok->cmd_array[i]);
 		if (flag > 0)
-			write(data->exec->outfile, " ", 1);
+			printf(" ");
 		i++;
 	}
-	write(data->exec->outfile, "\n", 1);
+	printf("\n");
 }
 
 int	check_flag(t_data *data)
@@ -80,8 +79,11 @@ int	check_echo_cmd(t_data *data)
 	if (ft_strncmp(data->tokenizer->final_cmd, "echo", 5) == 0
 		&& data->lst != NULL)
 	{
-		ft_putstr_fd("\n", data->exec->outfile);
-		return (1);
+		if (data->exec->nb_node != 1)
+		{
+			printf("\n");
+			return (1);
+		}
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:50:22 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 07:05:37 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/16 12:14:11 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ int	is_env_var(t_data *data, char **split_key)
 	return (0);
 }
 
-int	check_export_cmd(t_data *data)
+int	check_export_cmd(t_data *data, t_list_arg *tok)
 {
-	if (ft_strncmp(data->tokenizer->final_cmd, "export", 7) == 0
+	// dprintf(2, "%s\n", tok->final_cmd);
+	if (tok->cmd_array[0] && !tok->cmd_array[1]
 		&& data->lst != NULL)
 	{
 		print_lst_export(data->lst);
@@ -68,17 +69,17 @@ void	concat_env_var(t_data *data, char *key, char *new)
 	tmp->key_and_val[1] = new_value;
 }
 
-void	case_plus_egal(t_data *data)
+void	case_plus_egal(t_data *data, t_list_arg *tok)
 {
 	char	**split_key;
 	char	**split_value;
 
 	split_key = NULL_INIT;
 	split_value = NULL_INIT;
-	split_key = ft_split(data->tokenizer->cmd_array[1], '+');
+	split_key = ft_split(tok->cmd_array[1], '+');
 	if (!split_key)
 		return ;
-	split_value = ft_split(data->tokenizer->cmd_array[1], '=');
+	split_value = ft_split(tok->cmd_array[1], '=');
 	if (!split_value)
 	{
 		free_split(split_key);

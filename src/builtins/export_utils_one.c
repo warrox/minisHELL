@@ -6,7 +6,7 @@
 /*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:52:40 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/15 17:01:02 by cyferrei         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:34:32 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	exec_case_egual(t_data *data, int i)
 	}
 }
 
-int	is_valid_name(t_data *data)
+int	is_valid_name(t_list_arg *tok)
 {
 	char	**split_cmd;
 	int		i;
 
 	i = ZERO_INIT;
 	split_cmd = NULL;
-	split_cmd = ft_split(data->tokenizer->cmd_array[1], '=');
+	split_cmd = ft_split(tok->cmd_array[1], '=');
 	if (!split_cmd)
 		return (-1);
 	if (split_cmd[0] == NULL)
@@ -103,16 +103,16 @@ void	case_egal(t_data *data)
 	}
 }
 
-int	check_plus_egal(t_data *data)
+int	check_plus_egal(t_list_arg *tok)
 {
 	int	i;
 
 	i = ZERO_INIT;
-	while (data->tokenizer->final_cmd[i])
+	while (tok->final_cmd[i])
 	{
-		if (data->tokenizer->final_cmd[i] == '+')
+		if (tok->final_cmd[i] == '+')
 		{
-			if (data->tokenizer->final_cmd[i + 1] != '=')
+			if (tok->final_cmd[i + 1] != '=')
 				return (0);
 			else
 				return (1);

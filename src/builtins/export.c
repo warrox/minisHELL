@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: whamdi <whamdi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyferrei <cyferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:46:42 by cyferrei          #+#    #+#             */
-/*   Updated: 2024/07/16 07:05:56 by whamdi           ###   ########.fr       */
+/*   Updated: 2024/07/16 12:35:10 by cyferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	set_value(t_data *data, char **split_arg)
 	}
 }
 
-int	check_egals(t_data *data)
+int	check_egals(t_list_arg *tok)
 {
 	int	i;
 
 	i = ZERO_INIT;
-	while (data->tokenizer->final_cmd[i])
+	while (tok->final_cmd[i])
 	{
-		if (data->tokenizer->final_cmd[i] == '=')
+		if (tok->final_cmd[i] == '=')
 			return (1);
 		i++;
 	}
@@ -68,22 +68,22 @@ void	print_lst_export(t_list_arg *lst)
 	}
 }
 
-int	cmd_export(t_data *data)
+int	cmd_export(t_data *data, t_list_arg *tok)
 {
-	if (check_export_cmd(data))
+	if (check_export_cmd(data, tok))
 	{
 		return (1);
 	}
-	if (is_valid_name(data) != 1)
+	if (check_plus_egal(tok))
+	{
+		case_plus_egal(data, tok);
+		return (1);
+	}
+	if (is_valid_name(tok) != 1)
 	{
 		return (data->exit_status = 1);
 	}
-	if (check_plus_egal(data))
-	{
-		case_plus_egal(data);
-		return (1);
-	}
-	if (check_egals(data))
+	if (check_egals(tok))
 	{
 		case_egal(data);
 		return (1);
